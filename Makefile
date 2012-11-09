@@ -1,3 +1,5 @@
+.PHONY: all debug clean
+
 all:
 	./rebar compile generate
 
