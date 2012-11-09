@@ -3,4 +3,5 @@ deps
 *.app
 *.swp
 rel/batnitor
+erl_crash.dump
 
