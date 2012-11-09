@@ -1,0 +1,12 @@
+{application, batnitor,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { batnitor_app, []}},
+  {env, []}
+ ]}.
