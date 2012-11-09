@@ -2,3 +2,5 @@ deps
 *.beam
 *.app
 *.swp
+rel/batnitor
+
