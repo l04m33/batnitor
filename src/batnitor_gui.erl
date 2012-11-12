@@ -2,6 +2,7 @@
 -behaviour(wx_object).
 
 -include("batnitor.hrl").
+-include("common.hrl").
 -include_lib("wx/include/wx.hrl").
 
 -export([
@@ -21,6 +22,16 @@
         ]).
 
 
+-define(ID_OPEN_PLAYER_PROP_FILE,   100001).
+-define(ID_OPEN_MONSTER_PROP_FILE,  100002).
+-define(ID_OPEN_MONSTER_GROUP_FILE, 100003).
+-define(ID_OPEN_VERSUS_FILE,        100004).
+
+
+-record(state, {
+    main_frame = none}).
+
+
 start_link() ->
     start_link([]).
 
@@ -32,23 +43,37 @@ stop() ->
 
 
 init(Config) ->
-    ?INFO("~s up and running.", [?MODULE]),
+    ?I("~s up and running.", [?MODULE]),
     erlang:process_flag(trap_exit, true),
     wx:new(Config),
     wx:batch(fun () -> create_main_layout(Config) end).
 
 
-handle_event(#wx{id = ID, event = #wxCommand{type = command_menu_selected}}, State) ->
-    case ID of
-        ?wxID_OPEN ->
-            void;               % TODO
-        ?wxID_EXIT ->
-            stop()
+handle_event(#wx{id = ?ID_OPEN_PLAYER_PROP_FILE, 
+                 event = #wxCommand{type = command_menu_selected}}, State) ->
+    case choose_file_by_dialog(State#state.main_frame) of
+        {ok, FPath} ->
+            case file:open(FPath, [read]) of
+                {ok, FHandle} ->
+                    % TODO: 发给batnitor_simulator
+                    {_, PlayerPropList} = ecsv:process_csv_file_with(FHandle, fun parse_player_prop_csv/2, []),
+                    gen_server:cast(batnitor_simulator, {set_role_list, lists:map(fun row_to_role/1, PlayerPropList)});
+                _ ->
+                    show_message(State#state.main_frame, "Cannot open this file: " ++ FPath)
+            end;
+
+        cancel ->
+            void
     end,
     {noreply, State};
 
+handle_event(#wx{id = ?wxID_EXIT, 
+                 event = #wxCommand{type = command_menu_selected}}, State) ->
+    stop(),
+    {noreply, State};
+
 handle_event(WX, State) ->
-    ?INFO("wx event: ~w", [WX]),
+    ?I("wx event: ~w", [WX]),
     {noreply, State}.
 
 
@@ -68,7 +93,7 @@ handle_info(_Msg, State) ->
 
 
 terminate(_Reason, _State) ->
-    ?INFO("~s shutting down.", [?MODULE]),
+    ?I("~s shutting down.", [?MODULE]),
     ok.
 
 
@@ -85,13 +110,13 @@ create_main_layout(_Config) ->
     create_status_bar(MainFrame),
 
     wxFrame:show(MainFrame),
-    {MainFrame, no_use}.
+    {MainFrame, #state{main_frame = MainFrame}}.
 
 create_menu_bar(Frame) ->
     MainMenuBar = wxMenuBar:new(),
 
     FileMenu = wxMenu:new([]),
-    wxMenu:append(FileMenu, ?wxID_OPEN, "&Open Player Config"),
+    wxMenu:append(FileMenu, ?ID_OPEN_PLAYER_PROP_FILE, "&Open Player Config"),
     wxMenu:appendSeparator(FileMenu),
     wxMenu:append(FileMenu, ?wxID_EXIT, "&Quit"),
     wxMenuBar:append(MainMenuBar, FileMenu, "&File"),
@@ -101,4 +126,102 @@ create_menu_bar(Frame) ->
 
 create_status_bar(Frame) ->
     wxFrame:createStatusBar(Frame, []).
+
+choose_file_by_dialog(MainFrame) ->
+    FDialog = wxFileDialog:new(MainFrame, []),
+    Ret = case wxFileDialog:showModal(FDialog) of
+        ?wxID_OK ->
+            FPath = wxFileDialog:getPath(FDialog),
+            {ok, FPath};
+        ?wxID_CANCEL ->
+            cancel
+    end,
+    wxFileDialog:destroy(FDialog),
+    Ret.
+
+parse_player_prop_csv({eof}, AccList) -> AccList;
+parse_player_prop_csv({newline, Line}, AccList) ->
+    ?I("Line = ~p", [Line]),
+    [Line | AccList].
+
+show_message(MainFrame, Msg) ->
+    MsgD = wxMessageDialog:new(MainFrame, Msg),
+    wxMessageDialog:showModal(MsgD),
+    wxMessageDialog:destroy(MsgD).
+
+string_to_term(String) ->
+    case erl_scan:string(String++".") of
+        {ok, Tokens, _} ->
+            case erl_parse:parse_term(Tokens) of
+                {ok, Term} -> Term;
+                _Err -> undefined
+            end;
+        _Error ->
+            undefined
+    end.
+
+row_to_role([ID, DengJi, GongJi, FangYu, Xue, SuDu, MingZhong, ShanBi, BaoJi, 
+                  XingYun, GeDang, FanJi, PoJia, ZhiMing, GuaiDaRen, RenDaGuai, NanDu,
+                  GuaiWuLeiXing, JiNeng]) ->
+    {#role {
+        key                = {0, string_to_term(ID)},       %% 佣兵记录的key为一个记录:{player_id, mer_id}
+        gd_roleRank        = 0,                             %% 角色类别，1：为领主佣兵，0：其他佣兵
+        gd_isFired         = 0,                             %% 是否为玩家已解雇的佣兵，0：没解雇， 1：已解雇
+        gd_roleLevel       = string_to_term(DengJi),        %% 等级
+        gd_isBattle        = 1,                             %% 是否出战，若不出战，则为0，否则为站位的位子（1到6）
+        gd_exp             = 0,                             %% 当前经验
+        gd_skill           = string_to_term(JiNeng),        %% 技能列表
+        
+        %% 4 foster attribute
+        gd_fliliang        = 0,                             %% 培养所获得腕力
+        gd_fyuansheng      = 0,                             %% 培养所获得元神
+        gd_ftipo           = 0,                             %% 培养所获得体魄
+        gd_fminjie         = 0,                             %% 培养所获得敏捷
+        
+        gd_tliliang        = 0,                             %% 腕力天赋的提升值
+        gd_tyuansheng      = 0,                             %% 元神天赋的提升值
+        gd_ttipo           = 0,                             %% 体魄天赋的提升值
+        gd_tminjie         = 0,                             %% 敏捷天赋的提升值
+        
+        gd_careerID        = 1,                             %% 职业类型编号 % TODO: 会影响战斗～要设置？
+        gd_roleSex         = 0,                             %% 性别，0：男，1：女
+        %% 4个基础属性
+        gd_liliang         = 0,                             %% 腕力
+        gd_yuansheng       = 0,                             %% 元神
+        gd_tipo            = 0,                             %% 体魄
+        gd_minjie          = 0,                             %% 敏捷	
+        
+        gd_liliangTalent   = 0,                             %% 腕力的天赋
+        gd_yuanshengTalent = 0,                             %% 元神的天赋
+        gd_tipoTalent      = 0,                             %% 体魄的天赋
+        gd_minjieTalent    = 0,                             %% 敏捷的天赋
+        
+        gd_speed           = string_to_term(SuDu),          %% 攻击速度
+        gd_baoji           = string_to_term(BaoJi),         %% 暴击
+        gd_shanbi          = string_to_term(ShanBi),        %% 闪避
+        gd_gedang          = string_to_term(GeDang),        %% 格挡
+        gd_mingzhong       = string_to_term(MingZhong),     %% 命中率
+        gd_zhiming         = string_to_term(ZhiMing),       %% 致命
+        gd_xingyun         = string_to_term(XingYun),       %% 幸运
+        gd_fanji           = string_to_term(FanJi),         %% 反击
+        gd_pojia           = string_to_term(PoJia),         %% 破甲
+
+        gd_currentHp       = string_to_term(Xue),           %% 当前血量
+        gd_maxHp           = string_to_term(Xue),           %% 最大血量
+        p_def              = string_to_term(FangYu),        %% 物理防御
+        m_def              = string_to_term(FangYu),        %% 魔法防御
+        p_att              = string_to_term(GongJi),        %% 攻击力
+        m_att              = string_to_term(GongJi),        %% 魔攻
+        star_lv            = 0,                             %% 武将星级     %% TODO: 要设置？
+
+        gd_name            = ""                             %% 佣兵名称
+    }, 
+    {
+        {0, string_to_term(ID)},
+        string_to_term(GuaiDaRen),
+        string_to_term(RenDaGuai),
+        string_to_term(NanDu),
+        string_to_term(GuaiWuLeiXing)
+    }}.
+
 

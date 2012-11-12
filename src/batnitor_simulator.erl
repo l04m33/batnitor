@@ -2,6 +2,7 @@
 -behaviour(gen_server).
 
 -include("batnitor.hrl").
+-include("common.hrl").
 -include_lib("wx/include/wx.hrl").
 
 -export([
@@ -32,8 +33,12 @@ stop() ->
 
 
 init(_) ->
-    ?INFO("~s up and running.", [?MODULE]),
+    ?I("~s up and running.", [?MODULE]),
     erlang:process_flag(trap_exit, true),
+
+    ets:new(ets_role_rec, [named_table, public, {keypos, #role.key}, set]),
+    ets:new(ets_role_misc_rec, [named_table, public, {keypos, 1}, set]),
+
     {wx_ref, _, _, GPID} = batnitor_gui:start_link(),
     State = #state{gui_ref = GPID},
     {ok, State}.
@@ -42,6 +47,14 @@ init(_) ->
 handle_call(_Msg, _From, State) ->
     {reply, ok, State}.
 
+
+handle_cast({set_role_list, RoleMiscList}, State) ->
+    ets:delete_all_objects(ets_role_rec),
+    ets:delete_all_objects(ets_role_misc_rec),
+    {RoleList, MiscList} = lists:unzip(RoleMiscList),
+    ets:insert(ets_role_rec, RoleList),
+    ets:insert(ets_role_misc_rec, MiscList),
+    {noreply, State};
 
 handle_cast(stop, State) ->
     {stop, normal, State};
@@ -55,12 +68,12 @@ handle_info({'EXIT', GPID, normal}, #state{gui_ref = GPID} = State) ->
     {noreply, State};
 
 handle_info(_Msg, State) ->
-    ?INFO("_Msg = ~w", [_Msg]),
+    ?I("_Msg = ~w", [_Msg]),
     {noreply, State}.
 
 
 terminate(_Reason, _State) ->
-    ?INFO("~s shutting down.", [?MODULE]),
+    ?I("~s shutting down.", [?MODULE]),
     ok.
 
 
