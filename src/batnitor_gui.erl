@@ -51,18 +51,28 @@ init(Config) ->
 
 handle_event(#wx{id = ?ID_OPEN_PLAYER_PROP_FILE, 
                  event = #wxCommand{type = command_menu_selected}}, State) ->
-    case choose_file_by_dialog(State#state.main_frame) of
-        {ok, FPath} ->
-            case file:open(FPath, [read]) of
-                {ok, FHandle} ->
-                    % TODO: 发给batnitor_simulator
-                    {_, PlayerPropList} = ecsv:process_csv_file_with(FHandle, fun parse_player_prop_csv/2, []),
-                    gen_server:cast(batnitor_simulator, {set_role_list, lists:map(fun row_to_role/1, PlayerPropList)});
-                _ ->
-                    show_message(State#state.main_frame, "Cannot open this file: " ++ FPath)
+    case read_csv_rows_from_file(State#state.main_frame) of
+        {ok, RowList} ->
+            try
+                gen_server:cast(batnitor_simulator, {set_role_list, lists:map(fun row_to_role/1, RowList)})
+            catch _:_ ->
+                show_message(State#state.main_frame, "Illegal file format!")
             end;
+        _ ->
+            void
+    end,
+    {noreply, State};
 
-        cancel ->
+handle_event(#wx{id = ?ID_OPEN_MONSTER_PROP_FILE, 
+                 event = #wxCommand{type = command_menu_selected}}, State) ->
+    case read_csv_rows_from_file(State#state.main_frame) of
+        {ok, RowList} ->
+            try
+                gen_server:cast(batnitor_simulator, {set_monster_attr_list, lists:map(fun row_to_mon_attr/1, RowList)})
+            catch _:_ ->
+                show_message(State#state.main_frame, "Illegal file format!")
+            end;
+        _ ->
             void
     end,
     {noreply, State};
@@ -117,6 +127,8 @@ create_menu_bar(Frame) ->
 
     FileMenu = wxMenu:new([]),
     wxMenu:append(FileMenu, ?ID_OPEN_PLAYER_PROP_FILE, "&Open Player Config"),
+    wxMenu:append(FileMenu, ?ID_OPEN_MONSTER_PROP_FILE, "&Open Monster Config"),
+    wxMenu:append(FileMenu, ?ID_OPEN_MONSTER_GROUP_FILE, "&Open Monster Group Config"),
     wxMenu:appendSeparator(FileMenu),
     wxMenu:append(FileMenu, ?wxID_EXIT, "&Quit"),
     wxMenuBar:append(MainMenuBar, FileMenu, "&File"),
@@ -224,4 +236,49 @@ row_to_role([ID, DengJi, GongJi, FangYu, Xue, SuDu, MingZhong, ShanBi, BaoJi,
         string_to_term(GuaiWuLeiXing)
     }}.
 
+row_to_mon_attr([ID, MingZhong, ShanBi, BaoJi, XingYun, GeDang, FanJi, PoJia, _ZhiMing, JiNeng]) ->
+    #mon_attr {
+        id          = string_to_term(ID),
+		name        = "",
+		cat         = 0,        % generated on the fly
+		level       = 0,        % generated on the fly
+		hp          = 0,        % generated on the fly
+		mp          = 0,
+		p_att       = 0,        % generated on the fly
+		m_att       = 0,        % generated on the fly
+		p_def       = 0,        % generated on the fly
+		m_def       = 0,        % generated on the fly
+		speed       = 0,        % generated on the fly
+  		hit         = string_to_term(MingZhong),
+ 		dodge       = string_to_term(ShanBi),
+ 		crit        = string_to_term(BaoJi),
+ 		luck        = string_to_term(XingYun),
+		break       = string_to_term(PoJia),
+		agility     = 0,            %% 敏捷: 目前作用不明		% TODO: ???
+      	strength    = 0,            % TODO: ???
+		block       = string_to_term(GeDang),
+		counter     = string_to_term(FanJi),             %% 反击
+      	spirit      = 0,            %% 元神     % TODO: ???
+      	physique    = 0,            %% 体魄     % TODO: ???
+      	godhood     = 0, 
+      	att_count   = 1,            %% TODO: ???
+ 		skills      = string_to_term(JiNeng),
+ 		star        = 0
+	}.
+
+read_csv_rows_from_file(MainFrame) ->
+    case choose_file_by_dialog(MainFrame) of
+        {ok, FPath} ->
+            case file:open(FPath, [read]) of
+                {ok, FHandle} ->
+                    {_, PlayerPropList} = ecsv:process_csv_file_with(FHandle, fun parse_player_prop_csv/2, []),
+                    {ok, PlayerPropList};
+                _ ->
+                    show_message(MainFrame, "Cannot open this file: " ++ FPath),
+                    {error, cannot_open_file}
+            end;
+
+        cancel ->
+            cancel
+    end.
 

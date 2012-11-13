@@ -38,6 +38,8 @@ init(_) ->
 
     ets:new(ets_role_rec, [named_table, public, {keypos, #role.key}, set]),
     ets:new(ets_role_misc_rec, [named_table, public, {keypos, 1}, set]),
+    data_mon_group:init_ets(),
+    data_mon_attr:init_ets(),
 
     {wx_ref, _, _, GPID} = batnitor_gui:start_link(),
     State = #state{gui_ref = GPID},
@@ -54,6 +56,14 @@ handle_cast({set_role_list, RoleMiscList}, State) ->
     {RoleList, MiscList} = lists:unzip(RoleMiscList),
     ets:insert(ets_role_rec, RoleList),
     ets:insert(ets_role_misc_rec, MiscList),
+    {noreply, State};
+
+handle_cast({set_monster_group_list, MonsterGroupList}, State) ->
+    data_mon_group:set(MonsterGroupList),
+    {noreply, State};
+
+handle_cast({set_monster_attr_list, MonsterAttrList}, State) ->
+    data_mon_attr:set(MonsterAttrList),
     {noreply, State};
 
 handle_cast(stop, State) ->
