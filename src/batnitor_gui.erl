@@ -27,9 +27,16 @@
 -define(ID_OPEN_MONSTER_GROUP_FILE, 100003).
 -define(ID_OPEN_VERSUS_FILE,        100004).
 
+-define(ID_TEXT_PLAYER_FILE, 200001).
+-define(ID_TEXT_MONSTER_FILE, 200002).
+-define(ID_TEXT_MONSTER_GROUP_FILE, 200003).
+
 
 -record(state, {
-    main_frame = none}).
+    main_frame = none,
+    player_file_field = none,
+    monster_file_field = none,
+    monster_group_file_field = none}).
 
 
 start_link() ->
@@ -52,11 +59,12 @@ init(Config) ->
 handle_event(#wx{id = ?ID_OPEN_PLAYER_PROP_FILE, 
                  event = #wxCommand{type = command_menu_selected}}, State) ->
     case read_csv_rows_from_file(State#state.main_frame) of
-        {ok, RowList} ->
+        {ok, RowList, FPath} ->
             try
-                gen_server:cast(batnitor_simulator, {set_role_list, lists:map(fun row_to_role/1, RowList)})
+                gen_server:cast(batnitor_simulator, {set_role_list, lists:map(fun row_to_role/1, RowList)}),
+                wxTextCtrl:setValue(State#state.player_file_field, FPath)
             catch _:_ ->
-                show_message(State#state.main_frame, "Illegal file format!")
+                show_message(State#state.main_frame, "Illegal file format: " ++ FPath)
             end;
         _ ->
             void
@@ -66,11 +74,12 @@ handle_event(#wx{id = ?ID_OPEN_PLAYER_PROP_FILE,
 handle_event(#wx{id = ?ID_OPEN_MONSTER_PROP_FILE, 
                  event = #wxCommand{type = command_menu_selected}}, State) ->
     case read_csv_rows_from_file(State#state.main_frame) of
-        {ok, RowList} ->
+        {ok, RowList, FPath} ->
             try
-                gen_server:cast(batnitor_simulator, {set_monster_attr_list, lists:map(fun row_to_mon_attr/1, RowList)})
+                gen_server:cast(batnitor_simulator, {set_monster_attr_list, lists:map(fun row_to_mon_attr/1, RowList)}),
+                wxTextCtrl:setValue(State#state.monster_file_field, FPath)
             catch _:_ ->
-                show_message(State#state.main_frame, "Illegal file format!")
+                show_message(State#state.main_frame, "Illegal file format: " ++ FPath)
             end;
         _ ->
             void
@@ -80,11 +89,12 @@ handle_event(#wx{id = ?ID_OPEN_MONSTER_PROP_FILE,
 handle_event(#wx{id = ?ID_OPEN_MONSTER_GROUP_FILE, 
                  event = #wxCommand{type = command_menu_selected}}, State) ->
     case read_csv_rows_from_file(State#state.main_frame) of
-        {ok, RowList} ->
+        {ok, RowList, FPath} ->
             try
-                gen_server:cast(batnitor_simulator, {set_monster_group_list, lists:map(fun row_to_mon_group/1, RowList)})
+                gen_server:cast(batnitor_simulator, {set_monster_group_list, lists:map(fun row_to_mon_group/1, RowList)}),
+                wxTextCtrl:setValue(State#state.monster_group_file_field, FPath)
             catch _:_ ->
-                show_message(State#state.main_frame, "Illegal file format!")
+                show_message(State#state.main_frame, "Illegal file format: " ++ FPath)
             end;
         _ ->
             void
@@ -132,9 +142,41 @@ create_main_layout(_Config) ->
 
     create_menu_bar(MainFrame),
     create_status_bar(MainFrame),
+    MainPanel = wxPanel:new(MainFrame, []),
+    MainSizer = wxBoxSizer:new(?wxVERTICAL),
+    wxPanel:setSizer(MainPanel, MainSizer),
+    {PlayerPropField, MonAttrField, MonGroupField} = create_file_name_fields(MainPanel, MainSizer),
 
     wxFrame:show(MainFrame),
-    {MainFrame, #state{main_frame = MainFrame}}.
+    {MainFrame, #state{main_frame = MainFrame,
+                       player_file_field = PlayerPropField,
+                       monster_file_field = MonAttrField,
+                       monster_group_file_field = MonGroupField}}.
+
+create_file_name_fields(Panel, Sizer) ->
+    PSizer = wxStaticBoxSizer:new(?wxVERTICAL, Panel, [{label, "Player Config File: "}]),
+    MASizer = wxStaticBoxSizer:new(?wxVERTICAL, Panel, [{label, "Monster Config File: "}]),
+    MGSizer = wxStaticBoxSizer:new(?wxVERTICAL, Panel, [{label, "Monster Group Config File: "}]),
+
+    PText = wxTextCtrl:new(Panel, ?ID_TEXT_PLAYER_FILE, [{value, "none"}, {style, ?wxDEFAULT}]),
+    wxTextCtrl:setEditable(PText, false),
+    MAText = wxTextCtrl:new(Panel, ?ID_TEXT_MONSTER_FILE, [{value, "none"}, {style, ?wxDEFAULT}]),
+    wxTextCtrl:setEditable(MAText, false),
+    MGText = wxTextCtrl:new(Panel, ?ID_TEXT_MONSTER_GROUP_FILE, [{value, "none"}, {style, ?wxDEFAULT}]),
+    wxTextCtrl:setEditable(MGText, false),
+
+    wxSizer:add(PSizer, PText, [{flag, ?wxEXPAND}]),
+    wxSizer:add(MASizer, MAText, [{flag, ?wxEXPAND}]),
+    wxSizer:add(MGSizer, MGText, [{flag, ?wxEXPAND}]),
+
+    wxSizer:add(Sizer, PSizer, [{flag, ?wxEXPAND}]),
+    wxSizer:addSpacer(Sizer, 10),
+    wxSizer:add(Sizer, MASizer, [{flag, ?wxEXPAND}]),
+    wxSizer:addSpacer(Sizer, 10),
+    wxSizer:add(Sizer, MGSizer, [{flag, ?wxEXPAND}]),
+    wxSizer:addSpacer(Sizer, 10),
+
+    {PText, MAText, MGText}.
 
 create_menu_bar(Frame) ->
     MainMenuBar = wxMenuBar:new(),
@@ -306,7 +348,7 @@ read_csv_rows_from_file(MainFrame) ->
             case file:open(FPath, [read]) of
                 {ok, FHandle} ->
                     {_, PlayerPropList} = ecsv:process_csv_file_with(FHandle, fun parse_csv_line/2, []),
-                    {ok, PlayerPropList};
+                    {ok, PlayerPropList, FPath};
                 _ ->
                     show_message(MainFrame, "Cannot open this file: " ++ FPath),
                     {error, cannot_open_file}
