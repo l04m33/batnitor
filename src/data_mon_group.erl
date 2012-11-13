@@ -2,8 +2,10 @@
 
 -compile([export_all]).
 
+-include("common.hrl").
+
 init_ets() ->
-    ets:new(ets_monster_group, [named_table, public, {keypos, 1}, set]).
+    ets:new(ets_monster_group, [named_table, public, {keypos, #mon_group.id}, set]).
 
 set(MonGroupList) ->
     ets:delete_all_objects(ets_monster_group),

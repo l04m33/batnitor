@@ -77,6 +77,20 @@ handle_event(#wx{id = ?ID_OPEN_MONSTER_PROP_FILE,
     end,
     {noreply, State};
 
+handle_event(#wx{id = ?ID_OPEN_MONSTER_GROUP_FILE, 
+                 event = #wxCommand{type = command_menu_selected}}, State) ->
+    case read_csv_rows_from_file(State#state.main_frame) of
+        {ok, RowList} ->
+            try
+                gen_server:cast(batnitor_simulator, {set_monster_group_list, lists:map(fun row_to_mon_group/1, RowList)})
+            catch _:_ ->
+                show_message(State#state.main_frame, "Illegal file format!")
+            end;
+        _ ->
+            void
+    end,
+    {noreply, State};
+
 handle_event(#wx{id = ?wxID_EXIT, 
                  event = #wxCommand{type = command_menu_selected}}, State) ->
     stop(),
@@ -151,8 +165,8 @@ choose_file_by_dialog(MainFrame) ->
     wxFileDialog:destroy(FDialog),
     Ret.
 
-parse_player_prop_csv({eof}, AccList) -> AccList;
-parse_player_prop_csv({newline, Line}, AccList) ->
+parse_csv_line({eof}, AccList) -> AccList;
+parse_csv_line({newline, Line}, AccList) ->
     ?I("Line = ~p", [Line]),
     [Line | AccList].
 
@@ -266,12 +280,32 @@ row_to_mon_attr([ID, MingZhong, ShanBi, BaoJi, XingYun, GeDang, FanJi, PoJia, _Z
  		star        = 0
 	}.
 
+row_to_mon_group([GroupID, Mon1, Mon2, Mon3, Mon4, Mon5, Mon6]) ->
+    L = [{string_to_term(Mon1), 1},
+         {string_to_term(Mon2), 2},
+         {string_to_term(Mon3), 3},
+         {string_to_term(Mon4), 4},
+         {string_to_term(Mon5), 5},
+         {string_to_term(Mon6), 6}],
+    PosList = lists:filter(fun({M, _P}) -> M =/= 0 end, L),
+    #mon_group {
+        id          = string_to_term(GroupID),
+        level       = 0,        % TODO: generated on the fly
+        type        = soldier,  % TODO: generated on the fly
+        pos         = PosList,
+        pts         = 0,
+        items       = [],
+        exp         = 0,
+        silver      = 0,
+        drop_type   = unified
+    }.
+
 read_csv_rows_from_file(MainFrame) ->
     case choose_file_by_dialog(MainFrame) of
         {ok, FPath} ->
             case file:open(FPath, [read]) of
                 {ok, FHandle} ->
-                    {_, PlayerPropList} = ecsv:process_csv_file_with(FHandle, fun parse_player_prop_csv/2, []),
+                    {_, PlayerPropList} = ecsv:process_csv_file_with(FHandle, fun parse_csv_line/2, []),
                     {ok, PlayerPropList};
                 _ ->
                     show_message(MainFrame, "Cannot open this file: " ++ FPath),
