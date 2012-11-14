@@ -26,17 +26,20 @@
 -define(ID_OPEN_MONSTER_PROP_FILE,  100002).
 -define(ID_OPEN_MONSTER_GROUP_FILE, 100003).
 -define(ID_OPEN_VERSUS_FILE,        100004).
+-define(ID_DO_SIMULATION,           100005).
 
 -define(ID_TEXT_PLAYER_FILE, 200001).
 -define(ID_TEXT_MONSTER_FILE, 200002).
 -define(ID_TEXT_MONSTER_GROUP_FILE, 200003).
+-define(ID_GRID_RESULTS, 200004).
 
 
 -record(state, {
     main_frame = none,
     player_file_field = none,
     monster_file_field = none,
-    monster_group_file_field = none}).
+    monster_group_file_field = none,
+    result_grid = none}).
 
 
 start_link() ->
@@ -106,6 +109,21 @@ handle_event(#wx{id = ?wxID_EXIT,
     stop(),
     {noreply, State};
 
+handle_event(#wx{id = ?ID_DO_SIMULATION, 
+                 event = #wxCommand{type = command_menu_selected}}, State) ->
+    case gen_server:call(batnitor_simulator, check_data_all_set) of
+        {false, EmptyType} ->
+            ErrMsg = case EmptyType of
+                role            -> "Player config file not specified.";
+                monster_attr    -> "Monster config file not specified.";
+                monster_group   -> "Monster group config file not specified."
+            end,
+            show_message(State#state.main_frame, ErrMsg);
+        true ->
+            gen_server:cast(batnitor_simulator, do_simulation)
+    end,
+    {noreply, State};
+
 handle_event(WX, State) ->
     ?I("wx event: ~w", [WX]),
     {noreply, State}.
@@ -114,6 +132,24 @@ handle_event(WX, State) ->
 handle_call(_Msg, _From, State) ->
     {reply, ok, State}.
 
+
+handle_cast({append_battle_result, {PlayerRoleID, MonsterGroupID, Winner}}, State) ->
+    wxGrid:appendRows(State#state.result_grid, [{numRows, 1}]),
+    RowID = wxGrid:getNumberRows(State#state.result_grid) - 1,
+    wxGrid:setCellAlignment(State#state.result_grid, RowID, 0, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
+    wxGrid:setCellValue(State#state.result_grid, RowID, 0, integer_to_list(PlayerRoleID)),
+    wxGrid:setCellAlignment(State#state.result_grid, RowID, 1, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
+    wxGrid:setCellValue(State#state.result_grid, RowID, 1, integer_to_list(MonsterGroupID)),
+    wxGrid:setCellAlignment(State#state.result_grid, RowID, 2, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
+    case Winner of
+        att ->
+            wxGrid:setCellValue(State#state.result_grid, RowID, 2, "Win"),
+            wxGrid:setCellBackgroundColour(State#state.result_grid, RowID, 2, ?wxGREEN);
+        def ->
+            wxGrid:setCellValue(State#state.result_grid, RowID, 2, "Lose"),
+            wxGrid:setCellBackgroundColour(State#state.result_grid, RowID, 2, ?wxRED)
+    end,
+    {noreply, State};
 
 handle_cast(stop, State) ->
     {stop, normal, State};
@@ -146,12 +182,28 @@ create_main_layout(_Config) ->
     MainSizer = wxBoxSizer:new(?wxVERTICAL),
     wxPanel:setSizer(MainPanel, MainSizer),
     {PlayerPropField, MonAttrField, MonGroupField} = create_file_name_fields(MainPanel, MainSizer),
+    ResultGrid = create_grid(MainPanel, MainSizer),
 
     wxFrame:show(MainFrame),
     {MainFrame, #state{main_frame = MainFrame,
                        player_file_field = PlayerPropField,
                        monster_file_field = MonAttrField,
-                       monster_group_file_field = MonGroupField}}.
+                       monster_group_file_field = MonGroupField,
+                       result_grid = ResultGrid}}.
+
+create_grid(Panel, Sizer) ->
+    GSizer = wxStaticBoxSizer:new(?wxVERTICAL, Panel, [{label, "Results"}]),
+    Grid = wxGrid:new(Panel, ?ID_GRID_RESULTS, []),
+    wxGrid:createGrid(Grid, 0, 3),
+    wxGrid:setColLabelValue(Grid, 0, "Player Role ID"),
+    wxGrid:setColSize(Grid, 0, 120),
+    wxGrid:setColLabelValue(Grid, 1, "Monster Group ID"),
+    wxGrid:setColSize(Grid, 1, 150),
+    wxGrid:setColLabelValue(Grid, 2, "Result"),
+    wxGrid:setColSize(Grid, 2, 120),
+    wxSizer:add(GSizer, Grid, [{flag, ?wxEXPAND}, {proportion, 1}]),
+    wxSizer:add(Sizer, GSizer, [{flag, ?wxEXPAND}, {proportion, 1}]),
+    Grid.
 
 create_file_name_fields(Panel, Sizer) ->
     PSizer = wxStaticBoxSizer:new(?wxVERTICAL, Panel, [{label, "Player Config File: "}]),
@@ -182,12 +234,16 @@ create_menu_bar(Frame) ->
     MainMenuBar = wxMenuBar:new(),
 
     FileMenu = wxMenu:new([]),
-    wxMenu:append(FileMenu, ?ID_OPEN_PLAYER_PROP_FILE, "&Open Player Config"),
-    wxMenu:append(FileMenu, ?ID_OPEN_MONSTER_PROP_FILE, "&Open Monster Config"),
-    wxMenu:append(FileMenu, ?ID_OPEN_MONSTER_GROUP_FILE, "&Open Monster Group Config"),
+    wxMenu:append(FileMenu, ?ID_OPEN_PLAYER_PROP_FILE, "Open &Player Config"),
+    wxMenu:append(FileMenu, ?ID_OPEN_MONSTER_PROP_FILE, "Open &Monster Config"),
+    wxMenu:append(FileMenu, ?ID_OPEN_MONSTER_GROUP_FILE, "Open Monster &Group Config"),
     wxMenu:appendSeparator(FileMenu),
     wxMenu:append(FileMenu, ?wxID_EXIT, "&Quit"),
     wxMenuBar:append(MainMenuBar, FileMenu, "&File"),
+
+    SimMenu = wxMenu:new([]),
+    wxMenu:append(SimMenu, ?ID_DO_SIMULATION, "&Do Simulation"),
+    wxMenuBar:append(MainMenuBar, SimMenu, "&Simulation"),
 
     wxFrame:setMenuBar(Frame, MainMenuBar),
     wxFrame:connect(Frame, command_menu_selected).
@@ -280,7 +336,7 @@ row_to_role([ID, DengJi, GongJi, FangYu, Xue, SuDu, MingZhong, ShanBi, BaoJi,
         m_def              = string_to_term(FangYu),        %% 魔法防御
         p_att              = string_to_term(GongJi),        %% 攻击力
         m_att              = string_to_term(GongJi),        %% 魔攻
-        star_lv            = 0,                             %% 武将星级     %% TODO: 要设置？
+        star_lv            = 1,                             %% 武将星级     %% TODO: 要设置？
 
         gd_name            = ""                             %% 佣兵名称
     }, 
@@ -310,16 +366,14 @@ row_to_mon_attr([ID, MingZhong, ShanBi, BaoJi, XingYun, GeDang, FanJi, PoJia, _Z
  		crit        = string_to_term(BaoJi),
  		luck        = string_to_term(XingYun),
 		break       = string_to_term(PoJia),
-		agility     = 0,            %% 敏捷: 目前作用不明		% TODO: ???
-      	strength    = 0,            % TODO: ???
+		agility     = 0,
+      	strength    = 0,
 		block       = string_to_term(GeDang),
-		counter     = string_to_term(FanJi),             %% 反击
-      	spirit      = 0,            %% 元神     % TODO: ???
-      	physique    = 0,            %% 体魄     % TODO: ???
-      	godhood     = 0, 
-      	att_count   = 1,            %% TODO: ???
+		counter     = string_to_term(FanJi),
+      	spirit      = 0,
+      	physique    = 0,
  		skills      = string_to_term(JiNeng),
- 		star        = 0
+ 		star        = 1         % TODO
 	}.
 
 row_to_mon_group([GroupID, Mon1, Mon2, Mon3, Mon4, Mon5, Mon6]) ->
