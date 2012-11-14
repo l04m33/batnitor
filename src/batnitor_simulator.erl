@@ -84,13 +84,37 @@ handle_cast({set_monster_attr_list, MonsterAttrList}, State) ->
     data_mon_attr:set(MonsterAttrList),
     {noreply, State};
 
-handle_cast(do_simulation, State) ->
-    start_one_battle(1),        %% TODO
+handle_cast({do_simulation, MinGroupID, MaxGroupID, MinSimTimes, MaxSimTimes}, State) ->
+    case MinGroupID =< MaxGroupID of
+        true ->
+            case MinSimTimes =< MaxSimTimes of
+                true ->
+                    try
+                        start_one_battle(MinGroupID, MaxGroupID, MinSimTimes, MaxSimTimes)
+                    catch _:_ ->
+                        gen_server:cast(self(), {do_simulation, MinGroupID + 1, MaxGroupID, 1, MaxSimTimes})
+                    end;
+                _ ->        % false
+                    gen_server:cast(self(), {do_simulation, MinGroupID + 1, MaxGroupID, 1, MaxSimTimes})
+            end;
+        _ ->        % false
+            void
+    end,
     {noreply, State};
 
-handle_cast({battle_finish, {PlayerRoleID, MonsterGroupID, Winner} = Res}, State) ->
-    ?I("PlayerRoleID = ~w, MonsterGroupID = ~w, Winner = ~w", [PlayerRoleID, MonsterGroupID, Winner]),
-    gen_server:cast(batnitor_gui, {append_battle_result, Res}),
+handle_cast({battle_finish, {PlayerRoleID, MonsterGroupID, MaxGroupID, SimTimes, MaxSimTimes, 
+                             Winner, Rounds, PlayerHPList, MonHPList}}, State) ->
+    ?I("PlayerRoleID = ~w, MonsterGroupID = ~w, Winner = ~w, Rounds = ~w, PlayerHPList = ~w, MonHPList = ~w", 
+       [PlayerRoleID, MonsterGroupID, Winner, Rounds, PlayerHPList, MonHPList]),
+
+    PlayerTotalHP = calc_role_total_hp(PlayerRoleID),
+    MonTotalHP = calc_mon_total_hp(MonsterGroupID),
+    PlayerRemHP = calc_rem_hp(PlayerHPList),
+    MonRemHP = calc_rem_hp(MonHPList),
+
+    gen_server:cast(batnitor_gui, {append_battle_result, {PlayerRoleID, MonsterGroupID, Winner, Rounds, 
+                                                          PlayerRemHP/PlayerTotalHP, MonRemHP/MonTotalHP}}),
+    gen_server:cast(self(), {do_simulation, MonsterGroupID, MaxGroupID, SimTimes + 1, MaxSimTimes}),
     {noreply, State};
 
 handle_cast(stop, State) ->
@@ -120,7 +144,7 @@ code_change(_OldVsn, State, _Extra) ->
 
 
 
-start_one_battle(MonGroupID) ->
+start_one_battle(MonGroupID, MaxGroupID, SimTimes, MaxSimTimes) ->
     MonGroup = data_mon_group:get(MonGroupID),
     PosList = lists:keysort(2, MonGroup#mon_group.pos),
     [{PlayerRoleID, _} | _] = PosList,
@@ -135,13 +159,13 @@ start_one_battle(MonGroupID) ->
 		att_mer = PlayerRoleList,
 	 	monster = MonGroupID,
 		caller = batnitor_simulator,
-		callback = {PlayerRoleID, MonGroupID}
+		callback = {PlayerRoleID, MonGroupID, MaxGroupID, SimTimes, MaxSimTimes}
     },
     {ok, PID} = battle:start(Start),
     ?I("Battle process PID = ~w", [PID]).
 
 prepare_mon_attr(MonGroup, RoleInfo, MiscInfo) ->
-    {_, GuaiDaRen, RenDaGuai, NanDu, LeiXing} = MiscInfo,
+    {_, GuaiDaRen, RenDaGuai, NanDu, LeiXing, _RenShu} = MiscInfo,
     F = fun({MonID, _}) ->
         MonAttr = data_mon_attr:get(MonID),
         NewAttr = MonAttr#mon_attr {
@@ -203,16 +227,26 @@ prepare_mon_attr(MonGroup, RoleInfo, MiscInfo) ->
                     3 -> boss
                 end
     },
-    data_mon_group:set(NewGroup),
+    data_mon_group:set(NewGroup).
 
-    RoleF = fun(Pos) ->
-        RoleInfo#role {
-            gd_isBattle = Pos,
-            gd_roleRank = case Pos of
-                              1 -> 1;
-                              _ -> 0
-                          end
-        }
+calc_mon_total_hp(MonsterGroupID) ->
+    MonGroup = data_mon_group:get(MonsterGroupID),
+    F = fun({MonID, _}, TotalHP) ->
+        MonAttr = data_mon_attr:get(MonID),
+        MonAttr#mon_attr.hp + TotalHP
     end,
-    lists:map(RoleF, lists:seq(1, 3)).
+    lists:foldl(F, 0, MonGroup#mon_group.pos).
+
+calc_role_total_hp(PlayerRoleID) ->
+    MList = mod_role:get_on_battle_list(PlayerRoleID),
+    F = fun(R, TotalHP) ->
+        R#role.gd_maxHp + TotalHP
+    end,
+    lists:foldl(F, 0, MList).
+
+calc_rem_hp(HPList) ->
+    F = fun({_, HP}, TotalHP) ->
+        HP + TotalHP
+    end,
+    lists:foldl(F, 0, HPList).
 

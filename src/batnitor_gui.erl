@@ -32,6 +32,9 @@
 -define(ID_TEXT_MONSTER_FILE, 200002).
 -define(ID_TEXT_MONSTER_GROUP_FILE, 200003).
 -define(ID_GRID_RESULTS, 200004).
+-define(ID_TEXT_MIN_MONSTER_GROUP_ID, 200005).
+-define(ID_TEXT_MAX_MONSTER_GROUP_ID, 200006).
+-define(ID_TEXT_SIMULATION_TIMES, 200007).
 
 
 -record(state, {
@@ -39,7 +42,10 @@
     player_file_field = none,
     monster_file_field = none,
     monster_group_file_field = none,
-    result_grid = none}).
+    result_grid = none,
+    min_mon_group_id_field = none,
+    max_mon_group_id_field = none,
+    sim_times_field = none}).
 
 
 start_link() ->
@@ -120,7 +126,21 @@ handle_event(#wx{id = ?ID_DO_SIMULATION,
             end,
             show_message(State#state.main_frame, ErrMsg);
         true ->
-            gen_server:cast(batnitor_simulator, do_simulation)
+            MinGroupIDStr = wxTextCtrl:getValue(State#state.min_mon_group_id_field),
+            MaxGroupIDStr = wxTextCtrl:getValue(State#state.max_mon_group_id_field),
+            SimTimesStr = wxTextCtrl:getValue(State#state.sim_times_field),
+            try
+                MinGroupID = list_to_integer(MinGroupIDStr),
+                MaxGroupID = list_to_integer(MaxGroupIDStr),
+                SimTimes =  list_to_integer(SimTimesStr),
+                %wxGrid:clearGrid(State#state.result_grid),
+                NumRows = wxGrid:getNumberRows(State#state.result_grid),
+                wxGrid:deleteRows(State#state.result_grid, [{numRows, NumRows}]),
+                gen_server:cast(batnitor_simulator, {do_simulation, MinGroupID, MaxGroupID, 1, SimTimes})
+            catch _:_ ->
+                show_message(State#state.main_frame, "Illegal Monster Group IDs or Bad Simulation Times: " ++ 
+                                                     MinGroupIDStr ++ " - " ++ MaxGroupIDStr ++ " : " ++ SimTimesStr)
+            end
     end,
     {noreply, State};
 
@@ -133,21 +153,36 @@ handle_call(_Msg, _From, State) ->
     {reply, ok, State}.
 
 
-handle_cast({append_battle_result, {PlayerRoleID, MonsterGroupID, Winner}}, State) ->
+handle_cast({append_battle_result, {PlayerRoleID, MonsterGroupID, Winner, Rounds, 
+                                    PlayerHPRate, MonsterHPRate}}, State) ->
     wxGrid:appendRows(State#state.result_grid, [{numRows, 1}]),
     RowID = wxGrid:getNumberRows(State#state.result_grid) - 1,
+
     wxGrid:setCellAlignment(State#state.result_grid, RowID, 0, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
     wxGrid:setCellValue(State#state.result_grid, RowID, 0, integer_to_list(PlayerRoleID)),
+
     wxGrid:setCellAlignment(State#state.result_grid, RowID, 1, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
     wxGrid:setCellValue(State#state.result_grid, RowID, 1, integer_to_list(MonsterGroupID)),
+
     wxGrid:setCellAlignment(State#state.result_grid, RowID, 2, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
+    wxGrid:setCellValue(State#state.result_grid, RowID, 2, integer_to_list(Rounds)),
+
+    wxGrid:setCellAlignment(State#state.result_grid, RowID, 3, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
+    wxGrid:setCellValue(State#state.result_grid, RowID, 3, 
+                        lists:flatten(io_lib:format("~.2f", [PlayerHPRate*100])) ++ "%"),
+
+    wxGrid:setCellAlignment(State#state.result_grid, RowID, 4, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
+    wxGrid:setCellValue(State#state.result_grid, RowID, 4, 
+                        lists:flatten(io_lib:format("~.2f", [MonsterHPRate*100])) ++ "%"),
+
+    wxGrid:setCellAlignment(State#state.result_grid, RowID, 5, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
     case Winner of
         att ->
-            wxGrid:setCellBackgroundColour(State#state.result_grid, RowID, 2, ?wxGREEN),
-            wxGrid:setCellValue(State#state.result_grid, RowID, 2, "Win");
+            wxGrid:setCellBackgroundColour(State#state.result_grid, RowID, 5, ?wxGREEN),
+            wxGrid:setCellValue(State#state.result_grid, RowID, 5, "Win");
         def ->
-            wxGrid:setCellBackgroundColour(State#state.result_grid, RowID, 2, ?wxRED),
-            wxGrid:setCellValue(State#state.result_grid, RowID, 2, "Lose")
+            wxGrid:setCellBackgroundColour(State#state.result_grid, RowID, 5, ?wxRED),
+            wxGrid:setCellValue(State#state.result_grid, RowID, 5, "Lose")
     end,
     {noreply, State};
 
@@ -174,7 +209,7 @@ code_change(_OldVsn, State, _Extra) ->
 
 
 create_main_layout(_Config) ->
-    MainFrame = wxFrame:new(wx:null(), ?wxID_ANY, "Batnitor", [{size, {800, 600}}]),
+    MainFrame = wxFrame:new(wx:null(), ?wxID_ANY, "Batnitor", [{size, {900, 700}}]),
 
     create_menu_bar(MainFrame),
     create_status_bar(MainFrame),
@@ -182,6 +217,7 @@ create_main_layout(_Config) ->
     MainSizer = wxBoxSizer:new(?wxVERTICAL),
     wxPanel:setSizer(MainPanel, MainSizer),
     {PlayerPropField, MonAttrField, MonGroupField} = create_file_name_fields(MainPanel, MainSizer),
+    {MinGroupIDField, MaxGroupIDField, SimTimesField} = create_monster_group_id_fields(MainPanel, MainSizer),
     ResultGrid = create_grid(MainPanel, MainSizer),
 
     wxFrame:show(MainFrame),
@@ -189,18 +225,48 @@ create_main_layout(_Config) ->
                        player_file_field = PlayerPropField,
                        monster_file_field = MonAttrField,
                        monster_group_file_field = MonGroupField,
-                       result_grid = ResultGrid}}.
+                       result_grid = ResultGrid,
+                       min_mon_group_id_field = MinGroupIDField,
+                       max_mon_group_id_field = MaxGroupIDField,
+                       sim_times_field = SimTimesField}}.
+
+create_monster_group_id_fields(Panel, Sizer) ->
+    ParentSizer = wxStaticBoxSizer:new(?wxHORIZONTAL, Panel, []),
+    GIDSizer = wxStaticBoxSizer:new(?wxHORIZONTAL, Panel, [{label, "Min && Max Monster Group IDs"}]),
+    TimesSizer = wxStaticBoxSizer:new(?wxHORIZONTAL, Panel, [{label, "Simulation Times"}]),
+
+    MinText = wxTextCtrl:new(Panel, ?ID_TEXT_MIN_MONSTER_GROUP_ID, [{value, "1"}, {style, ?wxDEFAULT}, {size, {120, 30}}]),
+    MaxText = wxTextCtrl:new(Panel, ?ID_TEXT_MAX_MONSTER_GROUP_ID, [{value, "1"}, {style, ?wxDEFAULT}, {size, {120, 30}}]),
+    wxSizer:add(GIDSizer, MinText, []),
+    wxSizer:addSpacer(GIDSizer, 10),
+    wxSizer:add(GIDSizer, MaxText, []),
+
+    SimTimesText = wxTextCtrl:new(Panel, ?ID_TEXT_SIMULATION_TIMES, [{value, "1"}, {style, ?wxDEFAULT}, {size, {120, 30}}]),
+    wxSizer:add(TimesSizer, SimTimesText, []),
+
+    wxSizer:add(ParentSizer, GIDSizer, [{flag, ?wxEXPAND}]),
+    wxSizer:addSpacer(ParentSizer, 40),
+    wxSizer:add(ParentSizer, TimesSizer, [{flag, ?wxEXPAND}]),
+    wxSizer:add(Sizer, ParentSizer, [{flag, ?wxEXPAND}]),
+    wxSizer:addSpacer(Sizer, 10),
+    {MinText, MaxText, SimTimesText}.
 
 create_grid(Panel, Sizer) ->
     GSizer = wxStaticBoxSizer:new(?wxVERTICAL, Panel, [{label, "Results"}]),
     Grid = wxGrid:new(Panel, ?ID_GRID_RESULTS, []),
-    wxGrid:createGrid(Grid, 0, 3),
+    wxGrid:createGrid(Grid, 0, 6),
     wxGrid:setColLabelValue(Grid, 0, "Player Role ID"),
     wxGrid:setColSize(Grid, 0, 120),
     wxGrid:setColLabelValue(Grid, 1, "Monster Group ID"),
     wxGrid:setColSize(Grid, 1, 150),
-    wxGrid:setColLabelValue(Grid, 2, "Result"),
+    wxGrid:setColLabelValue(Grid, 2, "Rounds"),
     wxGrid:setColSize(Grid, 2, 120),
+    wxGrid:setColLabelValue(Grid, 3, "Player HP"),
+    wxGrid:setColSize(Grid, 3, 120),
+    wxGrid:setColLabelValue(Grid, 4, "Monster HP"),
+    wxGrid:setColSize(Grid, 4, 120),
+    wxGrid:setColLabelValue(Grid, 5, "Result"),
+    wxGrid:setColSize(Grid, 5, 120),
     wxSizer:add(GSizer, Grid, [{flag, ?wxEXPAND}, {proportion, 1}]),
     wxSizer:add(Sizer, GSizer, [{flag, ?wxEXPAND}, {proportion, 1}]),
     Grid.
@@ -286,7 +352,7 @@ string_to_term(String) ->
 
 row_to_role([ID, DengJi, GongJi, FangYu, Xue, SuDu, MingZhong, ShanBi, BaoJi, 
                   XingYun, GeDang, FanJi, PoJia, ZhiMing, GuaiDaRen, RenDaGuai, NanDu,
-                  GuaiWuLeiXing, JiNeng]) ->
+                  GuaiWuLeiXing, JiNeng, RenShu]) ->
     {#role {
         key                = {0, string_to_term(ID)},       %% 佣兵记录的key为一个记录:{player_id, mer_id}
         gd_roleRank        = 0,                             %% 角色类别，1：为领主佣兵，0：其他佣兵
@@ -345,7 +411,8 @@ row_to_role([ID, DengJi, GongJi, FangYu, Xue, SuDu, MingZhong, ShanBi, BaoJi,
         string_to_term(GuaiDaRen),
         string_to_term(RenDaGuai),
         string_to_term(NanDu),
-        string_to_term(GuaiWuLeiXing)
+        string_to_term(GuaiWuLeiXing),
+        string_to_term(RenShu)
     }}.
 
 row_to_mon_attr([ID, MingZhong, ShanBi, BaoJi, XingYun, GeDang, FanJi, PoJia, _ZhiMing, JiNeng]) ->
