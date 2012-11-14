@@ -22,19 +22,19 @@
         ]).
 
 
--define(ID_OPEN_PLAYER_PROP_FILE,   100001).
--define(ID_OPEN_MONSTER_PROP_FILE,  100002).
--define(ID_OPEN_MONSTER_GROUP_FILE, 100003).
--define(ID_OPEN_VERSUS_FILE,        100004).
--define(ID_DO_SIMULATION,           100005).
+-define(ID_OPEN_PLAYER_PROP_FILE,   10001).
+-define(ID_OPEN_MONSTER_PROP_FILE,  10002).
+-define(ID_OPEN_MONSTER_GROUP_FILE, 10003).
+-define(ID_OPEN_VERSUS_FILE,        10004).
+-define(ID_DO_SIMULATION,           10005).
 
--define(ID_TEXT_PLAYER_FILE, 200001).
--define(ID_TEXT_MONSTER_FILE, 200002).
--define(ID_TEXT_MONSTER_GROUP_FILE, 200003).
--define(ID_GRID_RESULTS, 200004).
--define(ID_TEXT_MIN_MONSTER_GROUP_ID, 200005).
--define(ID_TEXT_MAX_MONSTER_GROUP_ID, 200006).
--define(ID_TEXT_SIMULATION_TIMES, 200007).
+-define(ID_TEXT_PLAYER_FILE,        20001).
+-define(ID_TEXT_MONSTER_FILE,       20002).
+-define(ID_TEXT_MONSTER_GROUP_FILE, 20003).
+-define(ID_GRID_RESULTS,            20004).
+-define(ID_TEXT_MIN_MONSTER_GROUP_ID, 20005).
+-define(ID_TEXT_MAX_MONSTER_GROUP_ID, 20006).
+-define(ID_TEXT_SIMULATION_TIMES,   20007).
 
 
 -record(state, {
@@ -235,8 +235,8 @@ create_monster_group_id_fields(Panel, Sizer) ->
     GIDSizer = wxStaticBoxSizer:new(?wxHORIZONTAL, Panel, [{label, "Min && Max Monster Group IDs"}]),
     TimesSizer = wxStaticBoxSizer:new(?wxHORIZONTAL, Panel, [{label, "Simulation Times"}]),
 
-    MinText = wxTextCtrl:new(Panel, ?ID_TEXT_MIN_MONSTER_GROUP_ID, [{value, "1"}, {style, ?wxDEFAULT}, {size, {120, 30}}]),
-    MaxText = wxTextCtrl:new(Panel, ?ID_TEXT_MAX_MONSTER_GROUP_ID, [{value, "1"}, {style, ?wxDEFAULT}, {size, {120, 30}}]),
+    MinText = wxTextCtrl:new(Panel, ?ID_TEXT_MIN_MONSTER_GROUP_ID, [{value, "1"}, {style, ?wxDEFAULT}, {size, {120, 29}}]),
+    MaxText = wxTextCtrl:new(Panel, ?ID_TEXT_MAX_MONSTER_GROUP_ID, [{value, "1"}, {style, ?wxDEFAULT}, {size, {120, 29}}]),
     wxSizer:add(GIDSizer, MinText, []),
     wxSizer:addSpacer(GIDSizer, 10),
     wxSizer:add(GIDSizer, MaxText, []),
