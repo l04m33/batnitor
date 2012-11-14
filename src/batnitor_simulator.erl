@@ -131,7 +131,7 @@ start_one_battle(MonGroupID) ->
     Start = #battle_start {
         mod = pve,
 	 	type = 0,
-		%att_id = undefined,
+		att_id = PlayerRoleID,
 		att_mer = PlayerRoleList,
 	 	monster = MonGroupID,
 		caller = batnitor_simulator,

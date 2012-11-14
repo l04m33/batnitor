@@ -143,11 +143,11 @@ handle_cast({append_battle_result, {PlayerRoleID, MonsterGroupID, Winner}}, Stat
     wxGrid:setCellAlignment(State#state.result_grid, RowID, 2, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
     case Winner of
         att ->
-            wxGrid:setCellValue(State#state.result_grid, RowID, 2, "Win"),
-            wxGrid:setCellBackgroundColour(State#state.result_grid, RowID, 2, ?wxGREEN);
+            wxGrid:setCellBackgroundColour(State#state.result_grid, RowID, 2, ?wxGREEN),
+            wxGrid:setCellValue(State#state.result_grid, RowID, 2, "Win");
         def ->
-            wxGrid:setCellValue(State#state.result_grid, RowID, 2, "Lose"),
-            wxGrid:setCellBackgroundColour(State#state.result_grid, RowID, 2, ?wxRED)
+            wxGrid:setCellBackgroundColour(State#state.result_grid, RowID, 2, ?wxRED),
+            wxGrid:setCellValue(State#state.result_grid, RowID, 2, "Lose")
     end,
     {noreply, State};
 

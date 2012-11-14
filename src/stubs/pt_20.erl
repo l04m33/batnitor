@@ -42,6 +42,8 @@ read(_Cmd, _Bin) ->
 	Bin :: binary().
 %% pve battle 
 write(20000, BattleData) ->
+    gen_fsm:send_event(self(), {set_cmd, get(id), 0}),
+
 	Type     = BattleData#battle_data.type,
 	MonId    = BattleData#battle_data.monster,
 	MakeTeam = if (BattleData#battle_data.maketeam == true) -> 1; true -> 0 end,
@@ -80,6 +82,9 @@ write(20002, BattleData) ->
 write(20001, BattleData) ->
 	%% Type = BattleData#battle_data.type,
 	
+    gen_fsm:send_event(self(), {set_cmd, get(id), 0}),
+    gen_fsm:send_event(self(), {finish_play, get(id)}),
+
 	IsLastAct = 
 		case battle:is_battle_end(BattleData) of
 			false -> 0;
@@ -115,6 +120,8 @@ write(20003, BattleData) ->
 
 	
 write(20005, BattleData) ->
+    gen_fsm:send_event(self(), {quit, get(id)}),
+
 	Type = BattleData#battle_data.type,
 	Winner = BattleData#battle_data.winner,
 
