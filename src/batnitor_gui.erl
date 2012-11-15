@@ -323,8 +323,12 @@ create_menu_bar(Frame) ->
 create_status_bar(Frame) ->
     wxFrame:createStatusBar(Frame, []).
 
-choose_file_by_dialog(MainFrame) ->
-    FDialog = wxFileDialog:new(MainFrame, []),
+choose_file_by_dialog(MainFrame, OpenOrSave) ->
+    Style = case OpenOrSave of
+        open -> ?wxFD_OPEN;
+        save -> ?wxFD_SAVE
+    end,
+    FDialog = wxFileDialog:new(MainFrame, [{style, Style}]),
     Ret = case wxFileDialog:showModal(FDialog) of
         ?wxID_OK ->
             FPath = wxFileDialog:getPath(FDialog),
@@ -475,7 +479,7 @@ row_to_mon_group([GroupID, Mon1, Mon2, Mon3, Mon4, Mon5, Mon6]) ->
     }.
 
 read_csv_rows_from_file(MainFrame) ->
-    case choose_file_by_dialog(MainFrame) of
+    case choose_file_by_dialog(MainFrame, open) of
         {ok, FPath} ->
             case file:open(FPath, [read]) of
                 {ok, FHandle} ->
