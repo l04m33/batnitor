@@ -184,8 +184,11 @@ handle_cast({append_battle_result, {PlayerRoleID, MonsterGroupID, Winner, Rounds
             wxGrid:setCellBackgroundColour(State#state.result_grid, RowID, 5, ?wxGREEN),
             wxGrid:setCellValue(State#state.result_grid, RowID, 5, "Win");
         def ->
+            wxGrid:setCellBackgroundColour(State#state.result_grid, RowID, 5, {255, 200, 0}),
+            wxGrid:setCellValue(State#state.result_grid, RowID, 5, "Lose");
+        _ ->
             wxGrid:setCellBackgroundColour(State#state.result_grid, RowID, 5, ?wxRED),
-            wxGrid:setCellValue(State#state.result_grid, RowID, 5, "Lose")
+            wxGrid:setCellValue(State#state.result_grid, RowID, 5, Winner)
     end,
     {noreply, State};
 
@@ -212,7 +215,7 @@ code_change(_OldVsn, State, _Extra) ->
 
 
 create_main_layout(_Config) ->
-    MainFrame = wxFrame:new(wx:null(), ?wxID_ANY, "Batnitor", [{size, {900, 700}}]),
+    MainFrame = wxFrame:new(wx:null(), ?wxID_ANY, "Batnitor", [{size, {1000, 700}}]),
 
     create_menu_bar(MainFrame),
     create_status_bar(MainFrame),
@@ -269,7 +272,7 @@ create_grid(Panel, Sizer) ->
     wxGrid:setColLabelValue(Grid, 4, "Monster HP"),
     wxGrid:setColSize(Grid, 4, 120),
     wxGrid:setColLabelValue(Grid, 5, "Result"),
-    wxGrid:setColSize(Grid, 5, 120),
+    wxGrid:setColSize(Grid, 5, 220),
     wxSizer:add(GSizer, Grid, [{flag, ?wxEXPAND}, {proportion, 1}]),
     wxSizer:add(Sizer, GSizer, [{flag, ?wxEXPAND}, {proportion, 1}]),
     Grid.
@@ -447,7 +450,7 @@ row_to_mon_attr([ID, MingZhong, ShanBi, BaoJi, XingYun, GeDang, FanJi, PoJia, _Z
 		counter     = string_to_term(FanJi),
       	spirit      = 0,
       	physique    = 0,
- 		skills      = string_to_term(JiNeng),
+        skills      = string_to_term(JiNeng),
  		star        = 1         % TODO
 	}.
 

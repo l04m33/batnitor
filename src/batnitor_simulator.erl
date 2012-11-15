@@ -89,10 +89,12 @@ handle_cast({do_simulation, MinGroupID, MaxGroupID, MinSimTimes, MaxSimTimes}, S
         true ->
             case MinSimTimes =< MaxSimTimes of
                 true ->
-                    try
-                        start_one_battle(MinGroupID, MaxGroupID, MinSimTimes, MaxSimTimes)
-                    catch _:_ ->
-                        gen_server:cast(self(), {do_simulation, MinGroupID + 1, MaxGroupID, 1, MaxSimTimes})
+                    case start_one_battle(MinGroupID, MaxGroupID, MinSimTimes, MaxSimTimes) of
+                        ok -> void;
+                        error ->
+                            gen_server:cast(self(), {do_simulation, MinGroupID + 1, MaxGroupID, 1, MaxSimTimes});
+                        ignore ->
+                            gen_server:cast(self(), {do_simulation, MinGroupID + 1, MaxGroupID, 1, MaxSimTimes})
                     end;
                 _ ->        % false
                     gen_server:cast(self(), {do_simulation, MinGroupID + 1, MaxGroupID, 1, MaxSimTimes})
@@ -102,7 +104,7 @@ handle_cast({do_simulation, MinGroupID, MaxGroupID, MinSimTimes, MaxSimTimes}, S
     end,
     {noreply, State};
 
-handle_cast({battle_finish, {PlayerRoleID, MonsterGroupID, MaxGroupID, SimTimes, MaxSimTimes, 
+handle_cast({battle_finish, {PlayerRoleID, MonsterGroupID, _MaxGroupID, _SimTimes, _MaxSimTimes, 
                              Winner, Rounds, PlayerHPList, MonHPList}}, State) ->
     ?I("PlayerRoleID = ~w, MonsterGroupID = ~w, Winner = ~w, Rounds = ~w, PlayerHPList = ~w, MonHPList = ~w", 
        [PlayerRoleID, MonsterGroupID, Winner, Rounds, PlayerHPList, MonHPList]),
@@ -114,7 +116,6 @@ handle_cast({battle_finish, {PlayerRoleID, MonsterGroupID, MaxGroupID, SimTimes,
 
     gen_server:cast(batnitor_gui, {append_battle_result, {PlayerRoleID, MonsterGroupID, Winner, Rounds, 
                                                           PlayerRemHP/PlayerTotalHP, MonRemHP/MonTotalHP}}),
-    gen_server:cast(self(), {do_simulation, MonsterGroupID, MaxGroupID, SimTimes + 1, MaxSimTimes}),
     {noreply, State};
 
 handle_cast(stop, State) ->
@@ -123,6 +124,25 @@ handle_cast(stop, State) ->
 handle_cast(_Msg, State) ->
     {noreply, State}.
 
+
+handle_info({'DOWN', Ref, process, PID, Reason}, State) ->
+    ?I("Ref = ~w, PID = ~w, Reason = ~p", [Ref, PID, Reason]),
+    case erlang:erase(cur_battle_ref) of
+        {Ref, MonGroupID, MaxGroupID, SimTimes, MaxSimTimes, RoleID} ->
+            case Reason of
+                normal ->
+                    gen_server:cast(self(), {do_simulation, MonGroupID, MaxGroupID, SimTimes + 1, MaxSimTimes});
+                noproc ->
+                    gen_server:cast(self(), {do_simulation, MonGroupID, MaxGroupID, SimTimes + 1, MaxSimTimes});
+                _ ->
+                    gen_server:cast(batnitor_gui, {append_battle_result, 
+                                                   {RoleID, MonGroupID, lists:flatten(io_lib:format("~p", [Reason])), 0, 0.0, 0.0}}),
+                    gen_server:cast(self(), {do_simulation, MonGroupID, MaxGroupID, SimTimes + 1, MaxSimTimes})
+            end;
+        Other ->
+            ?I("cur_battle_ref = ~w", [Other])
+    end,
+    {noreply, State};
 
 handle_info({'EXIT', GPID, normal}, #state{gui_ref = GPID} = State) ->
     init:stop(),
@@ -145,24 +165,73 @@ code_change(_OldVsn, State, _Extra) ->
 
 
 start_one_battle(MonGroupID, MaxGroupID, SimTimes, MaxSimTimes) ->
-    MonGroup = data_mon_group:get(MonGroupID),
-    PosList = lists:keysort(2, MonGroup#mon_group.pos),
-    [{PlayerRoleID, _} | _] = PosList,
-    [RoleInfo] = ets:lookup(ets_role_rec, {0, PlayerRoleID}),
-    [MiscInfo] = ets:lookup(ets_role_misc_rec, {0, PlayerRoleID}),
-    PlayerRoleList = prepare_mon_attr(MonGroup, RoleInfo, MiscInfo),
-    ?I("Starting battle process...."),
-    Start = #battle_start {
-        mod = pve,
-	 	type = 0,
-		att_id = PlayerRoleID,
-		att_mer = PlayerRoleList,
-	 	monster = MonGroupID,
-		caller = batnitor_simulator,
-		callback = {PlayerRoleID, MonGroupID, MaxGroupID, SimTimes, MaxSimTimes}
-    },
-    {ok, PID} = battle:start(Start),
-    ?I("Battle process PID = ~w", [PID]).
+    case data_mon_group:get(MonGroupID) of
+        undefined ->
+            gen_server:cast(batnitor_gui, {append_battle_result, 
+                                           {0, MonGroupID, 
+                                            lists:flatten(io_lib:format("Unknown monster group: ~p", [MonGroupID])), 
+                                            0, 0.0, 0.0}}),
+            error;
+        MonGroup ->
+            PosList = lists:keysort(2, MonGroup#mon_group.pos),
+            case PosList of
+                [{PlayerRoleID, _} | _] ->
+                    case ets:lookup(ets_role_rec, {0, PlayerRoleID}) of
+                        [RoleInfo] ->
+                            [MiscInfo] = ets:lookup(ets_role_misc_rec, {0, PlayerRoleID}),
+                            PlayerRoleList = prepare_mon_attr(MonGroup, RoleInfo, MiscInfo),
+                            ?I("Starting battle process...."),
+                            Start = #battle_start {
+                                mod = pve,
+                                type = 0,
+                                att_id = PlayerRoleID,
+                                att_mer = PlayerRoleList,
+                                monster = MonGroupID,
+                                caller = batnitor_simulator,
+                                callback = {PlayerRoleID, MonGroupID, MaxGroupID, SimTimes, MaxSimTimes}
+                            },
+
+                            case battle:start(Start) of
+                                {ok, PID} ->
+                                    ?I("Battle process PID = ~w", [PID]),
+                                    Ref = erlang:monitor(process, PID),
+                                    erlang:put(cur_battle_ref, {Ref, MonGroupID, MaxGroupID, SimTimes, MaxSimTimes, PlayerRoleID}),
+                                    ok;
+                                {error, Reason} ->
+                                    case Reason of
+                                        {function_clause, [{data_skill, skill_info, [BadSkillID|_], _} | _]} ->
+                                            gen_server:cast(batnitor_gui, {append_battle_result, 
+                                                                           {PlayerRoleID, MonGroupID, 
+                                                                            lists:flatten(io_lib:format("Unknown skill: ~p", [BadSkillID])), 
+                                                                            0, 0.0, 0.0}});
+                                        _ ->
+                                            ?I("Reason = ~p", [Reason])
+                                    end,
+                                    error;
+                                ignore ->
+                                    gen_server:cast(batnitor_gui, {append_battle_result, 
+                                                                   {PlayerRoleID, MonGroupID, 
+                                                                    lists:flatten(io_lib:format("~p", [ignore])), 
+                                                                    0, 0.0, 0.0}}),
+                                    error
+                            end;
+
+                        [] ->
+                            gen_server:cast(batnitor_gui, {append_battle_result, 
+                                                           {PlayerRoleID, MonGroupID, 
+                                                            lists:flatten(io_lib:format("Unknown player config: ~p", [PlayerRoleID])), 
+                                                            0, 0.0, 0.0}}),
+                            error
+                    end;
+
+                [] ->
+                    gen_server:cast(batnitor_gui, {append_battle_result, 
+                                                   {0, MonGroupID, 
+                                                    lists:flatten(io_lib:format("Empty monster group: ~p", [MonGroupID])), 
+                                                    0, 0.0, 0.0}}),
+                    error
+            end
+    end.
 
 prepare_mon_attr(MonGroup, RoleInfo, MiscInfo) ->
     {_, GuaiDaRen, RenDaGuai, NanDu, LeiXing, _Skills} = MiscInfo,
