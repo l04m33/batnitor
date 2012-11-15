@@ -165,7 +165,7 @@ start_one_battle(MonGroupID, MaxGroupID, SimTimes, MaxSimTimes) ->
     ?I("Battle process PID = ~w", [PID]).
 
 prepare_mon_attr(MonGroup, RoleInfo, MiscInfo) ->
-    {_, GuaiDaRen, RenDaGuai, NanDu, LeiXing, _RenShu} = MiscInfo,
+    {_, GuaiDaRen, RenDaGuai, NanDu, LeiXing, _Skills} = MiscInfo,
     F = fun({MonID, _}) ->
         MonAttr = data_mon_attr:get(MonID),
         NewAttr = MonAttr#mon_attr {

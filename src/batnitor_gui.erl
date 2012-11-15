@@ -69,12 +69,13 @@ handle_event(#wx{id = ?ID_OPEN_PLAYER_PROP_FILE,
                  event = #wxCommand{type = command_menu_selected}}, State) ->
     case read_csv_rows_from_file(State#state.main_frame) of
         {ok, RowList, FPath} ->
-            try
+            %try
                 gen_server:cast(batnitor_simulator, {set_role_list, lists:map(fun row_to_role/1, RowList)}),
-                wxTextCtrl:setValue(State#state.player_file_field, FPath)
-            catch _:_ ->
-                show_message(State#state.main_frame, "Illegal file format: " ++ FPath)
-            end;
+                wxTextCtrl:setValue(State#state.player_file_field, FPath);
+            %catch Type:Err ->
+            %    ?E("Type = ~p; Err = ~p", [Type, Err]),
+            %    show_message(State#state.main_frame, "Illegal file format: " ++ FPath)
+            %end;
         _ ->
             void
     end,
@@ -87,7 +88,8 @@ handle_event(#wx{id = ?ID_OPEN_MONSTER_PROP_FILE,
             try
                 gen_server:cast(batnitor_simulator, {set_monster_attr_list, lists:map(fun row_to_mon_attr/1, RowList)}),
                 wxTextCtrl:setValue(State#state.monster_file_field, FPath)
-            catch _:_ ->
+            catch Type:Err ->
+                ?E("Type = ~p; Err = ~p", [Type, Err]),
                 show_message(State#state.main_frame, "Illegal file format: " ++ FPath)
             end;
         _ ->
@@ -102,7 +104,8 @@ handle_event(#wx{id = ?ID_OPEN_MONSTER_GROUP_FILE,
             try
                 gen_server:cast(batnitor_simulator, {set_monster_group_list, lists:map(fun row_to_mon_group/1, RowList)}),
                 wxTextCtrl:setValue(State#state.monster_group_file_field, FPath)
-            catch _:_ ->
+            catch Type:Err ->
+                ?E("Type = ~p; Err = ~p", [Type, Err]),
                 show_message(State#state.main_frame, "Illegal file format: " ++ FPath)
             end;
         _ ->
@@ -352,7 +355,12 @@ string_to_term(String) ->
 
 row_to_role([ID, DengJi, GongJi, FangYu, Xue, SuDu, MingZhong, ShanBi, BaoJi, 
                   XingYun, GeDang, FanJi, PoJia, ZhiMing, GuaiDaRen, RenDaGuai, NanDu,
-                  GuaiWuLeiXing, JiNeng, RenShu]) ->
+                  GuaiWuLeiXing, Skill1, Skill2, Skill3, Skill4, Skill5, Skill6]) ->
+    SkillsList = lists:zip(lists:seq(1, 6), 
+                           lists:map(fun string_to_term/1, 
+                                     [Skill1, Skill2, Skill3, Skill4, Skill5, Skill6])),
+    ?I("SkillsList = ~p", [SkillsList]),
+    ValidSkillsList = lists:filter(fun({_, S}) -> is_list(S) andalso length(S) > 0 end, SkillsList),
     {#role {
         key                = {0, string_to_term(ID)},       %% 佣兵记录的key为一个记录:{player_id, mer_id}
         gd_roleRank        = 0,                             %% 角色类别，1：为领主佣兵，0：其他佣兵
@@ -360,7 +368,7 @@ row_to_role([ID, DengJi, GongJi, FangYu, Xue, SuDu, MingZhong, ShanBi, BaoJi,
         gd_roleLevel       = string_to_term(DengJi),        %% 等级
         gd_isBattle        = 1,                             %% 是否出战，若不出战，则为0，否则为站位的位子（1到6）
         gd_exp             = 0,                             %% 当前经验
-        gd_skill           = string_to_term(JiNeng),        %% 技能列表
+        gd_skill           = [],                            %% 技能列表（运行时生成）
         
         %% 4 foster attribute
         gd_fliliang        = 0,                             %% 培养所获得腕力
@@ -412,7 +420,7 @@ row_to_role([ID, DengJi, GongJi, FangYu, Xue, SuDu, MingZhong, ShanBi, BaoJi,
         string_to_term(RenDaGuai),
         string_to_term(NanDu),
         string_to_term(GuaiWuLeiXing),
-        string_to_term(RenShu)
+        ValidSkillsList
     }}.
 
 row_to_mon_attr([ID, MingZhong, ShanBi, BaoJi, XingYun, GeDang, FanJi, PoJia, _ZhiMing, JiNeng]) ->
