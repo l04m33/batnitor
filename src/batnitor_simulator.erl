@@ -180,10 +180,8 @@ start_one_battle(MonGroupID, MaxGroupID, SimTimes, MaxSimTimes) ->
             PosList = lists:keysort(2, MonGroup#mon_group.pos),
             case PosList of
                 [{PlayerRoleID, _} | _] ->
-                    case ets:lookup(ets_role_rec, {0, PlayerRoleID}) of
-                        [RoleInfo] ->
-                            [MiscInfo] = ets:lookup(ets_role_misc_rec, {0, PlayerRoleID}),
-                            prepare_mon_attr(MonGroup, RoleInfo, MiscInfo),
+                    case prepare_mon_attr(MonGroup) of
+                        {ok, _} ->
                             ?I("Starting battle process...."),
                             Start = #battle_start {
                                 mod = pve,
@@ -219,10 +217,10 @@ start_one_battle(MonGroupID, MaxGroupID, SimTimes, MaxSimTimes) ->
                                     error
                             end;
 
-                        [] ->
+                        {bad_roles, BadRolesList} ->
                             gen_server:cast(batnitor_gui, {append_battle_result, 
                                                            {PlayerRoleID, MonGroupID, 
-                                                            lists:flatten(io_lib:format("Unknown player config: ~p", [PlayerRoleID])), 
+                                                            lists:flatten(io_lib:format("Role ID not found: ~w", [BadRolesList])), 
                                                             0, 0.0, 0.0}}),
                             error
                     end;
@@ -236,72 +234,81 @@ start_one_battle(MonGroupID, MaxGroupID, SimTimes, MaxSimTimes) ->
             end
     end.
 
-prepare_mon_attr(MonGroup, RoleInfo, MiscInfo) ->
-    {_, GuaiDaRen, RenDaGuai, NanDu, LeiXing, _Skills} = MiscInfo,
+prepare_mon_attr(MonGroup) ->
     F = fun({MonID, _}) ->
-        MonAttr = data_mon_attr:get(MonID),
-        NewAttr = MonAttr#mon_attr {
-            cat         = LeiXing, 
-            level       = RoleInfo#role.gd_roleLevel,
+        RoleInfoR = ets:lookup(ets_role_rec, {0, MonID}),
+        MiscInfoR = ets:lookup(ets_role_misc_rec, {0, MonID}),
+        case RoleInfoR of
+            [] -> {no_role, MonID};
+            [RoleInfo] ->
+                [MiscInfo] = MiscInfoR,
+                {_, GuaiDaRen, RenDaGuai, NanDu, LeiXing, _Skills} = MiscInfo,
+                MonAttr = data_mon_attr:get(MonID),
+                NewAttr = MonAttr#mon_attr {
+                    cat         = LeiXing, 
+                    level       = RoleInfo#role.gd_roleLevel,
 
-            hp          = erlang:round(
-                              RenDaGuai * RoleInfo#role.p_att * 
-                              (1 - (RoleInfo#role.p_def / (RoleInfo#role.p_def + RoleInfo#role.gd_roleLevel * 450)))),
+                    hp          = erlang:round(
+                                      RenDaGuai * RoleInfo#role.p_att * 
+                                      (1 - (RoleInfo#role.p_def / (RoleInfo#role.p_def + RoleInfo#role.gd_roleLevel * 450)))),
 
-            p_att       = case LeiXing of
-                              %% physical attacker
-                              1 -> erlang:round(
-                                       RoleInfo#role.gd_maxHp / 
-                                       ((1 - RoleInfo#role.p_def / 
-                                         (RoleInfo#role.p_def + RoleInfo#role.gd_roleLevel * 450)) * GuaiDaRen));
-                              %% magical attacker
-                              3 -> 0
-                          end,
+                    p_att       = case LeiXing of
+                                      %% physical attacker
+                                      1 -> erlang:round(
+                                               RoleInfo#role.gd_maxHp / 
+                                               ((1 - RoleInfo#role.p_def / 
+                                                 (RoleInfo#role.p_def + RoleInfo#role.gd_roleLevel * 450)) * GuaiDaRen));
+                                      %% magical attacker
+                                      3 -> 0
+                                  end,
 
-            m_att       = case LeiXing of
-                              %% physical attacker
-                              3 -> erlang:round(
-                                       RoleInfo#role.gd_maxHp / 
-                                       ((1 - RoleInfo#role.m_def / 
-                                         (RoleInfo#role.m_def + RoleInfo#role.gd_roleLevel * 450)) * GuaiDaRen));
-                              %% magical attacker
-                              1 -> 0
-                          end,
+                    m_att       = case LeiXing of
+                                      %% physical attacker
+                                      3 -> erlang:round(
+                                               RoleInfo#role.gd_maxHp / 
+                                               ((1 - RoleInfo#role.m_def / 
+                                                 (RoleInfo#role.m_def + RoleInfo#role.gd_roleLevel * 450)) * GuaiDaRen));
+                                      %% magical attacker
+                                      1 -> 0
+                                  end,
 
-            p_def       = case LeiXing of
-                              1 -> erlang:round(RoleInfo#role.p_def * 1.2);
-                              3 -> erlang:round(RoleInfo#role.p_def * 0.8)
-                          end,
+                    p_def       = case LeiXing of
+                                      1 -> erlang:round(RoleInfo#role.p_def * 1.2);
+                                      3 -> erlang:round(RoleInfo#role.p_def * 0.8)
+                                  end,
 
-            m_def       = case LeiXing of
-                              3 -> erlang:round(RoleInfo#role.m_def * 1.2);
-                              1 -> erlang:round(RoleInfo#role.m_def * 0.8)
-                          end,
+                    m_def       = case LeiXing of
+                                      3 -> erlang:round(RoleInfo#role.m_def * 1.2);
+                                      1 -> erlang:round(RoleInfo#role.m_def * 0.8)
+                                  end,
 
-            speed       = case NanDu of
-                              %% normal
-                              1 -> erlang:round(0.9 * RoleInfo#role.gd_speed);
-                              %% elite
-                              2 -> erlang:round(1.0 * RoleInfo#role.gd_speed);
-                              %% boss
-                              3 -> erlang:round(1.1 * RoleInfo#role.gd_speed)
-                          end
-        },
-        data_mon_attr:set(NewAttr),
-        NewAttr
+                    speed       = case NanDu of
+                                      %% normal
+                                      1 -> erlang:round(0.9 * RoleInfo#role.gd_speed);
+                                      %% elite
+                                      2 -> erlang:round(1.0 * RoleInfo#role.gd_speed);
+                                      %% boss
+                                      3 -> erlang:round(1.1 * RoleInfo#role.gd_speed)
+                                  end
+                },
+                data_mon_attr:set(NewAttr),
+                NewAttr
+        end
     end,
 
     NewAttrList = lists:map(F, MonGroup#mon_group.pos),
-    NewGroup = MonGroup#mon_group {
-        level = RoleInfo#role.gd_roleLevel,
-        type  = case NanDu of
-                    1 -> soldier;
-                    2 -> soldier;
-                    3 -> boss
-                end
-    },
-    data_mon_group:set(NewGroup),
-    NewAttrList.
+    BadRoleList = lists:filter(fun(E) -> element(1, E) =:= no_role end, NewAttrList),
+    case BadRoleList of
+        [] ->
+            NewGroup = MonGroup#mon_group {
+                level = 1,
+                type  = soldier
+            },
+            data_mon_group:set(NewGroup),
+            {ok, NewAttrList};
+        _ ->
+            {bad_roles, lists:usort([R || {_, R} <- BadRoleList])}
+    end.
 
 calc_mon_total_hp(MonsterGroupID) ->
     MonGroup = data_mon_group:get(MonsterGroupID),
@@ -333,14 +340,12 @@ calc_all_mon_attr(GroupID, MaxGroupID, AccList) ->
         MonGroup ->
             PosList = lists:keysort(2, MonGroup#mon_group.pos),
             case PosList of
-                [{PlayerRoleID, _} | _] ->
-                    case ets:lookup(ets_role_rec, {0, PlayerRoleID}) of
-                        [RoleInfo] ->
-                            [MiscInfo] = ets:lookup(ets_role_misc_rec, {0, PlayerRoleID}),
-                            NewAttrList = prepare_mon_attr(MonGroup, RoleInfo, MiscInfo),
+                [{_PlayerRoleID, _} | _] ->
+                    case prepare_mon_attr(MonGroup) of
+                        {ok, NewAttrList} ->
                             UniqAttrList = lists:ukeysort(#mon_attr.id, NewAttrList),
                             calc_all_mon_attr(GroupID + 1, MaxGroupID, [{GroupID, UniqAttrList} | AccList]);
-                        [] ->
+                        {bad_roles, _} ->
                             calc_all_mon_attr(GroupID + 1, MaxGroupID, AccList)
                     end;
 
