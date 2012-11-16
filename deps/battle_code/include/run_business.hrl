@@ -68,8 +68,8 @@
 %% 0:未接  1：已接 2：被劫镖  3：已刷新过镖车
 -define(SELL_OUT_ONE_MOMENT, 1).%%一抢而空的出售
 
--define(YA_BIAO_BEST_TIME_START,{18,0,0}).		%% 押镖活动开始时间
--define(YA_BIAO_BEST_TIME_OVER,{20,0,0}).		%% 押镖活动结束时间
+-define(YA_BIAO_BEST_TIME_START,{15,0,0}).		%% 押镖活动开始时间
+-define(YA_BIAO_BEST_TIME_OVER,{16,0,0}).		%% 押镖活动结束时间
 -define(ZHUANYUN_AWARD_TIME,{23,59,30}).		%% 转运奖励发放时间
 
 -define(ENABLE_ROB_LEVEL, 30).					%% 允许劫镖等级

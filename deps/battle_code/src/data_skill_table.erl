@@ -163,8 +163,8 @@ get(104, 10) ->
 get(105, 1) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 4,     
+		mp     = 0,
+		cd     = 3,     
 		id     = 105,	
 		level  = 1,
 		target = friend,
@@ -174,8 +174,8 @@ get(105, 1) ->
 get(105, 2) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 4,     
+		mp     = 0,
+		cd     = 3,     
 		id     = 105,	
 		level  = 2,
 		target = friend,
@@ -185,8 +185,8 @@ get(105, 2) ->
 get(105, 3) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 4,     
+		mp     = 0,
+		cd     = 3,     
 		id     = 105,	
 		level  = 3,
 		target = friend,
@@ -196,8 +196,8 @@ get(105, 3) ->
 get(105, 4) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 4,     
+		mp     = 0,
+		cd     = 3,     
 		id     = 105,	
 		level  = 4,
 		target = friend,
@@ -207,8 +207,8 @@ get(105, 4) ->
 get(105, 5) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 4,     
+		mp     = 0,
+		cd     = 3,     
 		id     = 105,	
 		level  = 5,
 		target = friend,
@@ -218,8 +218,8 @@ get(105, 5) ->
 get(105, 6) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 4,     
+		mp     = 0,
+		cd     = 3,     
 		id     = 105,	
 		level  = 6,
 		target = friend,
@@ -229,8 +229,8 @@ get(105, 6) ->
 get(105, 7) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 4,     
+		mp     = 0,
+		cd     = 3,     
 		id     = 105,	
 		level  = 7,
 		target = friend,
@@ -240,8 +240,8 @@ get(105, 7) ->
 get(105, 8) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 4,     
+		mp     = 0,
+		cd     = 3,     
 		id     = 105,	
 		level  = 8,
 		target = friend,
@@ -251,8 +251,8 @@ get(105, 8) ->
 get(105, 9) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 4,     
+		mp     = 0,
+		cd     = 3,     
 		id     = 105,	
 		level  = 9,
 		target = friend,
@@ -262,8 +262,8 @@ get(105, 9) ->
 get(105, 10) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 4,     
+		mp     = 0,
+		cd     = 3,     
 		id     = 105,	
 		level  = 10,
 		target = friend,
@@ -274,7 +274,7 @@ get(106, 1) ->
 	#battle_skill {
 		hp     = 0.1,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 106,	
 		level  = 1,
 		target = enemy,
@@ -283,9 +283,9 @@ get(106, 1) ->
 
 get(106, 2) -> 
 	#battle_skill {
-		hp     = 0.09,       
+		hp     = 0.1,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 106,	
 		level  = 2,
 		target = enemy,
@@ -294,9 +294,9 @@ get(106, 2) ->
 
 get(106, 3) -> 
 	#battle_skill {
-		hp     = 0.08,       
+		hp     = 0.1,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 106,	
 		level  = 3,
 		target = enemy,
@@ -305,9 +305,9 @@ get(106, 3) ->
 
 get(106, 4) -> 
 	#battle_skill {
-		hp     = 0.07,       
+		hp     = 0.1,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 106,	
 		level  = 4,
 		target = enemy,
@@ -316,9 +316,9 @@ get(106, 4) ->
 
 get(106, 5) -> 
 	#battle_skill {
-		hp     = 0.06,       
+		hp     = 0.1,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 106,	
 		level  = 5,
 		target = enemy,
@@ -327,9 +327,9 @@ get(106, 5) ->
 
 get(106, 6) -> 
 	#battle_skill {
-		hp     = 0.05,       
+		hp     = 0.1,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 106,	
 		level  = 6,
 		target = enemy,
@@ -338,9 +338,9 @@ get(106, 6) ->
 
 get(106, 7) -> 
 	#battle_skill {
-		hp     = 0.04,       
+		hp     = 0.1,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 106,	
 		level  = 7,
 		target = enemy,
@@ -349,9 +349,9 @@ get(106, 7) ->
 
 get(106, 8) -> 
 	#battle_skill {
-		hp     = 0.03,       
+		hp     = 0.1,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 106,	
 		level  = 8,
 		target = enemy,
@@ -360,9 +360,9 @@ get(106, 8) ->
 
 get(106, 9) -> 
 	#battle_skill {
-		hp     = 0.02,       
+		hp     = 0.1,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 106,	
 		level  = 9,
 		target = enemy,
@@ -371,9 +371,9 @@ get(106, 9) ->
 
 get(106, 10) -> 
 	#battle_skill {
-		hp     = 0.01,       
+		hp     = 0.1,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 106,	
 		level  = 10,
 		target = enemy,
@@ -383,8 +383,8 @@ get(106, 10) ->
 get(107, 1) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 0,
-		cd     = 3,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 107,	
 		level  = 1,
 		target = enemy,
@@ -394,8 +394,8 @@ get(107, 1) ->
 get(107, 2) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 0,
-		cd     = 3,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 107,	
 		level  = 2,
 		target = enemy,
@@ -405,8 +405,8 @@ get(107, 2) ->
 get(107, 3) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 0,
-		cd     = 3,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 107,	
 		level  = 3,
 		target = enemy,
@@ -416,8 +416,8 @@ get(107, 3) ->
 get(107, 4) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 0,
-		cd     = 3,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 107,	
 		level  = 4,
 		target = enemy,
@@ -427,8 +427,8 @@ get(107, 4) ->
 get(107, 5) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 0,
-		cd     = 3,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 107,	
 		level  = 5,
 		target = enemy,
@@ -438,8 +438,8 @@ get(107, 5) ->
 get(107, 6) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 0,
-		cd     = 3,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 107,	
 		level  = 6,
 		target = enemy,
@@ -449,8 +449,8 @@ get(107, 6) ->
 get(107, 7) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 0,
-		cd     = 3,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 107,	
 		level  = 7,
 		target = enemy,
@@ -460,8 +460,8 @@ get(107, 7) ->
 get(107, 8) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 0,
-		cd     = 3,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 107,	
 		level  = 8,
 		target = enemy,
@@ -471,8 +471,8 @@ get(107, 8) ->
 get(107, 9) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 0,
-		cd     = 3,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 107,	
 		level  = 9,
 		target = enemy,
@@ -482,8 +482,8 @@ get(107, 9) ->
 get(107, 10) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 0,
-		cd     = 3,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 107,	
 		level  = 10,
 		target = enemy,
@@ -494,7 +494,7 @@ get(108, 1) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 2,     
 		id     = 108,	
 		level  = 1,
 		target = self,
@@ -505,7 +505,7 @@ get(108, 2) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 2,     
 		id     = 108,	
 		level  = 2,
 		target = self,
@@ -516,7 +516,7 @@ get(108, 3) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 2,     
 		id     = 108,	
 		level  = 3,
 		target = self,
@@ -527,7 +527,7 @@ get(108, 4) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 2,     
 		id     = 108,	
 		level  = 4,
 		target = self,
@@ -538,7 +538,7 @@ get(108, 5) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 2,     
 		id     = 108,	
 		level  = 5,
 		target = self,
@@ -549,7 +549,7 @@ get(108, 6) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 2,     
 		id     = 108,	
 		level  = 6,
 		target = self,
@@ -560,7 +560,7 @@ get(108, 7) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 2,     
 		id     = 108,	
 		level  = 7,
 		target = self,
@@ -571,7 +571,7 @@ get(108, 8) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 2,     
 		id     = 108,	
 		level  = 8,
 		target = self,
@@ -582,7 +582,7 @@ get(108, 9) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 2,     
 		id     = 108,	
 		level  = 9,
 		target = self,
@@ -593,7 +593,7 @@ get(108, 10) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 2,     
 		id     = 108,	
 		level  = 10,
 		target = self,
@@ -713,8 +713,8 @@ get(109, 10) ->
 get(110, 1) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 110,	
 		level  = 1,
 		target = enemy,
@@ -724,8 +724,8 @@ get(110, 1) ->
 get(110, 2) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 110,	
 		level  = 2,
 		target = enemy,
@@ -735,8 +735,8 @@ get(110, 2) ->
 get(110, 3) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 110,	
 		level  = 3,
 		target = enemy,
@@ -746,8 +746,8 @@ get(110, 3) ->
 get(110, 4) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 110,	
 		level  = 4,
 		target = enemy,
@@ -757,8 +757,8 @@ get(110, 4) ->
 get(110, 5) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 110,	
 		level  = 5,
 		target = enemy,
@@ -768,8 +768,8 @@ get(110, 5) ->
 get(110, 6) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 110,	
 		level  = 6,
 		target = enemy,
@@ -779,8 +779,8 @@ get(110, 6) ->
 get(110, 7) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 110,	
 		level  = 7,
 		target = enemy,
@@ -790,8 +790,8 @@ get(110, 7) ->
 get(110, 8) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 110,	
 		level  = 8,
 		target = enemy,
@@ -801,8 +801,8 @@ get(110, 8) ->
 get(110, 9) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 110,	
 		level  = 9,
 		target = enemy,
@@ -812,8 +812,8 @@ get(110, 9) ->
 get(110, 10) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 110,	
 		level  = 10,
 		target = enemy,
@@ -824,7 +824,7 @@ get(111, 1) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 111,	
 		level  = 1,
 		target = enemy,
@@ -835,7 +835,7 @@ get(111, 2) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 111,	
 		level  = 2,
 		target = enemy,
@@ -846,7 +846,7 @@ get(111, 3) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 111,	
 		level  = 3,
 		target = enemy,
@@ -857,7 +857,7 @@ get(111, 4) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 111,	
 		level  = 4,
 		target = enemy,
@@ -868,7 +868,7 @@ get(111, 5) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 111,	
 		level  = 5,
 		target = enemy,
@@ -879,7 +879,7 @@ get(111, 6) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 111,	
 		level  = 6,
 		target = enemy,
@@ -890,7 +890,7 @@ get(111, 7) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 111,	
 		level  = 7,
 		target = enemy,
@@ -901,7 +901,7 @@ get(111, 8) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 111,	
 		level  = 8,
 		target = enemy,
@@ -912,7 +912,7 @@ get(111, 9) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 111,	
 		level  = 9,
 		target = enemy,
@@ -923,7 +923,7 @@ get(111, 10) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 111,	
 		level  = 10,
 		target = enemy,
@@ -934,7 +934,7 @@ get(112, 1) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 112,	
 		level  = 1,
 		target = enemy,
@@ -945,7 +945,7 @@ get(112, 2) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 112,	
 		level  = 2,
 		target = enemy,
@@ -956,7 +956,7 @@ get(112, 3) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 112,	
 		level  = 3,
 		target = enemy,
@@ -967,7 +967,7 @@ get(112, 4) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 112,	
 		level  = 4,
 		target = enemy,
@@ -978,7 +978,7 @@ get(112, 5) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 112,	
 		level  = 5,
 		target = enemy,
@@ -989,7 +989,7 @@ get(112, 6) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 112,	
 		level  = 6,
 		target = enemy,
@@ -1000,7 +1000,7 @@ get(112, 7) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 112,	
 		level  = 7,
 		target = enemy,
@@ -1011,7 +1011,7 @@ get(112, 8) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 112,	
 		level  = 8,
 		target = enemy,
@@ -1022,7 +1022,7 @@ get(112, 9) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 112,	
 		level  = 9,
 		target = enemy,
@@ -1033,7 +1033,7 @@ get(112, 10) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 112,	
 		level  = 10,
 		target = enemy,
@@ -1044,110 +1044,110 @@ get(113, 1) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 113,	
 		level  = 1,
 		target = enemy,
-		param  = {1.00,0}    
+		param  = {1.00,1}    
 	};
 
 get(113, 2) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 113,	
 		level  = 2,
 		target = enemy,
-		param  = {1.05,0}    
+		param  = {1.05,1}    
 	};
 
 get(113, 3) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 113,	
 		level  = 3,
 		target = enemy,
-		param  = {1.1,0}    
+		param  = {1.1,1}    
 	};
 
 get(113, 4) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 113,	
 		level  = 4,
 		target = enemy,
-		param  = {1.15,0}    
+		param  = {1.15,1}    
 	};
 
 get(113, 5) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 113,	
 		level  = 5,
 		target = enemy,
-		param  = {1.2,0}    
+		param  = {1.2,1}    
 	};
 
 get(113, 6) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 113,	
 		level  = 6,
 		target = enemy,
-		param  = {1.25,0}    
+		param  = {1.25,1}    
 	};
 
 get(113, 7) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 113,	
 		level  = 7,
 		target = enemy,
-		param  = {1.3,0}    
+		param  = {1.3,1}    
 	};
 
 get(113, 8) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 113,	
 		level  = 8,
 		target = enemy,
-		param  = {1.35,0}    
+		param  = {1.35,1}    
 	};
 
 get(113, 9) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 113,	
 		level  = 9,
 		target = enemy,
-		param  = {1.42,0}    
+		param  = {1.42,1}    
 	};
 
 get(113, 10) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 113,	
 		level  = 10,
 		target = enemy,
-		param  = {1.5,0}    
+		param  = {1.5,1}    
 	};
 
 get(114, 1) -> 
@@ -1263,8 +1263,8 @@ get(114, 10) ->
 get(115, 1) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 115,	
 		level  = 1,
 		target = enemy,
@@ -1274,8 +1274,8 @@ get(115, 1) ->
 get(115, 2) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 115,	
 		level  = 2,
 		target = enemy,
@@ -1285,8 +1285,8 @@ get(115, 2) ->
 get(115, 3) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 115,	
 		level  = 3,
 		target = enemy,
@@ -1296,8 +1296,8 @@ get(115, 3) ->
 get(115, 4) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 115,	
 		level  = 4,
 		target = enemy,
@@ -1307,8 +1307,8 @@ get(115, 4) ->
 get(115, 5) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 115,	
 		level  = 5,
 		target = enemy,
@@ -1318,8 +1318,8 @@ get(115, 5) ->
 get(115, 6) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 115,	
 		level  = 6,
 		target = enemy,
@@ -1329,8 +1329,8 @@ get(115, 6) ->
 get(115, 7) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 115,	
 		level  = 7,
 		target = enemy,
@@ -1340,8 +1340,8 @@ get(115, 7) ->
 get(115, 8) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 115,	
 		level  = 8,
 		target = enemy,
@@ -1351,8 +1351,8 @@ get(115, 8) ->
 get(115, 9) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 115,	
 		level  = 9,
 		target = enemy,
@@ -1362,8 +1362,8 @@ get(115, 9) ->
 get(115, 10) -> 
 	#battle_skill {
 		hp     = 0,       
-		mp     = 80,
-		cd     = 1,     
+		mp     = 60,
+		cd     = 0,     
 		id     = 115,	
 		level  = 10,
 		target = enemy,
@@ -1374,7 +1374,7 @@ get(116, 1) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 116,	
 		level  = 1,
 		target = enemy,
@@ -1385,7 +1385,7 @@ get(116, 2) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 116,	
 		level  = 2,
 		target = enemy,
@@ -1396,7 +1396,7 @@ get(116, 3) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 116,	
 		level  = 3,
 		target = enemy,
@@ -1407,7 +1407,7 @@ get(116, 4) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 116,	
 		level  = 4,
 		target = enemy,
@@ -1418,7 +1418,7 @@ get(116, 5) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 2,     
+		cd     = 1,     
 		id     = 116,	
 		level  = 5,
 		target = enemy,
@@ -1429,62 +1429,62 @@ get(116, 6) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 1,     
 		id     = 116,	
 		level  = 6,
 		target = enemy,
-		param  = {1,0.2,3}    
+		param  = {1,0.2,2}    
 	};
 
 get(116, 7) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 1,     
 		id     = 116,	
 		level  = 7,
 		target = enemy,
-		param  = {1,0.22,3}    
+		param  = {1,0.22,2}    
 	};
 
 get(116, 8) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 1,     
 		id     = 116,	
 		level  = 8,
 		target = enemy,
-		param  = {1,0.24,3}    
+		param  = {1,0.24,2}    
 	};
 
 get(116, 9) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 1,     
 		id     = 116,	
 		level  = 9,
 		target = enemy,
-		param  = {1,0.27,3}    
+		param  = {1,0.27,2}    
 	};
 
 get(116, 10) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 1,     
 		id     = 116,	
 		level  = 10,
 		target = enemy,
-		param  = {1,0.3,3}    
+		param  = {1,0.3,2}    
 	};
 
 get(117, 1) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 117,	
 		level  = 1,
 		target = enemy,
@@ -1495,7 +1495,7 @@ get(117, 2) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 117,	
 		level  = 2,
 		target = enemy,
@@ -1506,7 +1506,7 @@ get(117, 3) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 117,	
 		level  = 3,
 		target = enemy,
@@ -1517,7 +1517,7 @@ get(117, 4) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 117,	
 		level  = 4,
 		target = enemy,
@@ -1528,7 +1528,7 @@ get(117, 5) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 117,	
 		level  = 5,
 		target = enemy,
@@ -1539,7 +1539,7 @@ get(117, 6) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 117,	
 		level  = 6,
 		target = enemy,
@@ -1550,7 +1550,7 @@ get(117, 7) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 117,	
 		level  = 7,
 		target = enemy,
@@ -1561,7 +1561,7 @@ get(117, 8) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 117,	
 		level  = 8,
 		target = enemy,
@@ -1572,7 +1572,7 @@ get(117, 9) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 117,	
 		level  = 9,
 		target = enemy,
@@ -1583,7 +1583,7 @@ get(117, 10) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 3,     
+		cd     = 2,     
 		id     = 117,	
 		level  = 10,
 		target = enemy,
@@ -1594,7 +1594,7 @@ get(118, 1) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 118,	
 		level  = 1,
 		target = enemy,
@@ -1605,7 +1605,7 @@ get(118, 2) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 118,	
 		level  = 2,
 		target = enemy,
@@ -1616,7 +1616,7 @@ get(118, 3) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 118,	
 		level  = 3,
 		target = enemy,
@@ -1627,7 +1627,7 @@ get(118, 4) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 118,	
 		level  = 4,
 		target = enemy,
@@ -1638,7 +1638,7 @@ get(118, 5) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 118,	
 		level  = 5,
 		target = enemy,
@@ -1649,7 +1649,7 @@ get(118, 6) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 118,	
 		level  = 6,
 		target = enemy,
@@ -1660,7 +1660,7 @@ get(118, 7) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 118,	
 		level  = 7,
 		target = enemy,
@@ -1671,7 +1671,7 @@ get(118, 8) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 118,	
 		level  = 8,
 		target = enemy,
@@ -1682,7 +1682,7 @@ get(118, 9) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 118,	
 		level  = 9,
 		target = enemy,
@@ -1693,7 +1693,7 @@ get(118, 10) ->
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
-		cd     = 4,     
+		cd     = 3,     
 		id     = 118,	
 		level  = 10,
 		target = enemy,
@@ -4502,7 +4502,7 @@ get(257, 1) ->
 		id     = 257,	
 		level  = 1,
 		target = enemy,
-		param  = {0.17}    
+		param  = {1,0.17}    
 	};
 
 get(258, 1) -> 

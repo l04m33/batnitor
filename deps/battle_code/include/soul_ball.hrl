@@ -7,6 +7,8 @@
 -define(MINHUN, 4).
 -define(ETS_SOUL_BALL, cache_util:get_register_name(soul_ball)).
 -define(HUNSHI, 293).
+
+-define(HUNSHI_GOLD, 12).
 %% 魂珠数据结构
 -record(
     soul_ball,

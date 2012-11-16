@@ -1,7 +1,18 @@
--define(INIT_KING_MONSTER_ID, 1).		%% 定义第一个国王的怪物ID
--define(INIT_KING_MONSTER_NAME, 1).		%% 定义第一个国王的怪物名字
+-define(INIT_KING_MONSTER_ID, 221).		%% 定义第一个国王的怪物ID
+-define(INIT_KING_MONSTER_NAME, "国王").		%% 定义第一个国王的怪物名字
 -define(CHALLENGE_KING_CACHE_REF, cache_util:get_register_name(challenge_king)).
 -define(FIRST_CHALLENGE_KING_ASK_COMBAT, 10000).		%% 定义第一次挑战国王所需战斗力
+
+-define(NOTICE_BY_COMBAT,	0).		%% 战斗力超过1w时通知
+-define(NOTICE_BY_ARENA,	1).		%% 竞技场第一名时通知
+
+-define(KING_TYPE_MONSTER,	0).		%% 国王类型为怪物
+-define(KING_TYPE_PLAYER,	1).		%% 国王类型为玩家
+
+-define(SEND_KING_AWAWRD,	{20, 0, 0}).	%% 发放挑战国王奖励时间
+
+-define(HAVE_NOT_NOTICE,	0).		%% 未通知获得挑战国王资格
+-define(HAVE_NOTICE,		1).		%% 通知过获得挑战国王资格
 
 -record(challenge_king,
 	{
@@ -21,12 +32,23 @@
 
 -record(challenge_king_state,
 	{
-		id = 0				%% 玩家id
+		id = 0,				%% 玩家id
+		is_noticed = 0		%% 是否已经通知过获得挑战国王资格了 HAVE_NOT_NOTICE 否 HAVE_NOTICE 是
 	}
 ).
 
 -record(g_challenge_king_state,
 	{
 		who_challenging = 0		%% 正在挑战国王的玩家id
+	}
+).
+
+%% 定义国王奖励数据结构
+-record(king_award,
+	{
+		level = 0,				%% 国王等级
+		silver = 0,				%% 银币
+		jungong = 0,			%% 军功
+		exp = 0					%% 经验
 	}
 ).

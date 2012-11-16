@@ -56,7 +56,9 @@
 			announcement_pid  = none,        %% 公告和系统广播进程
 			achieve_pid       = none,		%% 成就模块
 			target_pid		  = none,		%% 目标模块
+			consume_pid		  = none,		%% 回馈模块
 			dazuo_pid		  = none,		%% 打坐模块
+			guide_pid		  = none,		%% 每日指引模块
 			arena_pid         = none,
 			guaji_pid		  = none,		%% 挂机模块
 			yunbiao_pid       = none,        %% 运镖模块

@@ -22,7 +22,9 @@
 -define(GOLD_FROM_TRADE_CANCEL, 18).	%% 18;		// 取消交易获得
 -define(GOLD_FROM_CONSUME_BONUS, 19).	%% 19;		// 消耗活动奖励
 -define(GOLD_FROM_GUILD_COMP, 20).		%% 20;		// 公会竞赛奖励
--define(GOLD_TARGET, 21).			%% 21;		// 目标系统获得
+-define(GOLD_TARGET, 21).				%% 21;		// 目标系统获得
+-define(GOLD_FROM_CONSUME,22).			%% 22;		// 回馈系统获得
+-define(GOLD_FROM_GUIDE,23).			%% 23;		//	每日指引获得
 
 -define(GOLD_FORCE_TAX, 21). 			%% = 21;	// 强征花销
 -define(GOLD_TRAIN_TIME, 22). 			%% ;		// 训练时间
@@ -165,6 +167,8 @@
 -define(SILVER_FROM_GUILD_SKILL,            45).    %%工会技能升级失败退回钱;
 -define(SILVER_FROM_TARGET,					46).    %%目标系统获得
 -define(SILVER_FROM_JUNGONGTASK,			47).	%%军功任务中获得
+-define(SILVER_FROM_CONSUME,				48).	%%回馈活动获得
+-define(SILVER_FROM_GUIDE,					49).	%%每日指引获得
 
 -define(SILVER_BUY_TIME, 1000). 			%% 1000    买道具消耗
 -define(SILVER_INTENSIFY_COST, 1001). 		%% 1001    强化消耗
@@ -202,6 +206,7 @@
 -define(SILVER_UPGRATE_SKILL,1041).			%% 1041   用于升级技能
 -define(SILVER_LEARN_GUILD_SKILL, 1042).     %%        用于升级工会技能
 -define(SILVER_BUY_MYSTICAL_SHOP_ITEM, 1043).		%% 用于购买神秘商店物品
+
 
 
 %% ========================= 物品来源去向 ==========================
@@ -246,6 +251,8 @@
 -define(ITEM_FROM_GM,				199).		%% GM获得
 -define(ITEM_FROM_EMPLOY,			200).		%% 招募时获得
 -define(ITEM_FROM_TARGET,			201).  		%% 目标系统获得
+-define(ITEM_FROM_CONSUME,			202).		%% 回馈活动获得
+-define(ITEM_FROM_GUIDE,			203).		%% 每日指引获得
 
 -define(ITEM_ADD_STACK,				200).		%% 堆叠后增加（包括物品移动，物品生成，宝石拆卸、交易获得等情况）
 -define(ITEM_DEC_STACK,				201).		%% 堆叠后减少
@@ -292,6 +299,7 @@
 -define(EXP_FROM_PLANTING,			8).		%% 种植经验种子所得
 -define(EXP_FROM_SLAVE_WORK,		9).		%% 奴隶劳作所得
 -define(EXP_FROM_DAZUO,				10).	%% 打坐所得
+-define(EXP_DROM_GUIDE,				11).	%% 每日指引获得
 
 %% ========================= 精力改变 ==========================
 -define(ENERGY_RECOVERY,			1).		%% 精力回复
@@ -363,6 +371,8 @@
 -define(POPULARITY_FROM_BOSS_BATTLE,        	18).	%% boss战斗获得
 -define(POPULARITY_FROM_TARGET,					19).	%% 目标系统获得
 -define(POPULARITY_FROM_JUNGONGTASK,			20).    %% 军功任务中获得
+-define(POPULARITY_FROM_CONSUME,				21).	%% 回馈活动中获得
+-define(POPULARITY_FROM_GUIDE,					22).	%% 每日指引获得
 
 -define(POPULARITY_FROM_GM,						99).	%%gm获取
 

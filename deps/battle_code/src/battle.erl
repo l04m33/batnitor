@@ -607,7 +607,14 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array) ->
 			
 		?INFO(battle, "On Battle List = ~w", [List]),
 		
-		Leader  = get_mer_leader(att, List),
+		%% �޸ġ��������Ҳ������ʱ����ʹ�ý�ɫ�б��е�һ����Ϊ���
+		Leader  = 
+		case get_mer_leader(att, List) of
+		data_not_exist ->
+			hd(MerList);
+		L ->
+			L
+		end,
 		List1 = lists:foldl(RoleFun, [], List),
 		PInfo   = 
 			#player_info {
@@ -620,6 +627,9 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array) ->
 		{[PInfo], NArray}
 	end.
 
+get_mer_leader(_, []) ->
+	data_not_exist;
+	
 get_mer_leader(Camp, [Role | Rest]) ->
 	if (Role#role.gd_roleRank == 1) ->
 		if (Camp == att) ->
@@ -1224,7 +1234,7 @@ get_counter(_Src, Tar, SkillId, _AttSpec, Dm, BattleData) ->
 			false ->
 				case lists:keysearch(?BUFF_COUNTER, #buff.name, Buffs) of
 					{value, #buff{value = Counter}} ->
-						?CHAT(battle, "*** counter ***"),
+						?CHAT(battle, "skill counter"),
 						Counter;
 					false ->
 						CounterRate = TarStat#battle_status.counter / 1666,
@@ -1232,7 +1242,7 @@ get_counter(_Src, Tar, SkillId, _AttSpec, Dm, BattleData) ->
 					
 						case random:uniform() =< CounterRate of
 							true -> 
-								?CHAT(battle, "**8 counter ***"),
+								?CHAT(battle, "trigger counter"),
 								100;
 							false -> 0
 						end
@@ -1457,6 +1467,7 @@ pre_attack(Src, Tar, _AttSpec, BattleData) ->
 	
 	?CHAT(battle, "Hit = ~w, Dodge = ~w, HitRate = ~w", [Hit, Dodge, NHitRate]),
 	random:uniform() =< NHitRate.
+
 		
 -spec do_attack(Src, Tar, AttSpec, BattleData) -> {CritcalHit, Damage, NTar, IsAssist} when
 	Src        :: integer(),
@@ -1476,7 +1487,8 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 	
 	{IsAssist, NTar} = 
 		case lists:keysearch(?BUFF_SCORNED, #buff.name, Buff) of
-			{value, #buff {value = T}} -> {false, T};
+			{value, #buff {value = T}} -> 
+				{false, T};
 			false -> 
 				{false, Tar}
 		end,
@@ -1486,35 +1498,39 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 	Job = SrcStat#battle_status.job,
 	?INFO(battle, "Job = ~w", [Job]),
 	
-	{Att0, Def0} =
-		case (Job == ?CAREER_HUWEI) orelse (Job == ?CAREER_MENGJIANG) of
-			true -> 
-				{SrcStat#battle_status.p_att, NTarStat#battle_status.p_def};
-			false ->
-				{SrcStat#battle_status.m_att, NTarStat#battle_status.m_def}
-		end,
-	
-	{Att, Def} = 
-		case (Job == ?CAREER_HUWEI) orelse (Job == ?CAREER_MENGJIANG) of
-			true -> 
-				{get_adjust_value(att,  SrcStat#battle_status.p_att,  Src,  BattleData),
-				 get_adjust_value(pdef, NTarStat#battle_status.p_def, NTar, BattleData)};
-			false ->
-				{get_adjust_value(att,  SrcStat#battle_status.m_att,  Src,  BattleData),
-				 get_adjust_value(mdef, NTarStat#battle_status.m_def, NTar, BattleData)}
-		end,
-	
-	?CHAT(value, "{Att0, Def0} = {~w, ~w}, {Att, Def} = {~w, ~w}", [Att0, Def0, Att, Def]),
-		
-	{AStar, DStar} = {SrcStat#battle_status.star, NTarStat#battle_status.star},
-	{ALevel, _DLevel} = {SrcStat#battle_status.level, NTarStat#battle_status.level},
-	
 	ParamX = 
 		case SrcStat#battle_status.is_lead == true orelse 
 			NTarStat#battle_status.is_lead == true of
 			true  -> 0;
 			false -> 1
 		end,
+	
+	{AStar, DStar}    = {SrcStat#battle_status.star, NTarStat#battle_status.star},
+	{ALevel, _DLevel} = {SrcStat#battle_status.level, NTarStat#battle_status.level},
+
+	{Att0, Def0, DefTag} =
+		case (Job == ?CAREER_HUWEI) orelse (Job == ?CAREER_MENGJIANG) of
+			true -> 
+				{SrcStat#battle_status.p_att, NTarStat#battle_status.p_def, pdef};
+			false ->
+				{SrcStat#battle_status.m_att, NTarStat#battle_status.m_def, mdef}
+		end,
+	
+	{Att, Def} =
+		begin	
+			%% DefNoBreak  = get_adjust_value(DefTag, Def0, NTar, BattleData),
+			BreakRate   = SrcStat#battle_status.break / 1000 + ParamX * 0.04 * (AStar - DStar),
+			BreakAdjust = 
+				case random:uniform() =< BreakRate of
+					true  -> 0.7; %% break the defense
+					false -> 1
+				end,
+			
+			{get_adjust_value(att,  Att0,  Src,  BattleData),
+			 get_adjust_value(DefTag, Def0, NTar,  BattleData) * BreakAdjust}
+		end,
+	
+	?CHAT(value, "{Att0, Def0} = {~w, ~w}, {Att, Def} = {~w, ~w}", [Att0, Def0, Att, Def]),
 	
 	{Crit, Luck} = {
 		get_adjust_value(crit, SrcStat#battle_status.crit, Src, BattleData),
@@ -1570,8 +1586,10 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 		end,
 	
 	BlockRate = 
-		NTarStat#battle_status.block / 2000 + Param2 / 4 * (AStar - DStar),
+		NTarStat#battle_status.block / 2000 + ParamX * 0.05 * (AStar - DStar),
 	
+	?CHAT(battle, "BlockRate = ~w", [BlockRate]),
+
 	IsBlock = 
 		random:uniform() =< BlockRate, 
 		
@@ -1663,8 +1681,8 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
 				Counter  = get_counter(Src, Tar, SkillId, AttSpec, Dm, BattleData),
 				
 				?INFO(battle, "****************battle attack: ***************************************"),
-				?CHAT(battle, "Src ~w use ~w ---> Tar ~w, deals ~w hitpoint(s), crit = ~w, hp+ = ~w, mp+ = ~w", 
-					  [Src, SkillId, Tar, Dm, Cr, HpDrain, Ma]),
+				?CHAT(battle, "Src ~w use ~w ---> Tar ~w, deals ~w hitpoint(s), crit = ~w, hp+ = ~w, mp+ = ~w, counter = ~w", 
+					  [Src, SkillId, Tar, Dm, Cr, HpDrain, Ma, Counter]),
 				
 				?INFO(battle, "Skillid = ~w, Src = ~w, Tar = ~w, Crit = ~w, Damage = ~w, HpDrain = ~w, MpDrain = ~w", 
 					  [SkillId, Src, NTar, Cr, Dm, HpDrain, Ma]),
@@ -1870,6 +1888,8 @@ handle_attack_info(SkillId, Src, AttInfoList, [AttInfo | Rest], BattleData) ->
 %% assist skill
 assist(SkillId, Src, AssSpecList, BattleData) ->
 	AttInfoList = assist(SkillId, Src, AssSpecList, [], BattleData),
+	?INFO(battle, "SKillID = ~w, AttInfoList = ~w", [SkillId, AttInfoList]),
+	
 	BattleData1 = handle_attack_info(SkillId, Src, AttInfoList, BattleData),
 
 	case is_battle_end(BattleData1) of
@@ -2170,14 +2190,20 @@ update_buffs(_Pos, [], BuffInfoList, BattleData) ->
 	{BuffInfoList, BattleData};
 
 update_buffs(Pos, [{Buff, Rate, Op} | Rest], BuffInfoList, BattleData) ->
-	%% ?INFO(battle, "Calling update_buffs/4"),
+    ?INFO(battle, "Calling update_buffs/4"),
 	case random:uniform() > Rate of
 		true ->
+			?INFO(battle, "miss??, Buff = ~w, Rate = ~w, Op = ~w", [Buff, Rate, Op]),
 			update_buffs(Pos, Rest, BuffInfoList, BattleData);
 		false ->
 			State  = get_battle_status(Pos, BattleData),
 			ByRate = Buff#buff.by_rate,
-			Value  = if (ByRate == false) -> round(Buff#buff.value); true -> round(Buff#buff.value * 100) end,
+			Value  = if (ByRate == false) -> 
+						round(Buff#buff.value); 
+					 true -> 
+						round(Buff#buff.value * 100) 
+					 end,
+			
 			case Op of
 				add ->
 					BuffInfo = 
@@ -2199,6 +2225,7 @@ update_buffs(Pos, [{Buff, Rate, Op} | Rest], BuffInfoList, BattleData) ->
 						},
 					NBattleData = add_buff(Buff, Pos, BattleData),
 					update_buffs(Pos, Rest, [BuffInfo | BuffInfoList], NBattleData);
+				
 				remove ->
 					case is_buff_exist(Buff, Pos, BattleData) of
 						false ->

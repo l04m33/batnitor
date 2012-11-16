@@ -50,6 +50,8 @@
 -include("fcm.hrl").
 -include("system_enable.hrl").
 -include("target.hrl").
+-include("guide.hrl").
+-include("consume.hrl").
 
 -include("challenge_king.hrl").
 

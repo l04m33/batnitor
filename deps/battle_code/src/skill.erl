@@ -259,23 +259,24 @@ handle_skill(SkillId = 106, Src, Tar, _Level, Param, BattleData) ->
 
 %% 浴血狂击, 对敌人进行一次物理攻击, 如果命中则吸取伤害(吸血)
 handle_skill(SkillId = 107, Src, Tar, _Level, Param, BattleData) ->
-	AttSpec = #attack_spec {
-		addition = ?p1,
-		buff_add = [#buff{name = ?BUFF_LIFE_DRAIN, value = ?p2, by_rate = true}],
-		targets  = [Tar]						
-	},
+	AttSpec = 
+		#attack_spec {
+			addition = ?p1,
+			buff_add = [#buff{name = ?BUFF_LIFE_DRAIN, value = ?p2, by_rate = true}],
+			targets  = [Tar]						
+		},
 	battle:attack(SkillId, Src, AttSpec, BattleData);
 
 
 %% 战意激荡: 将自己的防御转化为攻击
 handle_skill(SkillId = 108, Src, _Tar, _Level, Param, BattleData) ->
-	Buff = #buff {name = ?BUFF_FRENZY, duration = 2, settle = pre},
+	Buff = #buff {name = ?BUFF_FRENZY, duration = 2, settle = pre, value = ?p1, by_rate = true},
 	AssSpec = 
 		[
 			#assist_spec {
 				pos  = Src, 
 				eff  = [], 
-				buff = [{Buff, ?p1, add}]
+				buff = [{Buff, 1.0, add}]
 			}      
 		],
 	battle:assist(SkillId, Src, AssSpec, BattleData);
@@ -465,7 +466,7 @@ handle_skill(SkillId = 115, Src, Tar, _Level, Param, BattleData) ->
 	
 	battle:attack(SkillId, Src, AttSpec, BattleData);
 
-%% 雷光咒: 对敌人进行一次法术攻击，如果命中，则提高自己一定百分比的致命，持续一定回合。
+%% 龙落雷: 对敌人进行一次法术攻击，如果命中，则提高自己一定百分比的致命，持续一定回合。
 handle_skill(SkillId = 116, Src, Tar, _Level, Param, BattleData) ->
 	?INFO(skill, "Param = ~w", [Param]),
 	Buff = 

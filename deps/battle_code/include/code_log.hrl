@@ -2,7 +2,7 @@
 
 -ifdef(debug).
 	-define(CHAT(Tag, Format), mod_chat:sendSelf(Tag, Format, [])).
-	-define(CHAT(Tag, Format), mod_chat:sendSelf(Tag, Format, [])).
+	-define(CHAT(Tag, Format, Args), mod_chat:sendSelf(Tag, Format, Args)).
 -else.
 	-define(CHAT(Tag, Format), ok).
 	-define(CHAT(Tag, Format, Args), ok).

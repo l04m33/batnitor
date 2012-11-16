@@ -36,7 +36,7 @@
 -define(ERR_NOT_GUILD_SKILL,     33).       %% 技能不是公会技能
 -define(ERR_MUST_LEARN_FROM_ONE, 34).       %% 公会技能必须从一级学起
 -define(ERR_NOT_ONE_BY_ONE,		 35).	    %% 公会技能每次只能升一级
-
+-define(ERR_GUIDE_BOX_ERR,		 36).		%% 没有可领取奖励
 
 %% 场景
 %% -define(ERR_SCENE_NOT_COMPLETE,			11001).			%% 场景进度未完成
@@ -51,6 +51,7 @@
 -define(ERR_DUNGEON_NOT_CLEAR,			11205).			%% 副本未完成
 -define(ERR_AWARD_HAVE_CREAT,			11206).			%% 请不要再转转盘
 -define(ERR_MATE_NOT_ENOUGH_LEVEL,		11207).			%% 队友等级不够
+-define(ERR_MATE_NO_TIMES,				11208).			%% 队友副本进入次数已用完
 
 %% 物品系统 add by wangyl 2011-10-21
 -define(ERR_ITEM_NOT_EXIST,				12001).			%% 物品不存在
@@ -191,6 +192,7 @@
 -define(ERR_ON_BATTLE_MAX,				15008).				%% 出战人数已满
 -define(ERR_SKILL_LOCK_ALL,				15009).				%% 请不要锁定所有技能
 -define(ERR_FOSTER_MAX,					15010).				%% 属性已达当前等级的培养上限
+-define(ERR_ROLE_HAS_ONBATTLE,			15011).				%% 请先取消出战状态
 
 %%guild error info										    %% 公会错误代码
  -define(GUILD_ERROR_NAME_EXIST,			19001).			%% 公会名已存在
@@ -250,7 +252,11 @@
  -define(ERR_TEAM_ALREADY_IN_TEAM_SCENE,	30003).			%% 在组队场景中，不能组队
  -define(ERR_TEAM_ALREADY_IN_YUN_BIAO,	30009).			%% 被邀请玩家运镖中，不能组队
  -define(ERR_TEAM_ALREADY_IN_BATTLE,	30010).			%% 被邀请玩家战斗中，不能组队
-%% -define(ERR_TEAM_NOT_TEAM_SCENE,			30004).			%% 不是组队场景，不能组队
+ -define(ERR_TEAM_FULL_SELF,	30011).			%% 你的队伍人数已满，
+ -define(ERR_TEAM_INVITE_SUCCESS,	30012).			%% 组队邀请已发出，请耐心等待，
+ -define(ERR_TEAM_NOT_LEAD,	30013).			%% 您不是队长，不能邀请，
+
+ -define(ERR_TEAM_INVITE_SELF,			30004).			%% 抱歉，不能邀请自己
 -define(ERR_TEAM_NOT_TEAM_SCENE,			30005).			%% 被邀请者等级不足，不能进入此副本
 -define(ERR_TEAM_OFFLINE,			30006).			%% 被邀请者不在线
 -define(ERR_TEAM_FULL,			30007).			%% 队伍已满。不能加入
@@ -271,6 +277,7 @@
 -define(ERR_HAVE_BEEN_KING,				49007).			%% 已经是霸主身份
 -define(ERR_CHALLENGE_TIMEOUT,			49008).			%% 挑战超时
 -define(ERR_IS_THE_REST_LEVEL,			49009).			%% 已重置到最底层
+-define(ERR_CANT_CHANGLE_SELF,			49010).			%% 不能挑战自己
 %% 成就
 -define(ERR_ACHIEVE_AWARD_ERR,			29001).			%% 成就奖励不可领取
 %%
@@ -329,3 +336,9 @@
 -define(ERR_JUNGONG_TASK_HAVE_RECEIVE, 36000).			%% 请先完成当前军功任务
 -define(ERR_JUNGONG_TASK_ALL_DONE,	36001).				%% 今日军功任务已做完
 -define(ERR_JUNGONG_TASK_NOT_FINISH, 36002).			%% 军功任务未完成
+
+-define(ERR_HAVE_CHALLENGER, 63001).					%% 通知客户端国王正在被其他人挑战
+-define(COMBAT_POWER_TOO_LOW, 63002).					%% 出战角色战斗力总和小于1000
+-define(CANNOT_CHALLENGE_SELF, 63003).					%% 不能挑战自己
+-define(NOT_FIRST_IN_ARENA, 63004).						%% 24点结算时不是竞技场第一名
+-define(KING_CHANGE_TODAY, 63005).						%% 今天国王已经易主，明天才能挑战
