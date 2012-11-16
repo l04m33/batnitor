@@ -132,7 +132,8 @@ handle_event(#wx{id = ?ID_SAVE_CALC_MONSTER_PROP,
                         {ok, FHandle} ->
                             MonList = gen_server:call(batnitor_simulator, 
                                                       {get_calculated_monster_attr, MinGroupID, MaxGroupID}),
-                            write_mon_attr(MonList, FHandle);
+                            write_mon_attr(MonList, FHandle),
+                            file:close(FHandle);
                         _ ->
                             show_message(State#state.main_frame, "Cannot open file: " ++ FPath)
                     end;
@@ -140,6 +141,22 @@ handle_event(#wx{id = ?ID_SAVE_CALC_MONSTER_PROP,
                 _ ->        % false
                     show_message(State#state.main_frame, "Illegal Monster Group IDs: " ++ 
                                                          MinGroupIDStr ++ " - " ++ MaxGroupIDStr)
+            end;
+
+        cancel -> void
+    end,
+    {noreply, State};
+
+handle_event(#wx{id = ?ID_SAVE_RESULTS, 
+                 event = #wxCommand{type = command_menu_selected}}, State) ->
+    case choose_file_by_dialog(State#state.main_frame, save) of
+        {ok, FPath} ->
+            case file:open(FPath, write) of
+                {ok, FHandle} ->
+                    write_results(State#state.result_grid, FHandle),
+                    file:close(FHandle);
+                _ ->
+                    show_message(State#state.main_frame, "Cannot open file: " ++ FPath)
             end;
 
         cancel -> void
@@ -552,3 +569,33 @@ write_mon_attr(MonGroupList, FHandle) ->
     end,
     lists:foreach(G, MonGroupList).
 
+write_results(Grid, FHandle) ->
+    io:format(FHandle, "\"Player Role ID\",\"Monster Group ID\",\"Rounds\",\"Player HP\",\"Monster HP\",\"Result\"~n", []),
+    NumRows = wxGrid:getNumberRows(Grid),
+    write_results(Grid, FHandle, 0, NumRows).
+
+write_results(_Grid, _FHandle, Row, MaxRow) when Row >= MaxRow ->
+    ok;
+write_results(Grid, FHandle, Row, MaxRow) ->
+    io:format(FHandle, "~s,~s,~s,\"~s\",\"~s\",\"~s\"~n", 
+              [wxGrid:getCellValue(Grid, Row, 0),
+               wxGrid:getCellValue(Grid, Row, 1),
+               wxGrid:getCellValue(Grid, Row, 2),
+               wxGrid:getCellValue(Grid, Row, 3),
+               wxGrid:getCellValue(Grid, Row, 4),
+               escape_stack_trace(wxGrid:getCellValue(Grid, Row, 5), [])]),
+    write_results(Grid, FHandle, Row + 1, MaxRow).
+
+escape_stack_trace([], Acc) -> 
+    lists:reverse(Acc);
+escape_stack_trace([C | Rest], Acc) ->
+    case C of
+        $\n ->
+            escape_stack_trace(Rest, [$\s | Acc]);
+        $\r ->
+            escape_stack_trace(Rest, Acc);
+        $" ->
+            escape_stack_trace(Rest, [$' | Acc]);
+        _ ->
+            escape_stack_trace(Rest, [C | Acc])
+    end.

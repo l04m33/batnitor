@@ -324,7 +324,7 @@ calc_rem_hp(HPList) ->
     end,
     lists:foldl(F, 0, HPList).
 
-calc_all_mon_attr(GroupID, MaxGroupID, AccList) when GroupID >= MaxGroupID ->
+calc_all_mon_attr(GroupID, MaxGroupID, AccList) when GroupID > MaxGroupID ->
     lists:reverse(AccList);
 calc_all_mon_attr(GroupID, MaxGroupID, AccList) ->
     case data_mon_group:get(GroupID) of
