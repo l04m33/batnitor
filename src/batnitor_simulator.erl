@@ -68,6 +68,29 @@ handle_call({get_calculated_monster_attr, MinGroupID, MaxGroupID}, _From, State)
     Reply = calc_all_mon_attr(MinGroupID, MaxGroupID, []),
     {reply, Reply, State};
 
+handle_call({get_rounds_list_by_mon_group, MonGroupID}, _From, State) ->
+    Reply = case data_mon_group:get(MonGroupID) of
+        undefined -> [];
+        MonGroup ->
+            MonIDList = [M || {M, _P} <- MonGroup#mon_group.pos],
+            F = fun(M) ->
+                case ets:lookup(ets_role_misc_rec, {0, M}) of
+                    [MInfo] ->
+                        {_, GuaiDaRen, RenDaGuai, _, _, _} = MInfo,
+                        {M, GuaiDaRen, RenDaGuai};
+                    [] ->
+                        {no_role, M}
+                end
+            end,
+            RoundsList = lists:map(F, MonIDList),
+            BadRolesList = lists:filter(fun(E) -> element(1, E) =:= no_role end, RoundsList),
+            case BadRolesList of
+                [] -> RoundsList;
+                _ -> []
+            end
+    end,
+    {reply, Reply, State};
+
 handle_call(_Msg, _From, State) ->
     {reply, ok, State}.
 
