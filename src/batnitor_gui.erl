@@ -27,6 +27,8 @@
 -define(ID_OPEN_MONSTER_GROUP_FILE, 10003).
 -define(ID_OPEN_VERSUS_FILE,        10004).
 -define(ID_DO_SIMULATION,           10005).
+-define(ID_SAVE_RESULTS,            10006).
+-define(ID_SAVE_CALC_MONSTER_PROP,  10007).
 
 -define(ID_TEXT_PLAYER_FILE,        20001).
 -define(ID_TEXT_MONSTER_FILE,       20002).
@@ -110,6 +112,37 @@ handle_event(#wx{id = ?ID_OPEN_MONSTER_GROUP_FILE,
             end;
         _ ->
             void
+    end,
+    {noreply, State};
+
+handle_event(#wx{id = ?ID_SAVE_CALC_MONSTER_PROP, 
+                 event = #wxCommand{type = command_menu_selected}}, State) ->
+    case choose_file_by_dialog(State#state.main_frame, save) of
+        {ok, FPath} ->
+            MinGroupIDStr = wxTextCtrl:getValue(State#state.min_mon_group_id_field),
+            MaxGroupIDStr = wxTextCtrl:getValue(State#state.max_mon_group_id_field),
+            {MinGroupID, MaxGroupID} = try
+                {list_to_integer(MinGroupIDStr), list_to_integer(MaxGroupIDStr)}
+            catch _:_ ->
+                {0, 0}
+            end,
+            case MinGroupID > 0 andalso MaxGroupID > 0 of
+                true ->
+                    case file:open(FPath, write) of
+                        {ok, FHandle} ->
+                            MonList = gen_server:call(batnitor_simulator, 
+                                                      {get_calculated_monster_attr, MinGroupID, MaxGroupID}),
+                            write_mon_attr(MonList, FHandle);
+                        _ ->
+                            show_message(State#state.main_frame, "Cannot open file: " ++ FPath)
+                    end;
+
+                _ ->        % false
+                    show_message(State#state.main_frame, "Illegal Monster Group IDs: " ++ 
+                                                         MinGroupIDStr ++ " - " ++ MaxGroupIDStr)
+            end;
+
+        cancel -> void
     end,
     {noreply, State};
 
@@ -310,6 +343,9 @@ create_menu_bar(Frame) ->
     wxMenu:append(FileMenu, ?ID_OPEN_MONSTER_PROP_FILE, "Open &Monster Config"),
     wxMenu:append(FileMenu, ?ID_OPEN_MONSTER_GROUP_FILE, "Open Monster &Group Config"),
     wxMenu:appendSeparator(FileMenu),
+    wxMenu:append(FileMenu, ?ID_SAVE_RESULTS, "Save &Results"),
+    wxMenu:append(FileMenu, ?ID_SAVE_CALC_MONSTER_PROP, "Save &Calculated Monster Attributes"),
+    wxMenu:appendSeparator(FileMenu),
     wxMenu:append(FileMenu, ?wxID_EXIT, "&Quit"),
     wxMenuBar:append(MainMenuBar, FileMenu, "&File"),
 
@@ -493,4 +529,26 @@ read_csv_rows_from_file(MainFrame) ->
         cancel ->
             cancel
     end.
+
+write_mon_attr(MonGroupList, FHandle) ->
+    %io:format(FHandle, "\"怪物堆ID\",\"怪物ID\",\"怪物类型\",\"等级\",\"生命\",\"物攻\",\"魔攻\",\"物防\",\"魔防\",\"速度\"~n"),
+    io:format(FHandle, "\"Monster Group ID\",\"Monster ID\",\"Type\",\"Level\",\"HP\","
+                       "\"Physical Attack\",\"Magical Attack\",\"Physical Defence\",\"Magical Defence\",\"Speed\"~n", []),
+    G = fun({GroupID, MonList}) ->
+        F = fun(Mon) ->
+            io:format(FHandle, "~w,~w,~w,~w,~w,~w,~w,~w,~w,~w~n", 
+                      [GroupID,
+                       Mon#mon_attr.id,
+                       Mon#mon_attr.cat,
+                       Mon#mon_attr.level,
+                       Mon#mon_attr.hp,
+                       Mon#mon_attr.p_att,
+                       Mon#mon_attr.m_att,
+                       Mon#mon_attr.p_def,
+                       Mon#mon_attr.m_def,
+                       Mon#mon_attr.speed])
+        end,
+        lists:foreach(F, MonList)
+    end,
+    lists:foreach(G, MonGroupList).
 

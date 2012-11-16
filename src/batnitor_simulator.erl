@@ -64,6 +64,10 @@ handle_call(check_data_all_set, _From, State) ->
     end,
     {reply, Reply, State};
 
+handle_call({get_calculated_monster_attr, MinGroupID, MaxGroupID}, _From, State) ->
+    Reply = calc_all_mon_attr(MinGroupID, MaxGroupID, []),
+    {reply, Reply, State};
+
 handle_call(_Msg, _From, State) ->
     {reply, ok, State}.
 
@@ -179,13 +183,12 @@ start_one_battle(MonGroupID, MaxGroupID, SimTimes, MaxSimTimes) ->
                     case ets:lookup(ets_role_rec, {0, PlayerRoleID}) of
                         [RoleInfo] ->
                             [MiscInfo] = ets:lookup(ets_role_misc_rec, {0, PlayerRoleID}),
-                            PlayerRoleList = prepare_mon_attr(MonGroup, RoleInfo, MiscInfo),
+                            prepare_mon_attr(MonGroup, RoleInfo, MiscInfo),
                             ?I("Starting battle process...."),
                             Start = #battle_start {
                                 mod = pve,
                                 type = 0,
                                 att_id = PlayerRoleID,
-                                att_mer = PlayerRoleList,
                                 monster = MonGroupID,
                                 caller = batnitor_simulator,
                                 callback = {PlayerRoleID, MonGroupID, MaxGroupID, SimTimes, MaxSimTimes}
@@ -284,10 +287,11 @@ prepare_mon_attr(MonGroup, RoleInfo, MiscInfo) ->
                               3 -> erlang:round(1.1 * RoleInfo#role.gd_speed)
                           end
         },
-        data_mon_attr:set(NewAttr)
+        data_mon_attr:set(NewAttr),
+        NewAttr
     end,
 
-    lists:foreach(F, MonGroup#mon_group.pos),
+    NewAttrList = lists:map(F, MonGroup#mon_group.pos),
     NewGroup = MonGroup#mon_group {
         level = RoleInfo#role.gd_roleLevel,
         type  = case NanDu of
@@ -296,7 +300,8 @@ prepare_mon_attr(MonGroup, RoleInfo, MiscInfo) ->
                     3 -> boss
                 end
     },
-    data_mon_group:set(NewGroup).
+    data_mon_group:set(NewGroup),
+    NewAttrList.
 
 calc_mon_total_hp(MonsterGroupID) ->
     MonGroup = data_mon_group:get(MonsterGroupID),
@@ -318,4 +323,29 @@ calc_rem_hp(HPList) ->
         HP + TotalHP
     end,
     lists:foldl(F, 0, HPList).
+
+calc_all_mon_attr(GroupID, MaxGroupID, AccList) when GroupID >= MaxGroupID ->
+    lists:reverse(AccList);
+calc_all_mon_attr(GroupID, MaxGroupID, AccList) ->
+    case data_mon_group:get(GroupID) of
+        undefined ->
+            calc_all_mon_attr(GroupID + 1, MaxGroupID, AccList);
+        MonGroup ->
+            PosList = lists:keysort(2, MonGroup#mon_group.pos),
+            case PosList of
+                [{PlayerRoleID, _} | _] ->
+                    case ets:lookup(ets_role_rec, {0, PlayerRoleID}) of
+                        [RoleInfo] ->
+                            [MiscInfo] = ets:lookup(ets_role_misc_rec, {0, PlayerRoleID}),
+                            NewAttrList = prepare_mon_attr(MonGroup, RoleInfo, MiscInfo),
+                            UniqAttrList = lists:ukeysort(#mon_attr.id, NewAttrList),
+                            calc_all_mon_attr(GroupID + 1, MaxGroupID, [{GroupID, UniqAttrList} | AccList]);
+                        [] ->
+                            calc_all_mon_attr(GroupID + 1, MaxGroupID, AccList)
+                    end;
+
+                [] ->
+                    calc_all_mon_attr(GroupID + 1, MaxGroupID, AccList)
+            end
+    end.
 
