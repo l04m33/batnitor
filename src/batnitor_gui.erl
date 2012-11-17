@@ -214,7 +214,8 @@ handle_event(#wx{id = ?ID_GRID_RESULTS,
             end,
             case MonGroupID > 0 of
                 true ->
-                    case erlang:erase({grid_expanded, MonGroupID}) of
+                    SimTimes = list_to_integer(wxGrid:getCellValue(State#state.result_grid, Row, 2)),
+                    case erlang:erase({grid_expanded, MonGroupID, SimTimes}) of
                         undefined ->
                             RoundsList = gen_server:call(batnitor_simulator, {get_rounds_list_by_mon_group, MonGroupID}),
                             wxGrid:insertRows(State#state.result_grid, [{pos, Row + 1}, {numRows, length(RoundsList) + 1}]),
@@ -227,7 +228,7 @@ handle_event(#wx{id = ?ID_GRID_RESULTS,
                             set_cell_value(State#state.result_grid, Row + 1, 4, "Ren Da Guai", 
                                            read_only, {150, 150, 150}),
                             fill_expanded_rows(State#state.result_grid, RoundsList, Row + 2),
-                            erlang:put({grid_expanded, MonGroupID}, length(RoundsList) + 1);
+                            erlang:put({grid_expanded, MonGroupID, SimTimes}, length(RoundsList) + 1);
 
                         NumExpandedRows ->
                             wxGrid:deleteRows(State#state.result_grid, [{pos, Row + 1}, {numRows, NumExpandedRows}])
@@ -237,6 +238,18 @@ handle_event(#wx{id = ?ID_GRID_RESULTS,
             end;
 
         false ->
+            void
+    end,
+    {noreply, State};
+
+handle_event(#wx{id = ?ID_GRID_RESULTS,
+                 event = #wxGrid{type = grid_cell_change, row = Row, col = Col}}, State) ->
+    case Col of
+        3 ->        % Guai Da Ren
+            do_update_rounds_value(State#state.result_grid, Row, Col);
+        4 ->        % Ren Da Guai
+            do_update_rounds_value(State#state.result_grid, Row, Col);
+        _ ->
             void
     end,
     {noreply, State};
@@ -265,26 +278,28 @@ handle_cast(read_saved_paths, State) ->
     end,
     {noreply, State};
 
-handle_cast({append_battle_result, {PlayerRoleID, MonsterGroupID, Winner, Rounds, 
+handle_cast({append_battle_result, {PlayerRoleID, MonsterGroupID, SimTimes, Winner, Rounds, 
                                     PlayerHPRate, MonsterHPRate}}, State) ->
-    wxGrid:appendRows(State#state.result_grid, [{numRows, 1}]),
-    RowID = wxGrid:getNumberRows(State#state.result_grid) - 1,
+    %wxGrid:appendRows(State#state.result_grid, [{numRows, 1}]),
+    %RowID = wxGrid:getNumberRows(State#state.result_grid) - 1,
+    RowID = get_row_id_by_mon_group(State#state.result_grid, MonsterGroupID, SimTimes),
 
     set_cell_value(State#state.result_grid, RowID, 0, integer_to_list(MonsterGroupID)),
     set_cell_value(State#state.result_grid, RowID, 1, integer_to_list(PlayerRoleID)),
-    set_cell_value(State#state.result_grid, RowID, 2, integer_to_list(Rounds)),
-    set_cell_value(State#state.result_grid, RowID, 3, 
-                   lists:flatten(io_lib:format("~.2f", [PlayerHPRate*100])) ++ "%"),
+    set_cell_value(State#state.result_grid, RowID, 2, integer_to_list(SimTimes)),
+    set_cell_value(State#state.result_grid, RowID, 3, integer_to_list(Rounds)),
     set_cell_value(State#state.result_grid, RowID, 4, 
+                   lists:flatten(io_lib:format("~.2f", [PlayerHPRate*100])) ++ "%"),
+    set_cell_value(State#state.result_grid, RowID, 5, 
                    lists:flatten(io_lib:format("~.2f", [MonsterHPRate*100])) ++ "%"),
 
     case Winner of
         att ->
-            set_cell_value(State#state.result_grid, RowID, 5, "Win", read_only, ?wxGREEN);
+            set_cell_value(State#state.result_grid, RowID, 6, "Win", read_only, ?wxGREEN);
         def ->
-            set_cell_value(State#state.result_grid, RowID, 5, "Lose", read_only, {255, 200, 0});
+            set_cell_value(State#state.result_grid, RowID, 6, "Lose", read_only, {255, 200, 0});
         _ ->
-            set_cell_value(State#state.result_grid, RowID, 5, Winner, read_only, ?wxRED)
+            set_cell_value(State#state.result_grid, RowID, 6, Winner, read_only, ?wxRED)
     end,
     {noreply, State};
 
@@ -369,7 +384,7 @@ create_monster_group_id_fields(Panel, Sizer) ->
 create_grid(Panel, Sizer) ->
     GSizer = wxStaticBoxSizer:new(?wxVERTICAL, Panel, [{label, "Results"}]),
     Grid = wxGrid:new(Panel, ?ID_GRID_RESULTS, []),
-    wxGrid:createGrid(Grid, 0, 6),
+    wxGrid:createGrid(Grid, 0, 7),
 
     wxGrid:setColLabelValue(Grid, 0, "Monster Group ID"),
     wxGrid:setColSize(Grid, 0, 150),
@@ -377,22 +392,26 @@ create_grid(Panel, Sizer) ->
     wxGrid:setColLabelValue(Grid, 1, "Player Role ID"),
     wxGrid:setColSize(Grid, 1, 120),
 
-    wxGrid:setColLabelValue(Grid, 2, "Rounds"),
+    wxGrid:setColLabelValue(Grid, 2, "Sim. Times"),
     wxGrid:setColSize(Grid, 2, 120),
 
-    wxGrid:setColLabelValue(Grid, 3, "Player HP"),
+    wxGrid:setColLabelValue(Grid, 3, "Rounds"),
     wxGrid:setColSize(Grid, 3, 120),
 
-    wxGrid:setColLabelValue(Grid, 4, "Monster HP"),
+    wxGrid:setColLabelValue(Grid, 4, "Player HP"),
     wxGrid:setColSize(Grid, 4, 120),
 
-    wxGrid:setColLabelValue(Grid, 5, "Result"),
-    wxGrid:setColSize(Grid, 5, 220),
+    wxGrid:setColLabelValue(Grid, 5, "Monster HP"),
+    wxGrid:setColSize(Grid, 5, 120),
+
+    wxGrid:setColLabelValue(Grid, 6, "Result"),
+    wxGrid:setColSize(Grid, 6, 220),
 
     wxSizer:add(GSizer, Grid, [{flag, ?wxEXPAND}, {proportion, 1}]),
     wxSizer:add(Sizer, GSizer, [{flag, ?wxEXPAND}, {proportion, 1}]),
     wxGrid:enableEditing(Grid, true),
     wxGrid:connect(Grid, grid_label_left_click, []), %[{skip, true}]),
+    wxGrid:connect(Grid, grid_cell_change, []),
     Grid.
 
 create_file_name_fields(Panel, Sizer) ->
@@ -603,6 +622,7 @@ read_csv_rows_from_file(FPath) when is_list(FPath) ->
     case file:open(FPath, [read]) of
         {ok, FHandle} ->
             {_, PlayerPropList} = ecsv:process_csv_file_with(FHandle, fun parse_csv_line/2, []),
+            file:close(FPath),
             {ok, PlayerPropList, FPath};
         _ ->
             {error, cannot_open_file}
@@ -738,4 +758,58 @@ set_cell_value(Grid, Row, Col, Value, ReadOnly, BGColor) ->
     end,
     wxGrid:setCellAlignment(Grid, Row, Col, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
     wxGrid:setCellValue(Grid, Row, Col, Value).
+
+get_row_id_by_mon_group(Grid, MonsterGroupID, SimTimes) ->
+    RowsNum = wxGrid:getNumberRows(Grid),
+    get_row_id_by_mon_group(Grid, MonsterGroupID, 1, SimTimes, 0, RowsNum).
+
+get_row_id_by_mon_group(Grid, _MonsterGroupID, _SumSimTimes, _SimTimes, RowID, RowsNum) when RowID >= RowsNum ->
+    wxGrid:appendRows(Grid, [{numRows, 1}]),
+    RowsNum;
+get_row_id_by_mon_group(Grid, MonsterGroupID, SumSimTimes, SimTimes, RowID, RowsNum) ->
+    case list_to_integer(wxGrid:getCellValue(Grid, RowID, 0)) of
+        MonsterGroupID when is_integer(MonsterGroupID) ->
+            case SumSimTimes of
+                SimTimes ->
+                    RowID;
+                _ ->
+                    get_row_id_by_mon_group(Grid, MonsterGroupID, SumSimTimes + 1, SimTimes, RowID + 1, RowsNum)
+            end;
+        _ ->
+            get_row_id_by_mon_group(Grid, MonsterGroupID, 1, SimTimes, RowID + 1, RowsNum)
+    end.
+
+locate_prev_mon_group(Grid, RowID) ->
+    case RowID >= 1 of
+        true ->
+            VStr = wxGrid:getCellValue(Grid, RowID - 1, 0),
+            case length(VStr) of
+                0 -> locate_prev_mon_group(Grid, RowID - 1);
+                _ -> {list_to_integer(VStr), list_to_integer(wxGrid:getCellValue(Grid, RowID - 1, 2))}
+            end;
+        false ->
+            {0, 0}
+    end.
+
+do_update_rounds_value(Grid, Row, Col) ->
+    VStr = wxGrid:getCellValue(Grid, Row, Col),
+    NewValue = try
+        list_to_integer(VStr)
+    catch _:_ -> 
+        try
+            list_to_float(VStr)
+        catch _:_ ->
+            0
+        end
+    end,
+
+    case NewValue of
+        0 -> 
+            show_message(Grid, "Illegal Value: " ++ VStr);
+        _ ->
+            RoleID = list_to_integer(wxGrid:getCellValue(Grid, Row, 1)),
+            ets:update_element(ets_role_misc_rec, {0, RoleID}, {Col - 1, NewValue}),
+            {MonGroupID, SimTimes} = locate_prev_mon_group(Grid, Row),
+            gen_server:cast(batnitor_simulator, {do_simulation, MonGroupID, MonGroupID, SimTimes, SimTimes})
+    end.
 
