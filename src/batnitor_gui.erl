@@ -64,54 +64,58 @@ init(Config) ->
     ?I("~s up and running.", [?MODULE]),
     erlang:process_flag(trap_exit, true),
     wx:new(Config),
+    gen_server:cast(self(), read_saved_paths),
     wx:batch(fun () -> create_main_layout(Config) end).
 
 
 handle_event(#wx{id = ?ID_OPEN_PLAYER_PROP_FILE, 
                  event = #wxCommand{type = command_menu_selected}}, State) ->
-    case read_csv_rows_from_file(State#state.main_frame) of
-        {ok, RowList, FPath} ->
-            %try
-                gen_server:cast(batnitor_simulator, {set_role_list, lists:map(fun row_to_role/1, RowList)}),
-                wxTextCtrl:setValue(State#state.player_file_field, FPath);
-            %catch Type:Err ->
-            %    ?E("Type = ~p; Err = ~p", [Type, Err]),
-            %    show_message(State#state.main_frame, "Illegal file format: " ++ FPath)
-            %end;
-        _ ->
-            void
+    case choose_file_by_dialog(State#state.main_frame, open) of
+        {ok, FPath} ->
+            case read_config_file(player_file, FPath, State) of
+                ok ->
+                    void;
+                {error, illegal_file_format} ->
+                    show_message(State#state.main_frame, "Illegal file format: " ++ FPath);
+                {error, cannot_open_file} ->
+                    show_message(State#state.main_frame, "Cannot open file: " ++ FPath)
+            end;
+
+        cancel -> void
     end,
     {noreply, State};
 
 handle_event(#wx{id = ?ID_OPEN_MONSTER_PROP_FILE, 
                  event = #wxCommand{type = command_menu_selected}}, State) ->
-    case read_csv_rows_from_file(State#state.main_frame) of
-        {ok, RowList, FPath} ->
-            try
-                gen_server:cast(batnitor_simulator, {set_monster_attr_list, lists:map(fun row_to_mon_attr/1, RowList)}),
-                wxTextCtrl:setValue(State#state.monster_file_field, FPath)
-            catch Type:Err ->
-                ?E("Type = ~p; Err = ~p", [Type, Err]),
-                show_message(State#state.main_frame, "Illegal file format: " ++ FPath)
+    case choose_file_by_dialog(State#state.main_frame, open) of
+        {ok, FPath} ->
+            case read_config_file(monster_file, FPath, State) of
+                ok ->
+                    void;
+                {error, illegal_file_format} ->
+                    show_message(State#state.main_frame, "Illegal file format: " ++ FPath);
+                {error, cannot_open_file} ->
+                    show_message(State#state.main_frame, "Cannot open file: " ++ FPath)
             end;
-        _ ->
-            void
+
+        cancel -> void
     end,
     {noreply, State};
 
 handle_event(#wx{id = ?ID_OPEN_MONSTER_GROUP_FILE, 
                  event = #wxCommand{type = command_menu_selected}}, State) ->
-    case read_csv_rows_from_file(State#state.main_frame) of
-        {ok, RowList, FPath} ->
-            try
-                gen_server:cast(batnitor_simulator, {set_monster_group_list, lists:map(fun row_to_mon_group/1, RowList)}),
-                wxTextCtrl:setValue(State#state.monster_group_file_field, FPath)
-            catch Type:Err ->
-                ?E("Type = ~p; Err = ~p", [Type, Err]),
-                show_message(State#state.main_frame, "Illegal file format: " ++ FPath)
+    case choose_file_by_dialog(State#state.main_frame, open) of
+        {ok, FPath} ->
+            case read_config_file(monster_group_file, FPath, State) of
+                ok ->
+                    void;
+                {error, illegal_file_format} ->
+                    show_message(State#state.main_frame, "Illegal file format: " ++ FPath);
+                {error, cannot_open_file} ->
+                    show_message(State#state.main_frame, "Cannot open file: " ++ FPath)
             end;
-        _ ->
-            void
+
+        cancel -> void
     end,
     {noreply, State};
 
@@ -237,6 +241,21 @@ handle_call(_Msg, _From, State) ->
     {reply, ok, State}.
 
 
+handle_cast(read_saved_paths, State) ->
+    case file:consult("file_paths.config") of
+        {ok, FilePathList} ->
+            F = fun({Type, FPath}) ->
+                case FPath of
+                    undefined -> void;
+                    _ -> read_config_file(Type, FPath, State)
+                end
+            end,
+            lists:foreach(F, FilePathList);
+
+        _ -> void
+    end,
+    {noreply, State};
+
 handle_cast({append_battle_result, {PlayerRoleID, MonsterGroupID, Winner, Rounds, 
                                     PlayerHPRate, MonsterHPRate}}, State) ->
     wxGrid:appendRows(State#state.result_grid, [{numRows, 1}]),
@@ -292,6 +311,19 @@ handle_info(_Msg, State) ->
 
 terminate(_Reason, _State) ->
     ?I("~s shutting down.", [?MODULE]),
+    case file:open("file_paths.config", write) of
+        {ok, FHandle} ->
+            PList = [{player_file, erlang:get(player_file)},
+                     {monster_file, erlang:get(monster_file)},
+                     {monster_group_file, erlang:get(monster_group_file)}],
+            F = fun(T) ->
+                io:format(FHandle, "~p.~n", [T])
+            end,
+            lists:foreach(F, PList),
+            file:close(FHandle);
+
+        _ -> void
+    end,
     ok.
 
 
@@ -577,20 +609,13 @@ row_to_mon_group([GroupID, Mon1, Mon2, Mon3, Mon4, Mon5, Mon6]) ->
         drop_type   = unified
     }.
 
-read_csv_rows_from_file(MainFrame) ->
-    case choose_file_by_dialog(MainFrame, open) of
-        {ok, FPath} ->
-            case file:open(FPath, [read]) of
-                {ok, FHandle} ->
-                    {_, PlayerPropList} = ecsv:process_csv_file_with(FHandle, fun parse_csv_line/2, []),
-                    {ok, PlayerPropList, FPath};
-                _ ->
-                    show_message(MainFrame, "Cannot open this file: " ++ FPath),
-                    {error, cannot_open_file}
-            end;
-
-        cancel ->
-            cancel
+read_csv_rows_from_file(FPath) when is_list(FPath) ->
+    case file:open(FPath, [read]) of
+        {ok, FHandle} ->
+            {_, PlayerPropList} = ecsv:process_csv_file_with(FHandle, fun parse_csv_line/2, []),
+            {ok, PlayerPropList, FPath};
+        _ ->
+            {error, cannot_open_file}
     end.
 
 write_mon_attr(MonGroupList, FHandle) ->
@@ -664,4 +689,52 @@ fill_expanded_rows(Grid, [{RoleID, GuaiDaRen, RenDaGuai} | Rest], RowID) ->
     wxGrid:setCellValue(Grid, RowID, 3, lists:flatten(io_lib:format("~w", [RenDaGuai]))),
 
     fill_expanded_rows(Grid, Rest, RowID + 1).
+
+read_config_file(player_file, FPath, State) ->
+    case read_csv_rows_from_file(FPath) of
+        {ok, RowList, FPath} ->
+            try
+                gen_server:cast(batnitor_simulator, {set_role_list, lists:map(fun row_to_role/1, RowList)}),
+                erlang:put(player_file, FPath),
+                wxTextCtrl:setValue(State#state.player_file_field, FPath),
+                ok
+            catch Type:Err ->
+                ?E("Type = ~p; Err = ~p", [Type, Err]),
+                {error, illegal_file_format}
+            end;
+
+        Err -> Err
+    end;
+
+read_config_file(monster_file, FPath, State) ->
+    case read_csv_rows_from_file(FPath) of
+        {ok, RowList, FPath} ->
+            try
+                gen_server:cast(batnitor_simulator, {set_monster_attr_list, lists:map(fun row_to_mon_attr/1, RowList)}),
+                erlang:put(monster_file, FPath),
+                wxTextCtrl:setValue(State#state.monster_file_field, FPath),
+                ok
+            catch Type:Err ->
+                ?E("Type = ~p; Err = ~p", [Type, Err]),
+                {error, illegal_file_format}
+            end;
+
+        Err -> Err
+    end;
+
+read_config_file(monster_group_file, FPath, State) ->
+    case read_csv_rows_from_file(FPath) of
+        {ok, RowList, FPath} ->
+            try
+                gen_server:cast(batnitor_simulator, {set_monster_group_list, lists:map(fun row_to_mon_group/1, RowList)}),
+                erlang:put(monster_group_file, FPath),
+                wxTextCtrl:setValue(State#state.monster_group_file_field, FPath),
+                ok
+            catch Type:Err ->
+                ?E("Type = ~p; Err = ~p", [Type, Err]),
+                {error, illegal_file_format}
+            end;
+
+        Err -> Err
+    end.
 
