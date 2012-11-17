@@ -295,11 +295,11 @@ handle_cast({append_battle_result, {PlayerRoleID, MonsterGroupID, SimTimes, Winn
 
     case Winner of
         att ->
-            set_cell_value(State#state.result_grid, RowID, 6, "Win", read_only, ?wxGREEN);
+            set_cell_value(State#state.result_grid, RowID, 6, "Win", read_write, ?wxGREEN);
         def ->
-            set_cell_value(State#state.result_grid, RowID, 6, "Lose", read_only, {255, 200, 0});
+            set_cell_value(State#state.result_grid, RowID, 6, "Lose", read_write, {255, 200, 0});
         _ ->
-            set_cell_value(State#state.result_grid, RowID, 6, Winner, read_only, ?wxRED)
+            set_cell_value(State#state.result_grid, RowID, 6, Winner, read_write, ?wxRED)
     end,
     {noreply, State};
 
