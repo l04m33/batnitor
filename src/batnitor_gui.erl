@@ -217,9 +217,18 @@ handle_event(#wx{id = ?ID_GRID_RESULTS,
                     case erlang:erase({grid_expanded, MonGroupID}) of
                         undefined ->
                             RoundsList = gen_server:call(batnitor_simulator, {get_rounds_list_by_mon_group, MonGroupID}),
-                            wxGrid:insertRows(State#state.result_grid, [{pos, Row + 1}, {numRows, length(RoundsList)}]),
-                            fill_expanded_rows(State#state.result_grid, RoundsList, Row + 1),
-                            erlang:put({grid_expanded, MonGroupID}, length(RoundsList));
+                            wxGrid:insertRows(State#state.result_grid, [{pos, Row + 1}, {numRows, length(RoundsList) + 1}]),
+                            set_cell_value(State#state.result_grid, Row + 1, 1, "Monster ID", 
+                                           read_only, {150, 150, 150}),
+                            set_cell_value(State#state.result_grid, Row + 1, 2, "Monster Type", 
+                                           read_only, {150, 150, 150}),
+                            set_cell_value(State#state.result_grid, Row + 1, 3, "Guai Da Ren", 
+                                           read_only, {150, 150, 150}),
+                            set_cell_value(State#state.result_grid, Row + 1, 4, "Ren Da Guai", 
+                                           read_only, {150, 150, 150}),
+                            fill_expanded_rows(State#state.result_grid, RoundsList, Row + 2),
+                            erlang:put({grid_expanded, MonGroupID}, length(RoundsList) + 1);
+
                         NumExpandedRows ->
                             wxGrid:deleteRows(State#state.result_grid, [{pos, Row + 1}, {numRows, NumExpandedRows}])
                     end;
@@ -261,40 +270,21 @@ handle_cast({append_battle_result, {PlayerRoleID, MonsterGroupID, Winner, Rounds
     wxGrid:appendRows(State#state.result_grid, [{numRows, 1}]),
     RowID = wxGrid:getNumberRows(State#state.result_grid) - 1,
 
-    wxGrid:setReadOnly(State#state.result_grid, RowID, 0, [{isReadOnly, true}]),
-    wxGrid:setCellAlignment(State#state.result_grid, RowID, 0, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
-    wxGrid:setCellValue(State#state.result_grid, RowID, 0, integer_to_list(MonsterGroupID)),
+    set_cell_value(State#state.result_grid, RowID, 0, integer_to_list(MonsterGroupID)),
+    set_cell_value(State#state.result_grid, RowID, 1, integer_to_list(PlayerRoleID)),
+    set_cell_value(State#state.result_grid, RowID, 2, integer_to_list(Rounds)),
+    set_cell_value(State#state.result_grid, RowID, 3, 
+                   lists:flatten(io_lib:format("~.2f", [PlayerHPRate*100])) ++ "%"),
+    set_cell_value(State#state.result_grid, RowID, 4, 
+                   lists:flatten(io_lib:format("~.2f", [MonsterHPRate*100])) ++ "%"),
 
-    wxGrid:setReadOnly(State#state.result_grid, RowID, 1, [{isReadOnly, true}]),
-    wxGrid:setCellAlignment(State#state.result_grid, RowID, 1, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
-    wxGrid:setCellValue(State#state.result_grid, RowID, 1, integer_to_list(PlayerRoleID)),
-
-    wxGrid:setReadOnly(State#state.result_grid, RowID, 2, [{isReadOnly, true}]),
-    wxGrid:setCellAlignment(State#state.result_grid, RowID, 2, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
-    wxGrid:setCellValue(State#state.result_grid, RowID, 2, integer_to_list(Rounds)),
-
-    wxGrid:setReadOnly(State#state.result_grid, RowID, 3, [{isReadOnly, true}]),
-    wxGrid:setCellAlignment(State#state.result_grid, RowID, 3, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
-    wxGrid:setCellValue(State#state.result_grid, RowID, 3, 
-                        lists:flatten(io_lib:format("~.2f", [PlayerHPRate*100])) ++ "%"),
-
-    wxGrid:setReadOnly(State#state.result_grid, RowID, 4, [{isReadOnly, true}]),
-    wxGrid:setCellAlignment(State#state.result_grid, RowID, 4, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
-    wxGrid:setCellValue(State#state.result_grid, RowID, 4, 
-                        lists:flatten(io_lib:format("~.2f", [MonsterHPRate*100])) ++ "%"),
-
-    wxGrid:setReadOnly(State#state.result_grid, RowID, 5, [{isReadOnly, true}]),
-    wxGrid:setCellAlignment(State#state.result_grid, RowID, 5, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
     case Winner of
         att ->
-            wxGrid:setCellBackgroundColour(State#state.result_grid, RowID, 5, ?wxGREEN),
-            wxGrid:setCellValue(State#state.result_grid, RowID, 5, "Win");
+            set_cell_value(State#state.result_grid, RowID, 5, "Win", read_only, ?wxGREEN);
         def ->
-            wxGrid:setCellBackgroundColour(State#state.result_grid, RowID, 5, {255, 200, 0}),
-            wxGrid:setCellValue(State#state.result_grid, RowID, 5, "Lose");
+            set_cell_value(State#state.result_grid, RowID, 5, "Lose", read_only, {255, 200, 0});
         _ ->
-            wxGrid:setCellBackgroundColour(State#state.result_grid, RowID, 5, ?wxRED),
-            wxGrid:setCellValue(State#state.result_grid, RowID, 5, Winner)
+            set_cell_value(State#state.result_grid, RowID, 5, Winner, read_only, ?wxRED)
     end,
     {noreply, State};
 
@@ -672,22 +662,13 @@ escape_stack_trace([C | Rest], Acc) ->
     end.
 
 fill_expanded_rows(_Grid, [], _RowID) -> ok;
-fill_expanded_rows(Grid, [{RoleID, GuaiDaRen, RenDaGuai} | Rest], RowID) ->
-    wxGrid:setCellBackgroundColour(Grid, RowID, 1, {200, 200, 200}),
-    wxGrid:setCellAlignment(Grid, RowID, 1, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
-    wxGrid:setReadOnly(Grid, RowID, 1, [{isReadOnly, true}]),
-    wxGrid:setCellValue(Grid, RowID, 1, integer_to_list(RoleID)),
-
-    wxGrid:setCellBackgroundColour(Grid, RowID, 2, {200, 200, 200}),
-    wxGrid:setCellAlignment(Grid, RowID, 2, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
-    wxGrid:setReadOnly(Grid, RowID, 2, [{isReadOnly, false}]),
-    wxGrid:setCellValue(Grid, RowID, 2, lists:flatten(io_lib:format("~w", [GuaiDaRen]))),
-
-    wxGrid:setCellBackgroundColour(Grid, RowID, 3, {200, 200, 200}),
-    wxGrid:setCellAlignment(Grid, RowID, 3, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
-    wxGrid:setReadOnly(Grid, RowID, 3, [{isReadOnly, false}]),
-    wxGrid:setCellValue(Grid, RowID, 3, lists:flatten(io_lib:format("~w", [RenDaGuai]))),
-
+fill_expanded_rows(Grid, [{RoleID, NanDu, GuaiDaRen, RenDaGuai} | Rest], RowID) ->
+    set_cell_value(Grid, RowID, 1, integer_to_list(RoleID), read_only, {200, 200, 200}),
+    set_cell_value(Grid, RowID, 2, integer_to_list(NanDu), read_only, {200, 200, 200}),
+    set_cell_value(Grid, RowID, 3, lists:flatten(io_lib:format("~w", [GuaiDaRen])), 
+                   read_write, {200, 200, 200}),
+    set_cell_value(Grid, RowID, 4, lists:flatten(io_lib:format("~w", [RenDaGuai])), 
+                   read_write, {200, 200, 200}),
     fill_expanded_rows(Grid, Rest, RowID + 1).
 
 read_config_file(player_file, FPath, State) ->
@@ -737,4 +718,24 @@ read_config_file(monster_group_file, FPath, State) ->
 
         Err -> Err
     end.
+
+set_cell_value(Grid, Row, Col, Value) ->
+    set_cell_value(Grid, Row, Col, Value, read_only, undefined).
+
+%set_cell_value(Grid, Row, Col, Value, ReadOnly) ->
+%    set_cell_value(Grid, Row, Col, Value, ReadOnly, undefined).
+
+set_cell_value(Grid, Row, Col, Value, ReadOnly, BGColor) ->
+    case BGColor of
+        undefined -> void;
+        _ -> wxGrid:setCellBackgroundColour(Grid, Row, Col, BGColor)
+    end,
+    case ReadOnly of
+        read_only ->
+            wxGrid:setReadOnly(Grid, Row, Col, [{isReadOnly, true}]);
+        read_write ->
+            wxGrid:setReadOnly(Grid, Row, Col, [{isReadOnly, false}])
+    end,
+    wxGrid:setCellAlignment(Grid, Row, Col, ?wxALIGN_CENTER, ?wxALIGN_CENTER),
+    wxGrid:setCellValue(Grid, Row, Col, Value).
 

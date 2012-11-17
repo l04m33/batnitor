@@ -76,8 +76,8 @@ handle_call({get_rounds_list_by_mon_group, MonGroupID}, _From, State) ->
             F = fun(M) ->
                 case ets:lookup(ets_role_misc_rec, {0, M}) of
                     [MInfo] ->
-                        {_, GuaiDaRen, RenDaGuai, _, _, _} = MInfo,
-                        {M, GuaiDaRen, RenDaGuai};
+                        {_, GuaiDaRen, RenDaGuai, NanDu, _, _} = MInfo,
+                        {M, NanDu, GuaiDaRen, RenDaGuai};
                     [] ->
                         {no_role, M}
                 end
