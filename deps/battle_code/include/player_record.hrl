@@ -65,7 +65,8 @@
 			boss_pid          = none,         %%世界boss模块		  
 			marstower_pid	  = none,        %% 英雄塔模块
             temp_bag_pid      = none,        %% 临时背包
-            challenge_king_pid= none		%% 挑战国王
+            challenge_king_pid= none,		%% 挑战国王
+			competition_pid   = none		%% 比武模块
 	}).
 
 %%用户登录数据表

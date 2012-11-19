@@ -9,7 +9,7 @@
 -define(BATTLE_WAIT_QUIT,      data_battle:get_wait_quit_time()).
 -define(UNDEFINED, undefined).
 
--define(BOSS_POSITION, 11).
+-define(BOSS_POSITION, 9).
 
 %==========================================================================================
 % battle type

@@ -45,4 +45,6 @@
 -define(TASK_ENABLE,2).
 -define(LEVEL_ENABLE,3).
 
+-define(COMP_SYSTEM, 22).
+
 -define(DOUBLE_YUNBIAO_AWARD, 19).

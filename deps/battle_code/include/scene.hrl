@@ -22,9 +22,13 @@
 -define(CELL_WIDTH,  12).
 -define(SCENE_CACHE_REF, cache_util:get_register_name(position)).
 
--define(SCENE_STATE_RB,     1).
--define(SCENE_STATE_BATTLE, 2).
--define(SCENE_STATE_DAZUO,  4).
+-define(SCENE_STATE_RB,			1).
+-define(SCENE_STATE_BATTLE,		2).
+-define(SCENE_STATE_DAZUO,		4).
+-define(SCENE_STATE_COMP_TEAM,	16).
+-define(SCENE_STATE_COMP_BALL,	32).
+-define(SCENE_STATE_COMP_SPEED,	64).
+-define(SCENE_STATE_FLY,    8).
 
 -define(ROOM_NUMBERS, 100).
 -define(MAX_PLAYER,   30).
@@ -133,11 +137,20 @@
 		state          = 0,		%% 玩家在场景中的状态，如战斗、打坐、跑商等
 		rb_data        = [],
 		dazuo_data     = [],
+
+		comp_team_data = [],	%% 比武场队伍状态
+		comp_ball_data = [],	%% 比武场绣球状态
+		comp_speed_data= [],	%% 比武场加速状态
+
+		fly_data       = [],
 		
 		wing_data	   = 0,		%% 翅膀数据，目前为是否有翅膀这个状态
 		horse_data 	   = 0,		%% 坐骑数据
-
+		
+		
 		equip_data	   = #equip_info{},
+		
+		stealth_data   = false,
 
 		path           = [],
 		send_pid       = 0,		%% 玩家的广播进程ID列表

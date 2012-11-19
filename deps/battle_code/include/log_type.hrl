@@ -117,6 +117,7 @@
 -define(GOLD_BUY_MYSTICAL_SHOP_ITEM, 116).		%% 用于购买神秘商店物品
 -define(GOlD_REFRESH_JUNGONGTASK, 117).			%% 用于刷新军工任务
 -define(GOlD_AUTO_COMPLETE_JUNGONGTASK, 118).	%% 用于自动完成军工任务
+-define(GOLD_CLEAR_COMP_CD_COST,119).			%% 清除比武场CD
 
 
 %% ======================== 银币改变的操作类型 ==========================
@@ -248,11 +249,13 @@
 -define(ITEM_FROM_DUNGEON_AWARD,	136).		%% 打完副本的奖励
 -define(ITEM_FROM_MARSTOWER,		137).		%% 英雄塔获得
 -define(ITEM_FROM_BUY_HORN,         138).       %% 用银币买小喇叭获得
+-define(ITEM_FROM_EMPLOY,			139).		%% 招募时获得
+-define(ITEM_FROM_TARGET,			140).  		%% 目标系统获得
+-define(ITEM_FROM_CONSUME,			141).		%% 回馈活动获得
+-define(ITEM_FROM_GUIDE,			142).		%% 每日指引获得
+-define(ITEM_FROM_HONOUR_EXCHANGE,	143).		%% 荣誉点兑换获得
+
 -define(ITEM_FROM_GM,				199).		%% GM获得
--define(ITEM_FROM_EMPLOY,			200).		%% 招募时获得
--define(ITEM_FROM_TARGET,			201).  		%% 目标系统获得
--define(ITEM_FROM_CONSUME,			202).		%% 回馈活动获得
--define(ITEM_FROM_GUIDE,			203).		%% 每日指引获得
 
 -define(ITEM_ADD_STACK,				200).		%% 堆叠后增加（包括物品移动，物品生成，宝石拆卸、交易获得等情况）
 -define(ITEM_DEC_STACK,				201).		%% 堆叠后减少
@@ -383,7 +386,12 @@
 
 -define(WAKAN_FORM_USE_ITEM,1002).		%% 使用物品获得
 
+%% ======================== 荣誉积分改变的操作类型 ==========================
+-define(HONOUR_SCORE_FROM_COMP,			1001).
 
+-define(HONOUR_SCORE_FROM_GM,			1999).
+
+-define(HONOUR_SCORE_USE_EXCHANGE_ITEM,	2001).
 
 %% 道具变更类型
 -define(LOG_ITEM_CREATE, 1).				%% 新增道具

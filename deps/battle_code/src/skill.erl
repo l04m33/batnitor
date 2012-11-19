@@ -941,7 +941,12 @@ handle_skill(SkillId = 246, Src, Tar, _Level, Param, BattleData) ->
 
 %% 清心咒: 给随机一个己方目标加一个回血BUFF
 handle_skill(SkillId = 247, Src, Tar, _Level, _Param, BattleData) ->
-	Buffs       = [#buff{name = ?BUFF_REFRESH, value = 0.3, by_rate = true, duration = 2}],
+	SrcStat = battle:get_battle_status(Src, BattleData),
+	Att     = SrcStat#battle_status.m_att,
+	Lev     = SrcStat#battle_status.level,
+	V       = 0.6 * math:pow((Att * 0.49 + Lev * 12), 1.02),
+	
+	Buffs       = [#buff{name = ?BUFF_REFRESH, value = V, by_rate = false, duration = 2}],
 	BuffOps     = [{Buff, 1.0, add} || Buff <- Buffs],
 	AssSpecList = 
 		[
@@ -1106,7 +1111,10 @@ handle_skill(SkillId = 279, Src, Tar, _Level, _Param, BattleData) ->
 
 
 %% 重击 $$ 强攻
-handle_skill(SkillId, Src, Tar, _Level, Param, BattleData) when SkillId =:= 280; SkillId =:= 281 ->
+handle_skill(SkillId, Src, Tar, _Level, Param, BattleData)
+  	when SkillId =:= 280; 
+		 SkillId =:= 281 ->
+	
 	handle_skill(230, Src, Tar, _Level, {?p1}, BattleData);
 
 

@@ -49,6 +49,7 @@
 -include("boss.hrl").
 -include("fcm.hrl").
 -include("system_enable.hrl").
+-include("competition.hrl").
 -include("target.hrl").
 -include("guide.hrl").
 -include("consume.hrl").

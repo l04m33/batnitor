@@ -607,14 +607,13 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array) ->
 			
 		?INFO(battle, "On Battle List = ~w", [List]),
 		
-		%% �޸ġ��������Ҳ������ʱ����ʹ�ý�ɫ�б��е�һ����Ϊ���
 		Leader  = 
-		case get_mer_leader(att, List) of
-		data_not_exist ->
-			hd(MerList);
-		L ->
-			L
-		end,
+			case get_mer_leader(att, List) of
+			data_not_exist ->
+				hd(MerList);
+			L ->
+				L
+			end,
 		List1 = lists:foldl(RoleFun, [], List),
 		PInfo   = 
 			#player_info {
@@ -1612,7 +1611,7 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 		Damage4 = round(Damage3)
 	end,
 	
-	{IsCrit, Damage4, NTar, IsAssist}.
+	{IsCrit, max(Damage4, 1), NTar, IsAssist}.
 
 %% attack entry
 %% (1) attack function generate a list of *attack_info*, 

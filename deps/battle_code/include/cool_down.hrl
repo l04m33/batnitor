@@ -9,6 +9,7 @@
 -define(BOSS_BATTLE_CD, 3).%%世界boss战斗cd
 -define(Qihun_CD, 4).%%棋魂cd
 -define(CD_QUILT_GUILD, 5).     %% 帮派退出cd;
+-define(CD_TYPE_COMP, 6).		%% 比武保护CD
 
 %%　cd原型定义
 -record

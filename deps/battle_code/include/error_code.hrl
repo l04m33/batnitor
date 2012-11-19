@@ -37,6 +37,7 @@
 -define(ERR_MUST_LEARN_FROM_ONE, 34).       %% 公会技能必须从一级学起
 -define(ERR_NOT_ONE_BY_ONE,		 35).	    %% 公会技能每次只能升一级
 -define(ERR_GUIDE_BOX_ERR,		 36).		%% 没有可领取奖励
+-define(ERR_NOT_ENOUGH_HONOUR,   37).		%% 荣誉点不足
 
 %% 场景
 %% -define(ERR_SCENE_NOT_COMPLETE,			11001).			%% 场景进度未完成
@@ -329,13 +330,19 @@
 -define(ERR_CAN_NOT_CHAT_HORN_NOT,         16007). 		%% 小喇叭不足
 -define(ERR_CAN_NOT_IN_TEAM,  16008). 					%% 您不在组队中，无法发送聊天内容
 
--define(ERR_COMP_ALEADY_APPLY,	32000).					%% 退出比武后不能重新进入
--define(ERR_COMP_IS_DIE,		32001).					%% 您已经阵亡
--define(ERR_COMP_OTHER_IS_DIE,	32002).					%% 对方已阵亡
-
 -define(ERR_JUNGONG_TASK_HAVE_RECEIVE, 36000).			%% 请先完成当前军功任务
 -define(ERR_JUNGONG_TASK_ALL_DONE,	36001).				%% 今日军功任务已做完
 -define(ERR_JUNGONG_TASK_NOT_FINISH, 36002).			%% 军功任务未完成
+
+-define(ERR_COMP_ALREADY_APPLY,			37000).					%% 退出比武后不能重新进入
+-define(ERR_COMP_IS_DIE,				37001).					%% 您已经阵亡
+-define(ERR_COMP_OTHER_IS_DIE,			37002).					%% 对方已阵亡
+-define(ERR_COMP_NOT_DIE,				37003).
+-define(ERR_COMP_ALREADY_LEAVE,			37004).
+-define(ERR_COMP_OTHER_ALREADY_LEAVE,	37005).
+-define(ERR_COMP_OTHER_IS_CLOAKING,		37006).
+-define(ERR_COMP_END_IN_ADVANCE,		37007).					%% 比武已经提前结束
+-define(ERR_COMP_ALREADY_RAISE_BANNER,	37008).					%% 已经升旗了
 
 -define(ERR_HAVE_CHALLENGER, 63001).					%% 通知客户端国王正在被其他人挑战
 -define(COMBAT_POWER_TOO_LOW, 63002).					%% 出战角色战斗力总和小于1000
