@@ -72,7 +72,7 @@ handle_call({get_rounds_list_by_mon_group, MonGroupID}, _From, State) ->
     Reply = case data_mon_group:get(MonGroupID) of
         undefined -> [];
         MonGroup ->
-            MonIDList = [M || {M, _P} <- MonGroup#mon_group.pos],
+            MonIDList = lists:usort([M || {M, _P} <- MonGroup#mon_group.pos]),
             F = fun(M) ->
                 case ets:lookup(ets_role_misc_rec, {0, M}) of
                     [MInfo] ->

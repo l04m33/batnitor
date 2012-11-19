@@ -43,7 +43,6 @@ read(_Cmd, _Bin) ->
 %% pve battle 
 write(20000, BattleData) ->
     gen_fsm:send_event(self(), {set_cmd, get(id), 0}),
-
 	Type     = BattleData#battle_data.type,
 	MonId    = BattleData#battle_data.monster,
 	MakeTeam = if (BattleData#battle_data.maketeam == true) -> 1; true -> 0 end,
@@ -59,7 +58,7 @@ write(20000, BattleData) ->
 	
 	lists:map(
 	   	fun ({ID, Bin}) ->
-			{ID, pt:pack(20000, <<0:8, MonId:32, MakeTeam:8, MerNum:16, Bin/binary>>)}
+			{ID, pt:pack(20000, <<Type:8, MonId:32, MakeTeam:8, MerNum:16, Bin/binary>>)}
 		end, BinList);
 
 %% pvp battle 
@@ -80,25 +79,26 @@ write(20002, BattleData) ->
 		end, BinList);
 
 write(20001, BattleData) ->
-	%% Type = BattleData#battle_data.type,
-	
     gen_fsm:send_event(self(), {set_cmd, get(id), 0}),
     gen_fsm:send_event(self(), {finish_play, get(id)}),
-
+	%% Type = BattleData#battle_data.type,
+	
 	IsLastAct = 
 		case battle:is_battle_end(BattleData) of
 			false -> 0;
 			{true, _} -> 1
 		end,
+	
+	Type    = BattleData#battle_data.type,
 	Round   = BattleData#battle_data.round,
 	Pro     = battle:get_battle_pro(BattleData),
 	AttPro  = battle:get_attack_pro(BattleData),
 	ActInd  = length(Pro#battle_pro.attack_pro),
 	Pos     = AttPro#attack_pro.pos,
 	SkillId = AttPro#attack_pro.skillid,
-	Hp      = AttPro#attack_pro.hp,
+	Hp      = round(AttPro#attack_pro.hp),
 	Mp      = AttPro#attack_pro.mp,
-	HpInc   = AttPro#attack_pro.hp_inc,
+	HpInc   = round(AttPro#attack_pro.hp_inc),
 	MpInc   = AttPro#attack_pro.mp_inc,
 	TarBin  = get_tar_bin(AttPro#attack_pro.attack_info),
 	
@@ -109,7 +109,7 @@ write(20001, BattleData) ->
 	?INFO(battle, "Round = ~w, ActionIndex = ~w, Pos = ~w, SkillId = ~w, Hp = ~w, Mp = ~w",
 		[Round, ActInd, Pos, SkillId, Hp, Mp]),
 	
-	pt:pack(20001, <<0:8, Round:8, IsLastAct:8, ActInd:8, Pos:8, SkillId:32, Hp:32, 
+	pt:pack(20001, <<Type:8, Round:8, IsLastAct:8, ActInd:8, Pos:8, SkillId:32, Hp:32, 
 					Mp:16, HpInc:32, MpInc:16, TarNum:16, TarBin/binary, BuffNum:16, BuffBin/binary>>);
 	
 write(20003, BattleData) ->
@@ -122,9 +122,9 @@ write(20003, BattleData) ->
 write(20005, BattleData) ->
     gen_fsm:send_event(self(), {quit, get(id)}),
     calc_simulator_result(BattleData),
-
 	Type = BattleData#battle_data.type,
 	Winner = BattleData#battle_data.winner,
+	
 	AttIdList = battle:get_ids(att, BattleData),
 	DefIdList = battle:get_ids(def, BattleData),
 	
@@ -314,9 +314,9 @@ get_buff_bin(Bin, [BuffInfo | Rest]) ->
 	Value    = BuffInfo#buff_info.value,
 	Name     = BuffInfo#buff_info.name,
 	Owner    = BuffInfo#buff_info.owner,
-	Hp       = BuffInfo#buff_info.hp,
+	Hp       = round(BuffInfo#buff_info.hp),
 	Mp       = BuffInfo#buff_info.mp,
-	HpInc    = BuffInfo#buff_info.hp_inc,
+	HpInc    = round(BuffInfo#buff_info.hp_inc),
 	MpInc    = BuffInfo#buff_info.mp_inc,
 	Duration = 
 		if (IsRemove == 1) -> 
@@ -418,10 +418,6 @@ get_item_bin(Bin, [{ItemID, Count, _} | Rest]) ->
 	get_item_bin(NBin, Rest).
 
 
-
-
-
-
 get_battle_status(Pos, BattleData) ->
 	array:get(Pos, BattleData#battle_data.player).
 
@@ -439,7 +435,7 @@ get_battle_hp_list(Index, Limit, List, BattleData) ->
 	true ->
 		get_battle_hp_list(Index + 1, Limit, [{Index, Stat#battle_status.hp} | List], BattleData)
 	end.
-
+
 calc_simulator_result(BattleData) ->
 	Winner = BattleData#battle_data.winner,
     DefHPList = get_battle_hp_list(def, BattleData),
@@ -448,6 +444,8 @@ calc_simulator_result(BattleData) ->
     {PlayerRoleID, MonsterGroupID, MaxGroupID, SimTimes, MaxSimTimes} = BattleData#battle_data.callback,
     gen_server:cast(batnitor_simulator, {battle_finish, {PlayerRoleID, MonsterGroupID, MaxGroupID, SimTimes, MaxSimTimes, 
                                                          Winner, Rounds, AttHPList, DefHPList}}).
+
+
 
 
 
