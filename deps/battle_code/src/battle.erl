@@ -218,7 +218,7 @@ battle_complete({quit, ID}, BattleData) ->
 
 battle_complete(Msg, BattleData) ->
 	{Now, Timeout} = time_remain(BattleData),
-	?ERR(battle, "unknown message: ~w", [Msg]),
+	?INFO(battle, "unknown message: ~w", [Msg]),
 	{next_state, battle_complete, BattleData#battle_data {timeout = {Now, Timeout}}, Timeout}.
 	
 %% --------------------------------------------------------------------
@@ -384,7 +384,7 @@ get_battle_data(Start) ->
 			?INFO(battle, "calling get_mer_info"),
 			{Attacker, Array1} = get_mer_info(att, AttID, AttMer, MakeTeam, Array),
 			?INFO(battle, "calling get_mon_info"),
-			{Defender, Array2} = get_mon_info(def, MonID, Array1),
+			{Defender, Array2} = get_mon_info(def, MonID, Start#battle_start.monster_hp, Array1),
 			?INFO(battle, "done..."),
 			{Defender, Array2};
 		pvp ->
@@ -401,6 +401,17 @@ get_battle_data(Start) ->
 			defender  = Defender,
 			player    = Array2,
 			monster   = MonID,
+            initial_monster_hp = 
+                case is_list(Start#battle_start.monster_hp) of
+                    true ->
+                        lists:map(
+                            fun({RelPos, MHP}) ->
+                                {RelPos + ?BATTLE_FIELD_SIZE, MHP}
+                            end,
+                            Start#battle_start.monster_hp);
+                    _ ->    % false
+                        Start#battle_start.monster_hp
+                end,
 			caller    = Caller,
 			maketeam  = MakeTeam,
 			callback  = Callback
@@ -690,6 +701,15 @@ get_mon_info(Camp, MonGroupID, MonHp, Array) ->
 			?INFO(battle, "monster skill = ~w, start = ~w", [Res, MonAttr#mon_attr.star]),
 			
 			{ActiveSkills, _} = Res,
+
+            MaxHP = if
+                is_integer(MonHp) -> MonHp;
+                is_list(MonHp) ->
+                    case lists:keyfind(Pos, 1, MonHp) of
+                        false   -> MonAttr#mon_attr.hp;
+                        {_, HP} -> HP
+                    end
+            end,
 			
 			BattleStatus = 
 				#battle_status {
@@ -699,7 +719,7 @@ get_mon_info(Camp, MonGroupID, MonHp, Array) ->
 					name    = "", 
 					level   = MonAttr#mon_attr.level,
 					star    = MonAttr#mon_attr.star,
-					hp      = min(MonAttr#mon_attr.hp, MonHp),
+					hp      = min(MonAttr#mon_attr.hp, MaxHP),
 					hp_max  = MonAttr#mon_attr.hp,
 					mp      = MonAttr#mon_attr.mp,
 					p_att   = MonAttr#mon_attr.p_att,
@@ -807,12 +827,20 @@ check_battle(Start, IDList1, IDList2) ->
 get_battle_status(Pos, BattleData) ->
 	array:get(Pos, BattleData#battle_data.player).
 
+get_battle_status(Pos, Key, BattleData) ->
+	Stat = get_battle_status(Pos, BattleData),
+	element(Key, Stat).
+
 set_battle_status(Pos, State, BattleData) ->
-	Player = BattleData#battle_data.player,
+	Player  = BattleData#battle_data.player,
 	NPlayer = array:set(Pos, State, Player),
 	BattleData#battle_data {player = NPlayer}.
 
-
+set_battle_status(Pos, Key, Value, BattleData = #battle_data {player = Player}) ->
+	Stat   = get_battle_status(Pos, BattleData),
+	NStat  = erlang:setelement(Key, Stat, Value),
+	BattleData#battle_data {player = array:set(Pos, NStat, Player)}.
+	
 %% -spec get_player_list returns the list of position of all the players
 get_player_list(BattleData) ->
 	get_player_list(BattleData, 1, []).
@@ -1554,7 +1582,7 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 			{value, #buff {value = V}} -> V
 		end,	
 	
-	?INFO(battle, "Src = ~w, Job = ~w, Att = ~w, Def = ~w", [Src, Job, Att, Def]),
+	?INFO(battle, "Src = ~w, Job = ~w, Att = ~w, Def = ~w, ALevel = ~w", [Src, Job, Att, Def, ALevel]),
 	
 	Param1 = 450 * ALevel,
 	Param2 = ParamX * 0.2,
@@ -1625,7 +1653,6 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 	NBattleData :: #battle_data{}. 
 															 
 attack(SkillId, Src, AttSpec, BattleData) ->
-	?CHAT(battle, "$$$$$$$$$$$$$$$$$$$$$$$$$$"),
 	
 	AttInfoList = attack(SkillId, Src, AttSpec, AttSpec#attack_spec.targets, BattleData),
 	%% battle data should *not* change when processing attack/5
@@ -2489,7 +2516,17 @@ send_start_package(BattleData) ->
 	lists:foreach(fun (ID) -> 
 		catch scene:set_scene_state(ID, ?SCENE_STATE_BATTLE, 0) end, 
 	IDList),
-	send_player_package(BinIDList).
+
+	send_player_package(BinIDList),
+    case {BattleData#battle_data.mod, is_list(BattleData#battle_data.initial_monster_hp)} of
+        {pve, true} ->
+            MonHPBin = pt_20:write(20010, BattleData#battle_data.initial_monster_hp),
+            send_group_package(MonHPBin, IDList);
+        _ ->
+            void
+    end,
+    ok.
+
 
 %% pt 20001
 send_procedure_package(BattleData) ->
@@ -2645,7 +2682,7 @@ get_items_dispatch_2(ItemInfo) ->
 
 get_items_dispatch_2([], _) -> [];
 get_items_dispatch_2([{ItemID, Count, Rate} | Rest], F) ->
-	case random:uniform() =< F of
+	case F =< Rate of
 		true  -> [{ItemID, Count, 1}];
 		false ->
 			get_items_dispatch_2(Rest, F - Rate)

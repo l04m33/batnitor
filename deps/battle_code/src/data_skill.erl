@@ -520,6 +520,26 @@ get_skill_rate(118009) -> 0;
 
 get_skill_rate(118010) -> 0;
 
+get_skill_rate(119001) -> 0;
+
+get_skill_rate(119002) -> 0;
+
+get_skill_rate(119003) -> 0;
+
+get_skill_rate(119004) -> 0;
+
+get_skill_rate(119005) -> 0;
+
+get_skill_rate(119006) -> 0;
+
+get_skill_rate(119007) -> 0;
+
+get_skill_rate(119008) -> 0;
+
+get_skill_rate(119009) -> 0;
+
+get_skill_rate(119010) -> 0;
+
 get_skill_rate(201001) -> 3;
 
 get_skill_rate(201002) -> 2;
@@ -2098,7 +2118,7 @@ skill_info(105001) ->
 		class_id      = 105,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 1210,
+		level_up_exp  = 1152,
 		next_skill_id = 105002
 	};
 
@@ -2109,7 +2129,7 @@ skill_info(105002) ->
 		class_id      = 105,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 2840,
+		level_up_exp  = 2700,
 		next_skill_id = 105003
 	};
 
@@ -2120,7 +2140,7 @@ skill_info(105003) ->
 		class_id      = 105,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 9070,
+		level_up_exp  = 8640,
 		next_skill_id = 105004
 	};
 
@@ -2131,7 +2151,7 @@ skill_info(105004) ->
 		class_id      = 105,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 19950,
+		level_up_exp  = 19000,
 		next_skill_id = 105005
 	};
 
@@ -2142,7 +2162,7 @@ skill_info(105005) ->
 		class_id      = 105,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 48300,
+		level_up_exp  = 46000,
 		next_skill_id = 105006
 	};
 
@@ -2153,7 +2173,7 @@ skill_info(105006) ->
 		class_id      = 105,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 94500,
+		level_up_exp  = 90000,
 		next_skill_id = 105007
 	};
 
@@ -2164,7 +2184,7 @@ skill_info(105007) ->
 		class_id      = 105,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 191100,
+		level_up_exp  = 182000,
 		next_skill_id = 105008
 	};
 
@@ -2175,7 +2195,7 @@ skill_info(105008) ->
 		class_id      = 105,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 357000,
+		level_up_exp  = 340000,
 		next_skill_id = 105009
 	};
 
@@ -2186,7 +2206,7 @@ skill_info(105009) ->
 		class_id      = 105,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 651000,
+		level_up_exp  = 620000,
 		next_skill_id = 105010
 	};
 
@@ -2316,7 +2336,7 @@ skill_info(107001) ->
 	#skill_info{
 		mode_id       = 107001,
 		class_id      = 107,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 1152,
 		next_skill_id = 107002
@@ -2327,7 +2347,7 @@ skill_info(107002) ->
 	#skill_info{
 		mode_id       = 107002,
 		class_id      = 107,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 2700,
 		next_skill_id = 107003
@@ -2338,7 +2358,7 @@ skill_info(107003) ->
 	#skill_info{
 		mode_id       = 107003,
 		class_id      = 107,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 8640,
 		next_skill_id = 107004
@@ -2349,7 +2369,7 @@ skill_info(107004) ->
 	#skill_info{
 		mode_id       = 107004,
 		class_id      = 107,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 19000,
 		next_skill_id = 107005
@@ -2360,7 +2380,7 @@ skill_info(107005) ->
 	#skill_info{
 		mode_id       = 107005,
 		class_id      = 107,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 46000,
 		next_skill_id = 107006
@@ -2371,7 +2391,7 @@ skill_info(107006) ->
 	#skill_info{
 		mode_id       = 107006,
 		class_id      = 107,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 90000,
 		next_skill_id = 107007
@@ -2382,7 +2402,7 @@ skill_info(107007) ->
 	#skill_info{
 		mode_id       = 107007,
 		class_id      = 107,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 182000,
 		next_skill_id = 107008
@@ -2393,7 +2413,7 @@ skill_info(107008) ->
 	#skill_info{
 		mode_id       = 107008,
 		class_id      = 107,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 340000,
 		next_skill_id = 107009
@@ -2404,7 +2424,7 @@ skill_info(107009) ->
 	#skill_info{
 		mode_id       = 107009,
 		class_id      = 107,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 620000,
 		next_skill_id = 107010
@@ -2415,7 +2435,7 @@ skill_info(107010) ->
 	#skill_info{
 		mode_id       = 107010,
 		class_id      = 107,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
 		next_skill_id = 0
@@ -2428,7 +2448,7 @@ skill_info(108001) ->
 		class_id      = 108,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 1210,
+		level_up_exp  = 1090,
 		next_skill_id = 108002
 	};
 
@@ -2439,7 +2459,7 @@ skill_info(108002) ->
 		class_id      = 108,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 2840,
+		level_up_exp  = 2570,
 		next_skill_id = 108003
 	};
 
@@ -2450,7 +2470,7 @@ skill_info(108003) ->
 		class_id      = 108,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 9070,
+		level_up_exp  = 8210,
 		next_skill_id = 108004
 	};
 
@@ -2461,7 +2481,7 @@ skill_info(108004) ->
 		class_id      = 108,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 19950,
+		level_up_exp  = 18050,
 		next_skill_id = 108005
 	};
 
@@ -2472,7 +2492,7 @@ skill_info(108005) ->
 		class_id      = 108,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 48300,
+		level_up_exp  = 43700,
 		next_skill_id = 108006
 	};
 
@@ -2483,7 +2503,7 @@ skill_info(108006) ->
 		class_id      = 108,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 94500,
+		level_up_exp  = 85500,
 		next_skill_id = 108007
 	};
 
@@ -2494,7 +2514,7 @@ skill_info(108007) ->
 		class_id      = 108,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 191100,
+		level_up_exp  = 172900,
 		next_skill_id = 108008
 	};
 
@@ -2505,7 +2525,7 @@ skill_info(108008) ->
 		class_id      = 108,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 357000,
+		level_up_exp  = 323000,
 		next_skill_id = 108009
 	};
 
@@ -2516,7 +2536,7 @@ skill_info(108009) ->
 		class_id      = 108,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 651000,
+		level_up_exp  = 589000,
 		next_skill_id = 108010
 	};
 
@@ -2646,7 +2666,7 @@ skill_info(110001) ->
 	#skill_info{
 		mode_id       = 110001,
 		class_id      = 110,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 980,
 		next_skill_id = 110002
@@ -2657,7 +2677,7 @@ skill_info(110002) ->
 	#skill_info{
 		mode_id       = 110002,
 		class_id      = 110,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 2300,
 		next_skill_id = 110003
@@ -2668,7 +2688,7 @@ skill_info(110003) ->
 	#skill_info{
 		mode_id       = 110003,
 		class_id      = 110,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 7340,
 		next_skill_id = 110004
@@ -2679,7 +2699,7 @@ skill_info(110004) ->
 	#skill_info{
 		mode_id       = 110004,
 		class_id      = 110,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 16150,
 		next_skill_id = 110005
@@ -2690,7 +2710,7 @@ skill_info(110005) ->
 	#skill_info{
 		mode_id       = 110005,
 		class_id      = 110,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 39100,
 		next_skill_id = 110006
@@ -2701,7 +2721,7 @@ skill_info(110006) ->
 	#skill_info{
 		mode_id       = 110006,
 		class_id      = 110,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 76500,
 		next_skill_id = 110007
@@ -2712,7 +2732,7 @@ skill_info(110007) ->
 	#skill_info{
 		mode_id       = 110007,
 		class_id      = 110,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 154700,
 		next_skill_id = 110008
@@ -2723,7 +2743,7 @@ skill_info(110008) ->
 	#skill_info{
 		mode_id       = 110008,
 		class_id      = 110,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 289000,
 		next_skill_id = 110009
@@ -2734,7 +2754,7 @@ skill_info(110009) ->
 	#skill_info{
 		mode_id       = 110009,
 		class_id      = 110,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 527000,
 		next_skill_id = 110010
@@ -2745,7 +2765,7 @@ skill_info(110010) ->
 	#skill_info{
 		mode_id       = 110010,
 		class_id      = 110,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
 		next_skill_id = 0
@@ -2868,7 +2888,7 @@ skill_info(112001) ->
 		class_id      = 112,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 1152,
+		level_up_exp  = 1090,
 		next_skill_id = 112002
 	};
 
@@ -2879,7 +2899,7 @@ skill_info(112002) ->
 		class_id      = 112,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 2700,
+		level_up_exp  = 2570,
 		next_skill_id = 112003
 	};
 
@@ -2890,7 +2910,7 @@ skill_info(112003) ->
 		class_id      = 112,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 8640,
+		level_up_exp  = 8210,
 		next_skill_id = 112004
 	};
 
@@ -2901,7 +2921,7 @@ skill_info(112004) ->
 		class_id      = 112,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 19000,
+		level_up_exp  = 18050,
 		next_skill_id = 112005
 	};
 
@@ -2912,7 +2932,7 @@ skill_info(112005) ->
 		class_id      = 112,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 46000,
+		level_up_exp  = 43700,
 		next_skill_id = 112006
 	};
 
@@ -2923,7 +2943,7 @@ skill_info(112006) ->
 		class_id      = 112,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 90000,
+		level_up_exp  = 85500,
 		next_skill_id = 112007
 	};
 
@@ -2934,7 +2954,7 @@ skill_info(112007) ->
 		class_id      = 112,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 182000,
+		level_up_exp  = 172900,
 		next_skill_id = 112008
 	};
 
@@ -2945,7 +2965,7 @@ skill_info(112008) ->
 		class_id      = 112,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 340000,
+		level_up_exp  = 323000,
 		next_skill_id = 112009
 	};
 
@@ -2956,7 +2976,7 @@ skill_info(112009) ->
 		class_id      = 112,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 620000,
+		level_up_exp  = 589000,
 		next_skill_id = 112010
 	};
 
@@ -2978,7 +2998,7 @@ skill_info(113001) ->
 		class_id      = 113,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 1210,
+		level_up_exp  = 1152,
 		next_skill_id = 113002
 	};
 
@@ -2989,7 +3009,7 @@ skill_info(113002) ->
 		class_id      = 113,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 2840,
+		level_up_exp  = 2700,
 		next_skill_id = 113003
 	};
 
@@ -3000,7 +3020,7 @@ skill_info(113003) ->
 		class_id      = 113,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 9070,
+		level_up_exp  = 8640,
 		next_skill_id = 113004
 	};
 
@@ -3011,7 +3031,7 @@ skill_info(113004) ->
 		class_id      = 113,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 19950,
+		level_up_exp  = 19000,
 		next_skill_id = 113005
 	};
 
@@ -3022,7 +3042,7 @@ skill_info(113005) ->
 		class_id      = 113,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 48300,
+		level_up_exp  = 46000,
 		next_skill_id = 113006
 	};
 
@@ -3033,7 +3053,7 @@ skill_info(113006) ->
 		class_id      = 113,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 94500,
+		level_up_exp  = 90000,
 		next_skill_id = 113007
 	};
 
@@ -3044,7 +3064,7 @@ skill_info(113007) ->
 		class_id      = 113,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 191100,
+		level_up_exp  = 182000,
 		next_skill_id = 113008
 	};
 
@@ -3055,7 +3075,7 @@ skill_info(113008) ->
 		class_id      = 113,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 357000,
+		level_up_exp  = 340000,
 		next_skill_id = 113009
 	};
 
@@ -3066,7 +3086,7 @@ skill_info(113009) ->
 		class_id      = 113,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 651000,
+		level_up_exp  = 620000,
 		next_skill_id = 113010
 	};
 
@@ -3196,7 +3216,7 @@ skill_info(115001) ->
 	#skill_info{
 		mode_id       = 115001,
 		class_id      = 115,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 980,
 		next_skill_id = 115002
@@ -3207,7 +3227,7 @@ skill_info(115002) ->
 	#skill_info{
 		mode_id       = 115002,
 		class_id      = 115,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 2300,
 		next_skill_id = 115003
@@ -3218,7 +3238,7 @@ skill_info(115003) ->
 	#skill_info{
 		mode_id       = 115003,
 		class_id      = 115,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 7340,
 		next_skill_id = 115004
@@ -3229,7 +3249,7 @@ skill_info(115004) ->
 	#skill_info{
 		mode_id       = 115004,
 		class_id      = 115,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 16150,
 		next_skill_id = 115005
@@ -3240,7 +3260,7 @@ skill_info(115005) ->
 	#skill_info{
 		mode_id       = 115005,
 		class_id      = 115,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 39100,
 		next_skill_id = 115006
@@ -3251,7 +3271,7 @@ skill_info(115006) ->
 	#skill_info{
 		mode_id       = 115006,
 		class_id      = 115,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 76500,
 		next_skill_id = 115007
@@ -3262,7 +3282,7 @@ skill_info(115007) ->
 	#skill_info{
 		mode_id       = 115007,
 		class_id      = 115,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 154700,
 		next_skill_id = 115008
@@ -3273,7 +3293,7 @@ skill_info(115008) ->
 	#skill_info{
 		mode_id       = 115008,
 		class_id      = 115,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 289000,
 		next_skill_id = 115009
@@ -3284,7 +3304,7 @@ skill_info(115009) ->
 	#skill_info{
 		mode_id       = 115009,
 		class_id      = 115,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 527000,
 		next_skill_id = 115010
@@ -3295,7 +3315,7 @@ skill_info(115010) ->
 	#skill_info{
 		mode_id       = 115010,
 		class_id      = 115,
-		type          = 4,
+		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
 		next_skill_id = 0
@@ -3418,7 +3438,7 @@ skill_info(117001) ->
 		class_id      = 117,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 1152,
+		level_up_exp  = 1090,
 		next_skill_id = 117002
 	};
 
@@ -3429,7 +3449,7 @@ skill_info(117002) ->
 		class_id      = 117,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 2700,
+		level_up_exp  = 2570,
 		next_skill_id = 117003
 	};
 
@@ -3440,7 +3460,7 @@ skill_info(117003) ->
 		class_id      = 117,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 8640,
+		level_up_exp  = 8210,
 		next_skill_id = 117004
 	};
 
@@ -3451,7 +3471,7 @@ skill_info(117004) ->
 		class_id      = 117,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 19000,
+		level_up_exp  = 18050,
 		next_skill_id = 117005
 	};
 
@@ -3462,7 +3482,7 @@ skill_info(117005) ->
 		class_id      = 117,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 46000,
+		level_up_exp  = 43700,
 		next_skill_id = 117006
 	};
 
@@ -3473,7 +3493,7 @@ skill_info(117006) ->
 		class_id      = 117,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 90000,
+		level_up_exp  = 85500,
 		next_skill_id = 117007
 	};
 
@@ -3484,7 +3504,7 @@ skill_info(117007) ->
 		class_id      = 117,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 182000,
+		level_up_exp  = 172900,
 		next_skill_id = 117008
 	};
 
@@ -3495,7 +3515,7 @@ skill_info(117008) ->
 		class_id      = 117,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 340000,
+		level_up_exp  = 323000,
 		next_skill_id = 117009
 	};
 
@@ -3506,7 +3526,7 @@ skill_info(117009) ->
 		class_id      = 117,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 620000,
+		level_up_exp  = 589000,
 		next_skill_id = 117010
 	};
 
@@ -3528,7 +3548,7 @@ skill_info(118001) ->
 		class_id      = 118,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 1210,
+		level_up_exp  = 1152,
 		next_skill_id = 118002
 	};
 
@@ -3539,7 +3559,7 @@ skill_info(118002) ->
 		class_id      = 118,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 2840,
+		level_up_exp  = 2700,
 		next_skill_id = 118003
 	};
 
@@ -3550,7 +3570,7 @@ skill_info(118003) ->
 		class_id      = 118,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 9070,
+		level_up_exp  = 8640,
 		next_skill_id = 118004
 	};
 
@@ -3561,7 +3581,7 @@ skill_info(118004) ->
 		class_id      = 118,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 19950,
+		level_up_exp  = 19000,
 		next_skill_id = 118005
 	};
 
@@ -3572,7 +3592,7 @@ skill_info(118005) ->
 		class_id      = 118,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 48300,
+		level_up_exp  = 46000,
 		next_skill_id = 118006
 	};
 
@@ -3583,7 +3603,7 @@ skill_info(118006) ->
 		class_id      = 118,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 94500,
+		level_up_exp  = 90000,
 		next_skill_id = 118007
 	};
 
@@ -3594,7 +3614,7 @@ skill_info(118007) ->
 		class_id      = 118,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 191100,
+		level_up_exp  = 182000,
 		next_skill_id = 118008
 	};
 
@@ -3605,7 +3625,7 @@ skill_info(118008) ->
 		class_id      = 118,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 357000,
+		level_up_exp  = 340000,
 		next_skill_id = 118009
 	};
 
@@ -3616,7 +3636,7 @@ skill_info(118009) ->
 		class_id      = 118,
 		type          = 4,
 		effect        = 1,
-		level_up_exp  = 651000,
+		level_up_exp  = 620000,
 		next_skill_id = 118010
 	};
 
@@ -3625,6 +3645,116 @@ skill_info(118010) ->
 	#skill_info{
 		mode_id       = 118010,
 		class_id      = 118,
+		type          = 4,
+		effect        = 1,
+		level_up_exp  = 0,
+		next_skill_id = 0
+	};
+
+%% 战意激荡
+skill_info(119001) ->
+	#skill_info{
+		mode_id       = 119001,
+		class_id      = 119,
+		type          = 4,
+		effect        = 1,
+		level_up_exp  = 1090,
+		next_skill_id = 119002
+	};
+
+%% 战意激荡
+skill_info(119002) ->
+	#skill_info{
+		mode_id       = 119002,
+		class_id      = 119,
+		type          = 4,
+		effect        = 1,
+		level_up_exp  = 2570,
+		next_skill_id = 119003
+	};
+
+%% 战意激荡
+skill_info(119003) ->
+	#skill_info{
+		mode_id       = 119003,
+		class_id      = 119,
+		type          = 4,
+		effect        = 1,
+		level_up_exp  = 8210,
+		next_skill_id = 119004
+	};
+
+%% 战意激荡
+skill_info(119004) ->
+	#skill_info{
+		mode_id       = 119004,
+		class_id      = 119,
+		type          = 4,
+		effect        = 1,
+		level_up_exp  = 18050,
+		next_skill_id = 119005
+	};
+
+%% 战意激荡
+skill_info(119005) ->
+	#skill_info{
+		mode_id       = 119005,
+		class_id      = 119,
+		type          = 4,
+		effect        = 1,
+		level_up_exp  = 43700,
+		next_skill_id = 119006
+	};
+
+%% 战意激荡
+skill_info(119006) ->
+	#skill_info{
+		mode_id       = 119006,
+		class_id      = 119,
+		type          = 4,
+		effect        = 1,
+		level_up_exp  = 85500,
+		next_skill_id = 119007
+	};
+
+%% 战意激荡
+skill_info(119007) ->
+	#skill_info{
+		mode_id       = 119007,
+		class_id      = 119,
+		type          = 4,
+		effect        = 1,
+		level_up_exp  = 172900,
+		next_skill_id = 119008
+	};
+
+%% 战意激荡
+skill_info(119008) ->
+	#skill_info{
+		mode_id       = 119008,
+		class_id      = 119,
+		type          = 4,
+		effect        = 1,
+		level_up_exp  = 323000,
+		next_skill_id = 119009
+	};
+
+%% 战意激荡
+skill_info(119009) ->
+	#skill_info{
+		mode_id       = 119009,
+		class_id      = 119,
+		type          = 4,
+		effect        = 1,
+		level_up_exp  = 589000,
+		next_skill_id = 119010
+	};
+
+%% 战意激荡
+skill_info(119010) ->
+	#skill_info{
+		mode_id       = 119010,
+		class_id      = 119,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,

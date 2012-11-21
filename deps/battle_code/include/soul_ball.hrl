@@ -8,12 +8,12 @@
 -define(ETS_SOUL_BALL, cache_util:get_register_name(soul_ball)).
 -define(HUNSHI, 293).
 
--define(HUNSHI_GOLD, 12).
+-define(HUNSHI_GOLD, data_soul_ball:get_soul_cost()).
 %% 魂珠数据结构
 -record(
     soul_ball,
     {
-	    key = {0,0},
+	    key = {0,0}, %% {PlayerId,SoulType}
 		soulExp = 0
 	}
    ).

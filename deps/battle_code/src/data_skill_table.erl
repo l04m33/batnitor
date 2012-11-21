@@ -1700,6 +1700,116 @@ get(118, 10) ->
 		param  = {1.2}    
 	};
 
+get(119, 1) -> 
+	#battle_skill {
+		hp     = 0,       
+		mp     = 0,
+		cd     = 2,     
+		id     = 119,	
+		level  = 1,
+		target = self,
+		param  = {1,0.1}    
+	};
+
+get(119, 2) -> 
+	#battle_skill {
+		hp     = 0,       
+		mp     = 0,
+		cd     = 2,     
+		id     = 119,	
+		level  = 2,
+		target = self,
+		param  = {1.02,0.1}    
+	};
+
+get(119, 3) -> 
+	#battle_skill {
+		hp     = 0,       
+		mp     = 0,
+		cd     = 2,     
+		id     = 119,	
+		level  = 3,
+		target = self,
+		param  = {1.04,0.1}    
+	};
+
+get(119, 4) -> 
+	#battle_skill {
+		hp     = 0,       
+		mp     = 0,
+		cd     = 2,     
+		id     = 119,	
+		level  = 4,
+		target = self,
+		param  = {1.08,0.1}    
+	};
+
+get(119, 5) -> 
+	#battle_skill {
+		hp     = 0,       
+		mp     = 0,
+		cd     = 2,     
+		id     = 119,	
+		level  = 5,
+		target = self,
+		param  = {1.1,0.1}    
+	};
+
+get(119, 6) -> 
+	#battle_skill {
+		hp     = 0,       
+		mp     = 0,
+		cd     = 2,     
+		id     = 119,	
+		level  = 6,
+		target = self,
+		param  = {1.12,0.1}    
+	};
+
+get(119, 7) -> 
+	#battle_skill {
+		hp     = 0,       
+		mp     = 0,
+		cd     = 2,     
+		id     = 119,	
+		level  = 7,
+		target = self,
+		param  = {1.14,0.1}    
+	};
+
+get(119, 8) -> 
+	#battle_skill {
+		hp     = 0,       
+		mp     = 0,
+		cd     = 2,     
+		id     = 119,	
+		level  = 8,
+		target = self,
+		param  = {1.16,0.1}    
+	};
+
+get(119, 9) -> 
+	#battle_skill {
+		hp     = 0,       
+		mp     = 0,
+		cd     = 2,     
+		id     = 119,	
+		level  = 9,
+		target = self,
+		param  = {1.18,0.1}    
+	};
+
+get(119, 10) -> 
+	#battle_skill {
+		hp     = 0,       
+		mp     = 0,
+		cd     = 2,     
+		id     = 119,	
+		level  = 10,
+		target = self,
+		param  = {1.2,0.1}    
+	};
+
 get(201, 1) -> 
 	#battle_skill {
 		hp     = 0,       
@@ -4568,7 +4678,7 @@ get(263, 1) ->
 		id     = 263,	
 		level  = 1,
 		target = enemy,
-		param  = {0.5,2}    
+		param  = {0.5,1}    
 	};
 
 get(264, 1) -> 

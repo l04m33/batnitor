@@ -164,6 +164,15 @@ write(20009, #battle_data{award = Award}) ->
 		end,
 	lists:foldl(F, [], Items);
 
+write(20010, MonsterHPList) ->
+    BinList = lists:map(
+        fun({Pos, HP}) ->
+            <<Pos:8, HP:32>>
+        end,
+        MonsterHPList),
+    Payload = list_to_binary([<<(length(MonsterHPList)):16>> | BinList]),
+    pt:pack(20010, Payload);
+
 %% write(20009, {ID, Award}) ->
 %% 	Exp     = Award#battle_award.exp,
 %% 	Gold    = Award#battle_award.gold,
@@ -260,13 +269,13 @@ get_tar_bin_1(TarBin, Index, [AttInfo | Rest]) ->
 	Pos    = AttInfo#attack_info.pos,
 	Hit    = if (AttInfo#attack_info.is_miss == true) -> 1; true -> 0 end,
 	Crit   = if (AttInfo#attack_info.is_crit == true) -> 1; true -> 0 end,
-	Hp     = AttInfo#attack_info.hp,
+	Hp     = round(AttInfo#attack_info.hp),
 	Mp     = AttInfo#attack_info.mp,
-	HpInc  = AttInfo#attack_info.hp_inc,
+	HpInc  = round(AttInfo#attack_info.hp_inc),
 	MpInc  = AttInfo#attack_info.mp_inc,
-	HpAbs  = AttInfo#attack_info.hp_absorb,
-	HpReb  = AttInfo#attack_info.hp_rebound, %% rebound,
-	HpCnt  = AttInfo#attack_info.hp_counter,
+	HpAbs  = round(AttInfo#attack_info.hp_absorb),
+	HpReb  = round(AttInfo#attack_info.hp_rebound), %% rebound,
+	HpCnt  = round(AttInfo#attack_info.hp_counter),
 	MpReb  = 0,
 		
 	?INFO(battle, "AssPos = ~w, Pos = ~w, Hit = ~w, Crit = ~w, " ++ 
@@ -418,6 +427,8 @@ get_item_bin(Bin, [{ItemID, Count, _} | Rest]) ->
 	get_item_bin(NBin, Rest).
 
 
+
+
 get_battle_status(Pos, BattleData) ->
 	array:get(Pos, BattleData#battle_data.player).
 
@@ -444,8 +455,6 @@ calc_simulator_result(BattleData) ->
     {PlayerRoleID, MonsterGroupID, MaxGroupID, SimTimes, MaxSimTimes} = BattleData#battle_data.callback,
     gen_server:cast(batnitor_simulator, {battle_finish, {PlayerRoleID, MonsterGroupID, MaxGroupID, SimTimes, MaxSimTimes, 
                                                          Winner, Rounds, AttHPList, DefHPList}}).
-
-
 
 
 

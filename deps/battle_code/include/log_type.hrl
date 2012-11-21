@@ -170,6 +170,7 @@
 -define(SILVER_FROM_JUNGONGTASK,			47).	%%军功任务中获得
 -define(SILVER_FROM_CONSUME,				48).	%%回馈活动获得
 -define(SILVER_FROM_GUIDE,					49).	%%每日指引获得
+-define(SILVER_FROM_ARENA_CHALLENGE_AWARD,	50).	%%竞技场挑战获得
 
 -define(SILVER_BUY_TIME, 1000). 			%% 1000    买道具消耗
 -define(SILVER_INTENSIFY_COST, 1001). 		%% 1001    强化消耗
@@ -376,6 +377,7 @@
 -define(POPULARITY_FROM_JUNGONGTASK,			20).    %% 军功任务中获得
 -define(POPULARITY_FROM_CONSUME,				21).	%% 回馈活动中获得
 -define(POPULARITY_FROM_GUIDE,					22).	%% 每日指引获得
+-define(POPULARITY_FROM_ARENA_CHALLENGE,		23).	%% 竞技场挑战获得
 
 -define(POPULARITY_FROM_GM,						99).	%%gm获取
 

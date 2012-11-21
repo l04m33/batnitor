@@ -74,6 +74,15 @@
 		opponentId = 0						%% 被挑战者id，若不处于战斗状态中，为0
 	}).
 
+%% 定义竞技场挑战奖励数据结构
+-record(arena_challenge_award, {
+		level = 0,							%% 玩家大于该等级可获得奖励
+		win_silver = 0,						%% 挑战胜利获得银币
+		win_jungong = 0,					%% 挑战胜利获得军功
+		lose_silver = 0,					%% 挑战失败获得银币
+		lose_jungong = 0					%% 挑战失败获得军功
+	}).
+
 -define(CACHE_ARENA_AWARD, cache_util:get_register_name(arena_award)).
 -define(MAX_CHALLENGE_TIMES, 15). 	%%每天最大挑战次数
 -define(CACHE_ARENA_REC, cache_util:get_register_name(arena_rec)).

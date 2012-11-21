@@ -48,3 +48,6 @@
 -define(COMP_SYSTEM, 22).
 
 -define(DOUBLE_YUNBIAO_AWARD, 19).
+
+-define(DEFEND_KING, 22).
+-define(DEFEND_KING_TYPE,7).

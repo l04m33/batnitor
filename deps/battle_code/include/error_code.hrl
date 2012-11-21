@@ -247,6 +247,11 @@
 %% -define(ERR_CD_NUM_NOT_EXIST,			23005).			%% CD队列号不存在
 %% -define(ERR_CD_NOT_NEED_CLEAR,			23006).			%% CD无需清除
 
+%% VIP系统
+-define(ERR_HIGHT_LEVEL_NOT_OVER,			28001).			%% 高级VIP未失效
+-define(ERR_VIP_YEAR_NOT_OVER,				28002).			%% 半年费VIP未失效 
+-define(ERR_VIP_YEAR_HAVE_BUY,				28003).			%% 已经购买了半年费VIP
+
 %% 组队
 %% -define(ERR_TEAM_IN_BATTLE,				30001).			%% 战斗中，不能组队
  -define(ERR_TEAM_IN_ANOTHER_TEAM,		30002).			%% 在另一个队伍中，不能组队
@@ -290,6 +295,8 @@
 -define(ERR_ALREADY_IN_BLACK_LIST,18002). %%已经在黑名单
 -define(ERR_FRIEND_OFFLINE,18003).  		%%好友不在线
 -define(ERR_ADD_FRIEND_TO_SELF,18004).  		%%加自己为好友
+-define(ERR_PAY_TIMES_IS_FULL,18005).  		%%今日祝福次数已满
+-define(ERR_PAYED_TIMES_IS_FULL,18006).  		%%今日好友被祝福次数已满
 
 %%运镖
 -define(ERR_ROB_TIMES_ZERO, 26000).     		%%您今天的打劫次数已满
@@ -337,10 +344,10 @@
 -define(ERR_COMP_ALREADY_APPLY,			37000).					%% 退出比武后不能重新进入
 -define(ERR_COMP_IS_DIE,				37001).					%% 您已经阵亡
 -define(ERR_COMP_OTHER_IS_DIE,			37002).					%% 对方已阵亡
--define(ERR_COMP_NOT_DIE,				37003).
--define(ERR_COMP_ALREADY_LEAVE,			37004).
--define(ERR_COMP_OTHER_ALREADY_LEAVE,	37005).
--define(ERR_COMP_OTHER_IS_CLOAKING,		37006).
+-define(ERR_COMP_NOT_DIE,				37003).					%% 您没有阵亡
+-define(ERR_COMP_ALREADY_LEAVE,			37004).					%% 您已经离开比武场
+-define(ERR_COMP_OTHER_ALREADY_LEAVE,	37005).					%% 对方已经离开比武场
+-define(ERR_COMP_OTHER_IS_CLOAKING,		37006).					%% 对方已经隐形
 -define(ERR_COMP_END_IN_ADVANCE,		37007).					%% 比武已经提前结束
 -define(ERR_COMP_ALREADY_RAISE_BANNER,	37008).					%% 已经升旗了
 

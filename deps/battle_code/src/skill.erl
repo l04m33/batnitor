@@ -62,7 +62,11 @@ handle_skill(SkillUID, Src, Tar, BData) ->
 			Cd       = Skill#battle_skill.cd,
 			Param    = Skill#battle_skill.param,
 			Hp       = max(1, round(SrcStat#battle_status.hp * (1 - HpCost))),
-			MpCost   = if (SkillId == 105 orelse SkillId == 110 orelse SkillId == 115) -> 0; true -> Skill#battle_skill.mp end,
+			MpCost   = if (SkillId == 105 orelse SkillId == 110 orelse SkillId == 115) -> 
+					       0; 
+					   true -> 
+						   Skill#battle_skill.mp 
+					   end,
 			Mp       = max(0, SrcStat#battle_status.mp - MpCost),
 		
 			%% update hp and mp
@@ -1119,7 +1123,22 @@ handle_skill(SkillId, Src, Tar, _Level, Param, BattleData)
 
 
 %% 老周1
-handle_skill(SkillId = 1000, Src, Tar, _Level, _Param, BattleData) ->
+handle_skill(SkillId = 9116, Src, Tar, _Level, _Param, BattleData) ->
+	TarList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
+	Tar0    = hd(TarList),
+	Hp0     = battle:get_battle_status(Tar0, #battle_status.hp, BattleData),
+	
+	G = fun(Pos, {P, Hp}) ->
+			NHp = battle:get_battle_status(Pos, #battle_status.hp, BattleData),	
+			if (NHp < Hp) ->
+				{Pos, NHp};
+			true ->
+				{P, Hp}
+			end
+		end,
+	
+	{NTar, _} = lists:foldl(G, {Tar0, Hp0}, tl(TarList)),
+	
 	Buff = 
 		#buff {
 			name     = ?BUFF_ATT_UP, 
@@ -1130,11 +1149,23 @@ handle_skill(SkillId = 1000, Src, Tar, _Level, _Param, BattleData) ->
 
 	AttSpec = 
 		#attack_spec {
-			addition = 0,
-			buff     = [{Buff, 1.0, add}],
-			targets  = [Tar]
+			addition = 1,
+			buff     = [],
+			targets  = [NTar]
 		},
-	battle:attack(SkillId, Src, AttSpec, BattleData);
+	
+	AttInfoList = battle:attack(SkillId, Src, AttSpec, AttSpec#attack_spec.targets, BattleData),
+	BattleData1 = battle:handle_attack_info(SkillId, Src, AttInfoList, BattleData),
+	
+	FriendList  = battle:get_target_list(battle:calc_range(Src, ?ALLFRIENDLY), BattleData),	
+	F = fun(Pos) ->
+			{Pos, [{Buff, 1.0, add}]}
+		end,
+	BuffSpec = lists:map(F, FriendList),
+	
+	?INFO(skill, "BuffSpec = ~w", [BuffSpec]),
+	
+	battle:do_add_buff(BuffSpec, [], BattleData1);
 
 %======================================================================================================================
 % spare skills

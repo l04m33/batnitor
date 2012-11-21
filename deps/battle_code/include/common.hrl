@@ -38,6 +38,7 @@
 -include("task.hrl").
 -include("marstower.hrl").
 -include("achieve.hrl").
+-include("vip.hrl").
 
 -include("run_business.hrl").
 

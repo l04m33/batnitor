@@ -119,6 +119,7 @@
 		def_id,            %% Defender's ID
 		def_mer   = [],    %% Defender's Mercenary list
 	 	monster,           %% MonsterID
+        monster_hp = ?HP_MAX,   %% Monster HP, can be a list or an integer
 		maketeam  = false, %% true | false
 		checklist = [],    %% [check_spec()]
 		caller,            %% caller module's name or pid
@@ -140,6 +141,7 @@
 		player,    %% array()
 	    timeout,   %% {LastTime, Timeout}
 		monster,  
+        initial_monster_hp,
 		round = 0,
 		award,
 		winner,    %% camp()
@@ -271,8 +273,8 @@
 		buff_add = [], %% [#buff{}]                                                                                                                                                                                                              
 		%% if hit, enemy carry this debuff list
 		%% attacker carry this buff list
-	 	debuff   = [], %% [{#buff{}, rate, buff_op()]
-		buff     = []  %% [{#buff{}, Rate, buff_op()}] | [#buff{}, Rate, buff_op(), TarList]
+	 	debuff   = [], %% [{#buff{}, Tar, rate, buff_op()}]
+		buff     = []  %% [{#buff{}, Tar, Rate, buff_op()}]
 	}	
 ).
 

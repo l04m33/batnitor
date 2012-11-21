@@ -60,8 +60,7 @@
 -record(comp_top_info_types, {
 							  gd_CompLevel = {integer},		%% 比武等级
 							  gd_CompRank  = {integer},		%% 排名
-							  gd_RoleID    = {integer},		%% 角色ID
-							  gd_RoleName  = {string}		%% 角色名字
+							  gd_RoleID    = {integer}		%% 角色ID
 							 }).
 
 -record(comp_award_info, {
