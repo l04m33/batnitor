@@ -92,3 +92,6 @@
 -define(DRUG_TYPE_RESTORE,		5).
 -define(DRUG_TYPE_FLY,			6).
 -define(DRUG_TYPE_REVIVE,		7).
+
+-define(BANNER_IS_RAISE_N,		1).  %% 队旗未升起
+-define(BANNER_IS_RAISE_Y,		2).  %% 队旗已升起

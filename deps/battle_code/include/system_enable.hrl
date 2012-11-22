@@ -32,9 +32,6 @@
 -define(FENGDI_SYSTEM, 15).
 -define(FENGDI_SYSTEM_ENABLE_TYPE, 2).
 
--define(DOUBLE_YUN_BIAO,18).
--define(DOUBLE_YUN_BIAO_TYPE,5).
-
 -define(BOSS_SYSTEM,20).
 -define(BOSS_SYSTEM_ENABLE_TYPE,6).
 
@@ -46,8 +43,10 @@
 -define(LEVEL_ENABLE,3).
 
 -define(COMP_SYSTEM, 22).
+-define(HORSE_SYSTEM, 23).
 
 -define(DOUBLE_YUNBIAO_AWARD, 19).
+-define(DOUBLE_YUNBIAO_TYPE, 5).
 
--define(DEFEND_KING, 22).
+-define(DEFEND_KING, 23).
 -define(DEFEND_KING_TYPE,7).

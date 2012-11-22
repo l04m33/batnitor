@@ -72,7 +72,8 @@
 -define(BUFF_CRIT_UP,    33).
 -define(BUFF_CRIT_DOWN,  34).
 
--define(BUFF_DAMAGE_ADD, 35).    %% 
+-define(BUFF_DAMAGE_ADD, 35).    %% 增加伤害
+-define(BUFF_DMAAGE_SUB, 36).    %% 减去伤害
 
 -define(BUFF_TEST,       12).
 

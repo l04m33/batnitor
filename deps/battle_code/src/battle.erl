@@ -406,7 +406,7 @@ get_battle_data(Start) ->
                     true ->
                         lists:map(
                             fun({RelPos, MHP}) ->
-                                {RelPos + ?BATTLE_FIELD_SIZE, MHP}
+                                {RelPos + ?BATTLE_FIELD_SIZE div 2, MHP}
                             end,
                             Start#battle_start.monster_hp);
                     _ ->    % false
@@ -610,10 +610,12 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array) ->
 		end;
 	true -> %% maketeam = false;
 		List = 
-			if (is_integer(ID)) ->
-				mod_role:get_on_battle_list(ID);
+			if (MerList =/= []) ->
+				MerList;
 			true ->
-				MerList
+			   %% ID must be specified if MerList is []
+			   %%(is_integer(ID)) ->
+				mod_role:get_on_battle_list(ID)
 			end,
 			
 		?INFO(battle, "On Battle List = ~w", [List]),
@@ -1067,7 +1069,9 @@ handle_command(BattleData) ->
 	BattleData :: #battle_data{},
 	NBattleData :: #battle_data{}.
 
-start_new_round(BattleData) ->
+start_new_round(BattleData0) ->
+    BattleData = end_round_hook(BattleData0),
+
 	Round     = BattleData#battle_data.round,
 	?INFO(battle, "starting new round, Round = ~w", [Round + 1]),
 	
@@ -1081,7 +1085,7 @@ start_new_round(BattleData) ->
 	NAttacker = [PlayerInfo#player_info{finish_play = false} || PlayerInfo <- Attacker],
 	NDefender = [PlayerInfo#player_info{finish_play = false} || PlayerInfo <- Defender],
 
-	BattleData#battle_data {
+	NBattleData = BattleData#battle_data {
 		round     = Round + 1,
 		attorder  = AttOrder, 
 	%% if report is needed
@@ -1091,7 +1095,8 @@ start_new_round(BattleData) ->
 	%% endif
 		attacker  = NAttacker,
 		defender  = NDefender
-	}.
+	},
+    start_round_hook(NBattleData).
 
 get_att_order(BattleData) ->
 	?INFO(battle, "calling get_player_list"),
@@ -1557,7 +1562,8 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 			 get_adjust_value(DefTag, Def0, NTar,  BattleData) * BreakAdjust}
 		end,
 	
-	?CHAT(value, "{Att0, Def0} = {~w, ~w}, {Att, Def} = {~w, ~w}", [Att0, Def0, Att, Def]),
+	?CHAT(value, "{Att0, Def0} = {~w, ~w}, {Att, Def} = {~w, ~w}, {AStar, DStar}  = {~w, ~w}", 
+		  [Att0, Def0, Att, Def, AStar, DStar]),
 	
 	{Crit, Luck} = {
 		get_adjust_value(crit, SrcStat#battle_status.crit, Src, BattleData),
@@ -1860,7 +1866,7 @@ handle_attack_info(SkillId, Src, AttInfoList, [AttInfo | Rest], BattleData) ->
 			
 			DataSkill = data_skill_table:get(SkillId, 1),
 			MpAddBySkill = %% mp add by skill 
-				case Rest =/= [] orelse Src == Tar orelse DataSkill#battle_skill.mp == 100 of
+				case Rest =/= [] orelse Src == Tar orelse DataSkill#battle_skill.type == super of
 					%% Rest =/= [] is used to avoid adding mp more than once when attacking
 					%% and if the Skill is super skill, we will not add mp
 					true  -> 0;
@@ -1928,10 +1934,10 @@ assist(SkillId, Src, AssSpecList, BattleData) ->
 assist(_SkillId, _Src, [], AttInfoList, _BattleData) ->
 	AttInfoList;
 
-assist(SkillId, Src, [AssSpec | Rest], AttInfoList, BattleData) ->
+assist(SkillID, Src, [AssSpec | Rest], AttInfoList, BattleData) ->
 	Rate = AssSpec#assist_spec.rate, 
 	Tar  = AssSpec#assist_spec.pos,
-	Eff  = AssSpec#assist_spec.eff,
+	%% Eff  = AssSpec#assist_spec.eff,
 	%% AttInfo here does not contain the full information,
 	%% we simply put the hp_inc and | or mp_inc, is_crit, is_miss in it
 	%% and the other field will be adjust through the function handle_attack_info
@@ -1943,14 +1949,16 @@ assist(SkillId, Src, [AssSpec | Rest], AttInfoList, BattleData) ->
 			is_miss = IsMiss
 		},
 	
-	if (IsMiss == true) ->
-			assist(SkillId, Src, Rest, [AttInfo | AttInfoList], BattleData);
-	   (Eff == []) ->
-		   	assist(SkillId, Src, Rest, AttInfoList, BattleData);
-	   true ->   
-		    NAttInfo = assist_1(Tar, Eff, AttInfo, BattleData),
-			assist(SkillId, Src, Rest, [NAttInfo | AttInfoList], BattleData)
-	end.
+	assist(SkillID, Src, Rest, [AttInfo | AttInfoList], BattleData).
+	
+%% 	if (IsMiss == true) ->
+%% 			assist(SkillId, Src, Rest, [AttInfo | AttInfoList], BattleData);
+%% 	   (Eff == []) ->
+%% 		   	assist(SkillId, Src, Rest, AttInfoList, BattleData);
+%% 	   true ->   
+%% 		    NAttInfo = assist_1(Tar, Eff, AttInfo, BattleData),
+%% 			assist(SkillId, Src, Rest, [NAttInfo | AttInfoList], BattleData)
+%% 	end.
 	
 assist_1(_Tar, [], AttInfo, _BattleData) ->
 	AttInfo;
@@ -2445,13 +2453,15 @@ get_hp_recover_value(MaxHp, #buff {name = ?BUFF_REFRESH, by_rate = ByRate, value
 	end.
 			
 get_damage_value(Dm, Pos, BattleData) ->
-	{F, _I} = get_buff_value(?BUFF_SCORN, Pos, BattleData),
-	if (F =/= 0) ->
-		?INFO(value, "Damage is reduced ~w% by scorn buff. ", [F * 100]);
+	{F1, _I} = get_buff_value(?BUFF_SCORN, Pos, BattleData),
+	if (F1 =/= 0) ->
+		?INFO(value, "Damage is reduced ~w% by scorn buff. ", [F1 * 100]);
 	true ->
 		ok
 	end,
-	round(Dm * (1 - F)).
+	
+	{F2, I2} = get_buff_value(?BUFF_DMAAGE_SUB, Pos, BattleData),
+	round(Dm * (1 - F1) * (1 - F2) - I2).
 
 %========================================================================================================
 % skill transform handler
@@ -2780,49 +2790,41 @@ test_pvp(ID1, ID2) ->
 		},
 	battle:start(Start).
 
+end_round_hook(BattleData) ->
+    %% Everything that should be done after a round is finished
+    BattleData.
 
+start_round_hook(BattleData) ->
+    %% Everything that should be done before a new round starts
+    mutate_attack(BattleData).
 
+mutate_attack(BattleData) ->
+    Round = BattleData#battle_data.round,
+    case lists:member(Round, [11, 16, 21, 26]) of
+        true ->
+            lists:foldl(
+                fun(Pos, BD) ->
+                    case get_battle_status(Pos, BD) of
+                        ?UNDEFINED -> BD;
+                        State ->
+                            LastRate = 1 + ((Round - 11) div 5) * 0.25,
+                            NewPAtt = erlang:round(State#battle_status.p_att / LastRate * (LastRate + 0.25)),
+                            NewMAtt = erlang:round(State#battle_status.m_att / LastRate * (LastRate + 0.25)),
+                            ?INFO(battle_dbg, "Pos = ~w, p_att = ~w, NewPAtt = ~w", 
+                                  [Pos, State#battle_status.p_att, NewPAtt]),
+                            ?INFO(battle_dbg, "Pos = ~w, m_att = ~w, NewMAtt = ~w", 
+                                  [Pos, State#battle_status.m_att, NewMAtt]),
+                            NState = State#battle_status{
+                                p_att = NewPAtt,
+                                m_att = NewMAtt
+                            },
+                            set_battle_status(Pos, NState, BD)
+                    end
+                end,
+                BattleData,
+                lists:seq(1, ?BATTLE_FIELD_SIZE));
 
+        false ->
+            BattleData
+    end.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-													 
-													 
-													 

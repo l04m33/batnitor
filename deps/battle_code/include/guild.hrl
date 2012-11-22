@@ -31,14 +31,15 @@
 
 %% 工会事件
 -define(GUILD_EVENT_MAX, 30).
--define(GUILD_EVENT_CREATE,         1).
--define(GUILD_EVENT_JOIN,           2).
--define(GUILD_EVENT_QUIT,           3).
+-define(GUILD_EVENT_CREATE,         0).
+-define(GUILD_EVENT_JOIN,           1).
+-define(GUILD_EVENT_QUIT,           2).
 -define(GUILD_EVENT_DONATE,         3).
--define(GUILD_EVENT_TRANSFER,       5).
--define(GUILD_EVENT_BATTLE,         6).
--define(GUILD_EVENT_FIRE,           7).
+-define(GUILD_EVENT_DESIGNATE,      4).
 -define(GUILD_EVENT_UPGRADE_LEVEL,  5).
+-define(GUILD_EVENT_TRANSFER,       6).
+-define(GUILD_EVENT_BATTLE,         8).
+-define(GUILD_EVENT_FIRE,           7).
 -define(GUILD_EVENT_UPGRADE_SKILL,  9).
 -define(GUILE_EVENT_LEARN_SKILL,   10).
 

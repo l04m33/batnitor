@@ -38,6 +38,7 @@
 -define(ERR_NOT_ONE_BY_ONE,		 35).	    %% 公会技能每次只能升一级
 -define(ERR_GUIDE_BOX_ERR,		 36).		%% 没有可领取奖励
 -define(ERR_NOT_ENOUGH_HONOUR,   37).		%% 荣誉点不足
+-define(ERR_BAG_NO_SHOE,		 38).		%% 背包里没有小飞鞋
 
 %% 场景
 %% -define(ERR_SCENE_NOT_COMPLETE,			11001).			%% 场景进度未完成

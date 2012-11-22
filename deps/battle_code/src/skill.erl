@@ -204,9 +204,26 @@ handle_skill(SkillId = ?SKILL_COMMON_ATTACK, Src, Tar, _Level, _Param, BattleDat
 	battle:do_att_buff(Src, AttSpec, false, [Tar], NBattleData);
 
 
-%% 威慑4方: 进行3次物理攻击, 并且随机嘲讽N一个目标, 在嘲讽状态下受到攻击不加怒气
+%% 威震四方: 进行3次物理攻击, 并且随机嘲讽N一个目标, 在嘲讽状态下受到攻击不加怒气
 %% N = max(3, (Level + 2) div 3)
-handle_skill(SkillId = 104, Src, Tar, _Level, Param, BattleData) ->	
+%% handle_skill(SkillId = 104, Src, Tar, _Level, Param, BattleData) ->	
+%% 	Buff      = #buff{name = ?BUFF_SCORN,   duration = 1, settle = pre, by_rate = true,  value = ?p1},
+%% 	Debuff    = #buff{name = ?BUFF_SCORNED, duration = 1, settle = pre, by_rate = false, value = Src},
+%% 	
+%% 	BuffOps   = [{Buff,   1.0, add}],
+%% 	DebuffOps = [{Debuff, 1.0, add}],
+%% 	
+%% 	TarList   = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
+%% 	AttSpec   = 
+%% 		#attack_spec {
+%% 			addition = 1.0,
+%% 			%% targets  = lists:sublist(TarList, min(3, (Level + 2) div 3)),
+%% 			targets  = lists:sublist(TarList, 3),
+%% 			buff     = BuffOps,
+%% 			debuff   = DebuffOps					
+%% 		},
+%% 	battle:attack(SkillId, Src, AttSpec, BattleData);
+handle_skill(SkillId = 104, Src, Tar, Level, Param, BattleData) ->	
 	Buff      = #buff{name = ?BUFF_SCORN,   duration = 1, settle = pre, by_rate = true,  value = ?p1},
 	Debuff    = #buff{name = ?BUFF_SCORNED, duration = 1, settle = pre, by_rate = false, value = Src},
 	
@@ -219,18 +236,22 @@ handle_skill(SkillId = 104, Src, Tar, _Level, Param, BattleData) ->
 			addition = 1.0,
 			%% targets  = lists:sublist(TarList, min(3, (Level + 2) div 3)),
 			targets  = lists:sublist(TarList, 3),
-			buff     = BuffOps,
-			debuff   = DebuffOps					
+			buff     = [],
+			debuff   = []					
 		},
-	battle:attack(SkillId, Src, AttSpec, BattleData);
-
+	AttInfoList = battle:attack(SkillId, Src, AttSpec, AttSpec#attack_spec.targets, BattleData),
+	BattleData1 = battle:handle_attack_info(SkillId, Src, AttInfoList, BattleData),
+	
+	TarList1 = lists:sublist(TarList, (Level + 2) div 3),
+	BuffSpec = [{Src, BuffOps} | lists:map(fun(Pos) -> {Pos, DebuffOps} end, TarList1)],
+	
+	battle:do_add_buff(BuffSpec, [], BattleData1);
+		
 
 %% 坚若磐石: 使己方全体加物防和法防 
 handle_skill(SkillId = 105, Src, _Tar, _Level, Param, BattleData) ->
-	Buffs = 
-		[#buff{name = ?BUFF_PDEF_UP, duration = 2, value = ?p1, by_rate = true, settle = pre},
-		 #buff{name = ?BUFF_MDEF_UP, duration = 2, value = ?p1, by_rate = true, settle = pre}],
-	
+	Buffs = [#buff{name = ?BUFF_DMAAGE_SUB, duration = 2, value = ?p1, by_rate = true, settle = pre}],
+		
 	?INFO(skill, "value = ~w", [?p1]),
 	
 	BuffOps = 
@@ -528,6 +549,50 @@ handle_skill(SkillId = 118, Src, Tar, _Level, Param, BattleData) ->
 		},
 	battle:attack(SkillId, Src, AttSpec, BattleData);
 
+%% 老周1
+handle_skill(SkillId = 119, Src, Tar, _Level, _Param, BattleData) ->
+	TarList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
+	Tar0    = hd(TarList),
+	Hp0     = battle:get_battle_status(Tar0, #battle_status.hp, BattleData),
+	
+	G = fun(Pos, {P, Hp}) ->
+			NHp = battle:get_battle_status(Pos, #battle_status.hp, BattleData),	
+			if (NHp < Hp) ->
+				{Pos, NHp};
+			true ->
+				{P, Hp}
+			end
+		end,
+	
+	{NTar, _} = lists:foldl(G, {Tar0, Hp0}, tl(TarList)),
+	
+	Buff = 
+		#buff {
+			name     = ?BUFF_ATT_UP, 
+			by_rate  = true,
+			value    = 0.1,
+			duration = 1
+		},
+
+	AttSpec = 
+		#attack_spec {
+			addition = 1,
+			buff     = [],
+			targets  = [NTar]
+		},
+	
+	AttInfoList = battle:attack(SkillId, Src, AttSpec, AttSpec#attack_spec.targets, BattleData),
+	BattleData1 = battle:handle_attack_info(SkillId, Src, AttInfoList, BattleData),
+	
+	FriendList  = battle:get_target_list(battle:calc_range(Src, ?ALLFRIENDLY), BattleData),	
+	F = fun(Pos) ->
+			{Pos, [{Buff, 1.0, add}]}
+		end,
+	BuffSpec = lists:map(F, FriendList),
+	
+	?INFO(skill, "BuffSpec = ~w", [BuffSpec]),
+	
+	battle:do_add_buff(BuffSpec, [], BattleData1);
 
 %========================================================================================================
 % warrior skill
@@ -1120,52 +1185,6 @@ handle_skill(SkillId, Src, Tar, _Level, Param, BattleData)
 		 SkillId =:= 281 ->
 	
 	handle_skill(230, Src, Tar, _Level, {?p1}, BattleData);
-
-
-%% 老周1
-handle_skill(SkillId = 9116, Src, Tar, _Level, _Param, BattleData) ->
-	TarList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-	Tar0    = hd(TarList),
-	Hp0     = battle:get_battle_status(Tar0, #battle_status.hp, BattleData),
-	
-	G = fun(Pos, {P, Hp}) ->
-			NHp = battle:get_battle_status(Pos, #battle_status.hp, BattleData),	
-			if (NHp < Hp) ->
-				{Pos, NHp};
-			true ->
-				{P, Hp}
-			end
-		end,
-	
-	{NTar, _} = lists:foldl(G, {Tar0, Hp0}, tl(TarList)),
-	
-	Buff = 
-		#buff {
-			name     = ?BUFF_ATT_UP, 
-			by_rate  = true,
-			value    = 0.1,
-			duration = 1
-		},
-
-	AttSpec = 
-		#attack_spec {
-			addition = 1,
-			buff     = [],
-			targets  = [NTar]
-		},
-	
-	AttInfoList = battle:attack(SkillId, Src, AttSpec, AttSpec#attack_spec.targets, BattleData),
-	BattleData1 = battle:handle_attack_info(SkillId, Src, AttInfoList, BattleData),
-	
-	FriendList  = battle:get_target_list(battle:calc_range(Src, ?ALLFRIENDLY), BattleData),	
-	F = fun(Pos) ->
-			{Pos, [{Buff, 1.0, add}]}
-		end,
-	BuffSpec = lists:map(F, FriendList),
-	
-	?INFO(skill, "BuffSpec = ~w", [BuffSpec]),
-	
-	battle:do_add_buff(BuffSpec, [], BattleData1);
 
 %======================================================================================================================
 % spare skills

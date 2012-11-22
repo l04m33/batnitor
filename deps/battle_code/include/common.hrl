@@ -56,6 +56,7 @@
 -include("consume.hrl").
 
 -include("challenge_king.hrl").
+-include("defence.hrl").
 
 %%安全校验
 -define(TICKET, "SDFSDESF123DFSDF").
