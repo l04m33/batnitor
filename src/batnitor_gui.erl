@@ -183,6 +183,7 @@ handle_event(#wx{id = ?ID_DO_SIMULATION,
             end,
             show_message(State#state.main_frame, ErrMsg);
         true ->
+            purge_expanded_flags(),
             MinGroupIDStr = wxTextCtrl:getValue(State#state.min_mon_group_id_field),
             MaxGroupIDStr = wxTextCtrl:getValue(State#state.max_mon_group_id_field),
             SimTimesStr = wxTextCtrl:getValue(State#state.sim_times_field),
@@ -767,7 +768,7 @@ get_row_id_by_mon_group(Grid, _MonsterGroupID, _SumSimTimes, _SimTimes, RowID, R
     wxGrid:appendRows(Grid, [{numRows, 1}]),
     RowsNum;
 get_row_id_by_mon_group(Grid, MonsterGroupID, SumSimTimes, SimTimes, RowID, RowsNum) ->
-    case list_to_integer(wxGrid:getCellValue(Grid, RowID, 0)) of
+    case (catch list_to_integer(wxGrid:getCellValue(Grid, RowID, 0))) of
         MonsterGroupID when is_integer(MonsterGroupID) ->
             case SumSimTimes of
                 SimTimes ->
@@ -812,4 +813,14 @@ do_update_rounds_value(Grid, Row, Col) ->
             {MonGroupID, SimTimes} = locate_prev_mon_group(Grid, Row),
             gen_server:cast(batnitor_simulator, {do_simulation, MonGroupID, MonGroupID, SimTimes, SimTimes})
     end.
+
+purge_expanded_flags() ->
+    lists:foreach(
+        fun({K, _V}) ->
+            case K of
+                {grid_expanded, _, _} -> erlang:erase(K);
+                _ -> void
+            end
+        end,
+        erlang:get()).
 
