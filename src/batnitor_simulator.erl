@@ -141,8 +141,9 @@ handle_cast({battle_finish, {PlayerRoleID, MonsterGroupID, _MaxGroupID, SimTimes
     PlayerRemHP = calc_rem_hp(PlayerHPList),
     MonRemHP = calc_rem_hp(MonHPList),
 
-    gen_server:cast(batnitor_gui, {append_battle_result, {PlayerRoleID, MonsterGroupID, SimTimes, Winner, Rounds, 
-                                                          PlayerRemHP/PlayerTotalHP, MonRemHP/MonTotalHP}}),
+    append_battle_result(PlayerRoleID, MonsterGroupID, SimTimes, Winner, Rounds,
+                         PlayerRemHP/PlayerTotalHP, MonRemHP/MonTotalHP),
+
     {noreply, State};
 
 handle_cast(stop, State) ->
@@ -162,9 +163,8 @@ handle_info({'DOWN', Ref, process, PID, Reason}, State) ->
                 noproc ->
                     gen_server:cast(self(), {do_simulation, MonGroupID, MaxGroupID, SimTimes + 1, MaxSimTimes});
                 _ ->
-                    gen_server:cast(batnitor_gui, {append_battle_result, 
-                                                   {RoleID, MonGroupID, SimTimes,
-                                                    lists:flatten(io_lib:format("~p", [Reason])), 0, 0.0, 0.0}}),
+                    append_battle_result(RoleID, MonGroupID, SimTimes,
+                                         lists:flatten(io_lib:format("~p", [Reason]))),
                     gen_server:cast(self(), {do_simulation, MonGroupID, MaxGroupID, SimTimes + 1, MaxSimTimes})
             end;
         Other ->
@@ -195,10 +195,8 @@ code_change(_OldVsn, State, _Extra) ->
 start_one_battle(MonGroupID, MaxGroupID, SimTimes, MaxSimTimes) ->
     case data_mon_group:get(MonGroupID) of
         undefined ->
-            gen_server:cast(batnitor_gui, {append_battle_result, 
-                                           {0, MonGroupID, SimTimes,
-                                            lists:flatten(io_lib:format("Unknown monster group: ~p", [MonGroupID])), 
-                                            0, 0.0, 0.0}}),
+            append_battle_result(0, MonGroupID, SimTimes,
+                                 lists:flatten(io_lib:format("Unknown monster group: ~p", [MonGroupID]))), 
             error;
         MonGroup ->
             PosList = lists:keysort(2, MonGroup#mon_group.pos),
@@ -225,38 +223,28 @@ start_one_battle(MonGroupID, MaxGroupID, SimTimes, MaxSimTimes) ->
                                 {error, Reason} ->
                                     case Reason of
                                         {function_clause, [{data_skill, skill_info, [BadSkillID|_], _} | _]} ->
-                                            gen_server:cast(batnitor_gui, {append_battle_result, 
-                                                                           {PlayerRoleID, MonGroupID, SimTimes,
-                                                                            lists:flatten(io_lib:format("Unknown skill: ~p", [BadSkillID])), 
-                                                                            0, 0.0, 0.0}});
+                                            append_battle_result(PlayerRoleID, MonGroupID, SimTimes,
+                                                                 lists:flatten(io_lib:format("Unknown skill: ~p", [BadSkillID]))); 
                                         _ ->
-                                            gen_server:cast(batnitor_gui, {append_battle_result, 
-                                                                           {PlayerRoleID, MonGroupID, SimTimes,
-                                                                            lists:flatten(io_lib:format("~p", [Reason])), 
-                                                                            0, 0.0, 0.0}})
+                                            append_battle_result(PlayerRoleID, MonGroupID, SimTimes,
+                                                                 lists:flatten(io_lib:format("~p", [Reason]))) 
                                     end,
                                     error;
                                 ignore ->
-                                    gen_server:cast(batnitor_gui, {append_battle_result, 
-                                                                   {PlayerRoleID, MonGroupID, SimTimes,
-                                                                    lists:flatten(io_lib:format("~p", [ignore])), 
-                                                                    0, 0.0, 0.0}}),
+                                    append_battle_result(PlayerRoleID, MonGroupID, SimTimes,
+                                                         lists:flatten(io_lib:format("~p", [ignore]))), 
                                     error
                             end;
 
                         {bad_roles, BadRolesList} ->
-                            gen_server:cast(batnitor_gui, {append_battle_result, 
-                                                           {PlayerRoleID, MonGroupID, SimTimes,
-                                                            lists:flatten(io_lib:format("Role ID not found: ~w", [BadRolesList])), 
-                                                            0, 0.0, 0.0}}),
+                            append_battle_result(PlayerRoleID, MonGroupID, SimTimes,
+                                                 lists:flatten(io_lib:format("Role ID not found: ~w", [BadRolesList]))), 
                             error
                     end;
 
                 [] ->
-                    gen_server:cast(batnitor_gui, {append_battle_result, 
-                                                   {0, MonGroupID, SimTimes,
-                                                    lists:flatten(io_lib:format("Empty monster group: ~p", [MonGroupID])), 
-                                                    0, 0.0, 0.0}}),
+                    append_battle_result(0, MonGroupID, SimTimes,
+                                         lists:flatten(io_lib:format("Empty monster group: ~p", [MonGroupID]))), 
                     error
             end
     end.
@@ -380,4 +368,15 @@ calc_all_mon_attr(GroupID, MaxGroupID, AccList) ->
                     calc_all_mon_attr(GroupID + 1, MaxGroupID, AccList)
             end
     end.
+
+append_battle_result(PlayerRoleID, MonGroupID, SimTimes, 
+                     Result, Rounds, PlayerHPRate, MonsterHPRate) ->
+    gen_server:cast(batnitor_gui, {append_battle_result, 
+                                   {PlayerRoleID, MonGroupID, SimTimes, Result, 
+                                    Rounds, PlayerHPRate, MonsterHPRate}}).
+
+append_battle_result(PlayerRoleID, MonGroupID, SimTimes, Result) ->
+    gen_server:cast(batnitor_gui, {append_battle_result, 
+                                   {PlayerRoleID, MonGroupID, SimTimes, Result, 
+                                    0, 0.0, 0.0}}).
 
