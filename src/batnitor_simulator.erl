@@ -230,7 +230,10 @@ start_one_battle(MonGroupID, MaxGroupID, SimTimes, MaxSimTimes) ->
                                                                             lists:flatten(io_lib:format("Unknown skill: ~p", [BadSkillID])), 
                                                                             0, 0.0, 0.0}});
                                         _ ->
-                                            ?I("Reason = ~p", [Reason])
+                                            gen_server:cast(batnitor_gui, {append_battle_result, 
+                                                                           {PlayerRoleID, MonGroupID, SimTimes,
+                                                                            lists:flatten(io_lib:format("~p", [Reason])), 
+                                                                            0, 0.0, 0.0}})
                                     end,
                                     error;
                                 ignore ->
