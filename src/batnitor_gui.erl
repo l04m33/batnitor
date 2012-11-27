@@ -768,7 +768,8 @@ get_row_id_by_mon_group(Grid, _MonsterGroupID, _SumSimTimes, _SimTimes, RowID, R
     wxGrid:appendRows(Grid, [{numRows, 1}]),
     RowsNum;
 get_row_id_by_mon_group(Grid, MonsterGroupID, SumSimTimes, SimTimes, RowID, RowsNum) ->
-    case (catch list_to_integer(wxGrid:getCellValue(Grid, RowID, 0))) of
+    MonsterGroupIDStr = wxGrid:getCellValue(Grid, RowID, 0),
+    case (catch list_to_integer(MonsterGroupIDStr)) of
         MonsterGroupID when is_integer(MonsterGroupID) ->
             case SumSimTimes of
                 SimTimes ->
@@ -776,8 +777,14 @@ get_row_id_by_mon_group(Grid, MonsterGroupID, SumSimTimes, SimTimes, RowID, Rows
                 _ ->
                     get_row_id_by_mon_group(Grid, MonsterGroupID, SumSimTimes + 1, SimTimes, RowID + 1, RowsNum)
             end;
-        _ ->
-            get_row_id_by_mon_group(Grid, MonsterGroupID, 1, SimTimes, RowID + 1, RowsNum)
+        Other ->
+            ?I("Other = ~w", [Other]),
+            case MonsterGroupIDStr of
+                [] ->
+                    get_row_id_by_mon_group(Grid, MonsterGroupID, SumSimTimes, SimTimes, RowID + 1, RowsNum);
+                _ ->
+                    get_row_id_by_mon_group(Grid, MonsterGroupID, 1, SimTimes, RowID + 1, RowsNum)
+            end
     end.
 
 locate_prev_mon_group(Grid, RowID) ->
