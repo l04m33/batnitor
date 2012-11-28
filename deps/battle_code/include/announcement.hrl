@@ -57,6 +57,9 @@
 -define(SEND_COMP_STOP_CON_WIN, 58).
 -define(SEND_COMP_RAISE_BANNER, 59).
 -define(SEND_COMP_TOP_RANK, 60).
+-define(SEND_TEAM_RECRUIT, 61).
+-define(SEND_SOUL_BALL, 62).
+-define(SEND_WEALTH, 63).
 
 
 -define(CARD_FROM_RESURRECTION, 1).

@@ -58,6 +58,10 @@
 -include("challenge_king.hrl").
 -include("defence.hrl").
 
+-include("wealth.hrl").
+
+-include("lottery.hrl").
+
 %%安全校验
 -define(TICKET, "SDFSDESF123DFSDF").
 
@@ -76,14 +80,35 @@
 					  {delay_send, true}, {send_timeout, 50000}, 
 					  {keepalive, true}, {exit_on_close, true}]).
 
+%%这张表用来维护server唯一的常量
+%%用type做索引
+%%如果用数字,取字段value_i
+%%如果用字符串，取字段value_s
+%%如果直接使用erlang的term，取字段value_t
+%% type 类型
+%% 招财进宝里的奖池总数
+-define(G_SERVER_WEALTH_SILVER, 1).
+%% 投壶高级物品获得记录
+-define(ADVANCE_ITEM_HISTORY_FROM_LOTTERY, 2).
+%% 投壶历史记录
+-define(LOTTERY_HISTORY, 3).
+-record(g_server_para,
+	{
+		type = 0,
+		value_i = 0,
+		value_t = undefined,
+		value_s = ""
+	}).
+
+-record(g_server_para_types,
+	{
+		type = {integer},
+		value_i = {integer},
+		value_t = {term},
+		value_s = {string}		
+	}).
+
+-define(G_SERVER_PARA_REF, cache_util:get_register_name(g_server_para)).
+
 
 -endif.
-
-%% %% wrapper for catch
-%% -define(Catch(X),
-%% 	case catch (X) of
-%% 		{'EXIT', Reason} -> ?ERR("mod: ~w, id: ~w err: ~w", [?MODULE, get(id), Reason]);
-%% 		V -> V
-%% 	end).
-
-

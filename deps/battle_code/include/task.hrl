@@ -87,7 +87,6 @@
         gd_taskStar = 0,
         gd_taskState = 0,   %% 0未领取，1领取，2完成
         gd_finishNum = 0,
-        gd_freeTimes = 0,   %% 免费刷新次数
         gd_taskNum = 0,     %% 每天任务数
         gd_lastTime = 0
     }).
@@ -99,7 +98,6 @@
         gd_taskStar = {integer},
         gd_taskState = {integer},   %% 0未领取，1领取，2完成
         gd_finishNum = {integer},
-        gd_freeTimes = {integer},   %% 免费刷新次数
         gd_taskNum = {integer},     %% 每天任务数
         gd_lastTime = {integer}
     }).

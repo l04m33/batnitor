@@ -388,19 +388,11 @@
 	 	hp,                 %% integer() | float(),
 		hp_by_rate = false, %% boolean()
 	 	mp,                 %% integer(),
+        mp_add = 30,        %% integer()
 		cd,
 		type,               %% super | common | passive
 		target,             %% self  | friend | enemy
 		param = {}
 	}	
 ).
-
-
-
-
-
-
-
-
-
 

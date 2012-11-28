@@ -39,6 +39,7 @@
 -define(ERR_GUIDE_BOX_ERR,		 36).		%% 没有可领取奖励
 -define(ERR_NOT_ENOUGH_HONOUR,   37).		%% 荣誉点不足
 -define(ERR_BAG_NO_SHOE,		 38).		%% 背包里没有小飞鞋
+-define(ERR_NO_FEEDBACK_GOLD,	 39).		%% 没有可领取的元宝
 
 %% 场景
 %% -define(ERR_SCENE_NOT_COMPLETE,			11001).			%% 场景进度未完成
@@ -152,6 +153,7 @@
 -define(ERR_ITEM_XILIAN_LOCK_ALL,			12094).		%% 最多锁定5个属性
 -define(ERR_ITEM_MYSTICAL_SHOP_ITEM_NUM,	12095).		%% 限购次数已满
 -define(ERR_ITEM_MYSTICAL_SHOP_REFRESH,		12096).		%% 神秘商店已刷新，请重新打开神秘商店
+-define(ERR_SKILL_HAVE_LEARNED,				12097).		%% 已经拥有该技能,不需学习
 
 %% 寻仙系统
 -define(ERR_XUNXIAN_LEVEL_UNUSE,		12101).			%% 寻仙需要30级方能开启
@@ -239,6 +241,8 @@
 -define(ERR_BATTLE_ATTACKER_IS_ON_BATTLE,    20001).   %% 玩家正在战斗
 -define(ERR_BATTLE_DEFENDER_IS_ON_BATTLE,    20002).   %% 被挑战的玩家正在战斗中
 -define(ERR_BATTLE_DEFENDER_IS_NOT_ON_LINE,  20003).   %% 被挑战的玩家不在线
+-define(ERR_BATTLE_MONSTER_IS_ON_BATTLE,	 20004).    %%当前怪物正在战斗中，请稍后再来
+
 
 %% CD系统
 %% -define(ERR_CD_TYPE_NOT_EXIST,			23001).			%% CD类型不存在
@@ -262,6 +266,7 @@
  -define(ERR_TEAM_FULL_SELF,	30011).			%% 你的队伍人数已满，
  -define(ERR_TEAM_INVITE_SUCCESS,	30012).			%% 组队邀请已发出，请耐心等待，
  -define(ERR_TEAM_NOT_LEAD,	30013).			%% 您不是队长，不能邀请，
+ -define(ERR_TEAM_IN_COMP, 30014).         %% 比武中，不能邀请
 
  -define(ERR_TEAM_INVITE_SELF,			30004).			%% 抱歉，不能邀请自己
 -define(ERR_TEAM_NOT_TEAM_SCENE,			30005).			%% 被邀请者等级不足，不能进入此副本
@@ -285,6 +290,9 @@
 -define(ERR_CHALLENGE_TIMEOUT,			49008).			%% 挑战超时
 -define(ERR_IS_THE_REST_LEVEL,			49009).			%% 已重置到最底层
 -define(ERR_CANT_CHANGLE_SELF,			49010).			%% 不能挑战自己
+-define(ERR_OUTO_CHALLENGING,			49011).			%% 请先取消自动挑战
+-define(ERR_ACHIEVE_FLOOR_HIGHTER,		49012). 		%% 未通关的关卡不能挂机
+-define(ERR_NO_AUTO_CHALLENGE,			49013).			%% 没有自动挑战任务
 %% 成就
 -define(ERR_ACHIEVE_AWARD_ERR,			29001).			%% 成就奖励不可领取
 %%
@@ -343,14 +351,15 @@
 -define(ERR_JUNGONG_TASK_NOT_FINISH, 36002).			%% 军功任务未完成
 
 -define(ERR_COMP_ALREADY_APPLY,			37000).					%% 退出比武后不能重新进入
--define(ERR_COMP_IS_DIE,				37001).					%% 您已经阵亡
--define(ERR_COMP_OTHER_IS_DIE,			37002).					%% 对方已阵亡
--define(ERR_COMP_NOT_DIE,				37003).					%% 您没有阵亡
+-define(ERR_COMP_IS_DIE,				37001).					%% 您已经阵亡，请使用还魂丹复活
+-define(ERR_COMP_OTHER_IS_DIE,			37002).					%% 对方已阵亡，请等待TA复活
+-define(ERR_COMP_NOT_DIE,				37003).					%% 您还未阵亡，无需使用还魂丹
 -define(ERR_COMP_ALREADY_LEAVE,			37004).					%% 您已经离开比武场
 -define(ERR_COMP_OTHER_ALREADY_LEAVE,	37005).					%% 对方已经离开比武场
 -define(ERR_COMP_OTHER_IS_CLOAKING,		37006).					%% 对方已经隐形
 -define(ERR_COMP_END_IN_ADVANCE,		37007).					%% 比武已经提前结束
 -define(ERR_COMP_ALREADY_RAISE_BANNER,	37008).					%% 已经升旗了
+-define(ERR_COMP_NOT_COMP_TIME,			37009).					%% 现在不是比武活动时间，不能报名
 
 -define(ERR_HAVE_CHALLENGER, 63001).					%% 通知客户端国王正在被其他人挑战
 -define(COMBAT_POWER_TOO_LOW, 63002).					%% 出战角色战斗力总和小于1000

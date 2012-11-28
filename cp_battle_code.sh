@@ -7,12 +7,14 @@ if [ "$SG_SERVER_PATH" == "" ]; then
     exit 1
 fi
 
-cp -v $SG_SERVER_PATH/src/system/battle/ai.erl       ./deps/battle_code/src/
-cp -v $SG_SERVER_PATH/src/system/battle/battle.erl   ./deps/battle_code/src/
-cp -v $SG_SERVER_PATH/src/system/battle/skill.erl    ./deps/battle_code/src/
-cp -v $SG_SERVER_PATH/src/data/data_ai.erl           ./deps/battle_code/src/
-cp -v $SG_SERVER_PATH/src/data/data_skill.erl        ./deps/battle_code/src/
-cp -v $SG_SERVER_PATH/src/data/data_skill_table.erl  ./deps/battle_code/src/
+cp -v $SG_SERVER_PATH/src/system/battle/ai.erl      ./deps/battle_code/src/
+cp -v $SG_SERVER_PATH/src/system/battle/battle.erl  ./deps/battle_code/src/
+cp -v $SG_SERVER_PATH/src/system/battle/skill.erl   ./deps/battle_code/src/
+cp -v $SG_SERVER_PATH/src/system/mod_rand.erl       ./deps/battle_code/src/
+cp -v $SG_SERVER_PATH/src/util/util.erl             ./deps/battle_code/src/
+cp -v $SG_SERVER_PATH/src/data/data_ai.erl          ./deps/battle_code/src/
+cp -v $SG_SERVER_PATH/src/data/data_skill.erl       ./deps/battle_code/src/
+cp -v $SG_SERVER_PATH/src/data/data_skill_table.erl ./deps/battle_code/src/
 
 cp -v $SG_SERVER_PATH/include/*       ./deps/battle_code/include/
 

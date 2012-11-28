@@ -27,3 +27,7 @@
 
 -define(ETS_ECONOMY,ets_economy).
 
+-define(DISPLAY,1).
+-define(NOT_DISPLAY,0).
+
+

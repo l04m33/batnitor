@@ -8,7 +8,9 @@
 	gd_Point 		 = 0,		%% 积分
 	gd_AchieveLevel  = 0,       %% 通关层数
 	gd_AchieveTime   = 0,		%% 通关时间
-	gd_MonsterList   = []
+	gd_MonsterList   = [],		%% 怪物列表
+	gd_AutoCallengeTimes  = 0,	%% 自动挑战的次数
+	gd_FinishTime	 = 0		%% 完成时间
 	}).
 
 -record (marstower_types, {
@@ -20,7 +22,9 @@
 	gd_Point 		 = {integer},
 	gd_AchieveLevel  = {integer},
 	gd_AchieveTime	 = {integer},
-	gd_MonsterList   = {term}
+	gd_MonsterList   = {term},
+	gd_AutoCallengeTimes  = {integer},
+	gd_FinishTime	 = {integer}
 	}).
 
 -record (marstower_king, {

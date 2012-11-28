@@ -62,15 +62,10 @@ handle_skill(SkillUID, Src, Tar, BData) ->
 			Cd       = Skill#battle_skill.cd,
 			Param    = Skill#battle_skill.param,
 			Hp       = max(1, round(SrcStat#battle_status.hp * (1 - HpCost))),
-			MpCost   = if (SkillId == 105 orelse SkillId == 110 orelse SkillId == 115) -> 
-					       0; 
-					   true -> 
-						   Skill#battle_skill.mp 
-					   end,
+			MpCost   = Skill#battle_skill.mp,
 			Mp       = max(0, SrcStat#battle_status.mp - MpCost),
 		
 			%% update hp and mp
-			SrcStat     = battle:get_battle_status(Src, BattleData),
 			NSrcStat    = SrcStat#battle_status {hp = Hp, mp = Mp},
 			BattleData1 = battle:set_battle_status(Src, NSrcStat, BattleData),
 
@@ -235,14 +230,14 @@ handle_skill(SkillId = 104, Src, Tar, Level, Param, BattleData) ->
 		#attack_spec {
 			addition = 1.0,
 			%% targets  = lists:sublist(TarList, min(3, (Level + 2) div 3)),
-			targets  = lists:sublist(TarList, 3),
+			targets  = util:get_rand_list_elems(TarList, 3),
 			buff     = [],
 			debuff   = []					
 		},
 	AttInfoList = battle:attack(SkillId, Src, AttSpec, AttSpec#attack_spec.targets, BattleData),
 	BattleData1 = battle:handle_attack_info(SkillId, Src, AttInfoList, BattleData),
 	
-	TarList1 = lists:sublist(TarList, (Level + 2) div 3),
+	TarList1 = util:get_rand_list_elems(TarList, (Level + 2) div 3),
 	BuffSpec = [{Src, BuffOps} | lists:map(fun(Pos) -> {Pos, DebuffOps} end, TarList1)],
 	
 	battle:do_add_buff(BuffSpec, [], BattleData1);
@@ -354,7 +349,7 @@ handle_skill(SkillId = 109, Src, Tar, Level, Param, BattleData) ->
 %% 横扫千军: 对敌方3个目标进行攻击
 handle_skill(SkillId = 110, Src, Tar, _Level, Param, BattleData) ->
 	List = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-	NList = lists:sublist(List, 3),
+	NList = util:get_rand_list_elems(List, 3),
 	
 	AttSpec = 
 		#attack_spec {
@@ -430,14 +425,14 @@ handle_skill(SkillId = 112, Src, Tar0, _Level, Param, BattleData) ->
 			_BattleData2 = battle:attack(SkillId, Src, AttSpec1, BattleData1)
 	end;
 
-%% 破军之势, 令敌人眩晕2回合
+%% 破军之势, 令敌人眩晕N回合
 handle_skill(SkillId = 113, Src, Tar, _, Param, BattleData) ->
 	Buff = 
 		#buff {
 			name     = ?BUFF_FAINT,
 			by_rate  = false,
 			value    = 0,
-			duration = 2,
+			duration = ?p2,
 			settle   = pre 
 		},
 	
@@ -457,8 +452,8 @@ handle_skill(SkillId = 113, Src, Tar, _, Param, BattleData) ->
 handle_skill(SkillId = 114, Src, Tar, Level, Param, BattleData) ->
 	List = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
 	NList = 
-		if (Level =< 3) -> lists:sublist(List, 3);
-		   (Level =< 6) -> lists:sublist(List, 4);
+		if (Level =< 3) -> util:get_rand_list_elems(List, 3);
+		   (Level =< 6) -> util:get_rand_list_elems(List, 4);
 			true -> List
 		end,
 	
@@ -473,7 +468,7 @@ handle_skill(SkillId = 114, Src, Tar, Level, Param, BattleData) ->
 %% 奇门遁甲:	小奥义, 对敌方三个目标进行一次法术攻击，有一定概率附加固定伤害
 handle_skill(SkillId = 115, Src, Tar, _Level, Param, BattleData) ->
 	List = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-	NList = lists:sublist(List, 3),
+	NList = util:get_rand_list_elems(List, 3),
 	
 	Buff = 
 		#buff {
@@ -825,7 +820,7 @@ handle_skill(SkillId = 235, Src, _Tar, _Level, Param, BattleData) ->
 %% 冰凌笺  对敌方三个目标造成一定百分比的伤害
 handle_skill(SkillId = 236, Src, Tar, _Level, Param, BattleData) ->
 	List  = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-	NList = lists:sublist(List, 3),
+	NList = util:get_rand_list_elems(List, 3),
 		   
 	AttSpec = 
 		#attack_spec {
@@ -855,7 +850,7 @@ handle_skill(SkillId = 237, Src, Tar, _Level, Param, BattleData) ->
 %% 分光诀:   随机对地方两个单位进行法术攻击, 针对每个目标的伤害会降低
 handle_skill(SkillId = 238, Src, Tar, _Level, Param, BattleData) ->	
 	List = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-	NList = lists:sublist(List, 2),
+	NList = util:get_rand_list_elems(List, 2),
 	
 	AttSpec = 
 		#attack_spec {
@@ -868,7 +863,7 @@ handle_skill(SkillId = 238, Src, Tar, _Level, Param, BattleData) ->
 %% 凝劲术:   降低自己的命中率随机对敌方3个目标进行一次强力的法术攻击
 handle_skill(SkillId = 239, Src, Tar, _Level, Param, BattleData) ->
 	List  = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-	NList = lists:sublist(List, 3),
+	NList = util:get_rand_list_elems(List, 3),
 
 	Buff = 
 		#buff {
@@ -906,7 +901,7 @@ handle_skill(SkillId = 240, Src, Tar, _Level, Param, BattleData) ->
 
 handle_skill(SkillId = 241, Src, Tar, _Level, Param, BattleData) ->
 	List  = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-	NList = lists:sublist(List, 3),
+	NList = util:get_rand_list_elems(List, 3),
 	
 	Buff =
 		#buff {
@@ -930,7 +925,7 @@ handle_skill(SkillId = 241, Src, Tar, _Level, Param, BattleData) ->
 %% 三魂回春: 对己方3个目标进行强力治疗并增加目标10点怒气值
 handle_skill(SkillId = 242, Src, Tar, _Level, Param, BattleData) ->
 	List = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-	NList = lists:sublist(List, 3),
+	NList = util:get_rand_list_elems(List, 3),
 	
 	AssSpecList = 
 		[
@@ -946,7 +941,7 @@ handle_skill(SkillId = 242, Src, Tar, _Level, Param, BattleData) ->
 %% 元灵之光: 对己方3个目标进行治疗, 并概率性增加物理防御和法术防御
 handle_skill(SkillId = 243, Src, Tar, _Level, Param, BattleData) ->
 	List  = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-	NList = lists:sublist(List, 3),
+	NList = util:get_rand_list_elems(List, 3),
 	
 	Buffs = [#buff{name = ?BUFF_MDEF_UP, value = 30, by_rate = false}, 
 			 #buff{name = ?BUFF_PDEF_UP, value = 30, by_rate = false}],
@@ -1080,7 +1075,7 @@ handle_skill(_Skill = 259, Src, Tar, Level, Param, BattleData) ->
 	handle_skill(118, Src, Tar, Level, Param, BattleData);
 
 %% 睡眠
-handle_skill(SkillId = 261, Src, Tar, _Level, Param, BattleData) ->
+handle_skill(_SkillId = 261, Src, Tar, _Level, Param, BattleData) ->
 	handle_skill(279, Src, Tar, _Level, Param, BattleData);
 
 %% 摧枯拉朽

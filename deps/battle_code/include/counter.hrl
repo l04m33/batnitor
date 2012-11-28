@@ -24,10 +24,16 @@
 -define(COUNTER_YUNBIAO_ROBED_TIMES, 29).%%被劫次数记录
 -define(COUNTER_YUNBIAO_NUM, 30).   %%每天运镖总人数
 
+
 %%boss
 -define(INSPIRE_SUCCES, 31).  %%鼓舞
 %% -define(GOLD_INSPIRE_SUCCES,  32).  %%金币鼓舞
--define(CLEAN_BATTLE_CD, 33).   %%boss cd 
+-define(CLEAN_BATTLE_CD, 33).   %%boss cd
+
+%%招财进宝
+-define(COUNTER_WEALTH_LUCK,34). %%招财进宝运势
+-define(COUNTER_WEALTH_GAMBLED,35). %%招财进宝次数
+
 -record (counter, {
 	key           = {0, 0},
 	gd_updateTime = 0,				%% 更新时间

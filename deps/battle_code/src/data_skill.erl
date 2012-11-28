@@ -2117,7 +2117,7 @@ skill_info(105001) ->
 		mode_id       = 105001,
 		class_id      = 105,
 		type          = 4,
-		effect        = 1,
+		effect        = 4,
 		level_up_exp  = 1152,
 		next_skill_id = 105002
 	};
@@ -2666,7 +2666,7 @@ skill_info(110001) ->
 	#skill_info{
 		mode_id       = 110001,
 		class_id      = 110,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 980,
 		next_skill_id = 110002
@@ -2677,7 +2677,7 @@ skill_info(110002) ->
 	#skill_info{
 		mode_id       = 110002,
 		class_id      = 110,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2300,
 		next_skill_id = 110003
@@ -2688,7 +2688,7 @@ skill_info(110003) ->
 	#skill_info{
 		mode_id       = 110003,
 		class_id      = 110,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 7340,
 		next_skill_id = 110004
@@ -2699,7 +2699,7 @@ skill_info(110004) ->
 	#skill_info{
 		mode_id       = 110004,
 		class_id      = 110,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 16150,
 		next_skill_id = 110005
@@ -2710,7 +2710,7 @@ skill_info(110005) ->
 	#skill_info{
 		mode_id       = 110005,
 		class_id      = 110,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 39100,
 		next_skill_id = 110006
@@ -2721,7 +2721,7 @@ skill_info(110006) ->
 	#skill_info{
 		mode_id       = 110006,
 		class_id      = 110,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 76500,
 		next_skill_id = 110007
@@ -2732,7 +2732,7 @@ skill_info(110007) ->
 	#skill_info{
 		mode_id       = 110007,
 		class_id      = 110,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 154700,
 		next_skill_id = 110008
@@ -2743,7 +2743,7 @@ skill_info(110008) ->
 	#skill_info{
 		mode_id       = 110008,
 		class_id      = 110,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 289000,
 		next_skill_id = 110009
@@ -2754,7 +2754,7 @@ skill_info(110009) ->
 	#skill_info{
 		mode_id       = 110009,
 		class_id      = 110,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 527000,
 		next_skill_id = 110010
@@ -2765,7 +2765,7 @@ skill_info(110010) ->
 	#skill_info{
 		mode_id       = 110010,
 		class_id      = 110,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
 		next_skill_id = 0
@@ -3216,7 +3216,7 @@ skill_info(115001) ->
 	#skill_info{
 		mode_id       = 115001,
 		class_id      = 115,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 980,
 		next_skill_id = 115002
@@ -3227,7 +3227,7 @@ skill_info(115002) ->
 	#skill_info{
 		mode_id       = 115002,
 		class_id      = 115,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2300,
 		next_skill_id = 115003
@@ -3238,7 +3238,7 @@ skill_info(115003) ->
 	#skill_info{
 		mode_id       = 115003,
 		class_id      = 115,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 7340,
 		next_skill_id = 115004
@@ -3249,7 +3249,7 @@ skill_info(115004) ->
 	#skill_info{
 		mode_id       = 115004,
 		class_id      = 115,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 16150,
 		next_skill_id = 115005
@@ -3260,7 +3260,7 @@ skill_info(115005) ->
 	#skill_info{
 		mode_id       = 115005,
 		class_id      = 115,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 39100,
 		next_skill_id = 115006
@@ -3271,7 +3271,7 @@ skill_info(115006) ->
 	#skill_info{
 		mode_id       = 115006,
 		class_id      = 115,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 76500,
 		next_skill_id = 115007
@@ -3282,7 +3282,7 @@ skill_info(115007) ->
 	#skill_info{
 		mode_id       = 115007,
 		class_id      = 115,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 154700,
 		next_skill_id = 115008
@@ -3293,7 +3293,7 @@ skill_info(115008) ->
 	#skill_info{
 		mode_id       = 115008,
 		class_id      = 115,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 289000,
 		next_skill_id = 115009
@@ -3304,7 +3304,7 @@ skill_info(115009) ->
 	#skill_info{
 		mode_id       = 115009,
 		class_id      = 115,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 527000,
 		next_skill_id = 115010
@@ -3315,7 +3315,7 @@ skill_info(115010) ->
 	#skill_info{
 		mode_id       = 115010,
 		class_id      = 115,
-		type          = 1,
+		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
 		next_skill_id = 0
@@ -11579,13 +11579,17 @@ get_fixed_cost(8) -> 80.
 
 %%================================================
 %% 根据平均天赋值获取对应的技能孔数量
-get_skill_hole_nums(AverageTalent) when AverageTalent >= 350 -> 6;
+get_skill_hole_nums(AverageTalent) when AverageTalent >= 350 -> 8;
 
-get_skill_hole_nums(AverageTalent) when AverageTalent >= 260 -> 5;
+get_skill_hole_nums(AverageTalent) when AverageTalent >= 300 -> 7;
 
-get_skill_hole_nums(AverageTalent) when AverageTalent >= 180 -> 4;
+get_skill_hole_nums(AverageTalent) when AverageTalent >= 250 -> 6;
 
-get_skill_hole_nums(AverageTalent) when AverageTalent >= 100 -> 3;
+get_skill_hole_nums(AverageTalent) when AverageTalent >= 200 -> 5;
+
+get_skill_hole_nums(AverageTalent) when AverageTalent >= 150 -> 4;
+
+get_skill_hole_nums(AverageTalent) when AverageTalent >= 60 -> 3;
 
 get_skill_hole_nums(AverageTalent) when AverageTalent >= 0 -> 0.
 
@@ -14117,6 +14121,48 @@ get_guild_skill_attri(314028) -> {13,166};
 get_guild_skill_attri(314029) -> {13,173};
 
 get_guild_skill_attri(314030) -> {13,180}.
+
+
+%%================================================
+%% 技能初始化 职业id, 等级 -> 技能 
+get_initial_skill(1,1) -> [106001,101001];
+
+get_initial_skill(1,12) -> [];
+
+get_initial_skill(1,25) -> [];
+
+get_initial_skill(1,30) -> [];
+
+get_initial_skill(1,35) -> [];
+
+get_initial_skill(2,1) -> [111001,102001];
+
+get_initial_skill(2,12) -> [];
+
+get_initial_skill(2,25) -> [];
+
+get_initial_skill(2,30) -> [];
+
+get_initial_skill(2,35) -> [];
+
+get_initial_skill(3,1) -> [116001,103001];
+
+get_initial_skill(3,12) -> [];
+
+get_initial_skill(3,25) -> [];
+
+get_initial_skill(3,30) -> [];
+
+get_initial_skill(3,35) -> [].
+
+
+%%================================================
+%% 职业id -> 可获取技能的等级列表
+get_can_add_skill_level(1) -> [1, 12, 25, 30, 35];
+
+get_can_add_skill_level(2) -> [1, 12, 25, 30, 35];
+
+get_can_add_skill_level(3) -> [1, 12, 25, 30, 35].
 
 
 %%================================================

@@ -39,7 +39,8 @@
 
 -record(g_challenge_king_state,
 	{
-		who_challenging = 0		%% 正在挑战国王的玩家id
+		who_challenging = 0,		%% 正在挑战国王的玩家id
+		monitor_ref = undefined		%% 对正在挑战国王的战斗进程的monitor
 	}
 ).
 

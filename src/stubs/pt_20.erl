@@ -173,6 +173,9 @@ write(20010, MonsterHPList) ->
     Payload = list_to_binary([<<(length(MonsterHPList)):16>> | BinList]),
     pt:pack(20010, Payload);
 
+write(20011, AddedRate) ->
+    pt:pack(20011, <<AddedRate:16>>);
+
 %% write(20009, {ID, Award}) ->
 %% 	Exp     = Award#battle_award.exp,
 %% 	Gold    = Award#battle_award.gold,
@@ -427,52 +430,30 @@ get_item_bin(Bin, [{ItemID, Count, _} | Rest]) ->
 	get_item_bin(NBin, Rest).
 
 
-
-
 get_battle_status(Pos, BattleData) ->
-	array:get(Pos, BattleData#battle_data.player).
+    array:get(Pos, BattleData#battle_data.player).
 
 get_battle_hp_list(Winner, BattleData) ->
-	case Winner of
-		att -> get_battle_hp_list(1, ?BATTLE_FIELD_SIZE div 2 + 1, [], BattleData);
-		def -> get_battle_hp_list(?BATTLE_FIELD_SIZE div 2 + 1, ?BATTLE_FIELD_SIZE + 1, [], BattleData)
-	end.
+    case Winner of
+            att -> get_battle_hp_list(1, ?BATTLE_FIELD_SIZE div 2 + 1, [], BattleData);
+            def -> get_battle_hp_list(?BATTLE_FIELD_SIZE div 2 + 1, ?BATTLE_FIELD_SIZE + 1, [], BattleData)
+    end.
 
 get_battle_hp_list(Limit, Limit, List, _BattleData) -> List;
 get_battle_hp_list(Index, Limit, List, BattleData) ->
-	Stat = get_battle_status(Index, BattleData),
-	if (Stat == ?UNDEFINED) ->
-		get_battle_hp_list(Index + 1, Limit, List, BattleData);
-	true ->
-		get_battle_hp_list(Index + 1, Limit, [{Index, Stat#battle_status.hp} | List], BattleData)
-	end.
-
+    Stat = get_battle_status(Index, BattleData),
+    if (Stat == ?UNDEFINED) ->
+            get_battle_hp_list(Index + 1, Limit, List, BattleData);
+    true ->
+            get_battle_hp_list(Index + 1, Limit, [{Index, Stat#battle_status.hp} | List], BattleData)
+    end.
+
 calc_simulator_result(BattleData) ->
-	Winner = BattleData#battle_data.winner,
+    Winner = BattleData#battle_data.winner,
     DefHPList = get_battle_hp_list(def, BattleData),
     AttHPList = get_battle_hp_list(att, BattleData),
     Rounds = BattleData#battle_data.round,
     {PlayerRoleID, MonsterGroupID, MaxGroupID, SimTimes, MaxSimTimes} = BattleData#battle_data.callback,
     gen_server:cast(batnitor_simulator, {battle_finish, {PlayerRoleID, MonsterGroupID, MaxGroupID, SimTimes, MaxSimTimes, 
                                                          Winner, Rounds, AttHPList, DefHPList}}).
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
 

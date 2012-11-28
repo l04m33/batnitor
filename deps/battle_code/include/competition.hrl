@@ -14,7 +14,8 @@
 					  gd_IsBattle    = false,			%% 当前是否在战斗
 					  gd_IsLeave     = false,			%% 是否已经离开比武场
 					  gd_IsCloaking  = false,			%% 是否隐身
-					  gd_IsDouble    = false			%% 是否使用双倍积分丹
+					  gd_IsDouble    = false,			%% 是否使用双倍积分丹
+					  gd_IsFreeze    = false			%% 是否使用定身丹
 					 }).
 
 -record(g_comp_status, {
@@ -22,7 +23,7 @@
 						apply_tref = none,
 						begin_tref = none,
 						end_tref = none,
-						first_blood = {0, 0},
+						first_bloods = [],
 						banner_trefs = []
 					   }).
 
@@ -78,9 +79,9 @@
 
 -define(TIME_CD_SPEED_UP, 60).
 -define(TIME_CD_CLOAKING, 60).
--define(TIME_CD_DOUBLE, 60).
--define(TIME_CD_RESTORE, 60).
--define(TIME_CD_FLY, 60).
+-define(TIME_CD_DOUBLE, 90).
+-define(TIME_CD_RESTORE, 120).
+-define(TIME_CD_FLY, 120).
 
 -define(TIME_LAST_SPEED_UP, 10).
 -define(TIME_LAST_CLOAKING, 10).
@@ -95,3 +96,6 @@
 
 -define(BANNER_IS_RAISE_N,		1).  %% 队旗未升起
 -define(BANNER_IS_RAISE_Y,		2).  %% 队旗已升起
+
+-define(COMP_CLEAR_PROTECT_COST,	10).		%% 清除战斗保护状态的金币
+-define(COMP_REVIVE_COST,			8).			%% 复活需要的金币

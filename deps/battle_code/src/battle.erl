@@ -342,13 +342,19 @@ notify_complete(ID, BattleData) ->
 		false ->
 			ok
 	end,
-		
+	
+	WinHPList1 = get_battle_hp_list(Winner, BattleData),
+	F1 = fun({Pos, HP}) ->
+				 {(Pos - 1) rem (?BATTLE_FIELD_SIZE div 2) + 1, HP}
+		 end,
+	WinHPList = lists:map(F1, WinHPList1),
+	
 	Res = 
 		#battle_result {
 			is_win    = IsWin, 
 			mon_id    = BattleData#battle_data.monster,
 			type      = Type, 
-			hp_list   = get_battle_hp_list(Winner, BattleData),
+			hp_list   = WinHPList,
 			callback  = Callback, 
 			statistic = Statistic
 		},
@@ -712,6 +718,7 @@ get_mon_info(Camp, MonGroupID, MonHp, Array) ->
                         {_, HP} -> HP
                     end
             end,
+            CurHP = min(MonAttr#mon_attr.hp, MaxHP),
 			
 			BattleStatus = 
 				#battle_status {
@@ -721,7 +728,7 @@ get_mon_info(Camp, MonGroupID, MonHp, Array) ->
 					name    = "", 
 					level   = MonAttr#mon_attr.level,
 					star    = MonAttr#mon_attr.star,
-					hp      = min(MonAttr#mon_attr.hp, MaxHP),
+					hp      = CurHP,
 					hp_max  = MonAttr#mon_attr.hp,
 					mp      = MonAttr#mon_attr.mp,
 					p_att   = MonAttr#mon_attr.p_att,
@@ -734,7 +741,11 @@ get_mon_info(Camp, MonGroupID, MonHp, Array) ->
 					luck    = MonAttr#mon_attr.luck,
 					hit     = MonAttr#mon_attr.hit,
 					crit    = MonAttr#mon_attr.crit,
-					is_lead = 0	
+					is_lead = 0,
+                    is_alive = case CurHP of
+                                   0 -> false;
+                                   _ -> true
+                               end
 				},
 			if (Camp == att) ->
 				NArray = array:set(Pos, BattleStatus, Arr),
@@ -1501,11 +1512,9 @@ pre_attack(Src, Tar, _AttSpec, BattleData) ->
 	random:uniform() =< NHitRate.
 
 		
--spec do_attack(Src, Tar, AttSpec, BattleData) -> {CritcalHit, Damage, NTar, IsAssist} when
+-spec do_attack(Src, Tar, AttSpec, BattleData) -> {CritcalHit, Damage} when
 	Src        :: integer(),
 	Tar        :: integer(),
-	NTar       :: integer(),
-	IsAssist   :: boolean(),
 	AttSpec    :: #attack_spec{},
 	BattleData :: #battle_data{},
 	CritcalHit :: true | false,
@@ -1517,35 +1526,27 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 	Buff = SrcStat#battle_status.buff,
 	BuffAdd = AttSpec#attack_spec.buff_add,
 	
-	{IsAssist, NTar} = 
-		case lists:keysearch(?BUFF_SCORNED, #buff.name, Buff) of
-			{value, #buff {value = T}} -> 
-				{false, T};
-			false -> 
-				{false, Tar}
-		end,
 	
-	%% get the target;
-	NTarStat = get_battle_status(NTar, BattleData),
+	TarStat = get_battle_status(Tar, BattleData),
 	Job = SrcStat#battle_status.job,
 	?INFO(battle, "Job = ~w", [Job]),
 	
 	ParamX = 
 		case SrcStat#battle_status.is_lead == true orelse 
-			NTarStat#battle_status.is_lead == true of
+			TarStat#battle_status.is_lead == true of
 			true  -> 0;
 			false -> 1
 		end,
 	
-	{AStar, DStar}    = {SrcStat#battle_status.star, NTarStat#battle_status.star},
-	{ALevel, _DLevel} = {SrcStat#battle_status.level, NTarStat#battle_status.level},
+	{AStar, DStar}    = {SrcStat#battle_status.star, TarStat#battle_status.star},
+	{ALevel, _DLevel} = {SrcStat#battle_status.level, TarStat#battle_status.level},
 
 	{Att0, Def0, DefTag} =
 		case (Job == ?CAREER_HUWEI) orelse (Job == ?CAREER_MENGJIANG) of
 			true -> 
-				{SrcStat#battle_status.p_att, NTarStat#battle_status.p_def, pdef};
+				{SrcStat#battle_status.p_att, TarStat#battle_status.p_def, pdef};
 			false ->
-				{SrcStat#battle_status.m_att, NTarStat#battle_status.m_def, mdef}
+				{SrcStat#battle_status.m_att, TarStat#battle_status.m_def, mdef}
 		end,
 	
 	{Att, Def} =
@@ -1559,7 +1560,7 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 				end,
 			
 			{get_adjust_value(att,  Att0,  Src,  BattleData),
-			 get_adjust_value(DefTag, Def0, NTar,  BattleData) * BreakAdjust}
+			 get_adjust_value(DefTag, Def0, Tar,  BattleData) * BreakAdjust}
 		end,
 	
 	?CHAT(value, "{Att0, Def0} = {~w, ~w}, {Att, Def} = {~w, ~w}, {AStar, DStar}  = {~w, ~w}", 
@@ -1567,7 +1568,7 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 	
 	{Crit, Luck} = {
 		get_adjust_value(crit, SrcStat#battle_status.crit, Src, BattleData),
-		get_adjust_value(luck, NTarStat#battle_status.luck, Tar, BattleData)},
+		get_adjust_value(luck, TarStat#battle_status.luck, Tar, BattleData)},
 	
 	CritRate = 
 		case lists:keysearch(?BUFF_CRIT, #buff.name, Buff ++ BuffAdd) of
@@ -1619,7 +1620,7 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 		end,
 	
 	BlockRate = 
-		NTarStat#battle_status.block / 2000 + ParamX * 0.05 * (AStar - DStar),
+		TarStat#battle_status.block / 2000 + ParamX * 0.05 * (AStar - DStar),
 	
 	?CHAT(battle, "BlockRate = ~w", [BlockRate]),
 
@@ -1645,7 +1646,7 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 		Damage4 = round(Damage3)
 	end,
 	
-	{IsCrit, max(Damage4, 1), NTar, IsAssist}.
+	{IsCrit, max(Damage4, 1)}.
 
 %% attack entry
 %% (1) attack function generate a list of *attack_info*, 
@@ -1689,11 +1690,36 @@ attack(SkillId, Src, AttSpec, Targets, BattleData) ->
 													  
 %% Travers the Target list, do some calculation, and put the result in the AttInfoList
 attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
+
+	SrcStat = get_battle_status(Src, BattleData),
+	TarStat = get_battle_status(Tar, BattleData),
+	SrcBuff = SrcStat#battle_status.buff,
+		
+	{Skip, _IsAssist, NTar} = 
+		%% Tar is dead, so we must skip this attack
+		if (TarStat#battle_status.is_alive == false) ->
+			{true, false, Tar};
+		true ->
+			%% Tar is not dead, check if someone would be the new target of this player
+			case lists:keysearch(?BUFF_SCORNED, #buff.name, SrcBuff) of
+				{_, #buff {value = T}} when T =/= Tar -> 
+					IsAlive = get_battle_status(T, #battle_status.is_alive, BattleData),
+					if (IsAlive == true) ->
+						{false, true, T};
+					true ->
+						{false, false, Tar}
+					end;
+				false -> 
+					{false, false, Tar}
+			end
+		end,
 	
-	TarStat  = get_battle_status(Tar, BattleData),
-	BuffList = TarStat#battle_status.buff, 
-	
-	if (TarStat == ?UNDEFINED orelse TarStat#battle_status.is_alive == false) ->
+	NTarStat =
+		if (NTar == Tar) -> TarStat; true -> get_battle_status(NTar, BattleData) end,
+	TarBuff =
+		NTarStat#battle_status.buff, 
+		
+	if (Skip == true) ->	   
 		attack(SkillId, Src, AttSpec, Rest, AttInfoList, BattleData);
 	true ->
 		case pre_attack(Src, Tar, AttSpec, BattleData) of
@@ -1706,29 +1732,29 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
 				attack(SkillId, Src, AttSpec, Rest, [AttInfo | AttInfoList], BattleData);
 			true ->
 				%% TODO: may be change the AttSpec here
-				{Cr, Dm, NTar, _IsAssist} = do_attack(Src, Tar, AttSpec, BattleData),
-				HpDrain  = get_hp_absorb(Src, Tar, AttSpec, Dm, BattleData),
-				{Ma, Ms} = get_mp_absorb(Src, Tar, AttSpec, BattleData), %% MpDrain = {MpAdd, MpSub}
-				Rebound  = get_rebound(Src, Tar, AttSpec, Dm, BattleData),
-				Counter  = get_counter(Src, Tar, SkillId, AttSpec, Dm, BattleData),
+				{Cr, Dm} = do_attack(Src, NTar, AttSpec, BattleData),
+				HpDrain  = get_hp_absorb(Src, NTar, AttSpec, Dm, BattleData),
+				{Ma, Ms} = get_mp_absorb(Src, NTar, AttSpec, BattleData), %% MpDrain = {MpAdd, MpSub}
+				Rebound  = get_rebound(Src, NTar, AttSpec, Dm, BattleData),
+				Counter  = get_counter(Src, NTar, SkillId, AttSpec, Dm, BattleData),
 				
 				?INFO(battle, "****************battle attack: ***************************************"),
 				?CHAT(battle, "Src ~w use ~w ---> Tar ~w, deals ~w hitpoint(s), crit = ~w, hp+ = ~w, mp+ = ~w, counter = ~w", 
-					  [Src, SkillId, Tar, Dm, Cr, HpDrain, Ma, Counter]),
+					  [Src, SkillId, NTar, Dm, Cr, HpDrain, Ma, Counter]),
 				
 				?INFO(battle, "Skillid = ~w, Src = ~w, Tar = ~w, Crit = ~w, Damage = ~w, HpDrain = ~w, MpDrain = ~w", 
 					  [SkillId, Src, NTar, Cr, Dm, HpDrain, Ma]),
 				
 				print_battle_status(Src, BattleData),
-				print_battle_status(Tar, BattleData),
+				print_battle_status(NTar, BattleData),
 				
 				MpAddByAtt = 
-					case is_buff_exist(?BUFF_SCORN, TarStat) of
+					case is_buff_exist(?BUFF_SCORN, NTarStat) of
 						true -> 0;
 						_    -> 20
 					end,
 				
-				case lists:keysearch(?BUFF_ASSIST, #buff.name, BuffList) of
+				case lists:keysearch(?BUFF_ASSIST, #buff.name, TarBuff) of
 					{value, #buff {data = Pos, by_rate = true, value = V}} when Pos =/= Tar, Tar == NTar ->	
 		
 					AssStat = get_battle_status(Pos, BattleData),
@@ -1863,21 +1889,16 @@ handle_attack_info(SkillId, Src, AttInfoList, [AttInfo | Rest], BattleData) ->
 			?INFO(battle, "Src = ~w, AttOldMp = ~w, MpAbsorb = ~w", [Src, AttOldMp, MpAbsorb]),
 			AttMaxHp = SrcStat#battle_status.hp_max,
 			AttMaxMp = SrcStat#battle_status.mp_max, %% 100
-			
-			DataSkill = data_skill_table:get(SkillId, 1),
+
 			MpAddBySkill = %% mp add by skill 
-				case Rest =/= [] orelse Src == Tar orelse DataSkill#battle_skill.type == super of
+				case Rest =/= [] orelse Src == Tar of
 					%% Rest =/= [] is used to avoid adding mp more than once when attacking
-					%% and if the Skill is super skill, we will not add mp
 					true  -> 0;
-					false ->
-						case SkillId of
-							100 -> 10;
-							101 -> 10;
-							_   -> 30
-						end
+					false -> 
+                        DataSkill = data_skill_table:get(SkillId, 1),   % XXX: 总是用 Lv.1 的配置……
+                        DataSkill#battle_skill.mp_add
 				end,
-						
+
 			?INFO(battle, "Src = ~w, maxMp = ~w, OldMp = ~w, MpAddbyskill = ~w", 
 				[Src, AttMaxMp, AttOldMp, MpAddBySkill]),
 			
@@ -2662,7 +2683,7 @@ get_damage_data({D, S}, [H | T], BattleData) ->
 		get_damage_data({max(D, D1), S + S1}, T, BattleData)
 	end.
 
-%% get_items_dispatch(Ids, ItemInfo) -> [{ItemID, Count, BindInfo}]
+%% get_items_dispatch(Ids, ItemInfo) -> [{player_id(), [{ItemID, Count, BindInfo}]}]
 get_items_dispatch(Ids, DropType, ItemInfo) ->
 	get_items_dispatch(Ids, DropType, ItemInfo, []).
 	
@@ -2737,7 +2758,10 @@ send_battle_award(ID, BattleData) ->
 			{value, {ID, Value}} -> Value;
 			false -> []
 		end,
-	
+	case length(IDItems) == 0 of
+        false -> mod_team:update_item(ID, IDItems);
+        true ->skip
+    end,
 	?INFO(battle,"createItems, PlayerID = ~w, Itemlist = ~w", [ID, IDItems]),
 	
 	catch mod_economy:add_silver(ID, Silver, ?SILVER_FROM_MONSTER),
@@ -2800,16 +2824,17 @@ start_round_hook(BattleData) ->
 
 mutate_attack(BattleData) ->
     Round = BattleData#battle_data.round,
-    case lists:member(Round, [11, 16, 21, 26]) of
+    case lists:member(Round, [5, 11, 16, 21, 26]) of
         true ->
-            lists:foldl(
+            LastRate = 1 + ((Round - 11) div 5) * 0.25,
+            NewRate = LastRate + 0.25,
+            NBattleData = lists:foldl(
                 fun(Pos, BD) ->
                     case get_battle_status(Pos, BD) of
                         ?UNDEFINED -> BD;
                         State ->
-                            LastRate = 1 + ((Round - 11) div 5) * 0.25,
-                            NewPAtt = erlang:round(State#battle_status.p_att / LastRate * (LastRate + 0.25)),
-                            NewMAtt = erlang:round(State#battle_status.m_att / LastRate * (LastRate + 0.25)),
+                            NewPAtt = erlang:round(State#battle_status.p_att / LastRate * NewRate),
+                            NewMAtt = erlang:round(State#battle_status.m_att / LastRate * NewRate),
                             ?INFO(battle_dbg, "Pos = ~w, p_att = ~w, NewPAtt = ~w", 
                                   [Pos, State#battle_status.p_att, NewPAtt]),
                             ?INFO(battle_dbg, "Pos = ~w, m_att = ~w, NewMAtt = ~w", 
@@ -2822,7 +2847,11 @@ mutate_attack(BattleData) ->
                     end
                 end,
                 BattleData,
-                lists:seq(1, ?BATTLE_FIELD_SIZE));
+                lists:seq(1, ?BATTLE_FIELD_SIZE)),
+
+            Packet = pt_20:write(20011, erlang:round(NewRate * 100) - 100),
+            send_group_package(Packet, get_ids(NBattleData)),
+            NBattleData;
 
         false ->
             BattleData

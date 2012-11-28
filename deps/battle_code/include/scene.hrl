@@ -7,6 +7,7 @@
 -define(SCENE_ARENA, 		5).		%% 竞技场地图
 -define(SCENE_BOSS, 		6).		%% 世界BOSS竞技场地图
 -define(SCENE_MARSTOWER,    7).	    %% 英雄塔地图
+-define(SCENE_COMP,			8).		%% 比武地图
 
 -define(INIT_MAP,           1100).  %% 起始地图
 -define(SPECIAL_MAP, 		1900). 	%% 原野村要做特殊的处理
@@ -25,10 +26,13 @@
 -define(SCENE_STATE_RB,			1).
 -define(SCENE_STATE_BATTLE,		2).
 -define(SCENE_STATE_DAZUO,		4).
+-define(SCENE_STATE_FLY,		8).
 -define(SCENE_STATE_COMP_TEAM,	16).
 -define(SCENE_STATE_COMP_BALL,	32).
 -define(SCENE_STATE_COMP_SPEED,	64).
--define(SCENE_STATE_FLY,    8).
+-define(SCENE_STATE_HORSE,		128).
+-define(SCENE_STATE_WING,		256).
+-define(SCENE_STATE_FASHION,	512).
 
 -define(ROOM_NUMBERS, 100).
 -define(MAX_PLAYER,   30).

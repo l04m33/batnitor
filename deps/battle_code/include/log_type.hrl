@@ -25,6 +25,7 @@
 -define(GOLD_TARGET, 21).				%% 21;		// 目标系统获得
 -define(GOLD_FROM_CONSUME,22).			%% 22;		// 回馈系统获得
 -define(GOLD_FROM_GUIDE,23).			%% 23;		//	每日指引获得
+-define(GOLD_FROM_VIP,24).				%% 24;		// VIP充值回馈获得
 
 -define(GOLD_FORCE_TAX, 21). 			%% = 21;	// 强征花销
 -define(GOLD_TRAIN_TIME, 22). 			%% ;		// 训练时间
@@ -118,7 +119,9 @@
 -define(GOlD_REFRESH_JUNGONGTASK, 117).			%% 用于刷新军工任务
 -define(GOlD_AUTO_COMPLETE_JUNGONGTASK, 118).	%% 用于自动完成军工任务
 -define(GOLD_CLEAR_COMP_CD_COST,119).			%% 清除比武场CD
-
+-define(GOLD_USE_COMP_REVIE_DRUG,120).			%% 比武场使用复活丹
+-define(GOLD_WEALTH_GAMBLE,121).				%%招财进宝
+-define(GOLD_TOWER_FINISH_CHALLENGE,122). 	%% 马上完成爬塔自动挑战
 
 %% ======================== 银币改变的操作类型 ==========================
 -define(SILVER_TAX, 1). 					%% 1    征收所得
@@ -171,6 +174,9 @@
 -define(SILVER_FROM_CONSUME,				48).	%%回馈活动获得
 -define(SILVER_FROM_GUIDE,					49).	%%每日指引获得
 -define(SILVER_FROM_ARENA_CHALLENGE_AWARD,	50).	%%竞技场挑战获得
+-define(SILVER_FROM_WEALTH,					51).	%%招财进宝获得
+-define(SILVER_FROM_COMP,					52).	%%比武奖励获得
+-define(SILVER_FROM_MARSTOWER,				53).	%%爬塔自动挑战获得
 
 -define(SILVER_BUY_TIME, 1000). 			%% 1000    买道具消耗
 -define(SILVER_INTENSIFY_COST, 1001). 		%% 1001    强化消耗
@@ -208,6 +214,7 @@
 -define(SILVER_UPGRATE_SKILL,1041).			%% 1041   用于升级技能
 -define(SILVER_LEARN_GUILD_SKILL, 1042).     %%        用于升级工会技能
 -define(SILVER_BUY_MYSTICAL_SHOP_ITEM, 1043).		%% 用于购买神秘商店物品
+-define(SILVER_MARSTOWER_AUTO_CHALLENGE,1044). %% 用于爬塔自动挑战
 
 
 
@@ -304,6 +311,7 @@
 -define(EXP_FROM_SLAVE_WORK,		9).		%% 奴隶劳作所得
 -define(EXP_FROM_DAZUO,				10).	%% 打坐所得
 -define(EXP_DROM_GUIDE,				11).	%% 每日指引获得
+-define(EXP_FROM_MARSTOWER,			12).	%% 爬塔获得
 
 %% ========================= 精力改变 ==========================
 -define(ENERGY_RECOVERY,			1).		%% 精力回复

@@ -60,14 +60,16 @@
 			vip_pid			  = none,		%% VIP模块
 			dazuo_pid		  = none,		%% 打坐模块
 			guide_pid		  = none,		%% 每日指引模块
-			arena_pid         = none,
+			arena_pid         = none,		%% 竞技场模块
 			guaji_pid		  = none,		%% 挂机模块
 			yunbiao_pid       = none,        %% 运镖模块
 			boss_pid          = none,         %%世界boss模块		  
 			marstower_pid	  = none,        %% 英雄塔模块
             temp_bag_pid      = none,        %% 临时背包
             challenge_king_pid= none,		%% 挑战国王
-			competition_pid   = none		%% 比武模块
+			competition_pid   = none,		%% 比武模块
+			wealth_pid 		  = none,		%% 招财进宝
+			lottery_pid		  = none		%% 投壶模块
 	}).
 
 %%用户登录数据表

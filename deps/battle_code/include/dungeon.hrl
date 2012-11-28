@@ -8,6 +8,7 @@
 	key             = {0, 0},		%% {gd_accountId, dungeonId}
 	enterTimes      = 0,			%% 进入次数
 	buyTimes      	= 0,			%% 购买次数
+	vipBuyTimes		= 0,			%% VIP购买次数
 	updateTime      = 0,			%% 次数的更新时间
 	maxAttDamage    = 0,			%% 历史最大的一次伤害
 	totalRound      = 0,			%% 总的战斗回合数
@@ -22,6 +23,7 @@
 	key             = {{integer}, {integer}},
 	enterTimes    	= {integer},
 	buyTimes    	= {integer},
+	vipBuyTimes		= {integer},
 	updateTime    	= {integer},
 	maxAttDamage    = {integer},
 	totalRound      = {integer},

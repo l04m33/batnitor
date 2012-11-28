@@ -24,6 +24,7 @@
 %% 		19,		%%双倍运镖
 %% 		20,		%%世界boss
 %%		21,		%%双倍运镖
+%%		24,		%%比武
 %% 	]).
 
 -define(ARENA_SYSTEM, 13).
@@ -49,4 +50,8 @@
 -define(DOUBLE_YUNBIAO_TYPE, 5).
 
 -define(DEFEND_KING, 23).
+-define(DEFEND_KING_LEVEL, 25).
 -define(DEFEND_KING_TYPE,7).
+
+-define(SYSTEM_TYPE_COMP, 24).
+-define(SYSTEM_ENABLE_TYPE_COMP, 3).
