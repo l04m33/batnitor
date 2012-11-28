@@ -503,7 +503,7 @@ string_to_term(String) ->
 
 row_to_role([ID, DengJi, GongJi, FangYu, Xue, SuDu, MingZhong, ShanBi, BaoJi, 
                   XingYun, GeDang, FanJi, PoJia, ZhiMing, GuaiDaRen, RenDaGuai, NanDu,
-                  GuaiWuLeiXing, Skill1, Skill2, Skill3, Skill4, Skill5, Skill6]) ->
+                  GuaiWuLeiXing, GuaiWuZhiYe, Skill1, Skill2, Skill3, Skill4, Skill5, Skill6]) ->
     SkillsList = lists:zip(lists:seq(1, 6), 
                            lists:map(fun string_to_term/1, 
                                      [Skill1, Skill2, Skill3, Skill4, Skill5, Skill6])),
@@ -562,13 +562,14 @@ row_to_role([ID, DengJi, GongJi, FangYu, Xue, SuDu, MingZhong, ShanBi, BaoJi,
 
         gd_name            = ""                             %% 佣兵名称
     }, 
-    {
-        {0, string_to_term(ID)},
-        string_to_term(GuaiDaRen),
-        string_to_term(RenDaGuai),
-        string_to_term(NanDu),
-        string_to_term(GuaiWuLeiXing),
-        ValidSkillsList
+    #misc_info {
+        key         = {0, string_to_term(ID)},
+        guai_da_ren = string_to_term(GuaiDaRen),
+        ren_da_guai = string_to_term(RenDaGuai),
+        nan_du      = string_to_term(NanDu),
+        guai_lei_xing = string_to_term(GuaiWuLeiXing),
+        guai_zhi_ye = string_to_term(GuaiWuZhiYe),
+        skills_list = ValidSkillsList
     }}.
 
 row_to_mon_attr([ID, MingZhong, ShanBi, BaoJi, XingYun, GeDang, FanJi, PoJia, _ZhiMing, JiNeng]) ->

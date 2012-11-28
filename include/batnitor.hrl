@@ -25,4 +25,13 @@
 
 -endif.
 
+-record(misc_info, {
+    key         = {0, 0},
+    guai_da_ren = 0,
+    ren_da_guai = 0,
+    nan_du      = 0,
+    guai_lei_xing = 0,
+    guai_zhi_ye = 0,
+    skills_list = []}).
+
 -endif.

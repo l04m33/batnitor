@@ -37,7 +37,7 @@ init(_) ->
     erlang:process_flag(trap_exit, true),
 
     ets:new(ets_role_rec, [named_table, public, {keypos, #role.key}, set]),
-    ets:new(ets_role_misc_rec, [named_table, public, {keypos, 1}, set]),
+    ets:new(ets_role_misc_rec, [named_table, public, {keypos, #misc_info.key}, set]),
     data_mon_group:init_ets(),
     data_mon_attr:init_ets(),
 
@@ -76,7 +76,11 @@ handle_call({get_rounds_list_by_mon_group, MonGroupID}, _From, State) ->
             F = fun(M) ->
                 case ets:lookup(ets_role_misc_rec, {0, M}) of
                     [MInfo] ->
-                        {_, GuaiDaRen, RenDaGuai, NanDu, _, _} = MInfo,
+                        #misc_info{
+                            guai_da_ren = GuaiDaRen, 
+                            ren_da_guai = RenDaGuai, 
+                            nan_du = NanDu
+                        } = MInfo,
                         {M, NanDu, GuaiDaRen, RenDaGuai};
                     [] ->
                         {no_role, M}
@@ -257,19 +261,35 @@ prepare_mon_attr(MonGroup) ->
             [] -> {no_role, MonID};
             [RoleInfo] ->
                 [MiscInfo] = MiscInfoR,
-                {_, GuaiDaRen, RenDaGuai, NanDu, LeiXing, _Skills} = MiscInfo,
+                #misc_info{
+                    guai_da_ren = GuaiDaRen, 
+                    ren_da_guai = RenDaGuai, 
+                    nan_du = NanDu, 
+                    guai_lei_xing = LeiXing,
+                    guai_zhi_ye = ZhiYe
+                } = MiscInfo,
+
+                {AttackBoost, HPBoost, SpeedBoost} = case ZhiYe of
+                    1 -> {0.85,  1.2, 0.95};
+                    2 -> {   1,    1, 1.05};
+                    3 -> { 1.1,  0.8,    1};
+                    4 -> {   1,    1,    1}
+                end,
+
                 MonAttr = data_mon_attr:get(MonID),
                 NewAttr = MonAttr#mon_attr {
                     cat         = LeiXing, 
                     level       = RoleInfo#role.gd_roleLevel,
 
                     hp          = erlang:round(
+                                      HPBoost *
                                       RenDaGuai * RoleInfo#role.p_att * 
                                       (1 - (RoleInfo#role.p_def / (RoleInfo#role.p_def + RoleInfo#role.gd_roleLevel * 450)))),
 
                     p_att       = case LeiXing of
                                       %% physical attacker
                                       1 -> erlang:round(
+                                               AttackBoost *
                                                RoleInfo#role.gd_maxHp / 
                                                ((1 - RoleInfo#role.p_def / 
                                                  (RoleInfo#role.p_def + RoleInfo#role.gd_roleLevel * 450)) * GuaiDaRen));
@@ -278,12 +298,11 @@ prepare_mon_attr(MonGroup) ->
                                   end,
 
                     m_att       = case LeiXing of
-                                      %% physical attacker
                                       3 -> erlang:round(
+                                               AttackBoost *
                                                RoleInfo#role.gd_maxHp / 
                                                ((1 - RoleInfo#role.m_def / 
                                                  (RoleInfo#role.m_def + RoleInfo#role.gd_roleLevel * 450)) * GuaiDaRen));
-                                      %% magical attacker
                                       1 -> 0
                                   end,
 
@@ -299,11 +318,11 @@ prepare_mon_attr(MonGroup) ->
 
                     speed       = case NanDu of
                                       %% normal
-                                      1 -> erlang:round(0.9 * RoleInfo#role.gd_speed);
+                                      1 -> erlang:round(SpeedBoost * 0.9 * RoleInfo#role.gd_speed);
                                       %% elite
-                                      2 -> erlang:round(1.0 * RoleInfo#role.gd_speed);
+                                      2 -> erlang:round(SpeedBoost * 1.0 * RoleInfo#role.gd_speed);
                                       %% boss
-                                      3 -> erlang:round(1.1 * RoleInfo#role.gd_speed)
+                                      3 -> erlang:round(SpeedBoost * 1.1 * RoleInfo#role.gd_speed)
                                   end
                 },
                 data_mon_attr:set(NewAttr),

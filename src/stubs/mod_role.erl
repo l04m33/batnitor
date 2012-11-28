@@ -3,11 +3,12 @@
 -compile([export_all]).
 
 -include("common.hrl").
+-include("batnitor.hrl").
 
 get_on_battle_list(ID) ->
     [RoleInfo] = ets:lookup(ets_role_rec, {0, ID}),
     [MiscInfo] = ets:lookup(ets_role_misc_rec, {0, ID}),
-    {_, _, _, _, _, Skills} = MiscInfo,
+    #misc_info{skills_list = Skills} = MiscInfo,
     [{FirstPos, _} | _] = Skills,
     RoleF = fun({Pos, Skill}) ->
         RoleInfo#role {
