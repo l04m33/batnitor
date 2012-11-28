@@ -817,7 +817,7 @@ do_update_rounds_value(Grid, Row, Col) ->
             show_message(Grid, "Illegal Value: " ++ VStr);
         _ ->
             RoleID = list_to_integer(wxGrid:getCellValue(Grid, Row, 1)),
-            ets:update_element(ets_role_misc_rec, {0, RoleID}, {Col - 1, NewValue}),
+            ets:update_element(ets_role_misc_rec, {0, RoleID}, {Col, NewValue}),
             {MonGroupID, SimTimes} = locate_prev_mon_group(Grid, Row),
             gen_server:cast(batnitor_simulator, {do_simulation, MonGroupID, MonGroupID, SimTimes, SimTimes})
     end.
