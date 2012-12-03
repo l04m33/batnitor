@@ -316,6 +316,21 @@ terminate(_Reason, _State) ->
 
         _ -> void
     end,
+
+    case erlang:get(player_file) of
+        undefined -> void;
+        PFPath ->
+            case file:open(PFPath, write) of
+                {ok, PFHandle} ->
+                    io:format(PFHandle, "ID,等级,攻击,防御,HP,速度,命中,闪避,暴击,幸运,格挡,反击,破甲,"
+                                        "致命,怪打人次数,人打怪次数,难度,怪物类型,怪物职业,"
+                                        "技能组1,技能组2,技能组3,技能组4,技能组5,技能组6~n", []),
+                    RolesOrder = gen_server:call(batnitor_simulator, get_roles_order),
+                    write_player_config(PFHandle, RolesOrder);
+                {error, Err} ->
+                    ?E("Can't save player config: ~w", [{error, Err}])
+            end
+    end,
     ok.
 
 
@@ -837,4 +852,46 @@ purge_expanded_flags() ->
             end
         end,
         erlang:get()).
+
+write_player_config(_, []) -> ok;
+write_player_config(FHandle, [RoleID | Rest]) ->
+    [RoleInfo] = ets:lookup(ets_role_rec, {0, RoleID}),
+    [RoleMiscInfo] = ets:lookup(ets_role_misc_rec, {0, RoleID}),
+    DL0 = lists:ukeysort(1, RoleMiscInfo#misc_info.skills_list),
+    FullSkills = case length(DL0) < 6 of
+        true ->
+            {_, DL} = lists:unzip(lists:ukeymerge(1, DL0, lists:zip(lists:seq(1, 6), lists:duplicate(6, [])))),
+            DL ++ lists:duplicate(6 - length(DL0), []);
+        _ ->
+            {_, DL} = lists:unzip(DL0),
+            DL
+    end,
+    io:format(FHandle, "~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,"
+                       "~w,~w,~w,~w,~w,~w,\"~w\",\"~w\",\"~w\",\"~w\",\"~w\",\"~w\"~n",
+              [RoleID,
+               RoleInfo#role.gd_roleLevel,
+               RoleInfo#role.p_att,
+               RoleInfo#role.p_def,
+               RoleInfo#role.gd_currentHp,
+               RoleInfo#role.gd_speed,
+               RoleInfo#role.gd_mingzhong,
+               RoleInfo#role.gd_shanbi,
+               RoleInfo#role.gd_baoji,
+               RoleInfo#role.gd_xingyun,
+               RoleInfo#role.gd_gedang,
+               RoleInfo#role.gd_fanji,
+               RoleInfo#role.gd_pojia,
+               RoleInfo#role.gd_zhiming,
+               RoleMiscInfo#misc_info.guai_da_ren,
+               RoleMiscInfo#misc_info.ren_da_guai,
+               RoleMiscInfo#misc_info.nan_du,
+               RoleMiscInfo#misc_info.guai_lei_xing,
+               RoleMiscInfo#misc_info.guai_zhi_ye,
+               lists:nth(1, FullSkills),
+               lists:nth(2, FullSkills),
+               lists:nth(3, FullSkills),
+               lists:nth(4, FullSkills),
+               lists:nth(5, FullSkills),
+               lists:nth(6, FullSkills)]),
+    write_player_config(FHandle, Rest).
 

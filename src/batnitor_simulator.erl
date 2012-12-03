@@ -96,6 +96,10 @@ handle_call({get_rounds_list_by_mon_group, MonGroupID}, _From, State) ->
     end,
     {reply, Reply, State};
 
+handle_call(get_roles_order, _From, State) ->
+    Reply = State#state.roles_order,
+    {reply, Reply, State};
+
 handle_call(_Msg, _From, State) ->
     {reply, ok, State}.
 
