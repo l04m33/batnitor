@@ -1,6 +1,7 @@
 -ifndef(__COMMON_HRL__).
 -define(__COMMON_HRL__, 1).
 
+-include("chief_disciple.hrl").
 -include("rank.hrl").
 -include("soul_ball.hrl").
 -include("cool_down.hrl").

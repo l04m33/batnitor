@@ -206,16 +206,19 @@
 	minjie    = 0			%% 敏捷天赋的提升概率
 	}).
 
+-record (junwei_role, {
+	gd_accountId = 0,
+	gd_junling = 0,
+	gd_luck = 0,
+	gd_angry = 0,
+	gd_lastTime = 0
+	}).
 
-
-
-
-
-
-
-
-
-
-
-
+-record (junwei_role_types, {
+	gd_accountId = {integer},
+	gd_junling = {integer},
+	gd_luck = {integer},
+	gd_angry = {integer},
+	gd_lastTime = {integer}
+	}).
 

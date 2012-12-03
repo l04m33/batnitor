@@ -123,28 +123,14 @@ handle_event(#wx{id = ?ID_SAVE_CALC_MONSTER_PROP,
                  event = #wxCommand{type = command_menu_selected}}, State) ->
     case choose_file_by_dialog(State#state.main_frame, save) of
         {ok, FPath} ->
-            MinGroupIDStr = wxTextCtrl:getValue(State#state.min_mon_group_id_field),
-            MaxGroupIDStr = wxTextCtrl:getValue(State#state.max_mon_group_id_field),
-            {MinGroupID, MaxGroupID} = try
-                {list_to_integer(MinGroupIDStr), list_to_integer(MaxGroupIDStr)}
-            catch _:_ ->
-                {0, 0}
-            end,
-            case MinGroupID > 0 andalso MaxGroupID > 0 of
-                true ->
-                    case file:open(FPath, write) of
-                        {ok, FHandle} ->
-                            MonList = gen_server:call(batnitor_simulator, 
-                                                      {get_calculated_monster_attr, MinGroupID, MaxGroupID}),
-                            write_mon_attr(MonList, FHandle),
-                            file:close(FHandle);
-                        _ ->
-                            show_message(State#state.main_frame, "Cannot open file: " ++ FPath)
-                    end;
-
-                _ ->        % false
-                    show_message(State#state.main_frame, "Illegal Monster Group IDs: " ++ 
-                                                         MinGroupIDStr ++ " - " ++ MaxGroupIDStr)
+            case file:open(FPath, write) of
+                {ok, FHandle} ->
+                    MonList = gen_server:call(batnitor_simulator, 
+                                              get_calculated_monster_attr),
+                    write_mon_attr(MonList, FHandle),
+                    file:close(FHandle);
+                _ ->
+                    show_message(State#state.main_frame, "Cannot open file: " ++ FPath)
             end;
 
         cancel -> void
@@ -480,9 +466,10 @@ choose_file_by_dialog(MainFrame, OpenOrSave) ->
     wxFileDialog:destroy(FDialog),
     Ret.
 
-parse_csv_line({eof}, AccList) -> AccList;
+parse_csv_line({eof}, AccList) -> 
+    lists:reverse(AccList);
 parse_csv_line({newline, Line}, AccList) ->
-    ?I("Line = ~p", [Line]),
+    %?I("Line = ~p", [Line]),
     [Line | AccList].
 
 show_message(MainFrame, Msg) ->
@@ -507,7 +494,7 @@ row_to_role([ID, DengJi, GongJi, FangYu, Xue, SuDu, MingZhong, ShanBi, BaoJi,
     SkillsList = lists:zip(lists:seq(1, 6), 
                            lists:map(fun string_to_term/1, 
                                      [Skill1, Skill2, Skill3, Skill4, Skill5, Skill6])),
-    ?I("SkillsList = ~p", [SkillsList]),
+    %?I("SkillsList = ~p", [SkillsList]),
     ValidSkillsList = lists:filter(fun({_, S}) -> is_list(S) andalso length(S) > 0 end, SkillsList),
     {#role {
         key                = {0, string_to_term(ID)},       %% 佣兵记录的key为一个记录:{player_id, mer_id}
@@ -572,7 +559,7 @@ row_to_role([ID, DengJi, GongJi, FangYu, Xue, SuDu, MingZhong, ShanBi, BaoJi,
         skills_list = ValidSkillsList
     }}.
 
-row_to_mon_attr([ID, MingZhong, ShanBi, BaoJi, XingYun, GeDang, FanJi, PoJia, _ZhiMing, JiNeng]) ->
+row_to_mon_attr([ID, MingZhong, ShanBi, BaoJi, XingYun, GeDang, FanJi, PoJia, ZhiMing, JiNeng]) ->
     #mon_attr {
         id          = string_to_term(ID),
 		name        = "",
@@ -590,6 +577,7 @@ row_to_mon_attr([ID, MingZhong, ShanBi, BaoJi, XingYun, GeDang, FanJi, PoJia, _Z
  		crit        = string_to_term(BaoJi),
  		luck        = string_to_term(XingYun),
 		break       = string_to_term(PoJia),
+        fatal       = string_to_term(ZhiMing),
 		agility     = 0,
       	strength    = 0,
 		block       = string_to_term(GeDang),
@@ -630,30 +618,47 @@ read_csv_rows_from_file(FPath) when is_list(FPath) ->
             {error, cannot_open_file}
     end.
 
-write_mon_attr(MonGroupList, FHandle) ->
-    %io:format(FHandle, "\"怪物堆ID\",\"怪物ID\",\"怪物类型\",\"等级\",\"生命\",\"物攻\",\"魔攻\",\"物防\",\"魔防\",\"速度\"~n"),
-    io:format(FHandle, "\"Monster Group ID\",\"Monster ID\",\"Type\",\"Level\",\"HP\","
-                       "\"Physical Attack\",\"Magical Attack\",\"Physical Defence\",\"Magical Defence\",\"Speed\"~n", []),
-    G = fun({GroupID, MonList}) ->
-        F = fun(Mon) ->
-            io:format(FHandle, "~w,~w,~w,~w,~w,~w,~w,~w,~w,~w~n", 
-                      [GroupID,
-                       Mon#mon_attr.id,
-                       Mon#mon_attr.cat,
-                       Mon#mon_attr.level,
-                       Mon#mon_attr.hp,
-                       Mon#mon_attr.p_att,
-                       Mon#mon_attr.m_att,
-                       Mon#mon_attr.p_def,
-                       Mon#mon_attr.m_def,
-                       Mon#mon_attr.speed])
-        end,
-        lists:foreach(F, MonList)
+write_mon_attr(MonList, FHandle) ->
+    io:format(FHandle, "\"怪物ID\","
+                       "\"气血\","
+                       "\"物攻\","
+                       "\"法攻\","
+                       "\"物防\","
+                       "\"法防\","
+                       "\"速度\","
+                       "\"暴击\","
+                       "\"幸运\","
+                       "\"致命\","
+                       "\"闪避\","
+                       "\"名中\","
+                       "\"反击\","
+                       "\"破甲\","
+                       "\"格挡\","
+                       "\"怪物星级\"~n", []),
+
+    G = fun(Mon) ->
+        io:format(FHandle, "~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,~w~n", 
+                  [Mon#mon_attr.id,
+                   Mon#mon_attr.hp,
+                   Mon#mon_attr.p_att,
+                   Mon#mon_attr.m_att,
+                   Mon#mon_attr.p_def,
+                   Mon#mon_attr.m_def,
+                   Mon#mon_attr.speed,
+                   Mon#mon_attr.crit,
+                   Mon#mon_attr.luck,
+                   Mon#mon_attr.fatal,
+                   Mon#mon_attr.dodge,
+                   Mon#mon_attr.hit,
+                   Mon#mon_attr.counter,
+                   Mon#mon_attr.break,
+                   Mon#mon_attr.block,
+                   Mon#mon_attr.star])
     end,
-    lists:foreach(G, MonGroupList).
+    lists:foreach(G, MonList).
 
 write_results(Grid, FHandle) ->
-    io:format(FHandle, "\"Player Role ID\",\"Monster Group ID\",\"Rounds\",\"Player HP\",\"Monster HP\",\"Result\"~n", []),
+    io:format(FHandle, "\"角色ID\",\"怪物堆ID\",\"回合数\",\"玩家剩余HP\",\"怪物剩余HP\",\"结果\"~n", []),
     NumRows = wxGrid:getNumberRows(Grid),
     write_results(Grid, FHandle, 0, NumRows).
 
@@ -697,7 +702,8 @@ read_config_file(player_file, FPath, State) ->
     case read_csv_rows_from_file(FPath) of
         {ok, RowList, FPath} ->
             try
-                gen_server:cast(batnitor_simulator, {set_role_list, lists:map(fun row_to_role/1, RowList)}),
+                RoleList = lists:map(fun row_to_role/1, RowList),
+                gen_server:cast(batnitor_simulator, {set_role_list, RoleList}),
                 erlang:put(player_file, FPath),
                 wxTextCtrl:setValue(State#state.player_file_field, FPath),
                 ok

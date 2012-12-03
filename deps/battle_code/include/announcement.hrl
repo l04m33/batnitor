@@ -60,6 +60,7 @@
 -define(SEND_TEAM_RECRUIT, 61).
 -define(SEND_SOUL_BALL, 62).
 -define(SEND_WEALTH, 63).
+-define(SEND_COMP_REMOVE_BANNER, 65).
 
 
 -define(CARD_FROM_RESURRECTION, 1).

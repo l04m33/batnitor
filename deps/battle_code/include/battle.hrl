@@ -49,7 +49,8 @@
 -define(BUFF_SPEED_UP,   9).     %% 敏捷
 -define(BUFF_SPEED_DOWN, 10).
 -define(BUFF_CRIT,       12).    %% 暴擊
--define(BUFF_FATAL,      13).    %% 致命
+-define(BUFF_FATAL_UP,   13).    %% 致命+
+-define(BUFF_FATAL_DOWN, 39).    %% 致命-
 -define(BUFF_HIT_UP,     14).    %% 命中
 -define(BUFF_HIT_DOWN,   15).    %% 模糊(降命中)
 -define(BUFF_REBOUND,    16).    %% 反彈
@@ -61,10 +62,12 @@
 -define(BUFF_SCORNED,    22).    %% 被嘲讽
 -define(BUFF_ASSIST,     23).    %% 援護: 自動成為攻擊目標
 -define(BUFF_FAINT,      24).
--define(BUFF_DEADLY,     25).    %% 致命
 -define(BUFF_FRENZY,     26).    %% 狂暴
 -define(BUFF_WEAKNESS,   27).    %% 降低治疗量
 -define(BUFF_TOXIC,      28).    %% 中毒
+
+-define(BUFF_DODGE_UP,   29).    %% 闪避+
+-define(BUFF_DODGE_DOWN, 30).    %% 闪避-
 
 -define(BUFF_BLOCK_UP,   31).    %% 格挡(抗暴击)
 -define(BUFF_BLOCK_DOWN, 32).    %% 格挡下降
@@ -72,8 +75,11 @@
 -define(BUFF_CRIT_UP,    33).
 -define(BUFF_CRIT_DOWN,  34).
 
--define(BUFF_DAMAGE_ADD, 35).    %% 增加伤害
--define(BUFF_DMAAGE_SUB, 36).    %% 减去伤害
+-define(BUFF_CAST_DMG_UP, 35).   %% 输出伤害增加
+-define(BUFF_RECV_DMG_DOWN, 36). %% 输入伤害减少
+-define(BUFF_CAST_DMG_DOWN, 37). %% 输出伤害减少
+-define(BUFF_RECV_DMG_UP, 38).   %% 输入伤害增加
+
 
 -define(BUFF_TEST,       12).
 
@@ -94,6 +100,50 @@
 %=============================================================================================
 
 -define(SKILL_COMMON_ATTACK, 100001). %% 普通攻擊
+
+%=============================================================================================
+% battle log
+%=============================================================================================
+
+-define(BATTLE_LOG_PATH, 
+        filename:join(
+            filename:dirname(
+                element(2, element(2, application:get_env(sasl, sasl_error_logger)))), 
+            "battle")).
+
+-ifdef(debug).
+
+-define(BATTLE_LOG_INIT, 
+        begin
+            __LOG_NAME = filename:join(?BATTLE_LOG_PATH,  
+                                       "battle." ++ (pid_to_list(self()) -- "<>")),
+            {ok, __F} = file:open(__LOG_NAME, write),
+            erlang:put('__battle_log_file__', __F),
+            __LOG_NAME
+        end).
+
+-define(BATTLE_LOG(Fmt, Args), 
+        begin
+            io:format(erlang:get('__battle_log_file__'), Fmt ++ "~n", Args)
+        end).
+
+-define(BATTLE_LOG(Fmt),       ?BATTLE_LOG(Fmt, [])).
+
+-define(BATTLE_LOG_CLOSE, 
+        begin
+            file:close(erlang:erase('__battle_log_file__'))
+        end).
+
+-else.
+
+-define(BATTLE_LOG_INIT, "").
+-define(BATTLE_LOG(Fmt, Args), ok).
+-define(BATTLE_LOG(Fmt), ok).
+-define(BATTLE_LOG_CLOSE, ok).
+
+-endif.
+
+
 
 %=============================================================================================
 % type definition
@@ -183,6 +233,7 @@
 		counter       = 100,
 		block         = 100,
 		break         = 100, %% 破甲
+        fatal         = 100,
 		buff          = [],
 		cd            = [],
 		cmd           = ?UNDEFINED,
@@ -228,6 +279,7 @@
  		crit,		   
  		luck,                %% 幸运: 降低被攻击时触发暴击的可能性
 		break, 	             %% 破甲: 目前作用不明
+        fatal,               %% 致命
 		agility,             %% 敏捷: 目前作用不明		
       	strength,       
 		block = 0,

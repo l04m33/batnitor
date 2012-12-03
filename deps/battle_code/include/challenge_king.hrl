@@ -1,4 +1,4 @@
--define(INIT_KING_MONSTER_ID, 221).		%% 定义第一个国王的怪物ID
+-define(INIT_KING_MONSTER_ID, 400).		%% 定义第一个国王的怪物ID
 -define(INIT_KING_MONSTER_NAME, "国王").		%% 定义第一个国王的怪物名字
 -define(CHALLENGE_KING_CACHE_REF, cache_util:get_register_name(challenge_king)).
 -define(FIRST_CHALLENGE_KING_ASK_COMBAT, 10000).		%% 定义第一次挑战国王所需战斗力

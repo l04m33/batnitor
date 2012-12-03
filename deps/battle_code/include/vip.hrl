@@ -5,7 +5,9 @@
 	gd_EndTime = 0,
 	gd_LastTime = 0,
 	gd_InfoList = [],
-	gd_FeedbackGold = 0
+	gd_FeedbackGold = 0,
+	gd_BufferTime = 0,
+	gd_First = 0
 	}).
 
 -record(vip_types,{
@@ -14,10 +16,13 @@
 	gd_EndTime = {integer},
 	gd_LastTime = {integer},
 	gd_InfoList = {term},
-	gd_FeedbackGold = {integer}
+	gd_FeedbackGold = {integer},
+	gd_BufferTime = {integer},
+	gd_First = {integer}
 	}).
 
 -define(VIP_TYPE_FEEDBACK,1).	%% 绑定元宝回馈
+-define(VIP_TYPE_DAZUO,2).		%% 打坐
 -define(VIP_TYPE_XUNXIAN,9).    %% 寻仙
 -define(VIP_TYPE_ZHAOCAI,7).	%% 招财进宝
 -define(VIP_TYPE_FLY,10).		%% 飞行
@@ -28,3 +33,4 @@
 -define(VIP_TYPE_HORN,20).		%% 小喇叭
 -define(VIP_TYPE_YUNBIAO,21).	%% 运镖
 -define(VIP_TYPE_JUNGONG_TASK,22).%% 军工任务
+-define(VIP_TYPE_BUFF,17).		%% VIP BUFF加成

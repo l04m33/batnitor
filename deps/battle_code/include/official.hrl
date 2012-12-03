@@ -11,8 +11,11 @@
 -define(QIHUN_SU,			9).		%% 速
 -define(QIHUN_BAO,			10).	%% 暴
 
+
 -define(MIN_QIHUN_ID,	?QIHUN_JING).	%% 最小的器魂id
 -define(MAX_QIHUN_ID,	 ?QIHUN_BAO).	%% 最大的器魂id
+
+-define(ALL_QIHUN_LIST,(lists:seq(?MIN_QIHUN_ID,?MAX_QIHUN_ID))). %%所有器魂的列表
 
 %%俸禄状态
 -define(YILING_FENGLU,  1).

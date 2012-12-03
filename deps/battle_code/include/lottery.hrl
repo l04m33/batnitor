@@ -1,9 +1,12 @@
 -define(LOTTERY_BAG_SIZE, 180).			%% 投壶背包大小
 -define(ADVANCE_ITEM_SIZE, 10).			%% 投壶高级物品获得历史记录条数
 -define(LOTTERY_HISTORY_SIZE, 20).		%% 投壶历史记录显示条数
+-define(LOTTERY_RAND_MAX, 1000).		%% 定义投壶几率范围(1~1000)
 
 -define(LOTTERY_CACHE_REF, cache_util:get_register_name(lottery)).
 
+-define(FAIL,		0). %% 失败
+-define(SUCCESS,	1).	%% 成功
 
 %% 定义投壶玩家数据表结构
 -record(lottery, 
@@ -17,25 +20,6 @@
 	{
 		gd_AccountID		= {integer},
 		gd_lottery_bag		= {term}
-	}
-).
-
-%% 定义投壶背包道具数据结构
--record(lottery_bag_item,
-	{
-		id			= 0,		%% 道具原型id
-		is_bind		= 0,		%% 是否绑定 0 否 1 是
-		stack_num	= 0			%% 堆叠数量
-	}
-).
-
-%% 定义投壶展示物品数据结构
--record(lottery_show_item,
-	{
-		item_id		= 0,		%% 道具id
-		is_bind		= 0,		%% 是否绑定 0 否 1 是
-		player_id	= 0,		%% 玩家id
-		player_name	= ""		%% 玩家昵称
 	}
 ).
 

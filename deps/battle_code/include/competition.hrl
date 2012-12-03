@@ -53,15 +53,17 @@
 						   }).
 
 -record(comp_top_info, {
-						gd_CompLevel  = 0,		%% 比武场等级
-						gd_AccountID = 0,		%% 账号ID
-						gd_RoleID    = 0		%% 角色ID
+						gd_CompLevel = 0,			%% 比武场等级
+						gd_AccountID = 0,			%% 账号ID
+						gd_RoleID    = 0,			%% 角色ID
+						gd_Slogan    = "我是冠军"	%% 冠军口号
 					   }).
 
 -record(comp_top_info_types, {
 							  gd_CompLevel = {integer},		%% 比武等级
 							  gd_CompRank  = {integer},		%% 排名
-							  gd_RoleID    = {integer}		%% 角色ID
+							  gd_RoleID    = {integer},		%% 角色ID
+							  gd_Slogan    = {string}		%% 冠军口号
 							 }).
 
 -record(comp_award_info, {

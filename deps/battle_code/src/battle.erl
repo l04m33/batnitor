@@ -92,6 +92,10 @@ clear_battle([ID | Rest], Pid) ->
 %% init client side
 %% init rounds, battle procedure list
 battle_init(_Event, BattleData) ->
+    __LogFileName = ?BATTLE_LOG_INIT,
+    ?CHAT(battle, "本场战斗log: ~s", [__LogFileName]),
+    ?BATTLE_LOG("~n++++++++++++++++++ 战斗初始值 ++++++++++++++++++"),
+    dump_player_list(BattleData),
 	NBattleData = start_new_round(BattleData),
 	
 	send_start_package(NBattleData),
@@ -307,6 +311,11 @@ terminate(Reason, _StateName, BattleData) ->
 	Winner = BattleData#battle_data.winner,
 	?INFO(battle, "Winner = ~w", [Winner]),
 	
+    ?BATTLE_LOG("~n++++++++++++++++++ 战斗结束 ++++++++++++++++++"),
+    ?BATTLE_LOG("原因: ~p", [Reason]),
+    ?BATTLE_LOG("胜方: ~p", [Winner]),
+    dump_player_list(BattleData),
+
 	Ids = get_ids(BattleData),
 	F = fun(ID) ->
 			Info = get_player_info(ID, BattleData),
@@ -318,7 +327,10 @@ terminate(Reason, _StateName, BattleData) ->
 				catch notify_complete(ID, BattleData)
 			end
 		end,
-	lists:foreach(F, Ids).
+	lists:foreach(F, Ids),
+
+    ?BATTLE_LOG_CLOSE,
+    ok.
 
 notify_complete(ID, BattleData) ->
 	?INFO(battle, "calling notify complete, ID = ~w", [ID]),
@@ -690,6 +702,7 @@ role_2_bs(ID, Role) ->
 		agility   = Role#role.gd_minjie, 
 		speed     = Role#role.gd_speed,
 		break     = Role#role.gd_pojia,
+        fatal     = Role#role.gd_zhiming,
 		crit      = Role#role.gd_baoji,
 		luck      = Role#role.gd_xingyun,
 		is_lead   = Role#role.gd_roleRank == 1 
@@ -738,6 +751,7 @@ get_mon_info(Camp, MonGroupID, MonHp, Array) ->
 					dodge   = MonAttr#mon_attr.dodge,
 					block   = MonAttr#mon_attr.block,
 					break   = MonAttr#mon_attr.break,
+                    fatal   = MonAttr#mon_attr.fatal,
 					luck    = MonAttr#mon_attr.luck,
 					hit     = MonAttr#mon_attr.hit,
 					crit    = MonAttr#mon_attr.crit,
@@ -942,6 +956,13 @@ handle_command_ex(BattleData, Repeat) ->
 	?INFO(battle, "Calling Handle command Ex in Round ~w", [Round]),
 	
 	IsFaint = is_buff_exist(?BUFF_FAINT, SrcStat),
+    if
+        IsFaint =:= true ->
+            ?BATTLE_LOG("~n--------- 攻击者站位: ~w ---------", [Src]),
+            ?BATTLE_LOG("站位 ~w Buff效果: 晕", [Src]),
+            ?BATTLE_LOG("    Buff类型: 晕");
+        true -> void
+    end,
 	
 	%% calculate a new BattleData through handling the skill, 
 	%% indicated by NBattleData
@@ -1225,46 +1246,59 @@ get_hp_absorb(Src, Tar, AttSpec, Dm, BattleData) ->
 	TarStat = get_battle_status(Tar, BattleData),
 	Buffs = AttSpec#attack_spec.buff_add ++ SrcStat#battle_status.buff,
 	
-	case lists:keysearch(?BUFF_LIFE_DRAIN, #buff.name, Buffs) of
+	LifeDrain = case lists:keysearch(?BUFF_LIFE_DRAIN, #buff.name, Buffs) of
 		{value, #buff{value = V}} -> 
-			round(min(Dm, TarStat#battle_status.hp) * V);
+            LifeDrain0 = round(min(Dm, TarStat#battle_status.hp) * V),
+            ?BATTLE_LOG("        站位 ~w Buff效果: 吸血", [Src]),
+            ?BATTLE_LOG("            Buff类型: 吸血, 系数: ~w, 吸血点数: ~w", [V, LifeDrain0]),
+            LifeDrain0;
 		false ->
 			0
-	end.
+	end,
+    LifeDrain.
 
 get_mp_absorb(Src, Tar, AttSpec, BattleData) ->
 	SrcStat = get_battle_status(Src, BattleData),
 	TarStat = get_battle_status(Tar, BattleData), 
 	Buffs = AttSpec#attack_spec.buff_add ++ SrcStat#battle_status.buff,
-	
-	case lists:keysearch(?BUFF_MANA_DRAIN, #buff.name, Buffs) of
+
+	{Add, Sub} =  case lists:keysearch(?BUFF_MANA_DRAIN, #buff.name, Buffs) of
 		{value, #buff{value = {A, S}}} ->
-			SubFrom = min(S, TarStat#battle_status.mp),
-			AddTo   = min(SubFrom, A),
-			{AddTo, SubFrom};
+            ?BATTLE_LOG("        站位 ~w Buff效果: 吸怒气", [Src]),
+            ?BATTLE_LOG("            Buff类型: 吸怒气, 攻击者+: ~w, 目标-: ~w", 
+                        [A, S]),
+            {A, S};
 		false ->
 			{0, 0}
-	end.
+	end,
+    SubFrom = min(Sub, TarStat#battle_status.mp),
+    AddTo   = min(SubFrom, Add),
+    {AddTo, SubFrom}.
 
 get_rebound(_Src, Tar, _AttSpec, Dm, BattleData) ->
 	TarStat = get_battle_status(Tar, BattleData),	
 	Buffs = TarStat#battle_status.buff,
 	
-	case TarStat#battle_status.hp =< Dm of
+	RRB = case TarStat#battle_status.hp =< Dm of
 		true ->
 			0;
 		false ->
-			case lists:keysearch(?BUFF_REBOUND, #buff.name, Buffs) of
+			RB = case lists:keysearch(?BUFF_REBOUND, #buff.name, Buffs) of
 				{value, #buff{value = Rebound}} ->
-					Rebound;
+                    RB0 = round(Dm * Rebound),
+                    ?BATTLE_LOG("        站位 ~w Buff效果: 反弹", [Tar]),
+                    ?BATTLE_LOG("            Buff类型: 反弹, 系数: ~w, 反弹伤害: ~w", [Rebound, RB0]),
+                    RB0;
 				false ->
 					0
-			end
-	end.
+			end,
+            RB
+	end,
+    RRB.
 
 %% Damage is the damage from Src dealed to Tar
-get_counter(_Src, Tar, SkillId, _AttSpec, Dm, BattleData) ->
-	if (SkillId =/= ?SKILL_COMMON_ATTACK) ->
+get_counter(Src, Tar, SkillId, _AttSpec, Dm, BattleData) ->
+	CT = if (SkillId =/= ?SKILL_COMMON_ATTACK) ->
 		%% skill that is not common attack can not be countered.
 		0;
 	true ->
@@ -1277,21 +1311,31 @@ get_counter(_Src, Tar, SkillId, _AttSpec, Dm, BattleData) ->
 			false ->
 				case lists:keysearch(?BUFF_COUNTER, #buff.name, Buffs) of
 					{value, #buff{value = Counter}} ->
-						?CHAT(battle, "skill counter"),
-						Counter;
+                        ?BATTLE_LOG("        站位 ~w Buff效果: 反击", [Tar]),
+                        ?BATTLE_LOG("            Buff类型: 反击, 系数: ~w", [Counter]),
+						Counter;            % TODO: WTF? 这个没实现的？
 					false ->
-						CounterRate = TarStat#battle_status.counter / 1666,
-						?CHAT(battle, "CounterRate = ~w", [CounterRate]),
+                        SrcStat = get_battle_status(Src, BattleData),
+                        ParamX = 
+                            case SrcStat#battle_status.is_lead == true orelse 
+                                TarStat#battle_status.is_lead == true of
+                                true  -> 0;
+                                false -> 1
+                            end,
+                        {AStar, DStar} = {SrcStat#battle_status.star, TarStat#battle_status.star},
+                        CounterRate = max(0, TarStat#battle_status.counter / 1666 + ParamX * 0.04 * (AStar - DStar)),
 					
-						case random:uniform() =< CounterRate of
-							true -> 
-								?CHAT(battle, "trigger counter"),
-								100;
+                        CounterRand = random:uniform(),
+                        ?BATTLE_LOG("        反击几率: ~w, 随机数: ~w, 反击触发: ~w",
+                                    [CounterRate, CounterRand, CounterRand =< CounterRate]),
+						case CounterRand =< CounterRate of
+							true  -> 100;
 							false -> 0
 						end
 				end
 		end
-	end.
+	end,
+    CT.
 
 %==============================================================================================================
 % handling passive SKILL
@@ -1348,11 +1392,30 @@ get_adjust_value(Tag, Attr, Pos, BattleData) ->
 			mdef -> {?BUFF_MDEF_UP, ?BUFF_MDEF_DOWN};
 			att  -> {?BUFF_ATT_UP,  ?BUFF_ATT_DOWN};
 			crit -> {?BUFF_CRIT_UP, ?BUFF_CRIT_DOWN};
-			luck -> {?BUFF_LUCK_UP, ?BUFF_LUCK_DOWN}
+			luck -> {?BUFF_LUCK_UP, ?BUFF_LUCK_DOWN};
+            speed -> {?BUFF_SPEED_UP, ?BUFF_SPEED_DOWN};
+            hit  -> {?BUFF_HIT_UP,  ?BUFF_HIT_DOWN};
+            dodge -> {?BUFF_DODGE_UP, ?BUFF_DODGE_DOWN};
+            block -> {?BUFF_BLOCK_UP, ?BUFF_BLOCK_DOWN};
+            fatal -> {?BUFF_FATAL_UP, ?BUFF_FATAL_DOWN};
+            cast_damage -> {?BUFF_CAST_DMG_UP, ?BUFF_CAST_DMG_DOWN};
+            recv_damage -> {?BUFF_RECV_DMG_UP, ?BUFF_RECV_DMG_DOWN}
 		end,
 	{F1, I1} = get_buff_value(Buff,   Pos, BattleData), 
 	{F2, I2} = get_buff_value(DeBuff, Pos, BattleData),
-	round(Attr * (1 + F1 - F2)) + I1 - I2.
+    if 
+        F1 =/= 0 orelse I1 =/= 0 orelse F2 =/= 0 orelse I2 =/= 0 ->
+            ?BATTLE_LOG("        站位 ~w Buff效果: ~s", [Pos, tag_to_buff_effect(Tag)]),
+            ?BATTLE_LOG("            Buff类型: ~s, 浮点系数: ~w, 整数值: ~w", 
+                        [buff_type_to_str(Buff), F1, I1]),
+            ?BATTLE_LOG("            Debuff类型: ~s, 浮点系数: ~w, 整数值: ~w", 
+                        [buff_type_to_str(DeBuff), F2, I2]),
+            Output = round(Attr * (1 + F1 - F2)) + I1 - I2,
+            ?BATTLE_LOG("            综合输出: ~w / ~w / ~w", [Attr, Output, Output - Attr]),
+            Output;
+        true ->
+            Attr
+    end.
 
 %==============================================================================================================
 % attack handler and assist handler
@@ -1493,7 +1556,10 @@ pre_attack(Src, Tar, _AttSpec, BattleData) ->
 	SrcStat = get_battle_status(Src, BattleData),
 	TarStat = get_battle_status(Tar, BattleData),
 	
-	{Hit, Dodge} = {SrcStat#battle_status.hit, TarStat#battle_status.dodge},
+	{Hit, Dodge} = {
+        get_adjust_value(hit, SrcStat#battle_status.hit, Src, BattleData), 
+        get_adjust_value(dodge, TarStat#battle_status.dodge, Tar, BattleData)
+    },
 	{AStar, DStar} = {SrcStat#battle_status.star, TarStat#battle_status.star},
 
 	Param6 = 
@@ -1506,10 +1572,11 @@ pre_attack(Src, Tar, _AttSpec, BattleData) ->
 	HitRate = Hit * 10 / (Hit * 10 + Dodge) + Param6 * (AStar - DStar),
 	%% ?INFO(battle, "Hit = ~w, Dodge = ~w, Param = ~w, IsHit = ~w", [Hit, Dodge, Param6, IsHit]),
 	
-	NHitRate = max(0.4, HitRate),
+    NHitRate = min(1.0, max(0.4, HitRate)),
 	
-	?CHAT(battle, "Hit = ~w, Dodge = ~w, HitRate = ~w", [Hit, Dodge, NHitRate]),
-	random:uniform() =< NHitRate.
+	Rand = random:uniform(), 
+    ?BATTLE_LOG("        命中几率: ~w, 随机数: ~w, 命中: ~w", [NHitRate, Rand, Rand =< NHitRate]),
+    Rand =< NHitRate.
 
 		
 -spec do_attack(Src, Tar, AttSpec, BattleData) -> {CritcalHit, Damage} when
@@ -1552,9 +1619,12 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 	{Att, Def} =
 		begin	
 			%% DefNoBreak  = get_adjust_value(DefTag, Def0, NTar, BattleData),
-			BreakRate   = SrcStat#battle_status.break / 1000 + ParamX * 0.04 * (AStar - DStar),
+            BreakRate   = max(0, SrcStat#battle_status.break / 1000 + ParamX * 0.04 * (AStar - DStar)),
+            BreakRand   = random:uniform(),
+            ?BATTLE_LOG("        破甲几率: ~w, 随机数: ~w, 破甲: ~w",
+                        [BreakRate, BreakRand, BreakRand =< BreakRate]),
 			BreakAdjust = 
-				case random:uniform() =< BreakRate of
+				case BreakRand =< BreakRate of
 					true  -> 0.7; %% break the defense
 					false -> 1
 				end,
@@ -1562,37 +1632,34 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 			{get_adjust_value(att,  Att0,  Src,  BattleData),
 			 get_adjust_value(DefTag, Def0, Tar,  BattleData) * BreakAdjust}
 		end,
-	
-	?CHAT(value, "{Att0, Def0} = {~w, ~w}, {Att, Def} = {~w, ~w}, {AStar, DStar}  = {~w, ~w}", 
-		  [Att0, Def0, Att, Def, AStar, DStar]),
-	
+
 	{Crit, Luck} = {
 		get_adjust_value(crit, SrcStat#battle_status.crit, Src, BattleData),
 		get_adjust_value(luck, TarStat#battle_status.luck, Tar, BattleData)},
-	
+
+    LuckRate = max(0.20, min(0.94, Luck * 10 / (Luck * 12 + Crit) + ParamX * 0.05 * (AStar - DStar))),
 	CritRate = 
 		case lists:keysearch(?BUFF_CRIT, #buff.name, Buff ++ BuffAdd) of
 			false -> 
-				1 - Luck * 10 / (Luck * 12 + Crit) - ParamX * 0.05 * (AStar - DStar);
-			{value, _} ->
+                1 - LuckRate;
+			{value, #buff{value = CritV}} ->
+                ?BATTLE_LOG("        站位 ~w Buff效果: 暴击", [Src]),
+                ?BATTLE_LOG("            Buff类型: 必暴击, 系数: ~w", [CritV]),
 				1.0
 		end,
 		
-	?CHAT(battle, "Crit = ~w, Luck = ~w, CritRate = ~w", [Crit, Luck, CritRate]),
+    CritRand = random:uniform(),
+	IsCrit = CritRand =< CritRate,
+
+    ?BATTLE_LOG("        暴击几率: ~w, 随机数: ~w, 暴击: ~w",
+                [CritRate, CritRand, IsCrit]),
 	
-	IsCrit = 
-		random:uniform() =< CritRate,
-	
-	Deadly = 
-		case lists:keysearch(?BUFF_FATAL, #buff.name, SrcStat#battle_status.buff) of
-			false -> 0;
-			{value, #buff {value = V}} -> V
-		end,	
+	Fatality = get_adjust_value(fatal, SrcStat#battle_status.fatal, Src, BattleData),
 	
 	?INFO(battle, "Src = ~w, Job = ~w, Att = ~w, Def = ~w, ALevel = ~w", [Src, Job, Att, Def, ALevel]),
 	
 	Param1 = 450 * ALevel,
-	Param2 = ParamX * 0.2,
+	Param2 = ParamX * 0.1,
 	Param3 = (0.9 + random:uniform() / 5),
 		
 	Damage0 = 
@@ -1600,7 +1667,7 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 			Param3 * AttSpec#attack_spec.addition,
 	Damage1 = 
 		case IsCrit of
-			true -> round(Damage0 * 1.5 + Deadly / 600);
+			true  -> round(Damage0 * (1.5 + Fatality / 1250));
 			false -> round(Damage0)
 		end,
 	
@@ -1611,40 +1678,25 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 			_ ->
 				get_damage_value(Damage1, Tar, BattleData)
 		end,
-		
-	Damage3 = 
-		case lists:keysearch(?BUFF_DAMAGE_ADD, #buff.name, Buff ++ BuffAdd) of
-			false -> Damage2;
-			{value, #buff{value = Value}} ->
-				Damage2 + Value
-		end,
-	
-	BlockRate = 
-		TarStat#battle_status.block / 2000 + ParamX * 0.05 * (AStar - DStar),
-	
-	?CHAT(battle, "BlockRate = ~w", [BlockRate]),
 
-	IsBlock = 
-		random:uniform() =< BlockRate, 
-		
-	if (IsCrit == true) ->
-		?CHAT(battle, "*** critcal hit ***");
-	true ->
-		ok
-	end,
+    Damage3 = get_adjust_value(cast_damage, Damage2, Src, BattleData),
 	
-	if (IsCrit == true andalso Deadly > 0) ->
-		?CHAT(battle, "*** deadly hit ***");
-	true ->
-		ok
-	end,
+    AdjustedBlock = get_adjust_value(block, TarStat#battle_status.block, Tar, BattleData),
+	BlockRate = 
+         max(0, AdjustedBlock / 2000 + ParamX * 0.05 * (AStar - DStar)),
 	
+    BlockRand = random:uniform(),
+	IsBlock = BlockRand =< BlockRate, 
+    ?BATTLE_LOG("        格挡几率: ~w, 随机数: ~w, 格挡: ~w",
+                [BlockRate, BlockRand, IsBlock]),
+
 	if (IsBlock == true) ->
-		?CHAT(battle, "**** blocked ****"),
 		Damage4 = round(Damage3 * 0.8);
 	true ->
 		Damage4 = round(Damage3)
 	end,
+
+    ?BATTLE_LOG("        最终伤害值: ~w", [max(Damage4, 1)]),
 	
 	{IsCrit, max(Damage4, 1)}.
 
@@ -1702,13 +1754,17 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
 		true ->
 			%% Tar is not dead, check if someone would be the new target of this player
 			case lists:keysearch(?BUFF_SCORNED, #buff.name, SrcBuff) of
-				{_, #buff {value = T}} when T =/= Tar -> 
+				{_, #buff {value = T}} -> 
 					IsAlive = get_battle_status(T, #battle_status.is_alive, BattleData),
-					if (IsAlive == true) ->
+					TarRet = if (IsAlive == true) ->
 						{false, true, T};
 					true ->
 						{false, false, Tar}
-					end;
+					end,
+                    {_, _, NTar0} = TarRet,
+                    ?BATTLE_LOG("        站位 ~w Buff效果: 嘲讽", [Src]),
+                    ?BATTLE_LOG("            Buff类型: 被嘲讽, 嘲讽者站位: ~w, 新目标站位: ~w", [T, NTar0]),
+                    TarRet;
 				false -> 
 					{false, false, Tar}
 			end
@@ -1722,12 +1778,12 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
 	if (Skip == true) ->	   
 		attack(SkillId, Src, AttSpec, Rest, AttInfoList, BattleData);
 	true ->
+        ?BATTLE_LOG("    目标站位: ~w", [Tar]),
 		case pre_attack(Src, Tar, AttSpec, BattleData) of
 			false ->
 				%% miss target, so the other field in attack_info may be 0 (is_miss == true, is_crit = false) 
 				
 				?INFO(battle, "****************battle attack: ***************************************"),
-				?CHAT(battle, "Src ~w --miss--> Tar ~w", [Src, Tar]),
 				AttInfo = #attack_info {pos = Tar, is_miss = true},
 				attack(SkillId, Src, AttSpec, Rest, [AttInfo | AttInfoList], BattleData);
 			true ->
@@ -1739,8 +1795,6 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
 				Counter  = get_counter(Src, NTar, SkillId, AttSpec, Dm, BattleData),
 				
 				?INFO(battle, "****************battle attack: ***************************************"),
-				?CHAT(battle, "Src ~w use ~w ---> Tar ~w, deals ~w hitpoint(s), crit = ~w, hp+ = ~w, mp+ = ~w, counter = ~w", 
-					  [Src, SkillId, NTar, Dm, Cr, HpDrain, Ma, Counter]),
 				
 				?INFO(battle, "Skillid = ~w, Src = ~w, Tar = ~w, Crit = ~w, Damage = ~w, HpDrain = ~w, MpDrain = ~w", 
 					  [SkillId, Src, NTar, Cr, Dm, HpDrain, Ma]),
@@ -1749,16 +1803,23 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
 				print_battle_status(NTar, BattleData),
 				
 				MpAddByAtt = 
-					case is_buff_exist(?BUFF_SCORN, NTarStat) of
-						true -> 0;
-						_    -> 20
+                    case lists:keysearch(?BUFF_SCORN, #buff.name, NTarStat#battle_status.buff) of
+                        {value, #buff{value = _ScornV}} ->
+                            ?BATTLE_LOG("        站位 ~w Buff效果: 嘲讽", [NTar]),
+                            ?BATTLE_LOG("            Buff类型: 嘲讽, 怒气增加: ~w", [0]),
+                            0;
+						false -> 
+                            20
 					end,
 				
 				case lists:keysearch(?BUFF_ASSIST, #buff.name, TarBuff) of
 					{value, #buff {data = Pos, by_rate = true, value = V}} when Pos =/= Tar, Tar == NTar ->	
-		
+
 					AssStat = get_battle_status(Pos, BattleData),
 					if (AssStat#battle_status.is_alive == true) ->
+                        ?BATTLE_LOG("        站位 ~w Buff效果: 援护", [NTar]),
+                        ?BATTLE_LOG("            Buff类型: 被援护, 伤害减少系数: ~w, 援护者站位: ~w", [V, Pos]),
+		
 						AttInfo1 = 
 							#attack_info {
 								pos        = NTar,			  
@@ -1915,6 +1976,13 @@ handle_attack_info(SkillId, Src, AttInfoList, [AttInfo | Rest], BattleData) ->
 			
 			NSDamSuff = max(SDamSuff, max(0, -Counter) + max(0, -Rebound)),
 			NTDamDeal = max(TDamDeal, max(0, -Counter) + max(0, -Counter)),
+
+            ?BATTLE_LOG("    站位 ~w, 血: ~w / ~w / ~w, 怒气: ~w / ~w / ~w",
+                        [Src, SrcStat#battle_status.hp, AttNewHp, AttNewHp - SrcStat#battle_status.hp,
+                         SrcStat#battle_status.mp, AttNewMp, AttNewMp - SrcStat#battle_status.mp]),
+            ?BATTLE_LOG("    站位 ~w, 血: ~w / ~w / ~w, 怒气: ~w / ~w / ~w",
+                        [Tar, TarStat#battle_status.hp, DefNewHp, DefNewHp - TarStat#battle_status.hp,
+                         TarStat#battle_status.mp, DefNewMp, DefNewMp - TarStat#battle_status.mp]),
 	            
 			NSrcStat = 
 				SrcStat#battle_status {
@@ -1999,7 +2067,12 @@ assist_1(Tar, [Eff | Rest], AttInfo, BattleData) ->
 					end,
 				Inc1 = 
 					case lists:keysearch(?BUFF_WEAKNESS, #buff.name, Buffs) of
-						{value, #buff{by_rate = true, value = V}} -> round(Inc * (1 - V));
+						{value, #buff{by_rate = true, value = V}} -> 
+                            Inc10 = round(Inc * (1 - V)),
+                            ?BATTLE_LOG("        站位 ~w Buff效果: 降低治疗量"),
+                            ?BATTLE_LOG("            Buff效果: 降低治疗量, 系数: ~w, 降低数量: ~w",
+                                        [V, Inc10]),
+                            Inc10;
 						false -> Inc
 					end,
 				AttInfo#attack_info {hp_inc = Inc1};
@@ -2122,6 +2195,9 @@ settle_buff(Settle, Pos, [Buff | Rest], BuffList, BuffInfoList, State) ->
 						HpMax  = State#battle_status.hp_max,
 						Hp     = State#battle_status.hp,
 						HpLost = get_hp_lose_value(HpMax, Buff),
+                        ?BATTLE_LOG("站位 ~w Buff效果: 中毒", [Pos]),
+                        ?BATTLE_LOG("    Buff类型: 中毒, 系数: ~w, 失血量: ~w", 
+                                    [Buff#buff.value, HpLost]),
 						NewHp  = max(0, Hp - HpLost),
 						BInfo  = 
 							#buff_info {
@@ -2144,6 +2220,9 @@ settle_buff(Settle, Pos, [Buff | Rest], BuffList, BuffInfoList, State) ->
 						HpMax = State#battle_status.hp_max,
 						Hp    = State#battle_status.hp,
 						HpAdd = get_hp_recover_value(HpMax, Buff),
+                        ?BATTLE_LOG("站位 ~w Buff效果: 回血", [Pos]),
+                        ?BATTLE_LOG("    Buff类型: 回血, 系数: ~w, 回血量: ~w", 
+                                    [Buff#buff.value, HpAdd]),
 						NewHp = min(HpMax, Hp + HpAdd),
 						BInfo = 
 							#buff_info {
@@ -2179,7 +2258,14 @@ settle_buff(Settle, Pos, [Buff | Rest], BuffList, BuffInfoList, State) ->
 						},
 						{BInfo, State}
 				end,
-			NBuffList = if (Duration == 0) -> BuffList; true -> [NBuff | BuffList] end, 
+			NBuffList = if 
+                (Duration == 0) ->
+                    ?BATTLE_LOG("站位 ~w 删除Buff:", [Pos]),
+                    ?BATTLE_LOG(format_buff(NBuff)),
+                    BuffList; 
+                true -> 
+                    [NBuff | BuffList] 
+            end, 
 			settle_buff(Settle, Pos, Rest, NBuffList, [BuffInfo | BuffInfoList], NState)
 	end.			
 
@@ -2246,7 +2332,11 @@ update_buffs(_Pos, [], BuffInfoList, BattleData) ->
 
 update_buffs(Pos, [{Buff, Rate, Op} | Rest], BuffInfoList, BattleData) ->
     ?INFO(battle, "Calling update_buffs/4"),
-	case random:uniform() > Rate of
+    BuffRand = random:uniform(),
+    ?BATTLE_LOG("更新Buff, 站位: ~w, 操作: ~w, 持续回合: ~w, 几率: ~w, 随机数: ~w, 操作成功: ~w",
+                [Pos, Op, Buff#buff.duration, Rate, BuffRand, not (BuffRand > Rate)]),
+    ?BATTLE_LOG(format_buff(Buff)),
+	case BuffRand > Rate of
 		true ->
 			?INFO(battle, "miss??, Buff = ~w, Rate = ~w, Op = ~w", [Buff, Rate, Op]),
 			update_buffs(Pos, Rest, BuffInfoList, BattleData);
@@ -2433,15 +2523,9 @@ update_order_list(List, BattleData) ->
 	?INFO(battle, "List = ~w", [List]),
 	
 	MF = fun(P) ->
-			%% ?INFO(battle, "Pos = ~w", [P]),
 			State    = get_battle_status(P, BattleData),
-			%% ?INFO(battle, "State = ~w", [State]),
 			Speed    = State#battle_status.speed,
-			%% ?INFO(battle, "Speed = ~w", [Speed]),
-			{F1, I1} = get_buff_value(?BUFF_SPEED_UP, P, BattleData),
-			%% ?INFO(battle, "F = ~w, I = ~w", [F1, I1]),
-			{F2, I2} = get_buff_value(?BUFF_SPEED_DOWN, P, BattleData),
-			NSpeed   = round(Speed * (1 + F1 - F2) + I1 - I2),
+            NSpeed = get_adjust_value(speed, Speed, P, BattleData),
 			{P, NSpeed}
 		end,
 	List1 = lists:map(MF, List),
@@ -2474,15 +2558,15 @@ get_hp_recover_value(MaxHp, #buff {name = ?BUFF_REFRESH, by_rate = ByRate, value
 	end.
 			
 get_damage_value(Dm, Pos, BattleData) ->
-	{F1, _I} = get_buff_value(?BUFF_SCORN, Pos, BattleData),
-	if (F1 =/= 0) ->
-		?INFO(value, "Damage is reduced ~w% by scorn buff. ", [F1 * 100]);
-	true ->
-		ok
-	end,
-	
-	{F2, I2} = get_buff_value(?BUFF_DMAAGE_SUB, Pos, BattleData),
-	round(Dm * (1 - F1) * (1 - F2) - I2).
+	{F1, I1} = get_buff_value(?BUFF_SCORN, Pos, BattleData),
+    Damage0 = get_adjust_value(recv_damage, Dm, Pos, BattleData),
+    if
+        F1 =/= 0 orelse I1 =/= 0 ->
+            ?BATTLE_LOG("        站位 ~w Buff效果: 嘲讽", [Pos]),
+            ?BATTLE_LOG("            Buff类型: 嘲讽, 浮点系数: ~w, 整数值: ~w", [F1, I1]);
+        true -> void
+    end,
+	round(Damage0 * (1 - F1) - I1).
 
 %========================================================================================================
 % skill transform handler
@@ -2820,11 +2904,12 @@ end_round_hook(BattleData) ->
 
 start_round_hook(BattleData) ->
     %% Everything that should be done before a new round starts
+    ?BATTLE_LOG("~n================== 回合数: ~w ==================", [BattleData#battle_data.round]),
     mutate_attack(BattleData).
 
 mutate_attack(BattleData) ->
     Round = BattleData#battle_data.round,
-    case lists:member(Round, [5, 11, 16, 21, 26]) of
+    case lists:member(Round, [11, 16, 21, 26]) of
         true ->
             LastRate = 1 + ((Round - 11) div 5) * 0.25,
             NewRate = LastRate + 0.25,
@@ -2835,9 +2920,9 @@ mutate_attack(BattleData) ->
                         State ->
                             NewPAtt = erlang:round(State#battle_status.p_att / LastRate * NewRate),
                             NewMAtt = erlang:round(State#battle_status.m_att / LastRate * NewRate),
-                            ?INFO(battle_dbg, "Pos = ~w, p_att = ~w, NewPAtt = ~w", 
+                            ?INFO(battle, "Pos = ~w, p_att = ~w, NewPAtt = ~w", 
                                   [Pos, State#battle_status.p_att, NewPAtt]),
-                            ?INFO(battle_dbg, "Pos = ~w, m_att = ~w, NewMAtt = ~w", 
+                            ?INFO(battle, "Pos = ~w, m_att = ~w, NewMAtt = ~w", 
                                   [Pos, State#battle_status.m_att, NewMAtt]),
                             NState = State#battle_status{
                                 p_att = NewPAtt,
@@ -2856,4 +2941,111 @@ mutate_attack(BattleData) ->
         false ->
             BattleData
     end.
+
+-ifdef(debug).
+
+format_buff(#buff{name = ?BUFF_SCORNED} = Buff) ->
+    io_lib:format("    Buff类型: 被嘲讽, 嘲讽者站位: ~w", [Buff#buff.value]);
+format_buff(#buff{name = ?BUFF_ASSIST} = Buff) ->
+    io_lib:format("    Buff类型: 被援护, 系数: ~w, 援护者站位: ~w", [Buff#buff.value, Buff#buff.data]);
+format_buff(Buff) ->
+    io_lib:format("    Buff类型: ~s, 系数: ~w", 
+                  [buff_type_to_str(Buff#buff.name), Buff#buff.value]).
+
+buff_type_to_str(Type) ->
+    case Type of
+        ?BUFF_PDEF_UP     -> "物防+";
+        ?BUFF_PDEF_DOWN   -> "物防-";
+        ?BUFF_MDEF_UP     -> "魔防+";
+        ?BUFF_MDEF_DOWN   -> "魔防-";
+        ?BUFF_ATT_UP      -> "攻击+";
+        ?BUFF_ATT_DOWN    -> "攻击-";
+        ?BUFF_LUCK_UP     -> "幸运+";
+        ?BUFF_LUCK_DOWN   -> "幸运-";
+
+        ?BUFF_SPEED_UP    -> "速度+";
+        ?BUFF_SPEED_DOWN  -> "速度-";
+        ?BUFF_CRIT        -> "必暴击";
+        ?BUFF_FATAL_UP    -> "致命+";
+        ?BUFF_FATAL_DOWN  -> "致命-";
+        ?BUFF_HIT_UP      -> "命中+";
+        ?BUFF_HIT_DOWN    -> "命中-";
+        ?BUFF_REBOUND     -> "反弹";
+        ?BUFF_COUNTER     -> "反击";
+        ?BUFF_LIFE_DRAIN  -> "吸血";
+        ?BUFF_MANA_DRAIN  -> "吸怒气"; 
+        ?BUFF_REFRESH     -> "回血";
+        ?BUFF_SCORN       -> "嘲讽";
+        ?BUFF_SCORNED     -> "被嘲讽";
+        ?BUFF_ASSIST      -> "援护";
+        ?BUFF_FAINT       -> "晕";
+        ?BUFF_FRENZY      -> "狂暴";
+        ?BUFF_WEAKNESS    -> "降低治疗量";
+        ?BUFF_TOXIC       -> "中毒";
+
+        ?BUFF_DODGE_UP    -> "闪避+";
+        ?BUFF_DODGE_DOWN  -> "闪避-";
+
+        ?BUFF_BLOCK_UP    -> "格挡+";
+        ?BUFF_BLOCK_DOWN  -> "格挡-";
+
+        ?BUFF_CRIT_UP     -> "暴击+";
+        ?BUFF_CRIT_DOWN   -> "暴击-";
+
+        ?BUFF_CAST_DMG_UP -> "输出伤害+";
+        ?BUFF_RECV_DMG_DOWN -> "输入伤害-";
+        ?BUFF_CAST_DMG_DOWN -> "输出伤害-";
+        ?BUFF_RECV_DMG_UP -> "输入伤害+"
+    end.
+
+tag_to_buff_effect(Tag) ->
+    case Tag of
+        pdef -> "物防";
+        mdef -> "魔防";
+        att  -> "攻击";
+        crit -> "暴击";
+        luck -> "幸运";
+        speed -> "速度";
+        hit  -> "命中";
+        dodge -> "闪避";
+        block -> "格挡";
+        cast_damage -> "输出伤害";
+        recv_damage -> "输入伤害"
+    end.
+
+dump_player_list(BattleData) ->
+    F = fun(Pos) ->
+        case array:get(Pos, BattleData#battle_data.player) of
+            undefined -> void;
+            P ->
+                ?BATTLE_LOG("站位: ~w, ID: ~w, 名字: ~s, 职业: ~w, 等级: ~w, 星级: ~w",
+                            [Pos, P#battle_status.id, P#battle_status.name, 
+                             P#battle_status.job, P#battle_status.level, P#battle_status.star]),
+                ?BATTLE_LOG("    血: ~w, 怒气: ~w, 物攻: ~w, 魔攻: ~w, 物防: ~w, 魔防: ~w", 
+                            [P#battle_status.hp, P#battle_status.mp, 
+                             P#battle_status.p_att, P#battle_status.m_att,
+                             P#battle_status.p_def, P#battle_status.m_def]),
+                ?BATTLE_LOG("    速度: ~w, 命中: ~w, 闪避: ~w, 暴击: ~w, 幸运: ~w, 反击: ~w, 格挡: ~w, 破甲: ~w, 敏捷: ~w", 
+                            [P#battle_status.speed, P#battle_status.hit, 
+                             P#battle_status.dodge, P#battle_status.crit,
+                             P#battle_status.luck, P#battle_status.counter,
+                             P#battle_status.block, P#battle_status.break,
+                             P#battle_status.agility]),
+                ?BATTLE_LOG("    技能: ~w", [P#battle_status.skill]),
+                ?BATTLE_LOG("    被动技能: ~w", [P#battle_status.p_skill])
+        end
+    end,
+    lists:foreach(F, lists:seq(1, ?BATTLE_FIELD_SIZE)).
+
+-else.
+
+format_buff(_) -> ok.
+
+buff_type_to_str(_) -> ok.
+
+tag_to_buff_effect(_) -> ok.
+
+dump_player_list(_) -> ok.
+
+-endif.
 

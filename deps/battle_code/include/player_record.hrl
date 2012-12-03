@@ -62,6 +62,7 @@
 			guide_pid		  = none,		%% 每日指引模块
 			arena_pid         = none,		%% 竞技场模块
 			guaji_pid		  = none,		%% 挂机模块
+			junwei_role_pid   = none,		%% 军威将领模块
 			yunbiao_pid       = none,        %% 运镖模块
 			boss_pid          = none,         %%世界boss模块		  
 			marstower_pid	  = none,        %% 英雄塔模块
@@ -90,6 +91,7 @@
 	gd_LastLoginTime    =0, 
 	gd_LastLoginoutTime =0,
 	gd_max_recv_global_mail_id = 0,
+	gd_RegisterTime		= 0,
 	
 	gd_Password         =""
 	
@@ -112,6 +114,7 @@
 	gd_LastLoginTime		= {integer}, 
 	gd_LastLoginoutTime		= {integer},
 	gd_max_recv_global_mail_id = {integer},
+	gd_RegisterTime			= {integer},
 	
 	gd_Password				= {string}
 }).

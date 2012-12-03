@@ -40,7 +40,7 @@
 -define(ERR_NOT_ENOUGH_HONOUR,   37).		%% 荣誉点不足
 -define(ERR_BAG_NO_SHOE,		 38).		%% 背包里没有小飞鞋
 -define(ERR_NO_FEEDBACK_GOLD,	 39).		%% 没有可领取的元宝
-
+-define(ERR_NOT_ENOUHT_JUNLING,	 40).		%% 军令不足
 %% 场景
 %% -define(ERR_SCENE_NOT_COMPLETE,			11001).			%% 场景进度未完成
 %% -define(ERR_MOVE_CHECK_FAILED,			11002).			%% 场景 move check 失败
@@ -174,6 +174,7 @@
 -define(ERR_NO_FREE_CAGE,				13003).			%% 已没有空余的笼子了
 -define(ERR_ALREADY_FREEDOM,			13004).			%% 玩家已经自由了
 -define(ERR_NO_SLAVES,					13005).			%% 玩家已经没有奴隶了
+-define(ERR_OFFICIAL_ONE_KEY_NOT_ENOUGH,13006).			%% 一键升级器魂金钱不足
 
 %%邮件系统
 -define(ERR_MAIL_WRONG_TITLE,            14001).        %%邮件标题错误
@@ -183,6 +184,7 @@
 -define(ERR_MAIL_ITEM_HAVE_TAKE,		 14005).		%%附件已经领取过
 -define(ERR_MAIL_ITEM_NOT_EXIT,			 14006).        %%附件不存在
 -define(ERR_NO_MAIL_CAN_TAKE,			 14007).		%%没有可提取的附件
+-define(ERR_NOT_INGUILD,				 14008).		%%你还没有加入任何公会
 
 
 %% 佣兵系统
@@ -223,7 +225,7 @@
 %% -define(GUILD_ERROR_APPLY_CANCEL,		19021).			%% 取消公会申请
 %% -define(GUILD_ERROR_BEENINGUILD,			19022).			%% 用户已经在公会中
   -define(GUILD_ERROR_GOLD_NOTENOUGH,		19023).			%% 金币不足
-%% -define(GUILD_ERROR_NOTINGUILD,			19024).			%% 用户当前不在公会中
+  % -define(GUILD_ERROR_NOTINGUILD,			19024).			%% 用户当前不在公会中
 %% -define(GUILD_ERROR_NOEXIST,				19025).			%% 所查找的公会不存在或用户不存在
 %% -define(GUILD_ERROR_PROHIBITED_WORD,		19026).			%% 公会名称或者公会宣言中含有屏蔽词
 %% -define(GUILD_ERROR_NOT_IN_APPLY_LIST,	19027).			%% 批准的成员不在申请列表中
@@ -256,6 +258,7 @@
 -define(ERR_HIGHT_LEVEL_NOT_OVER,			28001).			%% 高级VIP未失效
 -define(ERR_VIP_YEAR_NOT_OVER,				28002).			%% 半年费VIP未失效 
 -define(ERR_VIP_YEAR_HAVE_BUY,				28003).			%% 已经购买了半年费VIP
+-define(ERR_BUFFER_HAVE_USED,				28004).			%% VIP祝福已使用过
 
 %% 组队
 %% -define(ERR_TEAM_IN_BATTLE,				30001).			%% 战斗中，不能组队
@@ -267,6 +270,12 @@
  -define(ERR_TEAM_INVITE_SUCCESS,	30012).			%% 组队邀请已发出，请耐心等待，
  -define(ERR_TEAM_NOT_LEAD,	30013).			%% 您不是队长，不能邀请，
  -define(ERR_TEAM_IN_COMP, 30014).         %% 比武中，不能邀请
+ -define(ERR_TEAM_CAN_NOT_APPLY_LEVEL_NOT_OK, 30015).         %% 等级不够，不能申请此副本组队
+ -define(ERR_TEAM_NOT_APPLY_ALREADY_IN_YUN_BIAO,  30016).         %% 运镖中，不能申请组队
+ -define(ERR_TEAM_NOT_APPLY_IN_BATTLE,    30017).         %% 战斗中不能申请组队
+ -define(ERR_TEAM_APPLY_IN_COMP, 30018).         %% 比武中，不能申请组队
+ -define(ERR_TEAM_APPLY_IN_TEAM_SCENE,    30019).         %% 已经在副本中，不能申请组队
+ -define(ERR_TEAM_APPLY_SUCCESS,    30020).         %% 组队申请已经发出
 
  -define(ERR_TEAM_INVITE_SELF,			30004).			%% 抱歉，不能邀请自己
 -define(ERR_TEAM_NOT_TEAM_SCENE,			30005).			%% 被邀请者等级不足，不能进入此副本
@@ -306,6 +315,7 @@
 -define(ERR_ADD_FRIEND_TO_SELF,18004).  		%%加自己为好友
 -define(ERR_PAY_TIMES_IS_FULL,18005).  		%%今日祝福次数已满
 -define(ERR_PAYED_TIMES_IS_FULL,18006).  		%%今日好友被祝福次数已满
+-define(ERR_REQUEST_ALREADY_SEND,18007).         %%今日好友被祝福次数已满
 
 %%运镖
 -define(ERR_ROB_TIMES_ZERO, 26000).     		%%您今天的打劫次数已满
@@ -357,7 +367,7 @@
 -define(ERR_COMP_ALREADY_LEAVE,			37004).					%% 您已经离开比武场
 -define(ERR_COMP_OTHER_ALREADY_LEAVE,	37005).					%% 对方已经离开比武场
 -define(ERR_COMP_OTHER_IS_CLOAKING,		37006).					%% 对方已经隐形
--define(ERR_COMP_END_IN_ADVANCE,		37007).					%% 比武已经提前结束
+-define(ERR_COMP_END_IN_ADVANCE,		37007).					%% 您所在等级段的比武已经结束
 -define(ERR_COMP_ALREADY_RAISE_BANNER,	37008).					%% 已经升旗了
 -define(ERR_COMP_NOT_COMP_TIME,			37009).					%% 现在不是比武活动时间，不能报名
 
@@ -366,3 +376,10 @@
 -define(CANNOT_CHALLENGE_SELF, 63003).					%% 不能挑战自己
 -define(NOT_FIRST_IN_ARENA, 63004).						%% 24点结算时不是竞技场第一名
 -define(KING_CHANGE_TODAY, 63005).						%% 今天国王已经易主，明天才能挑战
+
+%% =========================== 投壶相关 =================================
+-define(ERR_GOLD_NOT_ENOUGH, 65000).					%% 投壶所需元宝不足
+-define(ERR_BAG_SIZE_NOT_ENOUGH, 65001).				%% 投壶背包所需空间不足
+-define(ERR_BAG_SLOT_NOT_ENOUGH, 65002).				%% 正式背包空间不足
+-define(ERR_BAG_SLOT_INDEX_NOT_EXIST, 65003).				%% 所请求的位置没有物品
+
