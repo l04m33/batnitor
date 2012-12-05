@@ -484,7 +484,7 @@ choose_file_by_dialog(MainFrame, OpenOrSave) ->
 parse_csv_line({eof}, AccList) -> 
     lists:reverse(AccList);
 parse_csv_line({newline, Line}, AccList) ->
-    %?I("Line = ~p", [Line]),
+    ?I("Line = ~p", [Line]),
     [Line | AccList].
 
 show_message(MainFrame, Msg) ->
@@ -505,7 +505,7 @@ string_to_term(String) ->
 
 row_to_role([ID, DengJi, GongJi, FangYu, Xue, SuDu, MingZhong, ShanBi, BaoJi, 
                   XingYun, GeDang, FanJi, PoJia, ZhiMing, GuaiDaRen, RenDaGuai, NanDu,
-                  GuaiWuLeiXing, GuaiWuZhiYe, Skill1, Skill2, Skill3, Skill4, Skill5, Skill6]) ->
+                  GuaiWuLeiXing, GuaiWuZhiYe, Skill1, Skill2, Skill3, Skill4, Skill5, Skill6 | _]) ->
     SkillsList = lists:zip(lists:seq(1, 6), 
                            lists:map(fun string_to_term/1, 
                                      [Skill1, Skill2, Skill3, Skill4, Skill5, Skill6])),
@@ -574,7 +574,7 @@ row_to_role([ID, DengJi, GongJi, FangYu, Xue, SuDu, MingZhong, ShanBi, BaoJi,
         skills_list = ValidSkillsList
     }}.
 
-row_to_mon_attr([ID, MingZhong, ShanBi, BaoJi, XingYun, GeDang, FanJi, PoJia, ZhiMing, JiNeng]) ->
+row_to_mon_attr([ID, MingZhong, ShanBi, BaoJi, XingYun, GeDang, FanJi, PoJia, ZhiMing, JiNeng | _]) ->
     #mon_attr {
         id          = string_to_term(ID),
 		name        = "",
@@ -603,7 +603,7 @@ row_to_mon_attr([ID, MingZhong, ShanBi, BaoJi, XingYun, GeDang, FanJi, PoJia, Zh
  		star        = 1         % TODO
 	}.
 
-row_to_mon_group([GroupID, Mon1, Mon2, Mon3, Mon4, Mon5, Mon6]) ->
+row_to_mon_group([GroupID, Mon1, Mon2, Mon3, Mon4, Mon5, Mon6 | _]) ->
     L = [{string_to_term(Mon1), 1},
          {string_to_term(Mon2), 2},
          {string_to_term(Mon3), 3},
