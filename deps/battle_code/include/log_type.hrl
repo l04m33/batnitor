@@ -125,6 +125,8 @@
 -define(GOLD_COST_JUNLING,2096).					%% 购买军令
 -define(GOLD_LOTTERY,				2097).	%% 投壶花费
 -define(GOLD_ONE_KEY_COMPLETE_QIHUN,2098). %% 一键完成器魂升级
+-define(GOLD_USE_EVOKE_DRESS,		2099).	%% 幻化外形装扮消耗（包括坐骑、翅膀等）
+-define(GOLD_USE_ADD_DRESS_EXP,		2100).	%% 增加外形装扮消耗（包括坐骑、翅膀等）
 
 
 %% ======================== 银币改变的操作类型 ==========================
@@ -220,6 +222,7 @@
 -define(SILVER_BUY_MYSTICAL_SHOP_ITEM, 2036).		%% 用于购买神秘商店物品
 -define(SILVER_MARSTOWER_AUTO_CHALLENGE,2037). %% 用于爬塔自动挑战
 -define(SILVER_ONE_KEY_COMPLETE_QIHUN,2038). %% 一键完成器魂升级
+-define(SILVER_USE_ADD_DRESS_EXP,     2039).	%% 增加外形装扮消耗（包括坐骑、翅膀等）
 
 
 %%有一些操作，同时使用多种东西的
@@ -273,6 +276,7 @@
 -define(ITEM_FROM_VIP,				1045).		%% VIP礼包
 -define(ITEM_FROM_SHOP,				1046).		%% 商店购买
 -define(HU_LAO_GUAN,				1047).      %% 虎牢关掉落
+-define(ITEM_FROM_SWORD,			1048).		%% 神剑活动掉落
 
 -define(ITEM_ADD_STACK,				2001).		%% 堆叠后增加（包括物品移动，物品生成，宝石拆卸、交易获得等情况）
 
@@ -331,6 +335,8 @@
 -define(ENERGY_FROM_RUNNING,		1007).		%% 跑步
 -define(ENERGY_FROM_TASK,			1008).		%% 任务
 -define(ENERGY_FROM_TAX,			1009).		%% 征收
+
+
 -define(ENERGY_ENTER_DUNGEON,		2001).		%% 进入挑战副本消耗
 -define(ENERGY_ONLINE_ARENA_PVE,	2002).		%% 在线竞技打怪
 -define(ENERGY_TOWER,				2003).		%% 下水道打怪
@@ -367,6 +373,8 @@
 -define(PRACTICE_FROM_GIFT_BAG, 		1017).		%%使用礼包获得       
 -define(PRACTICE_FROM_MEDITATION, 		1018).		%%冥想获得
 -define(PRACTICE_FROM_USE_ITEM, 		1019).		%%使用物品获得
+
+-define(PRACTICE_USE_ADD_DRESS_EXP,     2001).	%% 增加外形装扮消耗（包括坐骑、翅膀等）
 
 
 -define(POPULARITY_FROM_GM,						1999).	%gm获取
@@ -417,3 +425,9 @@
 %% 角色是否第一次雇佣
 -define(lOG_ROLE_NOT_FIRST_EMPLOY,	0).			%% 角色不是第一次雇佣
 -define(LOG_ROLE_FIRST_EMPLOY,		1).			%% 角色是第一次雇佣
+
+%% 任务完成状态
+-define(TASK_STATE_ACCEPT,			1).			%% 接受任务
+-define(TASK_STATE_COMPLETE,		2).			%% 完成任务
+-define(TASK_STATE_SUBMIT,			3).			%% 提交任务
+-define(TASK_STATE_GIVE_UP,			4).			%% 放弃任务

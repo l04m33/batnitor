@@ -18,6 +18,7 @@
 -define(BATTLE_TYPE_ARENA, 5).
 -define(BATTLE_TYPE_BOSS, 10).
 -define(BATTLE_TYPE_CHALLENGE_KING, 15).
+-define(BATTLE_TYPE_SWORD,	32).
 
 
 %% Range define.
@@ -60,7 +61,8 @@
 -define(BUFF_REFRESH,    20).    %% 生命回複
 -define(BUFF_SCORN,      21).    %% 嘲讽
 -define(BUFF_SCORNED,    22).    %% 被嘲讽
--define(BUFF_ASSIST,     23).    %% 援護: 自動成為攻擊目標
+-define(BUFF_ASSIST,     23).    %% 援護：被援护者受到攻击时，援护者分担伤害
+-define(BUFF_ASSISTED,   40).    %% 被援護
 -define(BUFF_FAINT,      24).
 -define(BUFF_FRENZY,     26).    %% 狂暴
 -define(BUFF_WEAKNESS,   27).    %% 降低治疗量
@@ -117,14 +119,22 @@
         begin
             __LOG_NAME = filename:join(?BATTLE_LOG_PATH,  
                                        "battle." ++ (pid_to_list(self()) -- "<>")),
-            {ok, __F} = file:open(__LOG_NAME, write),
-            erlang:put('__battle_log_file__', __F),
-            __LOG_NAME
+            case file:open(__LOG_NAME, write) of
+                {ok, __F} ->
+                    erlang:put('__battle_log_file__', __F),
+                    __LOG_NAME;
+                {error, __Err} ->
+                    erlang:put('__battle_log_file__', {error, __Err}),
+                    lists:flatten(io_lib:format("~w", [{error, __Err}]))
+            end
         end).
 
 -define(BATTLE_LOG(Fmt, Args), 
         begin
-            io:format(erlang:get('__battle_log_file__'), Fmt ++ "~n", Args)
+            case erlang:get('__battle_log_file__') of
+                {error, _} -> void;
+                _ -> io:format(erlang:get('__battle_log_file__'), Fmt ++ "~n", Args)
+            end
         end).
 
 -define(BATTLE_LOG(Fmt),       ?BATTLE_LOG(Fmt, [])).
@@ -161,20 +171,29 @@
 % record definition
 %=============================================================================================
 
+-record(battle_plot, 
+    {
+        round,      % 触发回合数
+        plots,      % [进入前的剧情ID, 进入后的剧情ID]
+        new_roles   % 要添加的新佣兵
+    }
+).
+
 -record(battle_start, %% startup information
 	{
-		mod,               %% pve, pvp...	 
-	 	type      = 0,     %% 
-		att_id,            %% Attacker's ID
-		att_mer   = [],    %% Attacker's mercenary list
-		def_id,            %% Defender's ID
-		def_mer   = [],    %% Defender's Mercenary list
-	 	monster,           %% MonsterID
+		mod,                %% pve, pvp...	 
+	 	type       = 0,     %% 
+		att_id,             %% Attacker's ID
+		att_mer    = [],    %% Attacker's mercenary list
+		def_id,             %% Defender's ID
+		def_mer    = [],    %% Defender's Mercenary list
+	 	monster,            %% MonsterID
         monster_hp = ?HP_MAX,   %% Monster HP, can be a list or an integer
-		maketeam  = false, %% true | false
-		checklist = [],    %% [check_spec()]
-		caller,            %% caller module's name or pid
-		callback           %% term()
+        plot       = [],    %% [#battle_plot{}]
+		maketeam   = false, %% true | false
+		checklist  = [],    %% [check_spec()]
+		caller,             %% caller module's name or pid
+		callback            %% term()
 	}
 ).
 

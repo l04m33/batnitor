@@ -283,25 +283,25 @@ get_skill_rate(105009) -> 0;
 
 get_skill_rate(105010) -> 0;
 
-get_skill_rate(106001) -> 0;
+get_skill_rate(401001) -> 0;
 
-get_skill_rate(106002) -> 0;
+get_skill_rate(401002) -> 0;
 
-get_skill_rate(106003) -> 0;
+get_skill_rate(401003) -> 0;
 
-get_skill_rate(106004) -> 0;
+get_skill_rate(401004) -> 0;
 
-get_skill_rate(106005) -> 0;
+get_skill_rate(401005) -> 0;
 
-get_skill_rate(106006) -> 0;
+get_skill_rate(401006) -> 0;
 
-get_skill_rate(106007) -> 0;
+get_skill_rate(401007) -> 0;
 
-get_skill_rate(106008) -> 0;
+get_skill_rate(401008) -> 0;
 
-get_skill_rate(106009) -> 0;
+get_skill_rate(401009) -> 0;
 
-get_skill_rate(106010) -> 0;
+get_skill_rate(401010) -> 0;
 
 get_skill_rate(107001) -> 0;
 
@@ -323,25 +323,25 @@ get_skill_rate(107009) -> 0;
 
 get_skill_rate(107010) -> 0;
 
-get_skill_rate(108001) -> 0;
+get_skill_rate(402001) -> 0;
 
-get_skill_rate(108002) -> 0;
+get_skill_rate(402002) -> 0;
 
-get_skill_rate(108003) -> 0;
+get_skill_rate(402003) -> 0;
 
-get_skill_rate(108004) -> 0;
+get_skill_rate(402004) -> 0;
 
-get_skill_rate(108005) -> 0;
+get_skill_rate(402005) -> 0;
 
-get_skill_rate(108006) -> 0;
+get_skill_rate(402006) -> 0;
 
-get_skill_rate(108007) -> 0;
+get_skill_rate(402007) -> 0;
 
-get_skill_rate(108008) -> 0;
+get_skill_rate(402008) -> 0;
 
-get_skill_rate(108009) -> 0;
+get_skill_rate(402009) -> 0;
 
-get_skill_rate(108010) -> 0;
+get_skill_rate(402010) -> 0;
 
 get_skill_rate(109001) -> 0;
 
@@ -383,25 +383,25 @@ get_skill_rate(110009) -> 0;
 
 get_skill_rate(110010) -> 0;
 
-get_skill_rate(111001) -> 0;
+get_skill_rate(403001) -> 0;
 
-get_skill_rate(111002) -> 0;
+get_skill_rate(403002) -> 0;
 
-get_skill_rate(111003) -> 0;
+get_skill_rate(403003) -> 0;
 
-get_skill_rate(111004) -> 0;
+get_skill_rate(403004) -> 0;
 
-get_skill_rate(111005) -> 0;
+get_skill_rate(403005) -> 0;
 
-get_skill_rate(111006) -> 0;
+get_skill_rate(403006) -> 0;
 
-get_skill_rate(111007) -> 0;
+get_skill_rate(403007) -> 0;
 
-get_skill_rate(111008) -> 0;
+get_skill_rate(403008) -> 0;
 
-get_skill_rate(111009) -> 0;
+get_skill_rate(403009) -> 0;
 
-get_skill_rate(111010) -> 0;
+get_skill_rate(403010) -> 0;
 
 get_skill_rate(112001) -> 0;
 
@@ -503,25 +503,25 @@ get_skill_rate(116009) -> 0;
 
 get_skill_rate(116010) -> 0;
 
-get_skill_rate(117001) -> 0;
+get_skill_rate(404001) -> 0;
 
-get_skill_rate(117002) -> 0;
+get_skill_rate(404002) -> 0;
 
-get_skill_rate(117003) -> 0;
+get_skill_rate(404003) -> 0;
 
-get_skill_rate(117004) -> 0;
+get_skill_rate(404004) -> 0;
 
-get_skill_rate(117005) -> 0;
+get_skill_rate(404005) -> 0;
 
-get_skill_rate(117006) -> 0;
+get_skill_rate(404006) -> 0;
 
-get_skill_rate(117007) -> 0;
+get_skill_rate(404007) -> 0;
 
-get_skill_rate(117008) -> 0;
+get_skill_rate(404008) -> 0;
 
-get_skill_rate(117009) -> 0;
+get_skill_rate(404009) -> 0;
 
-get_skill_rate(117010) -> 0;
+get_skill_rate(404010) -> 0;
 
 get_skill_rate(118001) -> 0;
 
@@ -1977,89 +1977,99 @@ get_skill_rate(314029) -> 0;
 
 get_skill_rate(314030) -> 0;
 
-get_skill_rate(401001) -> 0;
+get_skill_rate(106001) -> 0;
 
-get_skill_rate(401002) -> 0;
+get_skill_rate(106002) -> 0;
 
-get_skill_rate(401003) -> 0;
+get_skill_rate(106003) -> 0;
 
-get_skill_rate(401004) -> 0;
+get_skill_rate(106004) -> 0;
 
-get_skill_rate(401005) -> 0;
+get_skill_rate(106005) -> 0;
 
-get_skill_rate(401006) -> 0;
+get_skill_rate(106006) -> 0;
 
-get_skill_rate(401007) -> 0;
+get_skill_rate(106007) -> 0;
 
-get_skill_rate(401008) -> 0;
+get_skill_rate(106008) -> 0;
 
-get_skill_rate(401009) -> 0;
+get_skill_rate(106009) -> 0;
 
-get_skill_rate(401010) -> 0;
+get_skill_rate(106010) -> 0;
 
-get_skill_rate(402001) -> 0;
+get_skill_rate(108001) -> 0;
 
-get_skill_rate(402002) -> 0;
+get_skill_rate(108002) -> 0;
 
-get_skill_rate(402003) -> 0;
+get_skill_rate(108003) -> 0;
 
-get_skill_rate(402004) -> 0;
+get_skill_rate(108004) -> 0;
 
-get_skill_rate(402005) -> 0;
+get_skill_rate(108005) -> 0;
 
-get_skill_rate(402006) -> 0;
+get_skill_rate(108006) -> 0;
 
-get_skill_rate(402007) -> 0;
+get_skill_rate(108007) -> 0;
 
-get_skill_rate(402008) -> 0;
+get_skill_rate(108008) -> 0;
 
-get_skill_rate(402009) -> 0;
+get_skill_rate(108009) -> 0;
 
-get_skill_rate(402010) -> 0;
+get_skill_rate(108010) -> 0;
 
-get_skill_rate(403001) -> 0;
+get_skill_rate(111001) -> 0;
 
-get_skill_rate(403002) -> 0;
+get_skill_rate(111002) -> 0;
 
-get_skill_rate(403003) -> 0;
+get_skill_rate(111003) -> 0;
 
-get_skill_rate(403004) -> 0;
+get_skill_rate(111004) -> 0;
 
-get_skill_rate(403005) -> 0;
+get_skill_rate(111005) -> 0;
 
-get_skill_rate(403006) -> 0;
+get_skill_rate(111006) -> 0;
 
-get_skill_rate(403007) -> 0;
+get_skill_rate(111007) -> 0;
 
-get_skill_rate(403008) -> 0;
+get_skill_rate(111008) -> 0;
 
-get_skill_rate(403009) -> 0;
+get_skill_rate(111009) -> 0;
 
-get_skill_rate(403010) -> 0;
+get_skill_rate(111010) -> 0;
 
-get_skill_rate(404001) -> 0;
+get_skill_rate(117001) -> 0;
 
-get_skill_rate(404002) -> 0;
+get_skill_rate(117002) -> 0;
 
-get_skill_rate(404003) -> 0;
+get_skill_rate(117003) -> 0;
 
-get_skill_rate(404004) -> 0;
+get_skill_rate(117004) -> 0;
 
-get_skill_rate(404005) -> 0;
+get_skill_rate(117005) -> 0;
 
-get_skill_rate(404006) -> 0;
+get_skill_rate(117006) -> 0;
 
-get_skill_rate(404007) -> 0;
+get_skill_rate(117007) -> 0;
 
-get_skill_rate(404008) -> 0;
+get_skill_rate(117008) -> 0;
 
-get_skill_rate(404009) -> 0;
+get_skill_rate(117009) -> 0;
 
-get_skill_rate(404010) -> 0;
+get_skill_rate(117010) -> 0;
 
 get_skill_rate(405001) -> 0;
 
-get_skill_rate(406001) -> 0.
+get_skill_rate(406001) -> 0;
+
+get_skill_rate(407001) -> 0;
+
+get_skill_rate(408001) -> 0;
+
+get_skill_rate(409001) -> 0;
+
+get_skill_rate(410001) -> 0;
+
+get_skill_rate(411001) -> 0.
 
 
 %%================================================
@@ -2329,109 +2339,109 @@ skill_info(105010) ->
 	};
 
 %% 背水一战
-skill_info(106001) ->
+skill_info(401001) ->
 	#skill_info{
-		mode_id       = 106001,
-		class_id      = 106,
+		mode_id       = 401001,
+		class_id      = 401,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 490,
-		next_skill_id = 106002
+		next_skill_id = 401002
 	};
 
 %% 背水一战
-skill_info(106002) ->
+skill_info(401002) ->
 	#skill_info{
-		mode_id       = 106002,
-		class_id      = 106,
+		mode_id       = 401002,
+		class_id      = 401,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2300,
-		next_skill_id = 106003
+		next_skill_id = 401003
 	};
 
 %% 背水一战
-skill_info(106003) ->
+skill_info(401003) ->
 	#skill_info{
-		mode_id       = 106003,
-		class_id      = 106,
+		mode_id       = 401003,
+		class_id      = 401,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 7340,
-		next_skill_id = 106004
+		next_skill_id = 401004
 	};
 
 %% 背水一战
-skill_info(106004) ->
+skill_info(401004) ->
 	#skill_info{
-		mode_id       = 106004,
-		class_id      = 106,
+		mode_id       = 401004,
+		class_id      = 401,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 16150,
-		next_skill_id = 106005
+		next_skill_id = 401005
 	};
 
 %% 背水一战
-skill_info(106005) ->
+skill_info(401005) ->
 	#skill_info{
-		mode_id       = 106005,
-		class_id      = 106,
+		mode_id       = 401005,
+		class_id      = 401,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 39100,
-		next_skill_id = 106006
+		next_skill_id = 401006
 	};
 
 %% 背水一战
-skill_info(106006) ->
+skill_info(401006) ->
 	#skill_info{
-		mode_id       = 106006,
-		class_id      = 106,
+		mode_id       = 401006,
+		class_id      = 401,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 76500,
-		next_skill_id = 106007
+		next_skill_id = 401007
 	};
 
 %% 背水一战
-skill_info(106007) ->
+skill_info(401007) ->
 	#skill_info{
-		mode_id       = 106007,
-		class_id      = 106,
+		mode_id       = 401007,
+		class_id      = 401,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 154700,
-		next_skill_id = 106008
+		next_skill_id = 401008
 	};
 
 %% 背水一战
-skill_info(106008) ->
+skill_info(401008) ->
 	#skill_info{
-		mode_id       = 106008,
-		class_id      = 106,
+		mode_id       = 401008,
+		class_id      = 401,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 289000,
-		next_skill_id = 106009
+		next_skill_id = 401009
 	};
 
 %% 背水一战
-skill_info(106009) ->
+skill_info(401009) ->
 	#skill_info{
-		mode_id       = 106009,
-		class_id      = 106,
+		mode_id       = 401009,
+		class_id      = 401,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 527000,
-		next_skill_id = 106010
+		next_skill_id = 401010
 	};
 
 %% 背水一战
-skill_info(106010) ->
+skill_info(401010) ->
 	#skill_info{
-		mode_id       = 106010,
-		class_id      = 106,
+		mode_id       = 401010,
+		class_id      = 401,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
@@ -2549,109 +2559,109 @@ skill_info(107010) ->
 	};
 
 %% 战意激荡
-skill_info(108001) ->
+skill_info(402001) ->
 	#skill_info{
-		mode_id       = 108001,
-		class_id      = 108,
+		mode_id       = 402001,
+		class_id      = 402,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 550,
-		next_skill_id = 108002
+		next_skill_id = 402002
 	};
 
 %% 战意激荡
-skill_info(108002) ->
+skill_info(402002) ->
 	#skill_info{
-		mode_id       = 108002,
-		class_id      = 108,
+		mode_id       = 402002,
+		class_id      = 402,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2570,
-		next_skill_id = 108003
+		next_skill_id = 402003
 	};
 
 %% 战意激荡
-skill_info(108003) ->
+skill_info(402003) ->
 	#skill_info{
-		mode_id       = 108003,
-		class_id      = 108,
+		mode_id       = 402003,
+		class_id      = 402,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 8210,
-		next_skill_id = 108004
+		next_skill_id = 402004
 	};
 
 %% 战意激荡
-skill_info(108004) ->
+skill_info(402004) ->
 	#skill_info{
-		mode_id       = 108004,
-		class_id      = 108,
+		mode_id       = 402004,
+		class_id      = 402,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 18050,
-		next_skill_id = 108005
+		next_skill_id = 402005
 	};
 
 %% 战意激荡
-skill_info(108005) ->
+skill_info(402005) ->
 	#skill_info{
-		mode_id       = 108005,
-		class_id      = 108,
+		mode_id       = 402005,
+		class_id      = 402,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 43700,
-		next_skill_id = 108006
+		next_skill_id = 402006
 	};
 
 %% 战意激荡
-skill_info(108006) ->
+skill_info(402006) ->
 	#skill_info{
-		mode_id       = 108006,
-		class_id      = 108,
+		mode_id       = 402006,
+		class_id      = 402,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 85500,
-		next_skill_id = 108007
+		next_skill_id = 402007
 	};
 
 %% 战意激荡
-skill_info(108007) ->
+skill_info(402007) ->
 	#skill_info{
-		mode_id       = 108007,
-		class_id      = 108,
+		mode_id       = 402007,
+		class_id      = 402,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 172900,
-		next_skill_id = 108008
+		next_skill_id = 402008
 	};
 
 %% 战意激荡
-skill_info(108008) ->
+skill_info(402008) ->
 	#skill_info{
-		mode_id       = 108008,
-		class_id      = 108,
+		mode_id       = 402008,
+		class_id      = 402,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 323000,
-		next_skill_id = 108009
+		next_skill_id = 402009
 	};
 
 %% 战意激荡
-skill_info(108009) ->
+skill_info(402009) ->
 	#skill_info{
-		mode_id       = 108009,
-		class_id      = 108,
+		mode_id       = 402009,
+		class_id      = 402,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 589000,
-		next_skill_id = 108010
+		next_skill_id = 402010
 	};
 
 %% 战意激荡
-skill_info(108010) ->
+skill_info(402010) ->
 	#skill_info{
-		mode_id       = 108010,
-		class_id      = 108,
+		mode_id       = 402010,
+		class_id      = 402,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
@@ -2879,109 +2889,109 @@ skill_info(110010) ->
 	};
 
 %% 龙牙突刺
-skill_info(111001) ->
+skill_info(403001) ->
 	#skill_info{
-		mode_id       = 111001,
-		class_id      = 111,
+		mode_id       = 403001,
+		class_id      = 403,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 490,
-		next_skill_id = 111002
+		next_skill_id = 403002
 	};
 
 %% 龙牙突刺
-skill_info(111002) ->
+skill_info(403002) ->
 	#skill_info{
-		mode_id       = 111002,
-		class_id      = 111,
+		mode_id       = 403002,
+		class_id      = 403,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2300,
-		next_skill_id = 111003
+		next_skill_id = 403003
 	};
 
 %% 龙牙突刺
-skill_info(111003) ->
+skill_info(403003) ->
 	#skill_info{
-		mode_id       = 111003,
-		class_id      = 111,
+		mode_id       = 403003,
+		class_id      = 403,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 7340,
-		next_skill_id = 111004
+		next_skill_id = 403004
 	};
 
 %% 龙牙突刺
-skill_info(111004) ->
+skill_info(403004) ->
 	#skill_info{
-		mode_id       = 111004,
-		class_id      = 111,
+		mode_id       = 403004,
+		class_id      = 403,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 16150,
-		next_skill_id = 111005
+		next_skill_id = 403005
 	};
 
 %% 龙牙突刺
-skill_info(111005) ->
+skill_info(403005) ->
 	#skill_info{
-		mode_id       = 111005,
-		class_id      = 111,
+		mode_id       = 403005,
+		class_id      = 403,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 39100,
-		next_skill_id = 111006
+		next_skill_id = 403006
 	};
 
 %% 龙牙突刺
-skill_info(111006) ->
+skill_info(403006) ->
 	#skill_info{
-		mode_id       = 111006,
-		class_id      = 111,
+		mode_id       = 403006,
+		class_id      = 403,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 76500,
-		next_skill_id = 111007
+		next_skill_id = 403007
 	};
 
 %% 龙牙突刺
-skill_info(111007) ->
+skill_info(403007) ->
 	#skill_info{
-		mode_id       = 111007,
-		class_id      = 111,
+		mode_id       = 403007,
+		class_id      = 403,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 154700,
-		next_skill_id = 111008
+		next_skill_id = 403008
 	};
 
 %% 龙牙突刺
-skill_info(111008) ->
+skill_info(403008) ->
 	#skill_info{
-		mode_id       = 111008,
-		class_id      = 111,
+		mode_id       = 403008,
+		class_id      = 403,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 289000,
-		next_skill_id = 111009
+		next_skill_id = 403009
 	};
 
 %% 龙牙突刺
-skill_info(111009) ->
+skill_info(403009) ->
 	#skill_info{
-		mode_id       = 111009,
-		class_id      = 111,
+		mode_id       = 403009,
+		class_id      = 403,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 527000,
-		next_skill_id = 111010
+		next_skill_id = 403010
 	};
 
 %% 龙牙突刺
-skill_info(111010) ->
+skill_info(403010) ->
 	#skill_info{
-		mode_id       = 111010,
-		class_id      = 111,
+		mode_id       = 403010,
+		class_id      = 403,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
@@ -3539,109 +3549,109 @@ skill_info(116010) ->
 	};
 
 %% 虚空炽炎
-skill_info(117001) ->
+skill_info(404001) ->
 	#skill_info{
-		mode_id       = 117001,
-		class_id      = 117,
+		mode_id       = 404001,
+		class_id      = 404,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 550,
-		next_skill_id = 117002
+		next_skill_id = 404002
 	};
 
 %% 虚空炽炎
-skill_info(117002) ->
+skill_info(404002) ->
 	#skill_info{
-		mode_id       = 117002,
-		class_id      = 117,
+		mode_id       = 404002,
+		class_id      = 404,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2570,
-		next_skill_id = 117003
+		next_skill_id = 404003
 	};
 
 %% 虚空炽炎
-skill_info(117003) ->
+skill_info(404003) ->
 	#skill_info{
-		mode_id       = 117003,
-		class_id      = 117,
+		mode_id       = 404003,
+		class_id      = 404,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 8210,
-		next_skill_id = 117004
+		next_skill_id = 404004
 	};
 
 %% 虚空炽炎
-skill_info(117004) ->
+skill_info(404004) ->
 	#skill_info{
-		mode_id       = 117004,
-		class_id      = 117,
+		mode_id       = 404004,
+		class_id      = 404,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 18050,
-		next_skill_id = 117005
+		next_skill_id = 404005
 	};
 
 %% 虚空炽炎
-skill_info(117005) ->
+skill_info(404005) ->
 	#skill_info{
-		mode_id       = 117005,
-		class_id      = 117,
+		mode_id       = 404005,
+		class_id      = 404,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 43700,
-		next_skill_id = 117006
+		next_skill_id = 404006
 	};
 
 %% 虚空炽炎
-skill_info(117006) ->
+skill_info(404006) ->
 	#skill_info{
-		mode_id       = 117006,
-		class_id      = 117,
+		mode_id       = 404006,
+		class_id      = 404,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 85500,
-		next_skill_id = 117007
+		next_skill_id = 404007
 	};
 
 %% 虚空炽炎
-skill_info(117007) ->
+skill_info(404007) ->
 	#skill_info{
-		mode_id       = 117007,
-		class_id      = 117,
+		mode_id       = 404007,
+		class_id      = 404,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 172900,
-		next_skill_id = 117008
+		next_skill_id = 404008
 	};
 
 %% 虚空炽炎
-skill_info(117008) ->
+skill_info(404008) ->
 	#skill_info{
-		mode_id       = 117008,
-		class_id      = 117,
+		mode_id       = 404008,
+		class_id      = 404,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 323000,
-		next_skill_id = 117009
+		next_skill_id = 404009
 	};
 
 %% 虚空炽炎
-skill_info(117009) ->
+skill_info(404009) ->
 	#skill_info{
-		mode_id       = 117009,
-		class_id      = 117,
+		mode_id       = 404009,
+		class_id      = 404,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 589000,
-		next_skill_id = 117010
+		next_skill_id = 404010
 	};
 
 %% 虚空炽炎
-skill_info(117010) ->
+skill_info(404010) ->
 	#skill_info{
-		mode_id       = 117010,
-		class_id      = 117,
+		mode_id       = 404010,
+		class_id      = 404,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
@@ -11646,109 +11656,109 @@ skill_info(314030) ->
 	};
 
 %% 背水一战
-skill_info(401001) ->
+skill_info(106001) ->
 	#skill_info{
-		mode_id       = 401001,
-		class_id      = 401,
+		mode_id       = 106001,
+		class_id      = 106,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 490,
-		next_skill_id = 401002
+		next_skill_id = 106002
 	};
 
 %% 背水一战
-skill_info(401002) ->
+skill_info(106002) ->
 	#skill_info{
-		mode_id       = 401002,
-		class_id      = 401,
+		mode_id       = 106002,
+		class_id      = 106,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2300,
-		next_skill_id = 401003
+		next_skill_id = 106003
 	};
 
 %% 背水一战
-skill_info(401003) ->
+skill_info(106003) ->
 	#skill_info{
-		mode_id       = 401003,
-		class_id      = 401,
+		mode_id       = 106003,
+		class_id      = 106,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 7340,
-		next_skill_id = 401004
+		next_skill_id = 106004
 	};
 
 %% 背水一战
-skill_info(401004) ->
+skill_info(106004) ->
 	#skill_info{
-		mode_id       = 401004,
-		class_id      = 401,
+		mode_id       = 106004,
+		class_id      = 106,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 16150,
-		next_skill_id = 401005
+		next_skill_id = 106005
 	};
 
 %% 背水一战
-skill_info(401005) ->
+skill_info(106005) ->
 	#skill_info{
-		mode_id       = 401005,
-		class_id      = 401,
+		mode_id       = 106005,
+		class_id      = 106,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 39100,
-		next_skill_id = 401006
+		next_skill_id = 106006
 	};
 
 %% 背水一战
-skill_info(401006) ->
+skill_info(106006) ->
 	#skill_info{
-		mode_id       = 401006,
-		class_id      = 401,
+		mode_id       = 106006,
+		class_id      = 106,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 76500,
-		next_skill_id = 401007
+		next_skill_id = 106007
 	};
 
 %% 背水一战
-skill_info(401007) ->
+skill_info(106007) ->
 	#skill_info{
-		mode_id       = 401007,
-		class_id      = 401,
+		mode_id       = 106007,
+		class_id      = 106,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 154700,
-		next_skill_id = 401008
+		next_skill_id = 106008
 	};
 
 %% 背水一战
-skill_info(401008) ->
+skill_info(106008) ->
 	#skill_info{
-		mode_id       = 401008,
-		class_id      = 401,
+		mode_id       = 106008,
+		class_id      = 106,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 289000,
-		next_skill_id = 401009
+		next_skill_id = 106009
 	};
 
 %% 背水一战
-skill_info(401009) ->
+skill_info(106009) ->
 	#skill_info{
-		mode_id       = 401009,
-		class_id      = 401,
+		mode_id       = 106009,
+		class_id      = 106,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 527000,
-		next_skill_id = 401010
+		next_skill_id = 106010
 	};
 
 %% 背水一战
-skill_info(401010) ->
+skill_info(106010) ->
 	#skill_info{
-		mode_id       = 401010,
-		class_id      = 401,
+		mode_id       = 106010,
+		class_id      = 106,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
@@ -11756,109 +11766,109 @@ skill_info(401010) ->
 	};
 
 %% 战意激荡
-skill_info(402001) ->
+skill_info(108001) ->
 	#skill_info{
-		mode_id       = 402001,
-		class_id      = 402,
+		mode_id       = 108001,
+		class_id      = 108,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 550,
-		next_skill_id = 402002
+		next_skill_id = 108002
 	};
 
 %% 战意激荡
-skill_info(402002) ->
+skill_info(108002) ->
 	#skill_info{
-		mode_id       = 402002,
-		class_id      = 402,
+		mode_id       = 108002,
+		class_id      = 108,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2570,
-		next_skill_id = 402003
+		next_skill_id = 108003
 	};
 
 %% 战意激荡
-skill_info(402003) ->
+skill_info(108003) ->
 	#skill_info{
-		mode_id       = 402003,
-		class_id      = 402,
+		mode_id       = 108003,
+		class_id      = 108,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 8210,
-		next_skill_id = 402004
+		next_skill_id = 108004
 	};
 
 %% 战意激荡
-skill_info(402004) ->
+skill_info(108004) ->
 	#skill_info{
-		mode_id       = 402004,
-		class_id      = 402,
+		mode_id       = 108004,
+		class_id      = 108,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 18050,
-		next_skill_id = 402005
+		next_skill_id = 108005
 	};
 
 %% 战意激荡
-skill_info(402005) ->
+skill_info(108005) ->
 	#skill_info{
-		mode_id       = 402005,
-		class_id      = 402,
+		mode_id       = 108005,
+		class_id      = 108,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 43700,
-		next_skill_id = 402006
+		next_skill_id = 108006
 	};
 
 %% 战意激荡
-skill_info(402006) ->
+skill_info(108006) ->
 	#skill_info{
-		mode_id       = 402006,
-		class_id      = 402,
+		mode_id       = 108006,
+		class_id      = 108,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 85500,
-		next_skill_id = 402007
+		next_skill_id = 108007
 	};
 
 %% 战意激荡
-skill_info(402007) ->
+skill_info(108007) ->
 	#skill_info{
-		mode_id       = 402007,
-		class_id      = 402,
+		mode_id       = 108007,
+		class_id      = 108,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 172900,
-		next_skill_id = 402008
+		next_skill_id = 108008
 	};
 
 %% 战意激荡
-skill_info(402008) ->
+skill_info(108008) ->
 	#skill_info{
-		mode_id       = 402008,
-		class_id      = 402,
+		mode_id       = 108008,
+		class_id      = 108,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 323000,
-		next_skill_id = 402009
+		next_skill_id = 108009
 	};
 
 %% 战意激荡
-skill_info(402009) ->
+skill_info(108009) ->
 	#skill_info{
-		mode_id       = 402009,
-		class_id      = 402,
+		mode_id       = 108009,
+		class_id      = 108,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 589000,
-		next_skill_id = 402010
+		next_skill_id = 108010
 	};
 
 %% 战意激荡
-skill_info(402010) ->
+skill_info(108010) ->
 	#skill_info{
-		mode_id       = 402010,
-		class_id      = 402,
+		mode_id       = 108010,
+		class_id      = 108,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
@@ -11866,109 +11876,109 @@ skill_info(402010) ->
 	};
 
 %% 龙牙突刺
-skill_info(403001) ->
+skill_info(111001) ->
 	#skill_info{
-		mode_id       = 403001,
-		class_id      = 403,
+		mode_id       = 111001,
+		class_id      = 111,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 490,
-		next_skill_id = 403002
+		next_skill_id = 111002
 	};
 
 %% 龙牙突刺
-skill_info(403002) ->
+skill_info(111002) ->
 	#skill_info{
-		mode_id       = 403002,
-		class_id      = 403,
+		mode_id       = 111002,
+		class_id      = 111,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2300,
-		next_skill_id = 403003
+		next_skill_id = 111003
 	};
 
 %% 龙牙突刺
-skill_info(403003) ->
+skill_info(111003) ->
 	#skill_info{
-		mode_id       = 403003,
-		class_id      = 403,
+		mode_id       = 111003,
+		class_id      = 111,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 7340,
-		next_skill_id = 403004
+		next_skill_id = 111004
 	};
 
 %% 龙牙突刺
-skill_info(403004) ->
+skill_info(111004) ->
 	#skill_info{
-		mode_id       = 403004,
-		class_id      = 403,
+		mode_id       = 111004,
+		class_id      = 111,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 16150,
-		next_skill_id = 403005
+		next_skill_id = 111005
 	};
 
 %% 龙牙突刺
-skill_info(403005) ->
+skill_info(111005) ->
 	#skill_info{
-		mode_id       = 403005,
-		class_id      = 403,
+		mode_id       = 111005,
+		class_id      = 111,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 39100,
-		next_skill_id = 403006
+		next_skill_id = 111006
 	};
 
 %% 龙牙突刺
-skill_info(403006) ->
+skill_info(111006) ->
 	#skill_info{
-		mode_id       = 403006,
-		class_id      = 403,
+		mode_id       = 111006,
+		class_id      = 111,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 76500,
-		next_skill_id = 403007
+		next_skill_id = 111007
 	};
 
 %% 龙牙突刺
-skill_info(403007) ->
+skill_info(111007) ->
 	#skill_info{
-		mode_id       = 403007,
-		class_id      = 403,
+		mode_id       = 111007,
+		class_id      = 111,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 154700,
-		next_skill_id = 403008
+		next_skill_id = 111008
 	};
 
 %% 龙牙突刺
-skill_info(403008) ->
+skill_info(111008) ->
 	#skill_info{
-		mode_id       = 403008,
-		class_id      = 403,
+		mode_id       = 111008,
+		class_id      = 111,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 289000,
-		next_skill_id = 403009
+		next_skill_id = 111009
 	};
 
 %% 龙牙突刺
-skill_info(403009) ->
+skill_info(111009) ->
 	#skill_info{
-		mode_id       = 403009,
-		class_id      = 403,
+		mode_id       = 111009,
+		class_id      = 111,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 527000,
-		next_skill_id = 403010
+		next_skill_id = 111010
 	};
 
 %% 龙牙突刺
-skill_info(403010) ->
+skill_info(111010) ->
 	#skill_info{
-		mode_id       = 403010,
-		class_id      = 403,
+		mode_id       = 111010,
+		class_id      = 111,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
@@ -11976,109 +11986,109 @@ skill_info(403010) ->
 	};
 
 %% 虚空炽炎
-skill_info(404001) ->
+skill_info(117001) ->
 	#skill_info{
-		mode_id       = 404001,
-		class_id      = 404,
+		mode_id       = 117001,
+		class_id      = 117,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 550,
-		next_skill_id = 404002
+		next_skill_id = 117002
 	};
 
 %% 虚空炽炎
-skill_info(404002) ->
+skill_info(117002) ->
 	#skill_info{
-		mode_id       = 404002,
-		class_id      = 404,
+		mode_id       = 117002,
+		class_id      = 117,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2570,
-		next_skill_id = 404003
+		next_skill_id = 117003
 	};
 
 %% 虚空炽炎
-skill_info(404003) ->
+skill_info(117003) ->
 	#skill_info{
-		mode_id       = 404003,
-		class_id      = 404,
+		mode_id       = 117003,
+		class_id      = 117,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 8210,
-		next_skill_id = 404004
+		next_skill_id = 117004
 	};
 
 %% 虚空炽炎
-skill_info(404004) ->
+skill_info(117004) ->
 	#skill_info{
-		mode_id       = 404004,
-		class_id      = 404,
+		mode_id       = 117004,
+		class_id      = 117,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 18050,
-		next_skill_id = 404005
+		next_skill_id = 117005
 	};
 
 %% 虚空炽炎
-skill_info(404005) ->
+skill_info(117005) ->
 	#skill_info{
-		mode_id       = 404005,
-		class_id      = 404,
+		mode_id       = 117005,
+		class_id      = 117,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 43700,
-		next_skill_id = 404006
+		next_skill_id = 117006
 	};
 
 %% 虚空炽炎
-skill_info(404006) ->
+skill_info(117006) ->
 	#skill_info{
-		mode_id       = 404006,
-		class_id      = 404,
+		mode_id       = 117006,
+		class_id      = 117,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 85500,
-		next_skill_id = 404007
+		next_skill_id = 117007
 	};
 
 %% 虚空炽炎
-skill_info(404007) ->
+skill_info(117007) ->
 	#skill_info{
-		mode_id       = 404007,
-		class_id      = 404,
+		mode_id       = 117007,
+		class_id      = 117,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 172900,
-		next_skill_id = 404008
+		next_skill_id = 117008
 	};
 
 %% 虚空炽炎
-skill_info(404008) ->
+skill_info(117008) ->
 	#skill_info{
-		mode_id       = 404008,
-		class_id      = 404,
+		mode_id       = 117008,
+		class_id      = 117,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 323000,
-		next_skill_id = 404009
+		next_skill_id = 117009
 	};
 
 %% 虚空炽炎
-skill_info(404009) ->
+skill_info(117009) ->
 	#skill_info{
-		mode_id       = 404009,
-		class_id      = 404,
+		mode_id       = 117009,
+		class_id      = 117,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 589000,
-		next_skill_id = 404010
+		next_skill_id = 117010
 	};
 
 %% 虚空炽炎
-skill_info(404010) ->
+skill_info(117010) ->
 	#skill_info{
-		mode_id       = 404010,
-		class_id      = 404,
+		mode_id       = 117010,
+		class_id      = 117,
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
@@ -12103,6 +12113,61 @@ skill_info(406001) ->
 		class_id      = 406,
 		type          = 1,
 		effect        = 1,
+		level_up_exp  = 0,
+		next_skill_id = 0
+	};
+
+%% 金刚护甲
+skill_info(407001) ->
+	#skill_info{
+		mode_id       = 407001,
+		class_id      = 407,
+		type          = 1,
+		effect        = 0,
+		level_up_exp  = 0,
+		next_skill_id = 0
+	};
+
+%% 破阵攻心
+skill_info(408001) ->
+	#skill_info{
+		mode_id       = 408001,
+		class_id      = 408,
+		type          = 1,
+		effect        = 0,
+		level_up_exp  = 0,
+		next_skill_id = 0
+	};
+
+%% 流云刺
+skill_info(409001) ->
+	#skill_info{
+		mode_id       = 409001,
+		class_id      = 409,
+		type          = 1,
+		effect        = 0,
+		level_up_exp  = 0,
+		next_skill_id = 0
+	};
+
+%% 虎啸破
+skill_info(410001) ->
+	#skill_info{
+		mode_id       = 410001,
+		class_id      = 410,
+		type          = 1,
+		effect        = 0,
+		level_up_exp  = 0,
+		next_skill_id = 0
+	};
+
+%% 冰凌筏
+skill_info(411001) ->
+	#skill_info{
+		mode_id       = 411001,
+		class_id      = 411,
+		type          = 1,
+		effect        = 0,
 		level_up_exp  = 0,
 		next_skill_id = 0
 	}.
@@ -14694,7 +14759,7 @@ get_guild_skill_attri(314030) -> {13,180}.
 
 %%================================================
 %% 技能初始化 职业id, 等级 -> 技能 
-get_initial_skill(1,1) -> [401001,101001];
+get_initial_skill(1,1) -> [106001,101001];
 
 get_initial_skill(1,12) -> [];
 
@@ -14704,7 +14769,7 @@ get_initial_skill(1,30) -> [];
 
 get_initial_skill(1,35) -> [];
 
-get_initial_skill(2,1) -> [403001,102001];
+get_initial_skill(2,1) -> [111001,102001];
 
 get_initial_skill(2,12) -> [];
 

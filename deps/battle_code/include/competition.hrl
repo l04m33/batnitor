@@ -56,7 +56,7 @@
 						gd_CompLevel = 0,			%% 比武场等级
 						gd_AccountID = 0,			%% 账号ID
 						gd_RoleID    = 0,			%% 角色ID
-						gd_Slogan    = "我是冠军"	%% 冠军口号
+						gd_Slogan    = "我就是比武冠军，来膜拜吧。"	%% 冠军口号
 					   }).
 
 -record(comp_top_info_types, {

@@ -920,20 +920,40 @@ set_battle_cmd(ID, Cmd, BattleData) ->
 					Info   = get_player_info(ID, BattleData),
 					Lead   = Info#player_info.lead,
 					State  = get_battle_status(Lead, BattleData),
+
+                    %% 被嘲讽的家伙只能用普通攻击……
+                    ScornedSID = case lists:keyfind(?BUFF_SCORNED, #buff.name, State#battle_status.buff) of
+                        false -> 0;
+                        _ -> 
+                            ?BATTLE_LOG("~n--------- 攻击者站位: ~w ---------", [Lead]),
+                            ?BATTLE_LOG("站位 ~w Buff效果: 嘲讽", [Lead]),
+                            ?BATTLE_LOG("    Buff类型: 被嘲讽, 新技能ID: ~w", [?SKILL_COMMON_ATTACK]),
+                            ?SKILL_COMMON_ATTACK
+                    end,
+
 					%% if Sid == 0 then we use AI to set command
 					if (Sid == 0) ->						 
-						{AISid, _, _, _} = ai:get_skill(Lead, BattleData),
-						%% if this skill is common attack, do not send this message to client
-						if (AISid == ?SKILL_COMMON_ATTACK) ->
-							ok;
-						true -> 
-							send_command_package(Lead, AISid, BattleData)
-						end,
-						NState = State#battle_status {cmd = {AISid, Lead, 0}};
+                        RealSID = if
+                            ScornedSID =/= 0 -> ScornedSID;
+                            true ->
+                                {AISid, _, _, _} = ai:get_skill(Lead, BattleData),
+                                AISid
+                        end,
+                        case RealSID of
+                            ?SKILL_COMMON_ATTACK -> void;
+                            _ -> send_command_package(Lead, RealSID, BattleData)
+                        end,
+						NState = State#battle_status {cmd = {RealSID, Lead, 0}};
+
 					true ->
-						NState = State#battle_status {cmd = {Sid, Lead, 0}},
+                        RealSID = if
+                            ScornedSID =/= 0 -> ScornedSID;
+                            true -> Sid
+                        end,
+
+						NState = State#battle_status {cmd = {RealSID, Lead, 0}},
 						?INFO(battle, "set battle cmd: Sid = ~w, Lead = ~w, Round = ~w, Timeout = ~w", 
-						  	[Sid, Lead, Round, Timeout])
+						  	[RealSID, Lead, Round, Timeout])
 					end,
 					set_battle_status(Lead, NState, BattleData); %% returns a BattleData
 				_ ->
@@ -986,7 +1006,17 @@ handle_command_ex(BattleData, Repeat) ->
 								T = ai:get_skill_target(?SKILL_COMMON_ATTACK, Src, BattleData),
 								{?SKILL_COMMON_ATTACK, Src, T, SIndex};
 							true ->  
-								ai:get_skill(Src, BattleData)
+                                %% 这里是怪物AI，处理嘲讽buff选技能的逻辑……
+                                case lists:keyfind(?BUFF_SCORNED, #buff.name, SrcStat#battle_status.buff) of
+                                    false ->
+                                        ai:get_skill(Src, BattleData);
+                                    _ ->
+                                        ?BATTLE_LOG("~n--------- 攻击者站位: ~w ---------", [Src]),
+                                        ?BATTLE_LOG("站位 ~w Buff效果: 嘲讽", [Src]),
+                                        ?BATTLE_LOG("    Buff类型: 被嘲讽, 新技能ID: ~w", [?SKILL_COMMON_ATTACK]),
+                                        T = ai:get_skill_target(?SKILL_COMMON_ATTACK, Src, BattleData),
+                                        {?SKILL_COMMON_ATTACK, Src, T, SIndex}
+                                end
 							end;
 						{S, Src, _} ->
 							%% case (2): 
@@ -1762,8 +1792,8 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
 						{false, false, Tar}
 					end,
                     {_, _, NTar0} = TarRet,
-                    ?BATTLE_LOG("        站位 ~w Buff效果: 嘲讽", [Src]),
-                    ?BATTLE_LOG("            Buff类型: 被嘲讽, 嘲讽者站位: ~w, 新目标站位: ~w", [T, NTar0]),
+                    ?BATTLE_LOG("站位 ~w Buff效果: 嘲讽", [Src]),
+                    ?BATTLE_LOG("    Buff类型: 被嘲讽, 嘲讽者站位: ~w, 新目标站位: ~w", [T, NTar0]),
                     TarRet;
 				false -> 
 					{false, false, Tar}
@@ -1812,7 +1842,7 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
                             20
 					end,
 				
-				case lists:keysearch(?BUFF_ASSIST, #buff.name, TarBuff) of
+				case lists:keysearch(?BUFF_ASSISTED, #buff.name, TarBuff) of
 					{value, #buff {data = Pos, by_rate = true, value = V}} when Pos =/= Tar, Tar == NTar ->	
 
 					AssStat = get_battle_status(Pos, BattleData),
@@ -2026,7 +2056,7 @@ assist(_SkillId, _Src, [], AttInfoList, _BattleData) ->
 assist(SkillID, Src, [AssSpec | Rest], AttInfoList, BattleData) ->
 	Rate = AssSpec#assist_spec.rate, 
 	Tar  = AssSpec#assist_spec.pos,
-	%% Eff  = AssSpec#assist_spec.eff,
+	Eff  = AssSpec#assist_spec.eff,
 	%% AttInfo here does not contain the full information,
 	%% we simply put the hp_inc and | or mp_inc, is_crit, is_miss in it
 	%% and the other field will be adjust through the function handle_attack_info
@@ -2038,16 +2068,12 @@ assist(SkillID, Src, [AssSpec | Rest], AttInfoList, BattleData) ->
 			is_miss = IsMiss
 		},
 	
-	assist(SkillID, Src, Rest, [AttInfo | AttInfoList], BattleData).
-	
-%% 	if (IsMiss == true) ->
-%% 			assist(SkillId, Src, Rest, [AttInfo | AttInfoList], BattleData);
-%% 	   (Eff == []) ->
-%% 		   	assist(SkillId, Src, Rest, AttInfoList, BattleData);
-%% 	   true ->   
-%% 		    NAttInfo = assist_1(Tar, Eff, AttInfo, BattleData),
-%% 			assist(SkillId, Src, Rest, [NAttInfo | AttInfoList], BattleData)
-%% 	end.
+ 	if (IsMiss == true) ->
+ 			assist(SkillID, Src, Rest, [AttInfo | AttInfoList], BattleData);
+ 	   true ->
+ 		    NAttInfo = assist_1(Tar, Eff, AttInfo, BattleData),
+ 			assist(SkillID, Src, Rest, [NAttInfo | AttInfoList], BattleData)
+ 	end.
 	
 assist_1(_Tar, [], AttInfo, _BattleData) ->
 	AttInfo;
@@ -2277,13 +2303,7 @@ settle_buff(Settle, Pos, [Buff | Rest], BuffList, BuffInfoList, State) ->
 	TarList    :: [integer()],    %% TarList is used in adding the debuff list
 	BattleData :: #battle_data{}.
 
-%% do_buff will do:
-%% (1) settle the buffs which are marked with post
-%% (2) add the debuff to the targets in the TarList
-%% (3) add the buff to the source
-
 do_att_buff(Src, AttSpec, IsMiss, TarList, BattleData) -> 
-	BattleData1 = settle_buff(post, Src, BattleData),
 	BuffSpec = 
 		case IsMiss orelse BattleData#battle_data.type == ?BATTLE_TYPE_BOSS of
 			false ->
@@ -2294,20 +2314,24 @@ do_att_buff(Src, AttSpec, IsMiss, TarList, BattleData) ->
 		end,
 	
 	?INFO(battle, "Src = ~w, BuffSpec = ~w", [Src, BuffSpec]),
-	_BattleData2 = do_add_buff(BuffSpec, [], BattleData1).
+	_BattleData1 = settle_and_add_buff(Src, BuffSpec, [], BattleData).
+
 
 -spec do_ass_buff (Src, AssSpecList, BattleData) -> #battle_data{} when
 	Src         :: integer(),
 	AssSpecList :: [#assist_spec{}],
 	BattleData  :: #battle_data{}.
-	
 
 do_ass_buff(Src, AssSpecList, BattleData) ->
-	BattleData1 = settle_buff(post, Src, BattleData),
 	BuffSpec = [{AssSpec#assist_spec.pos, AssSpec#assist_spec.buff} || AssSpec <- AssSpecList],
+	_BattleData1 = settle_and_add_buff(Src, BuffSpec, [], BattleData).
+
+
+settle_and_add_buff(Src, BuffSpec, BuffInfoList, BattleData) ->
+	BattleData1 = settle_buff(post, Src, BattleData),
+	_BattleData2 = do_add_buff(BuffSpec, BuffInfoList, BattleData1).
 	
-	_BattleData2 = do_add_buff(BuffSpec, [], BattleData1).
-	
+
 %% do_add_buff add the buffs, then produce a list of BuffInfo
 %% then update the BattleData with this BuffInfo
 -spec do_add_buff(BuffSpec, BuffInfoList, BattleData) -> #battle_data{} when
@@ -2900,6 +2924,8 @@ test_pvp(ID1, ID2) ->
 
 end_round_hook(BattleData) ->
     %% Everything that should be done after a round is finished
+    ?BATTLE_LOG("~n--------- 回合 ~w 结束状态 ---------", [BattleData#battle_data.round]),
+    dump_brief_player_list(BattleData),
     BattleData.
 
 start_round_hook(BattleData) ->
@@ -2942,11 +2968,36 @@ mutate_attack(BattleData) ->
             BattleData
     end.
 
+get_pos_by(Type, MaxFlag, PosList, BattleData) ->
+    FieldIdx = case Type of
+        hp -> #battle_status.hp;
+        mp -> #battle_status.mp
+    end,
+    Op = case MaxFlag of
+        max -> '>';
+        min -> '<'
+    end,
+    First = hd(PosList),
+    FirstStat = get_battle_status(First, BattleData),
+    get_pos_by(PosList, BattleData, FieldIdx, Op, {First, element(FieldIdx, FirstStat)}).
+
+get_pos_by([], _, _, _, {_CurMinPos, _CurMinVal} = Ret) ->
+    Ret;
+get_pos_by([H | T], BattleData, FieldIdx, Op, {CurMinPos, CurMinVal}) ->
+    Stat = get_battle_status(H, BattleData),
+    case erlang:Op(element(FieldIdx, Stat), CurMinVal) of
+        true ->
+            get_pos_by(T, BattleData, FieldIdx, Op, {H, element(FieldIdx, Stat)});
+        _ ->    % false
+            get_pos_by(T, BattleData, FieldIdx, Op, {CurMinPos, CurMinVal})
+    end.
+
+
 -ifdef(debug).
 
 format_buff(#buff{name = ?BUFF_SCORNED} = Buff) ->
     io_lib:format("    Buff类型: 被嘲讽, 嘲讽者站位: ~w", [Buff#buff.value]);
-format_buff(#buff{name = ?BUFF_ASSIST} = Buff) ->
+format_buff(#buff{name = ?BUFF_ASSISTED} = Buff) ->
     io_lib:format("    Buff类型: 被援护, 系数: ~w, 援护者站位: ~w", [Buff#buff.value, Buff#buff.data]);
 format_buff(Buff) ->
     io_lib:format("    Buff类型: ~s, 系数: ~w", 
@@ -2978,6 +3029,7 @@ buff_type_to_str(Type) ->
         ?BUFF_SCORN       -> "嘲讽";
         ?BUFF_SCORNED     -> "被嘲讽";
         ?BUFF_ASSIST      -> "援护";
+        ?BUFF_ASSISTED    -> "被援护";
         ?BUFF_FAINT       -> "晕";
         ?BUFF_FRENZY      -> "狂暴";
         ?BUFF_WEAKNESS    -> "降低治疗量";
@@ -3009,6 +3061,7 @@ tag_to_buff_effect(Tag) ->
         hit  -> "命中";
         dodge -> "闪避";
         block -> "格挡";
+        fatal -> "致命";
         cast_damage -> "输出伤害";
         recv_damage -> "输入伤害"
     end.
@@ -3037,6 +3090,16 @@ dump_player_list(BattleData) ->
     end,
     lists:foreach(F, lists:seq(1, ?BATTLE_FIELD_SIZE)).
 
+dump_brief_player_list(BattleData) ->
+    F = fun(Pos) ->
+        case array:get(Pos, BattleData#battle_data.player) of
+            undefined -> void;
+            P ->
+                ?BATTLE_LOG("站位: ~w, 血: ~w, 怒气: ~w", [Pos, P#battle_status.hp, P#battle_status.mp])
+        end
+    end,
+    lists:foreach(F, lists:seq(1, ?BATTLE_FIELD_SIZE)).
+
 -else.
 
 format_buff(_) -> ok.
@@ -3046,6 +3109,8 @@ buff_type_to_str(_) -> ok.
 tag_to_buff_effect(_) -> ok.
 
 dump_player_list(_) -> ok.
+
+dump_brief_player_list(_) -> ok.
 
 -endif.
 

@@ -41,6 +41,8 @@
 -define(ERR_BAG_NO_SHOE,		 38).		%% 背包里没有小飞鞋
 -define(ERR_NO_FEEDBACK_GOLD,	 39).		%% 没有可领取的元宝
 -define(ERR_NOT_ENOUHT_JUNLING,	 40).		%% 军令不足
+-define(ERR_CANT_USE_TOGETHER,	 41).		%% 该物品不能批量使用
+
 %% 场景
 %% -define(ERR_SCENE_NOT_COMPLETE,			11001).			%% 场景进度未完成
 %% -define(ERR_MOVE_CHECK_FAILED,			11002).			%% 场景 move check 失败
@@ -154,6 +156,7 @@
 -define(ERR_ITEM_MYSTICAL_SHOP_ITEM_NUM,	12095).		%% 限购次数已满
 -define(ERR_ITEM_MYSTICAL_SHOP_REFRESH,		12096).		%% 神秘商店已刷新，请重新打开神秘商店
 -define(ERR_SKILL_HAVE_LEARNED,				12097).		%% 已经拥有该技能,不需学习
+-define(ERR_STONE_LEVEL_MAX,				19098).		%% 宝石已经是最高级
 
 %% 寻仙系统
 -define(ERR_XUNXIAN_LEVEL_UNUSE,		12101).			%% 寻仙需要30级方能开启
@@ -277,6 +280,11 @@
  -define(ERR_TEAM_APPLY_IN_TEAM_SCENE,    30019).         %% 已经在副本中，不能申请组队
  -define(ERR_TEAM_APPLY_SUCCESS,    30020).         %% 组队申请已经发出
 
+%% 神剑
+-define(ERR_SWORD_NOT_START,32001). 		%% 天灵神剑活动未开始
+-define(ERR_SWORD_LEVEL_UNMATCH, 32002).	%% 等级阶段不符合神剑要求
+
+
  -define(ERR_TEAM_INVITE_SELF,			30004).			%% 抱歉，不能邀请自己
 -define(ERR_TEAM_NOT_TEAM_SCENE,			30005).			%% 被邀请者等级不足，不能进入此副本
 -define(ERR_TEAM_OFFLINE,			30006).			%% 被邀请者不在线
@@ -299,9 +307,11 @@
 -define(ERR_CHALLENGE_TIMEOUT,			49008).			%% 挑战超时
 -define(ERR_IS_THE_REST_LEVEL,			49009).			%% 已重置到最底层
 -define(ERR_CANT_CHANGLE_SELF,			49010).			%% 不能挑战自己
--define(ERR_OUTO_CHALLENGING,			49011).			%% 请先取消自动挑战
+-define(ERR_OUTO_CHALLENGING,			49011).			%% 您正处于战神塔自动挂机中
 -define(ERR_ACHIEVE_FLOOR_HIGHTER,		49012). 		%% 未通关的关卡不能挂机
 -define(ERR_NO_AUTO_CHALLENGE,			49013).			%% 没有自动挑战任务
+-define(ERR_AUTO_GUAJI_FINISH,			40014).			%% 战神塔自动挂机已经完成
+
 %% 成就
 -define(ERR_ACHIEVE_AWARD_ERR,			29001).			%% 成就奖励不可领取
 %%
@@ -383,3 +393,10 @@
 -define(ERR_BAG_SLOT_NOT_ENOUGH, 65002).				%% 正式背包空间不足
 -define(ERR_BAG_SLOT_INDEX_NOT_EXIST, 65003).				%% 所请求的位置没有物品
 
+%% =========================== 外形装扮相关 =================================
+-define(ERR_DRESS_ALREADY_EVOKE, 		51000).		%% 装扮外形已经幻化过
+-define(ERR_DRESS_NOT_EVOKE,			51001).		%% 装扮外形尚未幻化过
+-define(ERR_DRESS_LEVEL_NOT_ENOUGH, 	51002).		%% 装扮外形等级不足
+-define(ERR_DRESS_ALREADY_MAX_LEVEL, 	51003).		%% 装扮外形已达最高等级
+
+-define(ERROR_INTERNAL_NOT_REG_SYSTEM_ID, 65500).   %% 内部错误，有未被识别的系统id

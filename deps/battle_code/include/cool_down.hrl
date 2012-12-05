@@ -10,6 +10,7 @@
 -define(Qihun_CD, 4).%%棋魂cd
 -define(CD_QUILT_GUILD, 5).     %% 帮派退出cd;
 -define(CD_TYPE_COMP, 6).		%% 比武保护CD
+-define(CD_TYPE_SWORD, 7).  %% 神剑CD
 
 %%　cd原型定义
 -record

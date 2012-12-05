@@ -318,130 +318,130 @@ get(105, 10) ->
 		param  = {0.95,0.5,1}    
 	};
 
-get(106, 1) -> 
+get(401, 1) -> 
 	#battle_skill {
 		hp     = 0.1,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 106,	
+		id     = 401,	
 		level  = 1,
 		target = enemy,
 		type   = 4,
 		param  = {1.1}    
 	};
 
-get(106, 2) -> 
+get(401, 2) -> 
 	#battle_skill {
 		hp     = 0.1,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 106,	
+		id     = 401,	
 		level  = 2,
 		target = enemy,
 		type   = 4,
 		param  = {1.13}    
 	};
 
-get(106, 3) -> 
+get(401, 3) -> 
 	#battle_skill {
 		hp     = 0.1,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 106,	
+		id     = 401,	
 		level  = 3,
 		target = enemy,
 		type   = 4,
 		param  = {1.15}    
 	};
 
-get(106, 4) -> 
+get(401, 4) -> 
 	#battle_skill {
 		hp     = 0.1,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 106,	
+		id     = 401,	
 		level  = 4,
 		target = enemy,
 		type   = 4,
 		param  = {1.18}    
 	};
 
-get(106, 5) -> 
+get(401, 5) -> 
 	#battle_skill {
 		hp     = 0.1,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 106,	
+		id     = 401,	
 		level  = 5,
 		target = enemy,
 		type   = 4,
 		param  = {1.22}    
 	};
 
-get(106, 6) -> 
+get(401, 6) -> 
 	#battle_skill {
 		hp     = 0.1,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 106,	
+		id     = 401,	
 		level  = 6,
 		target = enemy,
 		type   = 4,
 		param  = {1.26}    
 	};
 
-get(106, 7) -> 
+get(401, 7) -> 
 	#battle_skill {
 		hp     = 0.1,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 106,	
+		id     = 401,	
 		level  = 7,
 		target = enemy,
 		type   = 4,
 		param  = {1.31}    
 	};
 
-get(106, 8) -> 
+get(401, 8) -> 
 	#battle_skill {
 		hp     = 0.1,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 106,	
+		id     = 401,	
 		level  = 8,
 		target = enemy,
 		type   = 4,
 		param  = {1.36}    
 	};
 
-get(106, 9) -> 
+get(401, 9) -> 
 	#battle_skill {
 		hp     = 0.1,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 106,	
+		id     = 401,	
 		level  = 9,
 		target = enemy,
 		type   = 4,
 		param  = {1.42}    
 	};
 
-get(106, 10) -> 
+get(401, 10) -> 
 	#battle_skill {
 		hp     = 0.1,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 106,	
+		id     = 401,	
 		level  = 10,
 		target = enemy,
 		type   = 4,
@@ -578,130 +578,130 @@ get(107, 10) ->
 		param  = {1.18,0.5}    
 	};
 
-get(108, 1) -> 
+get(402, 1) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 108,	
+		id     = 402,	
 		level  = 1,
 		target = self,
 		type   = 4,
 		param  = {0.05}    
 	};
 
-get(108, 2) -> 
+get(402, 2) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 108,	
+		id     = 402,	
 		level  = 2,
 		target = self,
 		type   = 4,
 		param  = {0.06}    
 	};
 
-get(108, 3) -> 
+get(402, 3) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 108,	
+		id     = 402,	
 		level  = 3,
 		target = self,
 		type   = 4,
 		param  = {0.07}    
 	};
 
-get(108, 4) -> 
+get(402, 4) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 108,	
+		id     = 402,	
 		level  = 4,
 		target = self,
 		type   = 4,
 		param  = {0.08}    
 	};
 
-get(108, 5) -> 
+get(402, 5) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 108,	
+		id     = 402,	
 		level  = 5,
 		target = self,
 		type   = 4,
 		param  = {0.09}    
 	};
 
-get(108, 6) -> 
+get(402, 6) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 108,	
+		id     = 402,	
 		level  = 6,
 		target = self,
 		type   = 4,
 		param  = {0.1}    
 	};
 
-get(108, 7) -> 
+get(402, 7) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 108,	
+		id     = 402,	
 		level  = 7,
 		target = self,
 		type   = 4,
 		param  = {0.11}    
 	};
 
-get(108, 8) -> 
+get(402, 8) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 108,	
+		id     = 402,	
 		level  = 8,
 		target = self,
 		type   = 4,
 		param  = {0.12}    
 	};
 
-get(108, 9) -> 
+get(402, 9) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 108,	
+		id     = 402,	
 		level  = 9,
 		target = self,
 		type   = 4,
 		param  = {0.13}    
 	};
 
-get(108, 10) -> 
+get(402, 10) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 108,	
+		id     = 402,	
 		level  = 10,
 		target = self,
 		type   = 4,
@@ -968,130 +968,130 @@ get(110, 10) ->
 		param  = {1.05}    
 	};
 
-get(111, 1) -> 
+get(403, 1) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 111,	
+		id     = 403,	
 		level  = 1,
 		target = enemy,
 		type   = 4,
 		param  = {1,0.1,2}    
 	};
 
-get(111, 2) -> 
+get(403, 2) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 111,	
+		id     = 403,	
 		level  = 2,
 		target = enemy,
 		type   = 4,
 		param  = {1,0.12,2}    
 	};
 
-get(111, 3) -> 
+get(403, 3) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 111,	
+		id     = 403,	
 		level  = 3,
 		target = enemy,
 		type   = 4,
 		param  = {1,0.14,2}    
 	};
 
-get(111, 4) -> 
+get(403, 4) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 111,	
+		id     = 403,	
 		level  = 4,
 		target = enemy,
 		type   = 4,
 		param  = {1,0.16,2}    
 	};
 
-get(111, 5) -> 
+get(403, 5) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 111,	
+		id     = 403,	
 		level  = 5,
 		target = enemy,
 		type   = 4,
 		param  = {1,0.18,2}    
 	};
 
-get(111, 6) -> 
+get(403, 6) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 111,	
+		id     = 403,	
 		level  = 6,
 		target = enemy,
 		type   = 4,
 		param  = {1,0.2,3}    
 	};
 
-get(111, 7) -> 
+get(403, 7) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 111,	
+		id     = 403,	
 		level  = 7,
 		target = enemy,
 		type   = 4,
 		param  = {1,0.22,3}    
 	};
 
-get(111, 8) -> 
+get(403, 8) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 111,	
+		id     = 403,	
 		level  = 8,
 		target = enemy,
 		type   = 4,
 		param  = {1,0.24,3}    
 	};
 
-get(111, 9) -> 
+get(403, 9) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 111,	
+		id     = 403,	
 		level  = 9,
 		target = enemy,
 		type   = 4,
 		param  = {1,0.27,3}    
 	};
 
-get(111, 10) -> 
+get(403, 10) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 111,	
+		id     = 403,	
 		level  = 10,
 		target = enemy,
 		type   = 4,
@@ -1748,130 +1748,130 @@ get(116, 10) ->
 		param  = {1.18,110,2}    
 	};
 
-get(117, 1) -> 
+get(404, 1) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 117,	
+		id     = 404,	
 		level  = 1,
 		target = enemy,
 		type   = 4,
 		param  = {1,0.1}    
 	};
 
-get(117, 2) -> 
+get(404, 2) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 117,	
+		id     = 404,	
 		level  = 2,
 		target = enemy,
 		type   = 4,
 		param  = {1.02,0.15}    
 	};
 
-get(117, 3) -> 
+get(404, 3) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 117,	
+		id     = 404,	
 		level  = 3,
 		target = enemy,
 		type   = 4,
 		param  = {1.04,0.2}    
 	};
 
-get(117, 4) -> 
+get(404, 4) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 117,	
+		id     = 404,	
 		level  = 4,
 		target = enemy,
 		type   = 4,
 		param  = {1.06,0.25}    
 	};
 
-get(117, 5) -> 
+get(404, 5) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 117,	
+		id     = 404,	
 		level  = 5,
 		target = enemy,
 		type   = 4,
 		param  = {1.08,0.3}    
 	};
 
-get(117, 6) -> 
+get(404, 6) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 117,	
+		id     = 404,	
 		level  = 6,
 		target = enemy,
 		type   = 4,
 		param  = {1.1,0.35}    
 	};
 
-get(117, 7) -> 
+get(404, 7) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 117,	
+		id     = 404,	
 		level  = 7,
 		target = enemy,
 		type   = 4,
 		param  = {1.12,0.4}    
 	};
 
-get(117, 8) -> 
+get(404, 8) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 117,	
+		id     = 404,	
 		level  = 8,
 		target = enemy,
 		type   = 4,
 		param  = {1.14,0.45}    
 	};
 
-get(117, 9) -> 
+get(404, 9) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 117,	
+		id     = 404,	
 		level  = 9,
 		target = enemy,
 		type   = 4,
 		param  = {1.17,0.5}    
 	};
 
-get(117, 10) -> 
+get(404, 10) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 117,	
+		id     = 404,	
 		level  = 10,
 		target = enemy,
 		type   = 4,
@@ -5216,7 +5216,7 @@ get(239, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.7}    
+		param  = {0.7,6}    
 	};
 
 get(240, 1) -> 
@@ -5229,7 +5229,7 @@ get(240, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.3,1,1}    
+		param  = {0.3,1.1}    
 	};
 
 get(241, 1) -> 
@@ -11329,520 +11329,520 @@ get(314, 30) ->
 		param  = {}    
 	};
 
-get(401, 1) -> 
+get(106, 1) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 401,	
+		id     = 106,	
 		level  = 1,
 		target = enemy,
 		type   = 4,
 		param  = {1,20,2}    
 	};
 
-get(401, 2) -> 
+get(106, 2) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 401,	
+		id     = 106,	
 		level  = 2,
 		target = enemy,
 		type   = 4,
 		param  = {1.02,30,2}    
 	};
 
-get(401, 3) -> 
+get(106, 3) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 401,	
+		id     = 106,	
 		level  = 3,
 		target = enemy,
 		type   = 4,
 		param  = {1.04,40,2}    
 	};
 
-get(401, 4) -> 
+get(106, 4) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 401,	
+		id     = 106,	
 		level  = 4,
 		target = enemy,
 		type   = 4,
 		param  = {1.06,50,2}    
 	};
 
-get(401, 5) -> 
+get(106, 5) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 401,	
+		id     = 106,	
 		level  = 5,
 		target = enemy,
 		type   = 4,
 		param  = {1.08,60,2}    
 	};
 
-get(401, 6) -> 
+get(106, 6) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 401,	
+		id     = 106,	
 		level  = 6,
 		target = enemy,
 		type   = 4,
 		param  = {1.1,70,2}    
 	};
 
-get(401, 7) -> 
+get(106, 7) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 401,	
+		id     = 106,	
 		level  = 7,
 		target = enemy,
 		type   = 4,
 		param  = {1.12,80,2}    
 	};
 
-get(401, 8) -> 
+get(106, 8) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 401,	
+		id     = 106,	
 		level  = 8,
 		target = enemy,
 		type   = 4,
 		param  = {1.14,90,2}    
 	};
 
-get(401, 9) -> 
+get(106, 9) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 401,	
+		id     = 106,	
 		level  = 9,
 		target = enemy,
 		type   = 4,
 		param  = {1.16,100,2}    
 	};
 
-get(401, 10) -> 
+get(106, 10) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 401,	
+		id     = 106,	
 		level  = 10,
 		target = enemy,
 		type   = 4,
 		param  = {1.18,110,2}    
 	};
 
-get(402, 1) -> 
+get(108, 1) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 402,	
+		id     = 108,	
 		level  = 1,
 		target = enemy,
 		type   = 4,
 		param  = {1,6}    
 	};
 
-get(402, 2) -> 
+get(108, 2) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 402,	
+		id     = 108,	
 		level  = 2,
 		target = enemy,
 		type   = 4,
 		param  = {1.02,7}    
 	};
 
-get(402, 3) -> 
+get(108, 3) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 402,	
+		id     = 108,	
 		level  = 3,
 		target = enemy,
 		type   = 4,
 		param  = {1.04,8}    
 	};
 
-get(402, 4) -> 
+get(108, 4) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 402,	
+		id     = 108,	
 		level  = 4,
 		target = enemy,
 		type   = 4,
 		param  = {1.06,9}    
 	};
 
-get(402, 5) -> 
+get(108, 5) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 402,	
+		id     = 108,	
 		level  = 5,
 		target = enemy,
 		type   = 4,
 		param  = {1.08,10}    
 	};
 
-get(402, 6) -> 
+get(108, 6) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 402,	
+		id     = 108,	
 		level  = 6,
 		target = enemy,
 		type   = 4,
 		param  = {1.1,11}    
 	};
 
-get(402, 7) -> 
+get(108, 7) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 402,	
+		id     = 108,	
 		level  = 7,
 		target = enemy,
 		type   = 4,
 		param  = {1.12,12}    
 	};
 
-get(402, 8) -> 
+get(108, 8) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 402,	
+		id     = 108,	
 		level  = 8,
 		target = enemy,
 		type   = 4,
 		param  = {1.14,13}    
 	};
 
-get(402, 9) -> 
+get(108, 9) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 402,	
+		id     = 108,	
 		level  = 9,
 		target = enemy,
 		type   = 4,
 		param  = {1.16,14}    
 	};
 
-get(402, 10) -> 
+get(108, 10) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 402,	
+		id     = 108,	
 		level  = 10,
 		target = enemy,
 		type   = 4,
 		param  = {1.18,15}    
 	};
 
-get(403, 1) -> 
+get(111, 1) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 403,	
+		id     = 111,	
 		level  = 1,
 		target = enemy,
 		type   = 4,
 		param  = {1,20,2}    
 	};
 
-get(403, 2) -> 
+get(111, 2) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 403,	
+		id     = 111,	
 		level  = 2,
 		target = enemy,
 		type   = 4,
 		param  = {1.02,30,2}    
 	};
 
-get(403, 3) -> 
+get(111, 3) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 403,	
+		id     = 111,	
 		level  = 3,
 		target = enemy,
 		type   = 4,
 		param  = {1.04,40,2}    
 	};
 
-get(403, 4) -> 
+get(111, 4) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 403,	
+		id     = 111,	
 		level  = 4,
 		target = enemy,
 		type   = 4,
 		param  = {1.06,50,2}    
 	};
 
-get(403, 5) -> 
+get(111, 5) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 403,	
+		id     = 111,	
 		level  = 5,
 		target = enemy,
 		type   = 4,
 		param  = {1.08,60,2}    
 	};
 
-get(403, 6) -> 
+get(111, 6) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 403,	
+		id     = 111,	
 		level  = 6,
 		target = enemy,
 		type   = 4,
 		param  = {1.1,70,2}    
 	};
 
-get(403, 7) -> 
+get(111, 7) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 403,	
+		id     = 111,	
 		level  = 7,
 		target = enemy,
 		type   = 4,
 		param  = {1.12,80,2}    
 	};
 
-get(403, 8) -> 
+get(111, 8) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 403,	
+		id     = 111,	
 		level  = 8,
 		target = enemy,
 		type   = 4,
 		param  = {1.14,90,2}    
 	};
 
-get(403, 9) -> 
+get(111, 9) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 403,	
+		id     = 111,	
 		level  = 9,
 		target = enemy,
 		type   = 4,
 		param  = {1.16,100,2}    
 	};
 
-get(403, 10) -> 
+get(111, 10) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 1,     
-		id     = 403,	
+		id     = 111,	
 		level  = 10,
 		target = enemy,
 		type   = 4,
 		param  = {1.18,110,2}    
 	};
 
-get(404, 1) -> 
+get(117, 1) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 404,	
+		id     = 117,	
 		level  = 1,
 		target = enemy,
 		type   = 4,
 		param  = {1,11}    
 	};
 
-get(404, 2) -> 
+get(117, 2) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 404,	
+		id     = 117,	
 		level  = 2,
 		target = enemy,
 		type   = 4,
 		param  = {1.02,12}    
 	};
 
-get(404, 3) -> 
+get(117, 3) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 404,	
+		id     = 117,	
 		level  = 3,
 		target = enemy,
 		type   = 4,
 		param  = {1.04,13}    
 	};
 
-get(404, 4) -> 
+get(117, 4) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 404,	
+		id     = 117,	
 		level  = 4,
 		target = enemy,
 		type   = 4,
 		param  = {1.06,14}    
 	};
 
-get(404, 5) -> 
+get(117, 5) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 404,	
+		id     = 117,	
 		level  = 5,
 		target = enemy,
 		type   = 4,
 		param  = {1.08,15}    
 	};
 
-get(404, 6) -> 
+get(117, 6) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 404,	
+		id     = 117,	
 		level  = 6,
 		target = enemy,
 		type   = 4,
 		param  = {1.1,16}    
 	};
 
-get(404, 7) -> 
+get(117, 7) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 404,	
+		id     = 117,	
 		level  = 7,
 		target = enemy,
 		type   = 4,
 		param  = {1.12,17}    
 	};
 
-get(404, 8) -> 
+get(117, 8) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 404,	
+		id     = 117,	
 		level  = 8,
 		target = enemy,
 		type   = 4,
 		param  = {1.14,18}    
 	};
 
-get(404, 9) -> 
+get(117, 9) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 404,	
+		id     = 117,	
 		level  = 9,
 		target = enemy,
 		type   = 4,
 		param  = {1.16,19}    
 	};
 
-get(404, 10) -> 
+get(117, 10) -> 
 	#battle_skill {
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
 		cd     = 2,     
-		id     = 404,	
+		id     = 117,	
 		level  = 10,
 		target = enemy,
 		type   = 4,
@@ -11873,6 +11873,71 @@ get(406, 1) ->
 		target = enemy,
 		type   = 1,
 		param  = {0.7,0.7,0.7,0.2,1}    
+	};
+
+get(407, 1) -> 
+	#battle_skill {
+		hp     = 0,       
+		mp     = 100,
+		mp_add = 0,
+		cd     = 0,     
+		id     = 407,	
+		level  = 1,
+		target = enemy,
+		type   = 1,
+		param  = {1,100,2}    
+	};
+
+get(408, 1) -> 
+	#battle_skill {
+		hp     = 0,       
+		mp     = 100,
+		mp_add = 0,
+		cd     = 0,     
+		id     = 408,	
+		level  = 1,
+		target = enemy,
+		type   = 1,
+		param  = {1,1}    
+	};
+
+get(409, 1) -> 
+	#battle_skill {
+		hp     = 0,       
+		mp     = 100,
+		mp_add = 0,
+		cd     = 0,     
+		id     = 409,	
+		level  = 1,
+		target = enemy,
+		type   = 1,
+		param  = {0.8}    
+	};
+
+get(410, 1) -> 
+	#battle_skill {
+		hp     = 0,       
+		mp     = 100,
+		mp_add = 0,
+		cd     = 0,     
+		id     = 410,	
+		level  = 1,
+		target = enemy,
+		type   = 1,
+		param  = {1}    
+	};
+
+get(411, 1) -> 
+	#battle_skill {
+		hp     = 0,       
+		mp     = 100,
+		mp_add = 0,
+		cd     = 0,     
+		id     = 411,	
+		level  = 1,
+		target = enemy,
+		type   = 1,
+		param  = {0.8,0.3,1}    
 	};
 
 

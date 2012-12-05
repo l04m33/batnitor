@@ -3,6 +3,7 @@
 -define(RANK_CALC_TIME,1000*10*60).
 
 -define(CACHE_RANK,cache_util:get_register_name(rank_status)).
+-define(CACHE_WEAPON_RANK,cache_util:get_register_name(rank_weapon)).
 
 -record
 (
@@ -23,6 +24,7 @@
 	}
 ).
 
+
 -record
 (
 	rank_status_types,
@@ -40,4 +42,29 @@
 		kingGuard = {integer},
 		xunxian = {integer}
     }
+).
+
+%%  装备排行榜
+-record
+(
+    rank_weapon,
+    {
+        weaponWorldId = 0,%% 装备世界id
+        combat = 0, %% 装备战斗力
+        level = 0, %% 装备等级
+        ownerPlayerId = 0, %% 所有者id
+        weaponOrId = 0 %% 装备原型id
+     }
+).
+
+-record
+(
+    rank_weapon_types,
+    {
+        weaponWorldId = {integer},
+        combat = {integer},
+        level = {integer},
+        ownerPlayerId = {integer},
+        weaponOrId = {integer}
+     }
 ).

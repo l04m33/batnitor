@@ -256,23 +256,31 @@ handle_skill(SkillId = 104, Src, Tar, Level, Param, BattleData) ->
 	
 	BuffOps   = [{Buff,   1.0, add}],
 	DebuffOps = [{Debuff, 1.0, add}],
-	
+
 	TarList   = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
+    RealTargets = util:get_rand_list_elems(TarList, min(3, (Level + 2) div 3)),
 	AttSpec   = 
 		#attack_spec {
 			addition = 1.0,
-			%% targets  = lists:sublist(TarList, min(3, (Level + 2) div 3)),
-			targets  = util:get_rand_list_elems(TarList, 3),
+			targets  = RealTargets,
 			buff     = [],
-			debuff   = []					
+			debuff   = []
 		},
 	AttInfoList = battle:attack(SkillId, Src, AttSpec, AttSpec#attack_spec.targets, BattleData),
 	BattleData1 = battle:handle_attack_info(SkillId, Src, AttInfoList, BattleData),
 	
-	TarList1 = util:get_rand_list_elems(TarList, (Level + 2) div 3),
-	BuffSpec = [{Src, BuffOps} | lists:map(fun(Pos) -> {Pos, DebuffOps} end, TarList1)],
+    HitList = lists:foldl(
+        fun(A, HitAcc) ->
+            case A#attack_info.is_miss of
+                true  -> HitAcc;
+                false -> [A#attack_info.pos | HitAcc]
+            end
+        end,
+        [],
+        AttInfoList),
+	BuffSpec = [{Src, BuffOps} | lists:map(fun(Pos) -> {Pos, DebuffOps} end, HitList)],
 	
-	battle:do_add_buff(BuffSpec, [], BattleData1);
+	battle:settle_and_add_buff(Src, BuffSpec, [], BattleData1);
 		
 %% 坚若磐石: 随机攻击三个目标，并使己方全体所受伤害减少
 handle_skill(SkillId = 105, Src, Tar, _Level, Param, BattleData) ->
@@ -291,15 +299,15 @@ handle_skill(SkillId = 105, Src, Tar, _Level, Param, BattleData) ->
         value = ?p2,
         duration = ?p3,
         by_rate = true,
-        settle = pre
+        settle = post
     },
     FriendList = battle:get_target_list(battle:calc_range(Src, ?ALLFRIENDLY), BattleData1),
     BuffSpec = [{Pos, [{Buff, 1.0, add}]} || Pos <- FriendList],
 
-    battle:do_add_buff(BuffSpec, [], BattleData1);
+    battle:settle_and_add_buff(Src, BuffSpec, [], BattleData1);
 
 %% 背水一战: 消耗自己的气血, 如果命中则对敌人造成较强的伤害
-handle_skill(SkillId = 106, Src, Tar, _Level, Param, BattleData) ->
+handle_skill(SkillId = 401, Src, Tar, _Level, Param, BattleData) ->
 	%% hp -2000 for testing
 	AttSpec = 
 		#attack_spec {
@@ -321,7 +329,7 @@ handle_skill(SkillId = 107, Src, Tar, _Level, Param, BattleData) ->
 
 
 %% 战意激荡: 将自己的防御转化为攻击
-handle_skill(SkillId = 108, Src, _Tar, _Level, Param, BattleData) ->
+handle_skill(SkillId = 402, Src, _Tar, _Level, Param, BattleData) ->
 	Buff = #buff {name = ?BUFF_FRENZY, duration = 2, settle = pre, value = ?p1, by_rate = true},
 	AssSpec = 
 		[
@@ -391,7 +399,7 @@ handle_skill(SkillId = 110, Src, Tar, _Level, Param, BattleData) ->
 	battle:attack(SkillId, Src, AttSpec, BattleData);
 
 %% 对敌人进行一次物理攻击，如果命中，则提高自己一定百分比的暴击，持续一定回合。
-handle_skill(SkillId = 111, Src, Tar, _Level, Param, BattleData) ->
+handle_skill(SkillId = 403, Src, Tar, _Level, Param, BattleData) ->
 	Buff = #buff {
 		name     = ?BUFF_CRIT_UP,
 		duration = ?p3,
@@ -411,28 +419,14 @@ handle_skill(SkillId = 111, Src, Tar, _Level, Param, BattleData) ->
 %% 则会对剩下单位中气血最少的单位进行一次追击，级别越高，追击伤害越高。
 handle_skill(SkillId = 112, Src, Tar0, _Level, Param, BattleData) ->
 	Targets0 = battle:get_target_list(battle:calc_range(Tar0, ?ALLFRIENDLY), BattleData),
-	TarStat0 = battle:get_battle_status(Tar0, BattleData),
-	Hp0 = TarStat0#battle_status.hp,
 	
 	%% find out whose hp is minimum.
-	F = fun(N, {Pos, Hp}) ->
-			Stat = battle:get_battle_status(Pos, BattleData),
-			Hp1 = Stat#battle_status.hp,
-			
-			if (Stat#battle_status.is_lead) ->
-					{Pos, Hp};
-			   (Hp1 < Hp) ->
-					{N, Hp1};
-				true ->
-					{Pos, Hp}
-			end
-		end,
-	{Tar, _} = lists:foldl(F, {Tar0, Hp0}, Targets0),
+	{Tar, _} = battle:get_pos_by(hp, min, Targets0, BattleData),
 				
 	AttSpec = 
 		#attack_spec {
 			addition = ?p1,				
-			targets = [Tar]		
+			targets = [Tar]
 		},
 	
 	AttInfoList = battle:attack(SkillId, Src, AttSpec, [Tar], BattleData),
@@ -449,16 +443,20 @@ handle_skill(SkillId = 112, Src, Tar0, _Level, Param, BattleData) ->
 		false ->
 			battle:do_att_buff(Src, AttSpec, true, [], BattleData1);
 		true ->
+            {NewTar, _} = battle:get_pos_by(hp, min, Targets, BattleData1),
 			AttSpec1 = 
 				#attack_spec {
 					addition = ?p2,
-					targets = [hd(Targets)]					 
+					targets = [NewTar]
 				},
 			_BattleData2 = battle:attack(SkillId, Src, AttSpec1, BattleData1)
 	end;
 
 %% 破军之势, 令敌人眩晕N回合
 handle_skill(SkillId = 113, Src, Tar, _, Param, BattleData) ->
+    Targets = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
+    {RealTar, _} = battle:get_pos_by(mp, max, Targets, BattleData),
+
     CurRate = random:uniform(),
     %R1 = ?p4 + ?p5,     % TODO: ?p4, ?p5换成公式
     %R2 = ?p5,
@@ -473,7 +471,7 @@ handle_skill(SkillId = 113, Src, Tar, _, Param, BattleData) ->
         0 ->
             #attack_spec {
                 addition = ?p1,
-                targets  = [Tar],
+                targets  = [RealTar],
                 debuff   = []
             };
         _ ->
@@ -487,7 +485,7 @@ handle_skill(SkillId = 113, Src, Tar, _, Param, BattleData) ->
         
             #attack_spec {
                 addition = ?p1,
-                targets  = [Tar],
+                targets  = [RealTar],
                 debuff   = [{Buff, 1.0, add}]
             }
     end,
@@ -557,7 +555,7 @@ handle_skill(SkillId = 116, Src, Tar, _Level, Param, BattleData) ->
 	battle:attack(SkillId, Src, AttSpec, BattleData);
 
 %% 强兵咒: 对敌人进行一次法术攻击, 如果命中则给对方增加一个降低治疗量的BUFF
-handle_skill(SkillId = 117, Src, Tar, _Level, Param, BattleData) ->
+handle_skill(SkillId = 404, Src, Tar, _Level, Param, BattleData) ->
 	Buff = 
 		#buff {
 			name = ?BUFF_WEAKNESS, 
@@ -637,7 +635,7 @@ handle_skill(SkillId = 119, Src, Tar, _Level, _Param, BattleData) ->
 	
 	?INFO(skill, "BuffSpec = ~w", [BuffSpec]),
 	
-	battle:do_add_buff(BuffSpec, [], BattleData1);
+	battle:settle_and_add_buff(Src, BuffSpec, [], BattleData1);
 
 %========================================================================================================
 % warrior skill
@@ -664,16 +662,25 @@ handle_skill(SkillId = 225, Src, _Tar, _Level, Param, BattleData) ->
 			value    = ?p1,
 			duration = 2,
 			settle   = post,
-			data     = Src,
-			by_rate  = true  
+			by_rate  = true
 		},
+
+	PBuff = 
+		#buff {
+			name     = ?BUFF_ASSISTED,
+			value    = ?p1,
+			duration = 2,
+			settle   = post,
+			data     = Src,
+			by_rate  = true
+		},
+
 	TeamList = battle:get_target_list(battle:calc_range(Src, ?ALLFRIENDLY), BattleData),
+    TeamTarList = lists:filter(fun(P) -> P =/= Src end, TeamList),
 	AssSpecList = 
 		[
-			#assist_spec {
-				pos = Pos,			  
-				buff = [{Buff, 1.0, add}]   
-			} || Pos <- TeamList
+            #assist_spec {pos = Src, buff = [{Buff, 1.0, add}]} |
+			[#assist_spec{pos = Pos, buff = [{PBuff, 1.0, add}]} || Pos <- TeamTarList]
 		],
 	battle:assist(SkillId, Src, AssSpecList, BattleData);
 	
@@ -914,15 +921,14 @@ handle_skill(SkillId = 238, Src, Tar, _Level, Param, BattleData) ->
 		},
 	battle:attack(SkillId, Src, AttSpec, BattleData);
 
-%% 凝劲术: 随机对敌方3个目标进行一次强力的法术攻击
+%% 凝劲术: 对敌方所有目标进行一次强力的法术攻击
 handle_skill(SkillId = 239, Src, Tar, _Level, Param, BattleData) ->
 	List  = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-	NList = util:get_rand_list_elems(List, 3),
 
 	AttSpec = 
 		#attack_spec {
 			addition = ?p1,
-			targets  = NList,
+			targets  = List,
 			buff_add = []
 		},
 	battle:attack(SkillId, Src, AttSpec, BattleData);
@@ -939,7 +945,7 @@ handle_skill(SkillId = 240, Src, Tar, _Level, Param, BattleData) ->
 	AttSpec = 
 		#attack_spec {
 			addition = ?p2,
-			targets  = [Tar],		  
+			targets  = [Tar],
 			buff_add = [Buff]
 		},
 	battle:attack(SkillId, Src, AttSpec, BattleData);
@@ -1073,9 +1079,9 @@ handle_skill(SkillId = 247, Src, Tar, _Level, _Param, BattleData) ->
 % monster skills
 %======================================================================================================================
 
-%% 坚若磐石: 使己方全体加物防和法防 
+%% 坚若磐石
 handle_skill(SkillId = 248, Src, _Tar, _Level, Param, BattleData) ->
-    Buffs   = [#buff{name = ?BUFF_RECV_DMG_DOWN, duration = 2, value = ?p1, by_rate = true, settle = pre}],
+    Buffs   = [#buff{name = ?BUFF_RECV_DMG_DOWN, duration = 2, value = ?p1, by_rate = true, settle = post}],
     BuffOps = [{Buff, 1.0, add} || Buff <- Buffs],
     
     FriendList = 
@@ -1093,11 +1099,11 @@ handle_skill(SkillId = 248, Src, _Tar, _Level, Param, BattleData) ->
 
 %% 背水一战
 handle_skill(_SkillId = 249, Src, Tar, Level, Param, BattleData) ->
-	handle_skill(106, Src, Tar, Level, {?p1}, BattleData);
+	handle_skill(401, Src, Tar, Level, {?p1}, BattleData);
 
 %% 战意激荡
 handle_skill(_SkillId = 250, Src, Tar, Level, Param, BattleData) ->
-	handle_skill(108, Src, Tar, Level, {?p1}, BattleData);
+	handle_skill(402, Src, Tar, Level, {?p1}, BattleData);
 
 %% 霸刃连斩
 handle_skill(_SkillId = 251, Src, Tar, Level, Param, BattleData) ->
@@ -1109,7 +1115,7 @@ handle_skill(_SkillId = 252, Src, Tar, Level, Param, BattleData) ->
 
 %% 暴怒冲锋
 handle_skill(_Skill = 253, Src, Tar, Level, Param, BattleData) ->
-	handle_skill(111, Src, Tar, Level, {?p1, ?p2, ?p3}, BattleData);
+	handle_skill(403, Src, Tar, Level, {?p1, ?p2, ?p3}, BattleData);
 
 %% 乘胜追击
 handle_skill(_Skill = 254, Src, Tar, Level, Param, BattleData) ->
@@ -1143,7 +1149,7 @@ handle_skill(_Skill = 257, Src, Tar, Level, Param, BattleData) ->
 
 %% 强兵咒
 handle_skill(_Skill = 258, Src, Tar, Level, Param, BattleData) ->
-	handle_skill(117, Src, Tar, Level, Param, BattleData);
+	handle_skill(404, Src, Tar, Level, Param, BattleData);
 
 %% 破军咒
 handle_skill(_Skill = 259, Src, Tar, Level, Param, BattleData) ->
@@ -1230,7 +1236,7 @@ handle_skill(SkillId = 275, Src, Tar, _Level, Param, BattleData) ->
 
 %% 背水一战
 handle_skill(_SkillId = 276, Src, Tar, Level, Param, BattleData) ->
-	handle_skill(106, Src, Tar, Level, {?p1}, BattleData);
+	handle_skill(401, Src, Tar, Level, {?p1}, BattleData);
 
 
 %% 吸取: 直接吸掉对方一定百分比的血
@@ -1261,7 +1267,7 @@ handle_skill(SkillId, Src, Tar, _Level, Param, BattleData)
 %======================================================================================================================
 
 %% 补血
-handle_skill(SkillId = 106, Src, _Tar, _, _Param, BattleData) ->
+handle_skill(SkillId = 401, Src, _Tar, _, _Param, BattleData) ->
 	AssistSpec = 
 		[
 		 	#assist_spec {pos = Src, eff = [{heal, 100, false}], buff = []}
@@ -1325,7 +1331,7 @@ handle_skill(SkillId = 1109, Src, Tar, _Level, _Param, BattleData) ->
 %======================================================================================================================
 
 %% 对随机一个敌人进行一次{P1}物理攻击，如果命中，则提高自己{P2}点格挡，持续{P3}回合。
-handle_skill(SkillId = 401, Src, Tar, _Level, Param, BattleData) ->
+handle_skill(SkillId = 106, Src, Tar, _Level, Param, BattleData) ->
     Buff = #buff {
         name     = ?BUFF_BLOCK_UP,
         value    = ?p2,
@@ -1343,16 +1349,9 @@ handle_skill(SkillId = 401, Src, Tar, _Level, Param, BattleData) ->
 
 %% 对敌方怒气最高的单位进行一次物理攻击，并吸收目标一定怒气（由攻击者的物理
 %% 攻击和被攻击者的物理防御决定，下限5，上限15点）
-handle_skill(SkillId = 402, Src, Tar, _Level, Param, BattleData) ->
+handle_skill(SkillId = 108, Src, Tar, _Level, Param, BattleData) ->
     CandList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-    F = fun(Pos, {MaxMP, MaxPos}) ->
-        S = battle:get_battle_status(Pos, BattleData),
-        case S#battle_status.mp > MaxMP of
-            true -> {S#battle_status.mp, Pos};
-            _ -> {MaxMP, MaxPos}
-        end
-    end,
-    {_, RealTar} = lists:foldl(F, {0, hd(CandList)}, CandList),
+    {RealTar, _} = battle:get_pos_by(mp, max, CandList, BattleData),
 
 	Buff = #buff {
         name     = ?BUFF_MANA_DRAIN,	   
@@ -1368,7 +1367,7 @@ handle_skill(SkillId = 402, Src, Tar, _Level, Param, BattleData) ->
     battle:attack(SkillId, Src, AttSpec, BattleData);
 
 %% 对随机一个敌人进行一次{P1}物理攻击，如果命中，则提高自己{P2}点命中，持续{P3}回合。
-handle_skill(SkillId = 403, Src, Tar, _Level, Param, BattleData) ->
+handle_skill(SkillId = 111, Src, Tar, _Level, Param, BattleData) ->
     Buff = #buff {
         name     = ?BUFF_HIT_UP,
         value    = ?p2,
@@ -1386,16 +1385,9 @@ handle_skill(SkillId = 403, Src, Tar, _Level, Param, BattleData) ->
 
 %% 对敌方怒气最高的单位进行一次魔法攻击，并减少目标一定怒气（由攻击者的魔法
 %% 攻击和被攻击者的魔法防御决定，下限5，上限20点）
-handle_skill(SkillId = 404, Src, Tar, _Level, Param, BattleData) ->
+handle_skill(SkillId = 117, Src, Tar, _Level, Param, BattleData) ->
     CandList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-    F = fun(Pos, {MaxMP, MaxPos}) ->
-        S = battle:get_battle_status(Pos, BattleData),
-        case S#battle_status.mp > MaxMP of
-            true -> {S#battle_status.mp, Pos};
-            _ -> {MaxMP, MaxPos}
-        end
-    end,
-    {_, RealTar} = lists:foldl(F, {0, hd(CandList)}, CandList),
+    {RealTar, _} = battle:get_pos_by(mp, max, CandList, BattleData),
 
 	Buff = #buff {
         name     = ?BUFF_MANA_DRAIN,	   
@@ -1412,43 +1404,153 @@ handle_skill(SkillId = 404, Src, Tar, _Level, Param, BattleData) ->
 
 %% 对敌人攻击3次 每次目标都是随机选取，附带晕buff
 handle_skill(SkillId = 406, Src, _Tar, _Level, Param, BattleData) ->
-	F = fun(N, {C, Data}) ->
+	F = fun(N, {C, Data, BSpec}) ->
 			if (C == false) ->
-				{false, Data};
+				{false, Data, BSpec};
 			true ->
 				T = ai:get_skill_target(SkillId, Src, Data),
-                Buff = #buff {
-                    name  = ?BUFF_FAINT,
-                    value = 0,
-                    duration = ?p5,
-                    settle = pre
-                },
 				AttSpec = 
 					#attack_spec {
                         addition = element(N, {?p1, ?p2, ?p3}),
-						targets  = [T],
-                        debuff   = [{Buff, ?p4, add}]
+						targets  = [T]
 					},
 				
 				%% we must use attack/5 here to avoid settle the buff
 				AttInfoList = battle:attack(SkillId, Src, AttSpec, [T], Data), 			
 				Data1       = battle:handle_attack_info(SkillId, Src, AttInfoList, Data),
 				SrcStat     = battle:get_battle_status(Src, Data1),
+
+                FirstAttInfo = hd(AttInfoList),
+                NBSpec = case FirstAttInfo#attack_info.is_miss of
+                    true  -> BSpec;
+                    false -> 
+                        Buff = #buff {
+                            name  = ?BUFF_FAINT,
+                            value = 0,
+                            duration = ?p5,
+                            settle = post
+                        },
+                        [{T, [{Buff, ?p4, add}]} | BSpec]
+                end,
 				
 				TarList = battle:get_target_list(battle:calc_range(Src, ?ALLENEMY), Data1),
 	
 				if (SrcStat#battle_status.is_alive == false orelse TarList == []) ->
-					{false, Data1};
+					{false, Data1, NBSpec};
 				true ->
-					{true, Data1}
+					{true, Data1, NBSpec}
 				end
 			end
 		end,
-	{_, NBattleData} = lists:foldl(F, {true, BattleData}, lists:seq(1, 3)),
-	battle:do_att_buff(Src, #attack_spec{}, true, [], NBattleData);
+    {_, NBattleData, BuffSpec} = lists:foldl(F, {true, BattleData, []}, lists:seq(1, 3)),
+    battle:settle_and_add_buff(Src, BuffSpec, [], NBattleData);
 
 %======================================================================================================================
 % New skills 2012-11-27 end
+%======================================================================================================================
+
+%======================================================================================================================
+% New skills 2012-12-04
+%======================================================================================================================
+
+%% 金刚护甲：敌人进行一次100%物理攻击，同时随机为己方3个目标增加固定值的物理防御和法术防御.
+%% {攻击系数, 增加物/魔防值, 持续回合}
+handle_skill(SkillID = 407, Src, Tar, _Level, Param, BattleData) ->
+    PBuff = #buff {
+        name     = ?BUFF_PDEF_UP,
+        value    = ?p2,
+        duration = ?p3,
+        settle   = post,
+        by_rate  = false
+    },
+
+    MBuff = #buff {
+        name     = ?BUFF_MDEF_UP,
+        value    = ?p2,
+        duration = ?p3,
+        settle   = post,
+        by_rate  = false
+    },
+
+    AttSpec = #attack_spec {
+        addition = ?p1,
+        targets  = [Tar],
+        buff     = []
+    },
+    AttInfoList = battle:attack(SkillID, Src, AttSpec, [Tar], BattleData),
+	BattleData1 = battle:handle_attack_info(SkillID, Src, AttInfoList, BattleData),
+
+    FriendList = battle:get_target_list(battle:calc_range(Src, ?ALLFRIENDLY), BattleData1),
+    FriendTarList = util:get_rand_list_elems(FriendList, 3),
+    BuffSpec = [{Pos, [{PBuff, 1.0, add}, {MBuff, 1.0, add}]} || Pos <- FriendTarList],
+	battle:settle_and_add_buff(Src, BuffSpec, [], BattleData1);
+
+%% 破阵攻心：进行一次物理攻击，造成100%伤害，如果命中则击晕目标一回合。
+%% {攻击系数, 晕回合数}
+handle_skill(SkillID = 408, Src, Tar, _Level, Param, BattleData) ->
+    Buff = #buff {
+        name     = ?BUFF_FAINT,
+        value    = 0,
+        duration = ?p2,
+        settle   = pre,
+        by_rate  = false
+    },
+
+    AttSpec = #attack_spec {
+        addition = ?p1,
+        targets  = [Tar],
+        debuff   = [{Buff, 1.0, add}]
+    },
+
+	battle:attack(SkillID, Src, AttSpec, BattleData);
+
+%% 流云刺：群体物理攻击，打两个目标，对每个目标都造成80%伤害。
+%% {攻击系数}
+handle_skill(SkillID = 409, Src, Tar, _Level, Param, BattleData) ->
+    EnemyList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
+    TarList = util:get_rand_list_elems(EnemyList, 2),
+
+    AttSpec = #attack_spec {
+        addition = ?p1,
+        targets  = TarList
+    },
+	battle:attack(SkillID, Src, AttSpec, BattleData);
+
+%% 虎啸破：群体物理攻击，随机打击三个目标，对每个目标都造成100%伤害。
+%% {攻击系数}
+handle_skill(SkillID = 410, Src, Tar, _Level, Param, BattleData) ->
+    EnemyList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
+    TarList = util:get_rand_list_elems(EnemyList, 3),
+
+    AttSpec = #attack_spec {
+        addition = ?p1,
+        targets  = TarList
+    },
+	battle:attack(SkillID, Src, AttSpec, BattleData);
+
+%% 冰凌筏：打2个目标，分别造成80%伤害，有概率睡眠1回合。
+%% {攻击系数, 晕的概率, 晕回合数}
+handle_skill(SkillID = 411, Src, Tar, _Level, Param, BattleData) ->
+    EnemyList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
+    TarList = util:get_rand_list_elems(EnemyList, 2),
+
+    Buff = #buff {
+        name     = ?BUFF_FAINT,
+        by_rate  = false,
+        value    = 0,
+        duration = ?p3,
+        settle   = pre 
+    },
+
+    AttSpec = #attack_spec {
+        addition = ?p1,
+        targets  = TarList,
+        debuff   = [{Buff, ?p2, add}]
+    },
+	battle:attack(SkillID, Src, AttSpec, BattleData);
+
+%======================================================================================================================
+% New skills 2012-12-04 end
 %======================================================================================================================
 
 %% default

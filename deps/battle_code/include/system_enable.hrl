@@ -55,3 +55,6 @@
 
 -define(SYSTEM_TYPE_COMP, 24).
 -define(SYSTEM_ENABLE_TYPE_COMP, 3).
+
+-define(SWORD,  32).
+-define(SWORD_TYPE, 8).
