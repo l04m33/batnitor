@@ -2,6 +2,7 @@
 
 
 %% ======================== 金币改变的操作类型 ==========================
+-define(GOLD_FROM_GM,1999).					%%GM获得
 -define(GOLD_CHARGE_MONEY, 1001). 			%% 1;		// 充钱
 -define(GOLD_CHARGE_CARD, 1002). 			%% 2;		// 充卡
 -define(GOLD_MAIL, 1003). 					%% 3;		// 邮件
@@ -27,6 +28,7 @@
 -define(GOLD_FROM_GUIDE,1023).				%% 23;		//	每日指引获得
 -define(GOLD_FROM_VIP,1024).				%% 24;		// VIP充值回馈获得
 -define(GOLD_WEALTH_GAMBLE,1025).				%%招财进宝
+
 
 -define(GOLD_FORCE_TAX, 2001). 				%% = 21;	// 强征花销
 -define(GOLD_TRAIN_TIME, 2002). 				%% ;		// 训练时间
@@ -130,6 +132,7 @@
 
 
 %% ======================== 银币改变的操作类型 ==========================
+-define(SILVER_FROM_GM,	1999).	%%GM获得
 -define(SILVER_TAX, 1001). 					%% 1    征收所得
 -define(SILVER_FORCE_TAX, 1002).				%% 2    强征所得
 -define(SILVER_TASK, 1003). 					%% 3    任务所得
@@ -354,6 +357,7 @@
 -define(ENERGY_CYCLIC_TASK_COST,	2015).		%% 自动完成循环任务消耗
 -define(ENERGY_FROM_MELEE,  		2016).      %% 团战
 
+-define(PRACTICE_FROM_GM,				1999).	%gm获取
 -define(PRACTICE_FROM_USE_BILL,			1001).		%%历练券
 -define(PRACTICE_FROM_BATTLE,			1002).		%%战斗获取
 -define(PRACTICE_FROM_FAST_BATTLE,		1003).		%%扫荡获取
@@ -361,7 +365,6 @@
 -define(PRACTICE_FROM_CONSUME_BONUS,	1005).		%%每日消耗活动获取
 -define(PRACTICE_FROM_DRAGON_HUNT,		1006).		%%猎龙获取
 -define(PRACTICE_FROM_GARDEN,			1007).		%%花园获取
--define(PRACTICE_FROM_GM,				1008).		%%gm获取
 -define(PRACTICE_FROM_GUILD_SALARY,		1009).		%%帮派福利
 -define(PRACTICE_FROM_ONLINE_AWARD,		1010).		%%每日抽奖
 -define(PRACTICE_FROM_RELATION,			1011).		%%好友

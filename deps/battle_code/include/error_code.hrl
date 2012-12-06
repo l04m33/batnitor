@@ -42,6 +42,7 @@
 -define(ERR_NO_FEEDBACK_GOLD,	 39).		%% 没有可领取的元宝
 -define(ERR_NOT_ENOUHT_JUNLING,	 40).		%% 军令不足
 -define(ERR_CANT_USE_TOGETHER,	 41).		%% 该物品不能批量使用
+-define(ERR_NO_ONBATTLE_ROLES,	 42).		%% 没有出战佣兵
 
 %% 场景
 %% -define(ERR_SCENE_NOT_COMPLETE,			11001).			%% 场景进度未完成
@@ -241,6 +242,8 @@
 -define(GUILD_ERROR_TRANSFER_SUCCESS, 19034).               %% 转让帮主成功
 -define(GUILD_ERROR_TRANSFER_FAIL, 19035).                  %% 转让的成员要精英及以上职位，历史功勋前10
 -define(GUILD_ERROR_APPLY_REACH_LIMIT,	19036).			%% 申请的工会的数目已经达到上限
+-define(GUILD_ERROR_APPLY_SUCCESS, 19037). %% 帮会申请通过
+-define(GUILD_ERROR_SEARCH_NULL, 19038). %% 搜索结果为空
 
 %% 战斗系统
 -define(ERR_BATTLE_ATTACKER_IS_ON_BATTLE,    20001).   %% 玩家正在战斗
@@ -342,6 +345,7 @@
 
 %% 种植
 -define(ERR_FENGDI_WATER,                16001).        %% 浇水次数超过2次     
+-define(ERR_FENGDI_REFRESH_HIGHEST,                16022).        %% 已经刷新到了最高品质
 %% 聊天
 -define(ERR_CAN_NOT_CHAT,         16003). %% 您当前处于禁言状态
 -define(ERR_PROHIBIT_WORD,16004).			%%含有敏感词

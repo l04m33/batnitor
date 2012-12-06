@@ -301,35 +301,42 @@ handle_info(_Msg, State) ->
     {noreply, State}.
 
 
-terminate(_Reason, _State) ->
+terminate(Reason, _State) ->
+    ?I("Reason = ~w", [Reason]),
     ?I("~s shutting down.", [?MODULE]),
-    case file:open("file_paths.config", write) of
-        {ok, FHandle} ->
-            PList = [{player_file, erlang:get(player_file)},
-                     {monster_file, erlang:get(monster_file)},
-                     {monster_group_file, erlang:get(monster_group_file)}],
-            F = fun(T) ->
-                io:format(FHandle, "~p.~n", [T])
+    case Reason =:= wx_deleted of
+        true ->
+            case file:open("file_paths.config", write) of
+                {ok, FHandle} ->
+                    PList = [{player_file, erlang:get(player_file)},
+                             {monster_file, erlang:get(monster_file)},
+                             {monster_group_file, erlang:get(monster_group_file)}],
+                    F = fun(T) ->
+                        io:format(FHandle, "~p.~n", [T])
+                    end,
+                    lists:foreach(F, PList),
+                    file:close(FHandle);
+
+                _ -> void
             end,
-            lists:foreach(F, PList),
-            file:close(FHandle);
 
-        _ -> void
-    end,
+            case erlang:get(player_file) of
+                undefined -> void;
+                PFPath ->
+                    case file:open(PFPath, write) of
+                        {ok, PFHandle} ->
+                            io:format(PFHandle, "ID,等级,攻击,防御,HP,速度,命中,闪避,暴击,幸运,格挡,反击,破甲,"
+                                                "致命,怪打人次数,人打怪次数,难度,怪物类型,怪物职业,"
+                                                "技能组1,技能组2,技能组3,技能组4,技能组5,技能组6~n", []),
+                            RolesOrder = gen_server:call(batnitor_simulator, get_roles_order),
+                            write_player_config(PFHandle, RolesOrder);
+                        {error, Err} ->
+                            ?E("Can't save player config: ~w", [{error, Err}])
+                    end
+            end;
 
-    case erlang:get(player_file) of
-        undefined -> void;
-        PFPath ->
-            case file:open(PFPath, write) of
-                {ok, PFHandle} ->
-                    io:format(PFHandle, "ID,等级,攻击,防御,HP,速度,命中,闪避,暴击,幸运,格挡,反击,破甲,"
-                                        "致命,怪打人次数,人打怪次数,难度,怪物类型,怪物职业,"
-                                        "技能组1,技能组2,技能组3,技能组4,技能组5,技能组6~n", []),
-                    RolesOrder = gen_server:call(batnitor_simulator, get_roles_order),
-                    write_player_config(PFHandle, RolesOrder);
-                {error, Err} ->
-                    ?E("Can't save player config: ~w", [{error, Err}])
-            end
+        _ ->        % false
+            void
     end,
     ok.
 
@@ -484,7 +491,7 @@ choose_file_by_dialog(MainFrame, OpenOrSave) ->
 parse_csv_line({eof}, AccList) -> 
     lists:reverse(AccList);
 parse_csv_line({newline, Line}, AccList) ->
-    ?I("Line = ~p", [Line]),
+    %?I("Line = ~p", [Line]),
     [Line | AccList].
 
 show_message(MainFrame, Msg) ->

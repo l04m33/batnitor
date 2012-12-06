@@ -6,6 +6,8 @@
 -define(BATTLE_ROW_SIZE,           3).
 -define(BATTLE_WAIT_BEGIN,     data_battle:get_wait_begin_time()).
 -define(BATTLE_WAIT_FINISH,    data_battle:get_wait_finish_time()).
+-define(BATTLE_WAIT_PLOT,      data_battle:get_wait_plot_time()).
+-define(BATTLE_WAIT_CONTINUE,  data_battle:get_wait_continue_time()).
 -define(BATTLE_WAIT_QUIT,      data_battle:get_wait_quit_time()).
 -define(UNDEFINED, undefined).
 
@@ -104,6 +106,13 @@
 -define(SKILL_COMMON_ATTACK, 100001). %% 普通攻擊
 
 %=============================================================================================
+% special skill definition
+%=============================================================================================
+
+-define(BATTLE_PLOT_TRIGGER_ROUNDS, 1).
+-define(BATTLE_PLOT_TRIGGER_DEATH,  2).
+
+%=============================================================================================
 % battle log
 %=============================================================================================
 
@@ -173,9 +182,9 @@
 
 -record(battle_plot, 
     {
-        round,      % 触发回合数
+        trigger,    % 触发条件，{类型, 值}，合法的暂时只有：{1, 回合数}，{2, 角色死亡站位}
         plots,      % [进入前的剧情ID, 进入后的剧情ID]
-        new_roles   % 要添加的新佣兵
+        new_roles   % 要添加的新佣兵，[#role{} | {Pos, #battle_status{}}]
     }
 ).
 
@@ -213,6 +222,7 @@
 		monster,  
         initial_monster_hp,
 		round = 0,
+        plot,
 		award,
 		winner,    %% camp()
 	    caller,   

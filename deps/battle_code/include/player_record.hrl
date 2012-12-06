@@ -70,7 +70,8 @@
             challenge_king_pid= none,		%% 挑战国王
 			competition_pid   = none,		%% 比武模块
 			wealth_pid 		  = none,		%% 招财进宝
-			lottery_pid		  = none		%% 投壶模块
+			lottery_pid		  = none,		%% 投壶模块
+			dressing_pid      = none		%% 外形装扮（包括坐骑、换装、翅膀等）
 	}).
 
 %%用户登录数据表

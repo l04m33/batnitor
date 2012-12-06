@@ -1125,10 +1125,10 @@ handle_skill(_Skill = 254, Src, Tar, Level, Param, BattleData) ->
 handle_skill(Skill = 255, Src, Tar, _Level, Param, BattleData) ->
     Buff = 
         #buff {
-            name     = ?BUFF_FAINT,
-            by_rate  = false,
-            value    = 0,
-            duration = ?p2,
+            name     = ?BUFF_SPEED_DOWN,
+            by_rate  = true,
+            value    = ?p2,
+            duration = 2,
             settle   = pre 
         },
     

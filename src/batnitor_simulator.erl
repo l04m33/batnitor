@@ -260,6 +260,7 @@ start_one_battle(MonGroupID, MaxGroupID, SimTimes, MaxSimTimes) ->
     end.
 
 prepare_mon_attr(MonID) when is_integer(MonID) ->
+    ?I("Preparing MonID = ~w", [MonID]),
     RoleInfoR = ets:lookup(ets_role_rec, {0, MonID}),
     MiscInfoR = ets:lookup(ets_role_misc_rec, {0, MonID}),
     case RoleInfoR of

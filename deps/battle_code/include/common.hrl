@@ -57,6 +57,7 @@
 -include("consume.hrl").
 
 -include("challenge_king.hrl").
+-include("dressing.hrl").
 -include("defence.hrl").
 
 -include("wealth.hrl").

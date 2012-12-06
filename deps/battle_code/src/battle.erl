@@ -37,6 +37,9 @@ set_battle_command(BattlePid, ID, Cmd) ->
 quit_battle(BattlePid, ID) ->
 	gen_fsm:send_event(BattlePid, {quit, ID}).
 
+end_plot(BattlePID, ID) ->
+    gen_fsm:send_event(BattlePID, {continue, ID}).
+
 logout(BattlePid, {logout, ID}) ->
 	gen_fsm:send_all_state_event(BattlePid, {logout, ID}).
 
@@ -177,8 +180,15 @@ battle_run(Event, BattleData) ->
 		
 		false ->
 			if (Event == timeout) ->
-				{next_state, battle_run, NBattleData#battle_data {
-					timeout = {Now, ?BATTLE_WAIT_FINISH}}, ?BATTLE_WAIT_FINISH};
+                case check_plot_trigger(NBattleData) of
+                    {true, Plot, NBattleData1} ->
+                        NBattleData2 = trigger_plot(Plot, NBattleData1),
+                        {next_state, battle_plot, NBattleData2#battle_data {
+                            timeout = {Now, ?BATTLE_WAIT_PLOT}}, ?BATTLE_WAIT_PLOT};
+                    false ->
+                        {next_state, battle_run, NBattleData#battle_data {
+                            timeout = {Now, ?BATTLE_WAIT_FINISH}}, ?BATTLE_WAIT_FINISH}
+                end;
 			true -> 
 				%% some player has not acted yet(due to the same round), 
 				%% update the timeout value
@@ -187,11 +197,38 @@ battle_run(Event, BattleData) ->
 						timeout = {Now, Timeout}}, Timeout};
 				true ->
 					%% if is next turn...
-					{next_state, battle_run, NBattleData#battle_data {
-						timeout = {Now, ?BATTLE_WAIT_FINISH}}, ?BATTLE_WAIT_FINISH}
+                    case check_plot_trigger(NBattleData) of
+                        {true, Plot, NBattleData1} ->
+                            NBattleData2 = trigger_plot(Plot, NBattleData1),
+                            {next_state, battle_plot, NBattleData2#battle_data {
+                                timeout = {Now, ?BATTLE_WAIT_PLOT}}, ?BATTLE_WAIT_PLOT};
+                        false ->
+                            {next_state, battle_run, NBattleData#battle_data {
+                                timeout = {Now, ?BATTLE_WAIT_FINISH}}, ?BATTLE_WAIT_FINISH}
+                    end
 				end
 			end
 	end.
+
+%% 战斗中播剧情暂时不支持组队，所以只要有一个玩家发continue过来就会继续
+battle_plot({continue, ID}, BattleData) ->
+    ?INFO(battle_plot, "{continue, ~w} received", [ID]),
+	{Now, _Timeout} = time_remain(BattleData),
+    % gen_fsm:send_event(self(), {finish_play, ID}),
+    {next_state, battle_run, BattleData#battle_data {
+        timeout = {Now, ?BATTLE_WAIT_CONTINUE}}, ?BATTLE_WAIT_CONTINUE};
+
+battle_plot(timeout, BattleData) ->
+    ?INFO(battle_plot, "timeout received"),
+	{Now, _Timeout} = time_remain(BattleData),
+    {next_state, battle_run, BattleData#battle_data {
+        timeout = {Now, ?BATTLE_WAIT_CONTINUE}}, ?BATTLE_WAIT_CONTINUE};
+
+battle_plot(_Event, BattleData) ->
+    ?INFO(battle_plot, "~w received", [_Event]),
+	{Now, Timeout} = time_remain(BattleData),
+    {next_state, battle_plot, BattleData#battle_data {
+        timeout = {Now, Timeout}}, Timeout}.
 
 battle_complete(timeout, BattleData) ->
 	{stop, normal, BattleData};
@@ -404,10 +441,11 @@ get_battle_data(Start) ->
 			?INFO(battle, "calling get_mon_info"),
 			{Defender, Array2} = get_mon_info(def, MonID, Start#battle_start.monster_hp, Array1),
 			?INFO(battle, "done..."),
-			{Defender, Array2};
+            PlotList = [transform_plot(AttID, P) || P <- Start#battle_start.plot];
 		pvp ->
 			{Attacker, Array1} = get_mer_info(att, AttID, AttMer, MakeTeam, Array),
-			{Defender, Array2} = get_mer_info(def, DefID, DefMer, MakeTeam, Array1)
+			{Defender, Array2} = get_mer_info(def, DefID, DefMer, MakeTeam, Array1),
+            PlotList = []       % PVP不支持加人和播剧情……
 	end,
 	
 	BattleData =
@@ -430,6 +468,7 @@ get_battle_data(Start) ->
                     _ ->    % false
                         Start#battle_start.monster_hp
                 end,
+            plot      = PlotList,
 			caller    = Caller,
 			maketeam  = MakeTeam,
 			callback  = Callback
@@ -1038,7 +1077,7 @@ handle_command_ex(BattleData, Repeat) ->
 			%% order package
 			send_order_package(BattleData),
 			BattleData1 = skill:handle_skill(Sid, Src, Tar, BattleData),
-			
+
 			%% procedure package
 			send_procedure_package(BattleData1),
 			
@@ -2095,7 +2134,7 @@ assist_1(Tar, [Eff | Rest], AttInfo, BattleData) ->
 					case lists:keysearch(?BUFF_WEAKNESS, #buff.name, Buffs) of
 						{value, #buff{by_rate = true, value = V}} -> 
                             Inc10 = round(Inc * (1 - V)),
-                            ?BATTLE_LOG("        站位 ~w Buff效果: 降低治疗量"),
+                            ?BATTLE_LOG("        站位 ~w Buff效果: 降低治疗量", [Tar]),
                             ?BATTLE_LOG("            Buff效果: 降低治疗量, 系数: ~w, 降低数量: ~w",
                                         [V, Inc10]),
                             Inc10;
@@ -2706,6 +2745,11 @@ send_player_package(BinIDList) ->
 		end,
 	lists:foreach(F, BinIDList).
 
+send_plot_package(Plot, BattleData) ->
+    Packet = pt_20:write(20012, Plot),
+	IDList = get_ids(BattleData),
+	send_group_package(Packet, IDList).
+
 send_group_package(Bin, IDList) ->
 	F = fun(ID) ->
 			case ets:lookup(?ETS_ONLINE, ID) of
@@ -2889,13 +2933,35 @@ print_battle_status(Pos, BattleData) ->
 	?INFO(battle, "State: Pos = ~w, Hp = ~w, Mp = ~w, Cd = ~w, Buff = ~w", [Pos, Hp, Mp, Cd, Bf]).
 
 test_pve(ID, MonID) ->
+    RoleList = lists:map(
+        fun({RID, Pos}) ->
+            R = data_role:get(RID),
+            R#role{
+                key = {ID, RID},
+                gd_maxHp = 20000,
+                gd_currentHp = 20000,
+                p_att = 100,
+                m_att = 100,
+                p_def = 2000,
+                m_def = 2000,
+                gd_isBattle = Pos
+            }
+        end,
+        [{22, 4}, {23, 5}]),
+
 	Start = 
 		#battle_start {
 			mod     = pve,
 			type    = 0,
 			att_id  = ID,
 			att_mer = [],
-			monster = MonID
+			monster = MonID,
+            plot    = [
+                #battle_plot{
+                    trigger = {?BATTLE_PLOT_TRIGGER_ROUNDS, 2},
+                    plots   = [1, 2],
+                    new_roles = RoleList
+                }]
 		},
 	battle:start(Start).
 
@@ -2992,6 +3058,73 @@ get_pos_by([H | T], BattleData, FieldIdx, Op, {CurMinPos, CurMinVal}) ->
             get_pos_by(T, BattleData, FieldIdx, Op, {CurMinPos, CurMinVal})
     end.
 
+transform_plot(ID, Plot) ->
+    F = fun(R) ->
+        Pos = R#role.gd_isBattle,
+        BS = role_2_bs(ID, R),
+        {Pos, BS}
+    end,
+    Plot#battle_plot{
+        new_roles = [F(R) || R <- Plot#battle_plot.new_roles]
+    }.
+
+check_plot_trigger(BattleData) ->
+    check_plot_trigger(BattleData#battle_data.plot, BattleData, []).
+
+check_plot_trigger([], _BattleData, _NewPlots) ->
+    false;
+check_plot_trigger([P | Rest], BattleData, NewPlots) ->
+    case check_single_plot_trigger(P, BattleData) of
+        true ->
+            {true, P, 
+             BattleData#battle_data{
+                plot = lists:reverse(NewPlots) ++ Rest
+             }};
+        false ->
+            check_plot_trigger(Rest, BattleData, [P | NewPlots])
+    end.
+
+check_single_plot_trigger(#battle_plot{trigger = {?BATTLE_PLOT_TRIGGER_ROUNDS, Round}}, BattleData) ->
+    case BattleData#battle_data.round of
+        Round -> true;
+        _     -> false
+    end;
+check_single_plot_trigger(#battle_plot{trigger = {?BATTLE_PLOT_TRIGGER_DEATH, Pos}}, BattleData) ->
+    Stat = get_battle_status(Pos, BattleData),
+    case Stat#battle_status.is_alive of
+        false -> true;
+        true  -> false
+    end.
+
+get_empty_pos(Cur, Max, _BattleData) when Cur >= Max ->
+    0;
+get_empty_pos(Cur, Max, BattleData) ->
+    case get_battle_status(Cur, BattleData) of
+        ?UNDEFINED -> Cur;
+        _ -> get_empty_pos(Cur + 1, Max, BattleData)
+    end.
+
+trigger_plot(Plot, BattleData) ->
+    ?INFO(battle_plot, "Plot triggered: ~w", [Plot]),
+    send_plot_package(Plot, BattleData),
+    BattleData1 = lists:foldl(
+        fun({Pos, BS}, BD) ->
+            NPos = case Pos =< (?BATTLE_FIELD_SIZE div 2) of
+                true ->     % 玩家加的佣兵
+                    get_empty_pos(1, ?BATTLE_FIELD_SIZE div 2, BD);
+                false ->    % 敌人加的佣兵
+                    get_empty_pos((?BATTLE_FIELD_SIZE div 2) + 1, ?BATTLE_FIELD_SIZE, BD)
+            end,
+            case NPos of
+                0 -> 
+                    exit(no_pos_for_plot_role);     % never returns
+                _ -> 
+                    set_battle_status(NPos, BS, BD)
+            end
+        end,
+        BattleData,
+        Plot#battle_plot.new_roles),
+    BattleData1#battle_data{attorder = get_att_order(BattleData1)}.
 
 -ifdef(debug).
 
