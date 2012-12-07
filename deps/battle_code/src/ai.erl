@@ -57,7 +57,6 @@ validate_skill(SkillUID, SkillId, Level, Src, BattleData) ->
 		BattleSkill ->
 			Hp       = BattleSkill#battle_skill.hp,
 			Mp       = BattleSkill#battle_skill.mp,
-			CD       = BattleSkill#battle_skill.cd,
 			Stat     = battle:get_battle_status(Src, BattleData),
 			_ByRate  = BattleSkill#battle_skill.hp_by_rate,
 			InCd     = 
@@ -74,7 +73,7 @@ validate_skill(SkillUID, SkillId, Level, Src, BattleData) ->
 				   ?INFO(skill, "Hp not enough. "),
 				   false; 
 			   (InCd == true) -> 
-				   ?INFO(skill, "in Cd state. CD list = ~w", [CD]),
+				   ?INFO(skill, "in CD state. CD list = ~w", [Stat#battle_status.cd]),
 				   false;
 			   true -> true
 			end
@@ -134,7 +133,7 @@ get_super_skill([SkillUID | Rest]) ->
 		get_super_skill(Rest)
 	end.
 
-get_skill_1(SLen, SLen, _SList, Src, BattleData) ->
+get_skill_1(SIndex, SLen, _SList, Src, BattleData) when SIndex > SLen ->
 	Tar = get_skill_target(?SKILL_COMMON_ATTACK, Src, BattleData),
 	{?SKILL_COMMON_ATTACK, Src, Tar, 1};
 

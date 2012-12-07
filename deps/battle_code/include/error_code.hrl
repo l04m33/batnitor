@@ -286,9 +286,12 @@
 %% 神剑
 -define(ERR_SWORD_NOT_START,32001). 		%% 天灵神剑活动未开始
 -define(ERR_SWORD_LEVEL_UNMATCH, 32002).	%% 等级阶段不符合神剑要求
+-define(ERR_SWORD_LEVEL_UNMATCH_1,	32003). %% 需要等级30-49级
+-define(ERR_SWORD_LEVEL_UNMATCH_2,	32004). %% 需要等级50-69级
+-define(ERR_SWORD_LEVEL_UNMATCH_3,	32005). %% 需要达到70级以上
 
 
- -define(ERR_TEAM_INVITE_SELF,			30004).			%% 抱歉，不能邀请自己
+-define(ERR_TEAM_INVITE_SELF,			30004).			%% 抱歉，不能邀请自己
 -define(ERR_TEAM_NOT_TEAM_SCENE,			30005).			%% 被邀请者等级不足，不能进入此副本
 -define(ERR_TEAM_OFFLINE,			30006).			%% 被邀请者不在线
 -define(ERR_TEAM_FULL,			30007).			%% 队伍已满。不能加入

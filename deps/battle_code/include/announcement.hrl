@@ -62,6 +62,7 @@
 -define(SEND_WEALTH, 63).
 -define(SEND_COMP_REMOVE_BANNER, 65).
 -define(SEND_TOUHU, 66).
+-define(SEND_SWORD, 67).
 
 
 -define(CARD_FROM_RESURRECTION, 1).

@@ -173,13 +173,15 @@
 			gd_accountId      = 0,
 			gd_EmployableList = [],		%% 玩家可招募的佣兵列表
 			gd_fosterFlag     = 1,		%% 记录培养的阶段
-			gd_junwei		  = 0		%% 用于招募神将的君威
+			gd_junwei		  = 0,		%% 用于招募神将的君威
+			gd_FollowRole	  = 0		%% 跟随将领
 	}).
 -record (role_data_types, {
 			gd_accountId      = {integer},
 			gd_EmployableList = {term},
 			gd_fosterFlag     = {integer},
-			gd_junwei     	  = {integer}
+			gd_junwei     	  = {integer},
+			gd_FollowRole	  = {integer}
 	}).
 
 -record(skill_info, {

@@ -104,6 +104,7 @@
 %=============================================================================================
 
 -define(SKILL_COMMON_ATTACK, 100001). %% 普通攻擊
+-define(SKILL_COMMON_ATTACK_ID, 100). %% 普通攻擊
 
 %=============================================================================================
 % special skill definition
@@ -184,7 +185,7 @@
     {
         trigger,    % 触发条件，{类型, 值}，合法的暂时只有：{1, 回合数}，{2, 角色死亡站位}
         plots,      % [进入前的剧情ID, 进入后的剧情ID]
-        new_roles   % 要添加的新佣兵，[#role{} | {Pos, #battle_status{}}]
+        new_roles   % 要添加的新佣兵，[#role{} | {Pos, #mon_attr{}} | {Pos, #battle_status{}}]
     }
 ).
 
@@ -470,6 +471,7 @@
 		hp_by_rate = false, %% boolean()
 	 	mp,                 %% integer(),
         mp_add = 30,        %% integer()
+        hit_mp_add = 20,    %% integer()
 		cd,
 		type,               %% super | common | passive
 		target,             %% self  | friend | enemy

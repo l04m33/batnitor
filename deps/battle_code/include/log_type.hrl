@@ -129,6 +129,8 @@
 -define(GOLD_ONE_KEY_COMPLETE_QIHUN,2098). %% 一键完成器魂升级
 -define(GOLD_USE_EVOKE_DRESS,		2099).	%% 幻化外形装扮消耗（包括坐骑、翅膀等）
 -define(GOLD_USE_ADD_DRESS_EXP,		2100).	%% 增加外形装扮消耗（包括坐骑、翅膀等）
+-define(GOLD_UP_VIP,				2101).	%% 用于升级VIP
+-define(GOLD_CHUANGONG,				2102).	%% 用于传功
 
 
 %% ======================== 银币改变的操作类型 ==========================
@@ -226,6 +228,7 @@
 -define(SILVER_MARSTOWER_AUTO_CHALLENGE,2037). %% 用于爬塔自动挑战
 -define(SILVER_ONE_KEY_COMPLETE_QIHUN,2038). %% 一键完成器魂升级
 -define(SILVER_USE_ADD_DRESS_EXP,     2039).	%% 增加外形装扮消耗（包括坐骑、翅膀等）
+-define(SILVER_CHUANGONG,			  2040).	%% 用于传功
 
 
 %%有一些操作，同时使用多种东西的

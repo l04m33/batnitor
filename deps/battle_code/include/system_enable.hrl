@@ -58,3 +58,6 @@
 
 -define(SWORD,  32).
 -define(SWORD_TYPE, 8).
+
+-define(SYSTEM_TYPE_HORSE, 6).
+-define(SYSTEM_ENABLE_TYPE_HORSE, 2).

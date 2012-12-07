@@ -747,6 +747,50 @@ role_2_bs(ID, Role) ->
 		is_lead   = Role#role.gd_roleRank == 1 
 	}.
 
+mon_2_bs(MonAttr, Pos, MonHp) ->
+    Res = transform_skill(MonAttr#mon_attr.skills),
+    ?INFO(battle, "monster skill = ~w, start = ~w", [Res, MonAttr#mon_attr.star]),
+    
+    {ActiveSkills, _} = Res,
+
+    MaxHP = if
+        is_integer(MonHp) -> MonHp;
+        is_list(MonHp) ->
+            case lists:keyfind(Pos, 1, MonHp) of
+                false   -> MonAttr#mon_attr.hp;
+                {_, HP} -> HP
+            end
+    end,
+    CurHP = min(MonAttr#mon_attr.hp, MaxHP),
+    
+    #battle_status {
+        id      = MonAttr#mon_attr.id,
+        job     = MonAttr#mon_attr.cat,
+        skill   = ActiveSkills,
+        name    = MonAttr#mon_attr.name, 
+        level   = MonAttr#mon_attr.level,
+        star    = MonAttr#mon_attr.star,
+        hp      = CurHP,
+        hp_max  = MonAttr#mon_attr.hp,
+        mp      = MonAttr#mon_attr.mp,
+        p_att   = MonAttr#mon_attr.p_att,
+        p_def   = MonAttr#mon_attr.p_def,
+        m_att   = MonAttr#mon_attr.m_att,
+        m_def   = MonAttr#mon_attr.m_def,
+        dodge   = MonAttr#mon_attr.dodge,
+        block   = MonAttr#mon_attr.block,
+        break   = MonAttr#mon_attr.break,
+        fatal   = MonAttr#mon_attr.fatal,
+        luck    = MonAttr#mon_attr.luck,
+        hit     = MonAttr#mon_attr.hit,
+        crit    = MonAttr#mon_attr.crit,
+        is_lead = 0,
+        is_alive = case CurHP of
+                       0 -> false;
+                       _ -> true
+                   end
+    }.
+
 get_mon_info(Camp, MonGroupID, Array) ->
 	get_mon_info(Camp, MonGroupID, ?HP_MAX, Array).
 
@@ -757,49 +801,7 @@ get_mon_info(Camp, MonGroupID, MonHp, Array) ->
 	
 	F = fun({MonID, Pos}, {Arr, List}) ->
 			MonAttr = data_mon_attr:get(MonID),
-			Res = transform_skill(MonAttr#mon_attr.skills),
-			?INFO(battle, "monster skill = ~w, start = ~w", [Res, MonAttr#mon_attr.star]),
-			
-			{ActiveSkills, _} = Res,
-
-            MaxHP = if
-                is_integer(MonHp) -> MonHp;
-                is_list(MonHp) ->
-                    case lists:keyfind(Pos, 1, MonHp) of
-                        false   -> MonAttr#mon_attr.hp;
-                        {_, HP} -> HP
-                    end
-            end,
-            CurHP = min(MonAttr#mon_attr.hp, MaxHP),
-			
-			BattleStatus = 
-				#battle_status {
-					id      = MonID,
-					job     = MonAttr#mon_attr.cat,
-					skill   = ActiveSkills,
-					name    = "", 
-					level   = MonAttr#mon_attr.level,
-					star    = MonAttr#mon_attr.star,
-					hp      = CurHP,
-					hp_max  = MonAttr#mon_attr.hp,
-					mp      = MonAttr#mon_attr.mp,
-					p_att   = MonAttr#mon_attr.p_att,
-					p_def   = MonAttr#mon_attr.p_def,
-					m_att   = MonAttr#mon_attr.m_att,
-					m_def   = MonAttr#mon_attr.m_def,
-					dodge   = MonAttr#mon_attr.dodge,
-					block   = MonAttr#mon_attr.block,
-					break   = MonAttr#mon_attr.break,
-                    fatal   = MonAttr#mon_attr.fatal,
-					luck    = MonAttr#mon_attr.luck,
-					hit     = MonAttr#mon_attr.hit,
-					crit    = MonAttr#mon_attr.crit,
-					is_lead = 0,
-                    is_alive = case CurHP of
-                                   0 -> false;
-                                   _ -> true
-                               end
-				},
+            BattleStatus = mon_2_bs(MonAttr, Pos, MonHp),
 			if (Camp == att) ->
 				NArray = array:set(Pos, BattleStatus, Arr),
 				NList = [Pos | List],
@@ -1432,9 +1434,12 @@ get_passive_skill(SkillID, Pos, BattleData) ->
 		  {Rate :: float() | integer(), Num :: integer()}. 
 
 get_buff_value(BuffName, Pos, BattleData) ->
+    get_buff_value(BuffName, Pos, BattleData, []).
+
+get_buff_value(BuffName, Pos, BattleData, ExtraBuffList) ->
 	State = get_battle_status(Pos, BattleData),
 	%% ?INFO(battle, "Pos = ~w, State = ~w", [Pos, State]),
-	Buffs = State#battle_status.buff,
+	Buffs = State#battle_status.buff ++ ExtraBuffList,
 	%% ?INFO(battle, "Buffs = ~w", [Buffs]),
 	{F, I} = get_buff_value_1(BuffName, Buffs, {0, 0}),
 	%% ?INFO(battle, "F = ~w, I = ~w", [F, I]),
@@ -1455,6 +1460,9 @@ get_buff_value_1(BuffName, [#buff{name = Name, by_rate = B, value = Value} | Res
 	end.
 
 get_adjust_value(Tag, Attr, Pos, BattleData) ->
+    get_adjust_value(Tag, Attr, Pos, BattleData, []).
+
+get_adjust_value(Tag, Attr, Pos, BattleData, ExtraBuff) ->
 	{Buff, DeBuff} = 
 		case Tag of
 			pdef -> {?BUFF_PDEF_UP, ?BUFF_PDEF_DOWN};
@@ -1470,8 +1478,8 @@ get_adjust_value(Tag, Attr, Pos, BattleData) ->
             cast_damage -> {?BUFF_CAST_DMG_UP, ?BUFF_CAST_DMG_DOWN};
             recv_damage -> {?BUFF_RECV_DMG_UP, ?BUFF_RECV_DMG_DOWN}
 		end,
-	{F1, I1} = get_buff_value(Buff,   Pos, BattleData), 
-	{F2, I2} = get_buff_value(DeBuff, Pos, BattleData),
+	{F1, I1} = get_buff_value(Buff,   Pos, BattleData, ExtraBuff), 
+	{F2, I2} = get_buff_value(DeBuff, Pos, BattleData, ExtraBuff),
     if 
         F1 =/= 0 orelse I1 =/= 0 orelse F2 =/= 0 orelse I2 =/= 0 ->
             ?BATTLE_LOG("        站位 ~w Buff效果: ~s", [Pos, tag_to_buff_effect(Tag)]),
@@ -1621,12 +1629,12 @@ calc_range(Target, Range) ->
 	AttSpec    :: #attack_spec{},
 	BattleData :: #battle_data{}.
 
-pre_attack(Src, Tar, _AttSpec, BattleData) ->
+pre_attack(Src, Tar, AttSpec, BattleData) ->
 	SrcStat = get_battle_status(Src, BattleData),
 	TarStat = get_battle_status(Tar, BattleData),
 	
 	{Hit, Dodge} = {
-        get_adjust_value(hit, SrcStat#battle_status.hit, Src, BattleData), 
+        get_adjust_value(hit, SrcStat#battle_status.hit, Src, BattleData, AttSpec#attack_spec.buff_add), 
         get_adjust_value(dodge, TarStat#battle_status.dodge, Tar, BattleData)
     },
 	{AStar, DStar} = {SrcStat#battle_status.star, TarStat#battle_status.star},
@@ -1662,7 +1670,6 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 	Buff = SrcStat#battle_status.buff,
 	BuffAdd = AttSpec#attack_spec.buff_add,
 	
-	
 	TarStat = get_battle_status(Tar, BattleData),
 	Job = SrcStat#battle_status.job,
 	?INFO(battle, "Job = ~w", [Job]),
@@ -1687,7 +1694,6 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 	
 	{Att, Def} =
 		begin	
-			%% DefNoBreak  = get_adjust_value(DefTag, Def0, NTar, BattleData),
             BreakRate   = max(0, SrcStat#battle_status.break / 1000 + ParamX * 0.04 * (AStar - DStar)),
             BreakRand   = random:uniform(),
             ?BATTLE_LOG("        破甲几率: ~w, 随机数: ~w, 破甲: ~w",
@@ -1698,12 +1704,12 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 					false -> 1
 				end,
 			
-			{get_adjust_value(att,  Att0,  Src,  BattleData),
+			{get_adjust_value(att, Att0, Src, BattleData, BuffAdd),
 			 get_adjust_value(DefTag, Def0, Tar,  BattleData) * BreakAdjust}
 		end,
 
 	{Crit, Luck} = {
-		get_adjust_value(crit, SrcStat#battle_status.crit, Src, BattleData),
+		get_adjust_value(crit, SrcStat#battle_status.crit, Src, BattleData, BuffAdd),
 		get_adjust_value(luck, TarStat#battle_status.luck, Tar, BattleData)},
 
     LuckRate = max(0.20, min(0.94, Luck * 10 / (Luck * 12 + Crit) + ParamX * 0.05 * (AStar - DStar))),
@@ -1711,9 +1717,9 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 		case lists:keysearch(?BUFF_CRIT, #buff.name, Buff ++ BuffAdd) of
 			false -> 
                 1 - LuckRate;
-			{value, #buff{value = CritV}} ->
+			{value, #buff{value = _CritV}} ->
                 ?BATTLE_LOG("        站位 ~w Buff效果: 暴击", [Src]),
-                ?BATTLE_LOG("            Buff类型: 必暴击, 系数: ~w", [CritV]),
+                ?BATTLE_LOG("            Buff类型: 必暴击, 系数: ~w", [_CritV]),
 				1.0
 		end,
 		
@@ -1723,7 +1729,7 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
     ?BATTLE_LOG("        暴击几率: ~w, 随机数: ~w, 暴击: ~w",
                 [CritRate, CritRand, IsCrit]),
 	
-	Fatality = get_adjust_value(fatal, SrcStat#battle_status.fatal, Src, BattleData),
+	Fatality = get_adjust_value(fatal, SrcStat#battle_status.fatal, Src, BattleData, BuffAdd),
 	
 	?INFO(battle, "Src = ~w, Job = ~w, Att = ~w, Def = ~w, ALevel = ~w", [Src, Job, Att, Def, ALevel]),
 	
@@ -1748,7 +1754,7 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 				get_damage_value(Damage1, Tar, BattleData)
 		end,
 
-    Damage3 = get_adjust_value(cast_damage, Damage2, Src, BattleData),
+    Damage3 = get_adjust_value(cast_damage, Damage2, Src, BattleData, BuffAdd),
 	
     AdjustedBlock = get_adjust_value(block, TarStat#battle_status.block, Tar, BattleData),
 	BlockRate = 
@@ -1830,9 +1836,9 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
 					true ->
 						{false, false, Tar}
 					end,
-                    {_, _, NTar0} = TarRet,
+                    {_, _, _NTar0} = TarRet,
                     ?BATTLE_LOG("站位 ~w Buff效果: 嘲讽", [Src]),
-                    ?BATTLE_LOG("    Buff类型: 被嘲讽, 嘲讽者站位: ~w, 新目标站位: ~w", [T, NTar0]),
+                    ?BATTLE_LOG("    Buff类型: 被嘲讽, 嘲讽者站位: ~w, 新目标站位: ~w", [T, _NTar0]),
                     TarRet;
 				false -> 
 					{false, false, Tar}
@@ -1878,7 +1884,8 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
                             ?BATTLE_LOG("            Buff类型: 嘲讽, 怒气增加: ~w", [0]),
                             0;
 						false -> 
-                            20
+                            DataSkill = data_skill_table:get(SkillId, 1),   % XXX: 总是用 Lv.1 的配置……
+                            DataSkill#battle_skill.hit_mp_add
 					end,
 				
 				case lists:keysearch(?BUFF_ASSISTED, #buff.name, TarBuff) of
@@ -2110,15 +2117,16 @@ assist(SkillID, Src, [AssSpec | Rest], AttInfoList, BattleData) ->
  	if (IsMiss == true) ->
  			assist(SkillID, Src, Rest, [AttInfo | AttInfoList], BattleData);
  	   true ->
- 		    NAttInfo = assist_1(Tar, Eff, AttInfo, BattleData),
+ 		    NAttInfo = assist_1(Src, Tar, Eff, AttInfo, BattleData),
  			assist(SkillID, Src, Rest, [NAttInfo | AttInfoList], BattleData)
  	end.
 	
-assist_1(_Tar, [], AttInfo, _BattleData) ->
+assist_1(_Src, _Tar, [], AttInfo, _BattleData) ->
 	AttInfo;
 
-assist_1(Tar, [Eff | Rest], AttInfo, BattleData) ->
+assist_1(Src, Tar, [Eff | Rest], AttInfo, BattleData) ->
 	{Type, Value, ByRate} = Eff,
+	SrcStat  = get_battle_status(Src, BattleData),
 	TarStat  = get_battle_status(Tar, BattleData),
 	Buffs    = TarStat#battle_status.buff, 
 	NAttInfo = 
@@ -2140,7 +2148,8 @@ assist_1(Tar, [Eff | Rest], AttInfo, BattleData) ->
                             Inc10;
 						false -> Inc
 					end,
-				AttInfo#attack_info {hp_inc = Inc1};
+                MaxDiff = TarStat#battle_status.hp_max - TarStat#battle_status.hp,
+				AttInfo#attack_info {hp_inc = min(Inc1, MaxDiff)};
 			mana -> 
 				Inc = 
 					if (ByRate == true) ->
@@ -2148,7 +2157,8 @@ assist_1(Tar, [Eff | Rest], AttInfo, BattleData) ->
 					true ->
 						Value
 					end,
-				AttInfo#attack_info {mp_inc = Inc};
+                MaxDiff = TarStat#battle_status.mp_max - TarStat#battle_status.mp,
+				AttInfo#attack_info {mp_inc = min(Inc, MaxDiff)};
 			hp_absorb -> %% absorb !!
 				Inc = 
 					if (ByRate == true) ->
@@ -2156,11 +2166,13 @@ assist_1(Tar, [Eff | Rest], AttInfo, BattleData) ->
 					true ->
 						Value
 					end,
-				AttInfo#attack_info {hp_inc = -Inc, hp_absorb = Inc};
+                MaxHPLoss = TarStat#battle_status.hp,
+                MaxHPGain = SrcStat#battle_status.hp_max - SrcStat#battle_status.hp,
+				AttInfo#attack_info {hp_inc = -min(Inc, MaxHPLoss), hp_absorb = min(Inc, MaxHPGain)};
 			_ -> %% buff or other skills are not relative to hp, mp
 				AttInfo
 		end,
-	assist_1(Tar, Rest, NAttInfo, BattleData).
+	assist_1(Src, Tar, Rest, NAttInfo, BattleData).
 
 get_battle_pro(BattleData) ->
 	BattlePro = hd(BattleData#battle_data.procedure),
@@ -2586,8 +2598,8 @@ update_order_list(List, BattleData) ->
 	?INFO(battle, "List = ~w", [List]),
 	
 	MF = fun(P) ->
-			State    = get_battle_status(P, BattleData),
-			Speed    = State#battle_status.speed,
+			State  = get_battle_status(P, BattleData),
+			Speed  = State#battle_status.speed,
             NSpeed = get_adjust_value(speed, Speed, P, BattleData),
 			{P, NSpeed}
 		end,
@@ -2933,8 +2945,19 @@ print_battle_status(Pos, BattleData) ->
 	?INFO(battle, "State: Pos = ~w, Hp = ~w, Mp = ~w, Cd = ~w, Buff = ~w", [Pos, Hp, Mp, Cd, Bf]).
 
 test_pve(ID, MonID) ->
+	Start = 
+		#battle_start {
+			mod     = pve,
+			type    = 0,
+			att_id  = ID,
+			att_mer = [],
+			monster = MonID
+		},
+	battle:start(Start).
+
+test_pve_plot(ID, MonID) ->
     RoleList = lists:map(
-        fun({RID, Pos}) ->
+        fun({Pos, RID}) ->
             R = data_role:get(RID),
             R#role{
                 key = {ID, RID},
@@ -2947,7 +2970,8 @@ test_pve(ID, MonID) ->
                 gd_isBattle = Pos
             }
         end,
-        [{22, 4}, {23, 5}]),
+        [{1, 22}, {2, 23}]),
+    MonList = [{7, data_mon_attr:get(911)}, {8, data_mon_attr:get(910)}],
 
 	Start = 
 		#battle_start {
@@ -2960,7 +2984,7 @@ test_pve(ID, MonID) ->
                 #battle_plot{
                     trigger = {?BATTLE_PLOT_TRIGGER_ROUNDS, 2},
                     plots   = [1, 2],
-                    new_roles = RoleList
+                    new_roles = RoleList ++ MonList
                 }]
 		},
 	battle:start(Start).
@@ -3059,10 +3083,18 @@ get_pos_by([H | T], BattleData, FieldIdx, Op, {CurMinPos, CurMinVal}) ->
     end.
 
 transform_plot(ID, Plot) ->
-    F = fun(R) ->
-        Pos = R#role.gd_isBattle,
-        BS = role_2_bs(ID, R),
-        {Pos, BS}
+    F = fun(E) ->
+        case E of
+            {Pos, MonAttr} when is_record(MonAttr, mon_attr) ->
+                BS = mon_2_bs(MonAttr, Pos, ?HP_MAX),
+                {Pos, BS};
+            Role when is_record(Role, role) ->
+                Pos = Role#role.gd_isBattle,
+                BS = role_2_bs(ID, Role),
+                {Pos, BS};
+            {Pos, BS} when is_record(BS, battle_status) ->
+                {Pos, BS}
+        end
     end,
     Plot#battle_plot{
         new_roles = [F(R) || R <- Plot#battle_plot.new_roles]
@@ -3106,9 +3138,8 @@ get_empty_pos(Cur, Max, BattleData) ->
 
 trigger_plot(Plot, BattleData) ->
     ?INFO(battle_plot, "Plot triggered: ~w", [Plot]),
-    send_plot_package(Plot, BattleData),
-    BattleData1 = lists:foldl(
-        fun({Pos, BS}, BD) ->
+    {BattleData1, NewPlot} = lists:foldl(
+        fun({Pos, BS}, {BD, NP}) ->
             NPos = case Pos =< (?BATTLE_FIELD_SIZE div 2) of
                 true ->     % 玩家加的佣兵
                     get_empty_pos(1, ?BATTLE_FIELD_SIZE div 2, BD);
@@ -3119,11 +3150,13 @@ trigger_plot(Plot, BattleData) ->
                 0 -> 
                     exit(no_pos_for_plot_role);     % never returns
                 _ -> 
-                    set_battle_status(NPos, BS, BD)
+                    {set_battle_status(NPos, BS, BD),
+                     NP#battle_plot{new_roles = [{NPos, BS} | NP#battle_plot.new_roles]}}
             end
         end,
-        BattleData,
+        {BattleData, Plot#battle_plot{new_roles = []}},
         Plot#battle_plot.new_roles),
+    send_plot_package(NewPlot, BattleData1),
     BattleData1#battle_data{attorder = get_att_order(BattleData1)}.
 
 -ifdef(debug).
