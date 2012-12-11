@@ -63,6 +63,7 @@
 -include("wealth.hrl").
 
 -include("lottery.hrl").
+-include("mines.hrl").
 
 %%安全校验
 -define(TICKET, "SDFSDESF123DFSDF").

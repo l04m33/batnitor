@@ -51,6 +51,7 @@
 -define(SEND_ITEM_CREATE_WORLD_BOSS, 48).
 -define(SEND_ITEM_CREATE_KING, 49).
 -define(SEND_ITEM_CREATE, 50).
+-define(SEND_ITEM_CREATE_DEFENCE, 40).
 -define(SEND_VIP, 55).
 -define(SEND_COMP_FIRST_BLOOD, 56).
 -define(SEND_COMP_CON_WIN, 57).
@@ -63,6 +64,7 @@
 -define(SEND_COMP_REMOVE_BANNER, 65).
 -define(SEND_TOUHU, 66).
 -define(SEND_SWORD, 67).
+-define(SEND_HORSE_UP_LEVEL, 68).
 
 
 -define(CARD_FROM_RESURRECTION, 1).

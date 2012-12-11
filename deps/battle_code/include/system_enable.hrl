@@ -61,3 +61,7 @@
 
 -define(SYSTEM_TYPE_HORSE, 6).
 -define(SYSTEM_ENABLE_TYPE_HORSE, 2).
+
+-define(BATTLE_EXTRA_MP,        34).
+-define(BATTLE_EXTRA_MP_END,    33).
+

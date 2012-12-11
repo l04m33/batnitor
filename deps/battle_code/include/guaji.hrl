@@ -21,5 +21,5 @@
 	gd_IsAutoBuy = {integer}
 	}).
 
--define(DailyGuajiTimes,200).
+-define(DailyGuajiTimes,200).  %% 日常挂机免费次数区别于VIP模块中的免费次数,这字段除了每天重置还作记录购买次数用
 -define(AutoBuyTimes, 20).

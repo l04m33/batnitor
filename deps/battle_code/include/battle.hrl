@@ -21,6 +21,7 @@
 -define(BATTLE_TYPE_BOSS, 10).
 -define(BATTLE_TYPE_CHALLENGE_KING, 15).
 -define(BATTLE_TYPE_SWORD,	32).
+-define(BATTLE_TYPE_DEFENCE,    33).
 
 
 %% Range define.
@@ -118,10 +119,17 @@
 %=============================================================================================
 
 -define(BATTLE_LOG_PATH, 
-        filename:join(
-            filename:dirname(
-                element(2, element(2, application:get_env(sasl, sasl_error_logger)))), 
-            "battle")).
+        begin
+            case application:get_env(sasl, sasl_error_logger) of
+                undefined ->
+                    filename:join(".", "battle");
+                _ ->
+                    filename:join(
+                        filename:dirname(
+                            element(2, element(2, application:get_env(sasl, sasl_error_logger)))), 
+                        "battle")
+            end
+        end).
 
 -ifdef(debug).
 
@@ -143,6 +151,7 @@
         begin
             case erlang:get('__battle_log_file__') of
                 {error, _} -> void;
+                undefined  -> void;
                 _ -> io:format(erlang:get('__battle_log_file__'), Fmt ++ "~n", Args)
             end
         end).

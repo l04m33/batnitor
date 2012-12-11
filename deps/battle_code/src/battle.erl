@@ -17,6 +17,8 @@
 %% gen_fsm callbacks
 -export([init/1, handle_event/3, handle_sync_event/4, handle_info/3, terminate/3, code_change/4]).
 
+-export([set_battle_plot/2]).
+
 -compile(export_all).
 
 %% ====================================================================
@@ -42,6 +44,26 @@ end_plot(BattlePID, ID) ->
 
 logout(BattlePid, {logout, ID}) ->
 	gen_fsm:send_all_state_event(BattlePid, {logout, ID}).
+
+%%判断是否需要加人，如果需要，返回plot list，否则返回undefined
+set_battle_plot(Id,MonsterId)->
+	case lists:member(MonsterId, data_battle_plot:get_monster_list() ) of
+		true->
+			Recv_task_needed = data_battle_plot:get_recv_task(MonsterId),
+			case mod_task:check_ever_receive(Id, Recv_task_needed) of
+				true->
+					Plot_list = data_battle_plot:get_plot_list(MonsterId);
+				false->
+					Plot_list = []
+			end;
+		false->
+			Plot_list = []
+	end,
+	?INFO(plot,"plot list is ~w",[Plot_list]),
+	Plot_list.
+				
+			
+				
 
 %% ====================================================================
 %% Server functions
@@ -441,7 +463,8 @@ get_battle_data(Start) ->
 			?INFO(battle, "calling get_mon_info"),
 			{Defender, Array2} = get_mon_info(def, MonID, Start#battle_start.monster_hp, Array1),
 			?INFO(battle, "done..."),
-            PlotList = [transform_plot(AttID, P) || P <- Start#battle_start.plot];
+            PlayerLevel = mod_role:get_main_level(AttID),
+            PlotList = [transform_plot(AttID, PlayerLevel, P) || P <- Start#battle_start.plot];
 		pvp ->
 			{Attacker, Array1} = get_mer_info(att, AttID, AttMer, MakeTeam, Array),
 			{Defender, Array2} = get_mer_info(def, DefID, DefMer, MakeTeam, Array1),
@@ -602,6 +625,8 @@ get_mer_list(ID, BattleData) ->
 	NArray         :: array().
 																					 
 get_mer_info(Camp, ID, MerList, MakeTeam, Array) ->
+    PlayerLevel = mod_role:get_main_level(ID),
+
 	RoleFun = 
 		fun (Role, Acc) ->
 			if (Camp == att) ->
@@ -618,7 +643,7 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array) ->
 			true ->
 				Pos = Role#role.gd_isBattle + ?BATTLE_FIELD_SIZE div 2
 			end,
-			array:set(Pos, role_2_bs(ID, Role), Arr)
+			array:set(Pos, role_2_bs(ID, PlayerLevel, Role), Arr)
 		end,
 			
 	if (MakeTeam == true) ->
@@ -634,7 +659,7 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array) ->
 						pid      = Ps#player_status.player_pid, 
 						lead     = get_mer_leader(Camp, List), 
 						mer_list = lists:foldl(RoleFun, [], List)
-					},	  
+					},
 				NArray = lists:foldl(ArrayFun, Array, List),
 				{[PInfo], NArray};
 			
@@ -711,7 +736,7 @@ get_mer_leader(Camp, [Role | Rest]) ->
 	end.
 			   
 %% role to battle status
-role_2_bs(ID, Role) ->
+role_2_bs(ID, PlayerLevel, Role) ->
 	?INFO(battle, "ID = ~w", [Role#role.gd_roleRank]),
 	?INFO(battle, "Skill From Mer = ~w", [Role#role.gd_skill]),
 	{ActSkills, PasSkills} = transform_skill(Role#role.gd_skill),
@@ -719,6 +744,9 @@ role_2_bs(ID, Role) ->
 	?INFO(battle, "ActSkills = ~w, PasSkills = ~w", [ActSkills, PasSkills]),
 	?INFO(battle, "StartLevel = ~w", [Role#role.star_lv]),
 	?INFO(battle, "p_att = ~w, hp = ~w, maxhp = ~w",[Role#role.p_att,Role#role.gd_currentHp,Role#role.gd_maxHp]),
+
+    {?LEVEL_ENABLE, MinExtraMPLevel} = data_enable_system:get(?BATTLE_EXTRA_MP),
+    {?LEVEL_ENABLE, MaxExtraMPLevel} = data_enable_system:get(?BATTLE_EXTRA_MP_END),
 	
 	#battle_status {
 		id        = element(2, Role#role.key),
@@ -732,6 +760,11 @@ role_2_bs(ID, Role) ->
 		p_skill   = PasSkills,
 		hp        = Role#role.gd_currentHp ,
 		hp_max    = Role#role.gd_maxHp,
+        mp        = case PlayerLevel >= MinExtraMPLevel andalso 
+                            PlayerLevel =< MaxExtraMPLevel of
+                        true -> 70;
+                        false -> 0
+                    end,
 		p_att     = Role#role.p_att,
 		p_def     = Role#role.p_def,
 		m_att     = Role#role.m_att,
@@ -744,6 +777,8 @@ role_2_bs(ID, Role) ->
         fatal     = Role#role.gd_zhiming,
 		crit      = Role#role.gd_baoji,
 		luck      = Role#role.gd_xingyun,
+        counter   = Role#role.gd_fanji,
+        block     = Role#role.gd_gedang,
 		is_lead   = Role#role.gd_roleRank == 1 
 	}.
 
@@ -778,6 +813,7 @@ mon_2_bs(MonAttr, Pos, MonHp) ->
         m_att   = MonAttr#mon_attr.m_att,
         m_def   = MonAttr#mon_attr.m_def,
         dodge   = MonAttr#mon_attr.dodge,
+        counter = MonAttr#mon_attr.counter,
         block   = MonAttr#mon_attr.block,
         break   = MonAttr#mon_attr.break,
         fatal   = MonAttr#mon_attr.fatal,
@@ -1156,10 +1192,12 @@ handle_command_ex(BattleData, Repeat) ->
 			NextSrc = hd(NOrderList),
 			?INFO(battle, "NextSrc = ~w", [NextSrc]),
 			NextSrcStat = get_battle_status(NextSrc, NBattleData2),
-			if (NextSrcStat#battle_status.is_lead == true) ->
-				NBattleData2;
-			true ->
-				handle_command_ex(NBattleData2, true)
+			case NextSrcStat#battle_status.is_lead == true orelse
+                    length(NOrderList) =:= get_alive_num(NBattleData2) of
+                true ->
+                    NBattleData2;
+                _ ->        % false
+                    handle_command_ex(NBattleData2, true)
 			end
 	end.
 
@@ -1334,11 +1372,17 @@ get_mp_absorb(Src, Tar, AttSpec, BattleData) ->
 	Buffs = AttSpec#attack_spec.buff_add ++ SrcStat#battle_status.buff,
 
 	{Add, Sub} =  case lists:keysearch(?BUFF_MANA_DRAIN, #buff.name, Buffs) of
-		{value, #buff{value = {A, S}}} ->
+		{value, #buff{value = {A, S}, by_rate = ByRate}} ->
+            {Add0, Sub0} = case ByRate of
+                false -> {A, S};
+                true  -> 
+                    TarMP = TarStat#battle_status.mp,
+                    {round(TarMP * A), round(TarMP * S)}
+            end,
             ?BATTLE_LOG("        站位 ~w Buff效果: 吸怒气", [Src]),
             ?BATTLE_LOG("            Buff类型: 吸怒气, 攻击者+: ~w, 目标-: ~w", 
-                        [A, S]),
-            {A, S};
+                        [Add0, Sub0]),
+            {Add0, Sub0};
 		false ->
 			{0, 0}
 	end,
@@ -1369,7 +1413,7 @@ get_rebound(_Src, Tar, _AttSpec, Dm, BattleData) ->
 
 %% Damage is the damage from Src dealed to Tar
 get_counter(Src, Tar, SkillId, _AttSpec, Dm, BattleData) ->
-	CT = if (SkillId =/= ?SKILL_COMMON_ATTACK) ->
+	CT = if (SkillId =/= ?SKILL_COMMON_ATTACK_ID) ->
 		%% skill that is not common attack can not be countered.
 		0;
 	true ->
@@ -2858,7 +2902,8 @@ get_items_dispatch([Id | Rest], DropType, ItemInfo, DspList) ->
 			unified   -> get_items_dispatch_1(ItemInfo);
 			exclusive -> get_items_dispatch_2(ItemInfo)
 		end,
-	get_items_dispatch(Rest, DropType, ItemInfo, [{Id, Items} | DspList]).
+    Items1 = fold_duplicate_items(Items),
+	get_items_dispatch(Rest, DropType, ItemInfo, [{Id, Items1} | DspList]).
 
 get_items_dispatch_1(ItemInfo) ->
 	get_items_dispatch_1(ItemInfo, []).
@@ -2928,8 +2973,14 @@ send_battle_award(ID, BattleData) ->
     end,
 	?INFO(battle,"createItems, PlayerID = ~w, Itemlist = ~w", [ID, IDItems]),
 	
-	catch mod_economy:add_silver(ID, Silver, ?SILVER_FROM_MONSTER),
-	catch mod_items:createItems(ID, IDItems, ?ITEM_FROM_BATTLE).
+    case BattleData#battle_data.type of
+        ?BATTLE_TYPE_DEFENCE ->
+            catch mod_economy:add_silver(ID, Silver, ?SILVER_FROM_DEFENCE_MON),
+            catch mod_items:createItems(ID, IDItems, ?ITEM_FROM_DEFENCE_MON);
+        _ ->
+            catch mod_economy:add_silver(ID, Silver, ?SILVER_FROM_MONSTER),
+            catch mod_items:createItems(ID, IDItems, ?ITEM_FROM_BATTLE)
+    end.
 		
 %==============================================================================================================
 % Debug function
@@ -3061,7 +3112,9 @@ mutate_attack(BattleData) ->
 get_pos_by(Type, MaxFlag, PosList, BattleData) ->
     FieldIdx = case Type of
         hp -> #battle_status.hp;
-        mp -> #battle_status.mp
+        mp -> #battle_status.mp;
+        p_def -> #battle_status.p_def;
+        m_pef -> #battle_status.m_def
     end,
     Op = case MaxFlag of
         max -> '>';
@@ -3082,7 +3135,7 @@ get_pos_by([H | T], BattleData, FieldIdx, Op, {CurMinPos, CurMinVal}) ->
             get_pos_by(T, BattleData, FieldIdx, Op, {CurMinPos, CurMinVal})
     end.
 
-transform_plot(ID, Plot) ->
+transform_plot(ID, PlayerLevel, Plot) ->
     F = fun(E) ->
         case E of
             {Pos, MonAttr} when is_record(MonAttr, mon_attr) ->
@@ -3090,7 +3143,7 @@ transform_plot(ID, Plot) ->
                 {Pos, BS};
             Role when is_record(Role, role) ->
                 Pos = Role#role.gd_isBattle,
-                BS = role_2_bs(ID, Role),
+                BS = role_2_bs(ID, PlayerLevel, Role),
                 {Pos, BS};
             {Pos, BS} when is_record(BS, battle_status) ->
                 {Pos, BS}
@@ -3158,6 +3211,25 @@ trigger_plot(Plot, BattleData) ->
         Plot#battle_plot.new_roles),
     send_plot_package(NewPlot, BattleData1),
     BattleData1#battle_data{attorder = get_att_order(BattleData1)}.
+
+get_alive_num(BattleData) ->
+    L = get_target_list(calc_range(0, ?ALL), BattleData),
+    length(L).
+
+fold_duplicate_items(Items) ->
+    fold_duplicate_items(Items, dict:new()).
+
+fold_duplicate_items([], AccItems) ->
+    [{ID, Count, Bound} || {{ID, Bound}, Count} <- dict:to_list(AccItems)];
+fold_duplicate_items([{ItemID, Count, Bound} | Rest], AccItems) ->
+    NDict = case dict:find({ItemID, Bound}, AccItems) of
+        error -> 
+            dict:store({ItemID, Bound}, Count, AccItems);
+        {ok, OldCount} ->
+            dict:store({ItemID, Bound}, OldCount + Count, AccItems)
+    end,
+    fold_duplicate_items(Rest, NDict).
+
 
 -ifdef(debug).
 

@@ -148,9 +148,9 @@ get_passive_skill_buffs(Pos, BattleData) ->
 get_passive_skill_buffs([PSkillUID | Rest], BL, DL, PL) ->
 	?INFO(skill, "PSkillUID = ~w", [PSkillUID]),
 	{PSkill, Level} = get_skill_id_level(PSkillUID),
-	
-	Param = data_skill_table:get(PSkill, Level),
-	
+
+    Param = (data_skill_table:get(PSkill, Level))#battle_skill.param,
+
 	case PSkill of
 		?PSKILL_POISON -> 
 			?INFO(skill, "toxic..."), %% p1 = rate, p2 = hp lose value
@@ -165,17 +165,38 @@ get_passive_skill_buffs([PSkillUID | Rest], BL, DL, PL) ->
 			Type = none,
 			Buff = none
 	end,
-	
-	case Type of
-		debuff ->
-			get_passive_skill_buffs(Rest, BL, [Buff | DL], PL);
-		buff ->
-			get_passive_skill_buffs(Rest, [Buff | BL], DL, PL);
-		pre_add ->
-			get_passive_skill_buffs(Rest, BL, DL, [Buff | PL]);
-		_ ->
-			get_passive_skill_buffs(Rest, BL, DL, PL)
-	end;
+
+    {B, Rate, Op} = case Type of
+        none -> {none, -1, add};
+        _    -> Buff
+    end,
+    BuffRand = random:uniform(),
+
+    case Type of
+        none -> void;
+        _ ->
+            ?BATTLE_LOG("被动技能 ~w, 几率: ~w, 随机数: ~w, 生效: ~w",
+                        [PSkillUID, Rate, BuffRand, BuffRand =< Rate])
+    end,
+
+    case BuffRand =< Rate of
+        true ->
+            case Type of
+                debuff ->
+                    ?BATTLE_LOG("    被动技能添加Debuff: ~s", [battle:buff_type_to_str(B#buff.name)]),
+                    ?BATTLE_LOG("        系数: ~w, 持续回合数: ~w", [B#buff.value, B#buff.duration]),
+                    get_passive_skill_buffs(Rest, BL, [{B, 1.0, Op} | DL], PL);
+                buff ->
+                    get_passive_skill_buffs(Rest, [Buff | BL], DL, PL);
+                pre_add ->
+                    ?BATTLE_LOG("    被动技能添加临时Buff: ~s", [battle:buff_type_to_str(B#buff.name)]),
+                    ?BATTLE_LOG("        系数: ~w", [B#buff.value]),
+                    get_passive_skill_buffs(Rest, BL, DL, [B | PL])
+            end;
+
+        _ ->        % false
+            get_passive_skill_buffs(Rest, BL, DL, PL)
+    end;
 					
 get_passive_skill_buffs([], BL, DL, PL) ->
 	{BL, DL, PL}.
@@ -241,7 +262,7 @@ handle_skill(SkillId = 104, Src, Tar, Level, Param, BattleData) ->
 	DebuffOps = [{Debuff, 1.0, add}],
 
 	TarList   = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-    RealTargets = util:get_rand_list_elems(TarList, min(3, (Level + 2) div 3)),
+    RealTargets = util:get_rand_list_elems(TarList, 3), 
 	AttSpec   = 
 		#attack_spec {
 			addition = ?p1,
@@ -261,7 +282,10 @@ handle_skill(SkillId = 104, Src, Tar, Level, Param, BattleData) ->
         end,
         [],
         AttInfoList),
-	BuffSpec = [{Src, BuffOps} | lists:map(fun(Pos) -> {Pos, DebuffOps} end, HitList)],
+
+    ScornNum = min(3, (Level + 2) div 3),
+    RandScornList = util:get_rand_list_elems(HitList, ScornNum),
+	BuffSpec = [{Src, BuffOps} | lists:map(fun(Pos) -> {Pos, DebuffOps} end, RandScornList)],
 
 	battle:settle_and_add_buff(Src, BuffSpec, [], BattleData1);
 
@@ -694,7 +718,7 @@ handle_skill(SkillId = 226, Src, Tar, _Level, Param, BattleData) ->
 	battle:attack(SkillId, Src, AttSpec, BattleData);
 
 %% 怒袭;
-%% {攻击系数, 吸怒气点数}   % TODO
+%% {攻击系数, 吸怒气点数}
 handle_skill(SkillId = 227, Src, Tar, _Level, Param, BattleData) ->
 	Buff = 
 		#buff {
@@ -879,7 +903,7 @@ handle_skill(SkillId = 235, Src, _Tar, _Level, Param, BattleData) ->
 				Data1       = battle:handle_attack_info(SkillId, Src, AttInfoList, Data),
 				SrcStat     = battle:get_battle_status(Src, Data1),
 				
-				TarList = battle:get_target_list(battle:calc_range(Src, ?ALLENEMY), Data1),
+				TarList = battle:get_target_list(battle:calc_range(T, ?ALLFRIENDLY), Data1),
 	
 				if (SrcStat#battle_status.is_alive == false orelse TarList == []) ->
 					{false, Data1};
@@ -1052,12 +1076,12 @@ handle_skill(SkillId = 243, Src, Tar, _Level, Param, BattleData) ->
 %% {}
 handle_skill(SkillId = 244, Src, Tar, _Level, _Param, BattleData) ->
 	List  = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-    {Tar, _} = battle:get_pos_by(hp, min, List, BattleData),
+    {NTar, _} = battle:get_pos_by(hp, min, List, BattleData),
 
 	AssSpecList = 
 		[
 			#assist_spec {
-				pos  = Tar,
+				pos  = NTar,
 				eff  = [{heal, 300, false}],
 				buff = []			  
 			}
@@ -1190,11 +1214,10 @@ handle_skill(_Skill = 254, Src, Tar, Level, Param, BattleData) ->
 handle_skill(Skill = 255, Src, Tar, _Level, Param, BattleData) ->
     Buff = 
         #buff {
-            name     = ?BUFF_SPEED_DOWN,
-            by_rate  = true,
-            value    = ?p2,
-            duration = 2,
-            settle   = pre 
+            name     = ?BUFF_FAINT,
+            by_rate  = false,
+            duration = 1,
+            settle   = post
         },
     
     AttSpec = #attack_spec {
@@ -1223,6 +1246,13 @@ handle_skill(_Skill = 258, Src, Tar, Level, Param, BattleData) ->
 %% {攻击系数}
 handle_skill(_Skill = 259, Src, Tar, Level, Param, BattleData) ->
 	handle_skill(118, Src, Tar, Level, Param, BattleData);
+
+handle_skill(SkillId = 260, Src, Tar, _Level, Param, BattleData) ->
+	Buff = #buff {name = ?BUFF_CAST_DMG_DOWN, value = ?p1, duration = 1, settle = post, by_rate = true},
+	BuffOps = [{Buff, 1.0, add}],
+	AssSpecList = 
+		[#assist_spec {pos = Tar, rate = 1.0, eff = [], buff = BuffOps}],
+	battle:assist(SkillId, Src, AssSpecList, BattleData);
 
 %% 睡眠
 %% {持续回合数}
@@ -1261,9 +1291,132 @@ handle_skill(SkillId = 263, Src, Tar, _Level, Param, BattleData) ->
 		},
 	battle:attack(SkillId, Src, AttSpec, BattleData);
 
+%% {攻击系数, 降怒气几率, 降怒气点数}
+handle_skill(SkillId = 264, Src, Tar, _Level, Param, BattleData) ->
+	TarList = battle:get_target_list(
+		battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
+    RealTarList = util:get_rand_list_elems(TarList, 3),
+    BuffList = case random:uniform() =< ?p2 of
+        true -> 
+            [#buff{name = ?BUFF_MANA_DRAIN, by_rate = true, value = {0, ?p3}}];
+        false -> []
+    end,
+	AttSpec = 
+		#attack_spec {
+			addition = ?p1,			  
+			targets  = RealTarList,
+            buff_add = BuffList
+		},
+	battle:attack(SkillId, Src, AttSpec, BattleData);
+
+%% {攻击系数, 伤害降低系数, 持续回合数}
+handle_skill(SkillId = 265, Src, Tar, _Level, Param, BattleData) ->
+	AttSpec = 
+		#attack_spec {
+			addition = ?p1,			  
+			targets  = [Tar]
+		},
+    AttInfoList = battle:attack(SkillId, Src, AttSpec, [Tar], BattleData), 
+    BattleData1 = battle:handle_attack_info(SkillId, Src, AttInfoList, BattleData),
+
+    TarList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData1),
+	Buff    = #buff{name = ?BUFF_SCORN,   duration = 1, settle = post, by_rate = true,  value = ?p2},
+	Debuff  = #buff{name = ?BUFF_SCORNED, duration = 1, settle = post, by_rate = false, value = Src},
+	BuffOps   = [{Buff,   1.0, add}],
+	DebuffOps = [{Debuff, 1.0, add}],
+
+    BuffSpec = [{Src, BuffOps} | [{T, DebuffOps} || T <- TarList]],
+	battle:settle_and_add_buff(Src, BuffSpec, [], BattleData1);
+
+%% {攻击系数}
+handle_skill(SkillId = 266, Src, _Tar, _Level, Param, BattleData) ->
+	F = fun(_N, {C, Data}) ->
+			if (C == false) ->
+				{false, Data};
+			true ->
+				T = ai:get_skill_target(SkillId, Src, Data),
+				AttSpec = 
+					#attack_spec {
+						addition = ?p1,
+						targets  = [T]			  
+					},
+				
+				AttInfoList = battle:attack(SkillId, Src, AttSpec, [T], Data), 			
+				Data1       = battle:handle_attack_info(SkillId, Src, AttInfoList, Data),
+				SrcStat     = battle:get_battle_status(Src, Data1),
+				
+				TarList = battle:get_target_list(battle:calc_range(T, ?ALLFRIENDLY), Data1),
+	
+				if (SrcStat#battle_status.is_alive == false orelse TarList == []) ->
+					{false, Data1};
+				true ->
+					{true, Data1}
+				end
+			end
+		end,
+	{_, NBattleData} = lists:foldl(F, {true, BattleData}, lists:seq(1, 3)),
+	battle:do_att_buff(Src, #attack_spec{}, true, [], NBattleData);
+
+%% {攻击系数, 输出伤害减少系数}
+handle_skill(SkillId = 267, Src, Tar, _Level, Param, BattleData) ->
+	AttSpec = 
+		#attack_spec {
+			addition = ?p1,			  
+			targets  = [Tar]
+		},
+    AttInfoList = battle:attack(SkillId, Src, AttSpec, [Tar], BattleData), 
+    BattleData1 = battle:handle_attack_info(SkillId, Src, AttInfoList, BattleData),
+
+    TarList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData1),
+	Buff    = #buff{name = ?BUFF_CAST_DMG_DOWN, duration = 1, settle = post, by_rate = true, value = ?p2},
+    BuffSpec = [{T, [{Buff, 1.0, add}]} || T <- TarList],
+	battle:settle_and_add_buff(Src, BuffSpec, [], BattleData1);
+
+%% {攻击系数, 受到伤害增加系数}
+handle_skill(SkillId = 268, Src, Tar, _Level, Param, BattleData) ->
+    TarList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
+    Buff = #buff {
+        name    = ?BUFF_RECV_DMG_UP,
+        by_rate = true,
+        value   = ?p2,
+        duration = 30,
+        settle  = post
+    },
+	AttSpec = #attack_spec {
+        addition = ?p1,			  
+        targets  = TarList,
+        debuff   = [{Buff, 1.0, add}]
+    },
+	battle:attack(SkillId, Src, AttSpec, BattleData);
+
+%% {}
+handle_skill(SkillId = 269, Src, Tar, _Level, _Param, BattleData) ->
+    TarList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
+    {NTar, _} = battle:get_pos_by(hp, min, TarList, BattleData),
+	AttSpec = #attack_spec {
+        addition = 1,
+        targets  = [NTar],
+        buff_add = [#buff {
+                        name  = ?BUFF_CAST_DMG_UP,
+                        value = 1,
+                        by_rate = true
+                    }]
+    },
+	battle:attack(SkillId, Src, AttSpec, BattleData);
+
 %% 血性饥渴
 %% {攻击系数, 吸血系数}
 handle_skill(SkillId = 270, Src, Tar, _Level, Param, BattleData) ->
+	TarList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
+    SrcStat = battle:get_battle_status(Src, BattleData),
+    Job = SrcStat#battle_status.job,
+    Tag = 
+		case (Job == ?CAREER_HUWEI) orelse (Job == ?CAREER_MENGJIANG) of
+			true  -> p_def;
+			false -> m_def
+		end,
+    {NTar, _} = battle:get_pos_by(Tag, min, TarList, BattleData),
+
 	Buff = 
 		#buff {
 			name    = ?BUFF_LIFE_DRAIN,   
@@ -1273,7 +1426,7 @@ handle_skill(SkillId = 270, Src, Tar, _Level, Param, BattleData) ->
 	AttSpec = 
 		#attack_spec {
 			addition = ?p1,		  
-			targets  = [Tar],
+			targets  = [NTar],
 			buff_add = [Buff]  
 		},
 	battle:attack(SkillId, Src, AttSpec, BattleData);
@@ -1330,6 +1483,36 @@ handle_skill(SkillId = 279, Src, Tar, _Level, Param, BattleData) ->
 	AssSpecList = [ #assist_spec {pos = Tar, eff = [], buff = BuffOps} ],
 	battle:assist(SkillId, Src, AssSpecList, BattleData);
 
+%% {输出伤害降低系数, 持续回合数}
+handle_skill(SkillId = 282, Src, Tar, _Level, Param, BattleData) ->
+	TarList   = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
+	Buff = #buff {name = ?BUFF_CAST_DMG_DOWN, value = ?p1, duration = ?p2, settle = post, by_rate = true},
+	BuffOps = [{Buff, 1.0, add}],
+	AssSpecList = [#assist_spec{pos = T, eff = [], buff = BuffOps} || T <- TarList],
+	battle:assist(SkillId, Src, AssSpecList, BattleData);
+
+%% {每回合减血系数}
+handle_skill(SkillId = 283, Src, Tar, _Level, Param, BattleData) ->
+	Buff = #buff {name = ?BUFF_TOXIC, value = ?p1, duration = 2, settle = pre, by_rate = true},
+	BuffOps = [{Buff, 1.0, add}],
+	AssSpecList = [#assist_spec{pos = Tar, eff = [], buff = BuffOps}],
+	battle:assist(SkillId, Src, AssSpecList, BattleData);
+
+%% {每回合减血系数}
+handle_skill(SkillId = 284, Src, Tar, _Level, Param, BattleData) ->
+	TarList   = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
+	Buff = #buff {name = ?BUFF_TOXIC, value = ?p1, duration = 2, settle = pre, by_rate = true},
+	BuffOps = [{Buff, 0.5, add}],
+	AssSpecList = [#assist_spec{pos = T, eff = [], buff = BuffOps} || T <- TarList],
+	battle:assist(SkillId, Src, AssSpecList, BattleData);
+
+%% {反弹系数}
+handle_skill(SkillId = 285, Src, Tar, _Level, Param, BattleData) ->
+	Buff = #buff {name = ?BUFF_REBOUND, value = ?p1, duration = 1, settle = post, by_rate = true},
+	BuffOps = [{Buff, 1.0, add}],
+	AssSpecList = 
+		[#assist_spec {pos = Tar, rate = 1.0, eff = [], buff = BuffOps}],
+	battle:assist(SkillId, Src, AssSpecList, BattleData);
 
 %% 重击 $$ 强攻
 %% {攻击系数}
@@ -1515,7 +1698,7 @@ handle_skill(SkillId = 406, Src, _Tar, _Level, Param, BattleData) ->
                         [{T, [{Buff, ?p4, add}]} | BSpec]
                 end,
 				
-				TarList = battle:get_target_list(battle:calc_range(Src, ?ALLENEMY), Data1),
+				TarList = battle:get_target_list(battle:calc_range(T, ?ALLFRIENDLY), Data1),
 	
 				if (SrcStat#battle_status.is_alive == false orelse TarList == []) ->
 					{false, Data1, NBSpec};

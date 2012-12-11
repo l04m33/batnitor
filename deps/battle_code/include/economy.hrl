@@ -8,6 +8,7 @@
 	gd_totalPopularity = 0,		%% 累计总声望
 	gd_HonourScore     = 0,		%% 当前荣誉积分
 	gd_TotHonourScore  = 0, 	%% 累计荣誉积分
+	gd_SchoolPoint	   = 0,		%% 当前师门积分
 	gd_lingli          = 0		%% 灵力（求求暂时不要用啊，用了后果自负）
 	}).
 
@@ -21,6 +22,7 @@
 	gd_totalPopularity = {integer},
 	gd_HonourScore     = {integer},
 	gd_TotHonourScore  = {integer},
+	gd_SchoolPoint	   = {integer},
 	gd_lingli          = {integer}
 	}).
 

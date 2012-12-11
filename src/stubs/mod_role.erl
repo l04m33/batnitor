@@ -22,3 +22,5 @@ get_on_battle_list(ID) ->
     end,
     lists:map(RoleF, Skills).
 
+get_main_level(_) -> 90.
+

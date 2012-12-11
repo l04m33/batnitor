@@ -150,9 +150,9 @@
 		
 		wing_data	   = 0,		%% 翅膀数据，目前为是否有翅膀这个状态
 		horse_data 	   = 0,		%% 坐骑数据
-		
-		
 		equip_data	   = #equip_info{},
+		
+		follow_role_data = 0,
 		
 		stealth_data   = false,
 

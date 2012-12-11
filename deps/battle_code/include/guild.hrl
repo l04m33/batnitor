@@ -29,6 +29,7 @@
 -define(GUILD_SORT_EXPLOIT,        3).
 -define(GUILD_SORT_MEMBER_NUM,     4).
 
+
 %% 工会事件
 -define(GUILD_EVENT_MAX, 30).
 -define(GUILD_EVENT_CREATE,         0).
@@ -73,7 +74,7 @@
 		members         = [],       %% 成员列表  list()
 		exp             = 0,        %% 功勋  exploit,
 		state           = normal,   %% normal | {dismiss, Time, TimerRef},
-		manifesto       = "",
+		manifesto       = "",       %% 工会宣言
 		event,                      %% #guild_event_tab{}
 		apply_list      = []        %% {ID, AppTime} list
 	}		
@@ -104,14 +105,14 @@
 		id,
 		name,         
 	 	guild_id,
-		rank          = 5,
+		rank          = 5,     %% 职位，默认为屌丝
 		exp           = 0,     %% 功勋 exploit
 		total_exp     = 0,     %% 总功勋(历史功勋)
 		join_time     = 0,     %% 加入工会的时间
 		donate_time   = 0,     %% 最近一次捐献的时间
 		donate_count  = 0,     
 		welfare_time  = 0,     %% 最近一次领取福利的时间
-		leave_time    = 0
+		leave_time    = 0      %% 离线时间，在线时为0
 	}		   
 ).
 
