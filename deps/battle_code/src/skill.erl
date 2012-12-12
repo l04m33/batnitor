@@ -1,6 +1,6 @@
 -module(skill).
 -include("common.hrl").
--export([handle_skill/4, handle_skill/6]).
+-export([handle_skill/4, handle_skill/6, get_skill_id_level/1, get_skill_uid/2]).
 
 
 -ifdef(debug).

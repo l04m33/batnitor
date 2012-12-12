@@ -765,7 +765,7 @@ role_2_bs(ID, PlayerLevel, Role) ->
         {true, AngerSkillInfo} ->
             {AngryMP0} = AngerSkillInfo#battle_skill.param,
             ?BATTLE_LOG("被动技能 ~w 生效, 增加怒气 ~w", 
-                        [?PSKILL_ANGER * 1000 + AngerSkillInfo#battle_skill.level, AngryMP0]),
+                        [skill:get_skill_uid(?PSKILL_ANGER, AngerSkillInfo#battle_skill.level), AngryMP0]),
             AngryMP0;
         false ->
             0
@@ -1429,13 +1429,13 @@ get_rebound(_Src, Tar, _AttSpec, Dm, BattleData) ->
                             {RBRate, RBVal} = RBSkillInfo#battle_skill.param,
                             RBRand = random:uniform(),
                             ?BATTLE_LOG("        被动技能 ~w, 几率: ~w, 随机数: ~w, 生效: ~w",
-                                        [?PSKILL_REBOUND * 1000 + RBSkillInfo#battle_skill.level, 
+                                        [skill:get_skill_uid(?PSKILL_REBOUND, RBSkillInfo#battle_skill.level), 
                                          RBRate, RBRand, RBRand =< RBRate]),
                             case RBRand =< RBRate of
                                 true ->
                                     RB0 = round(Dm * RBVal),
                                     ?BATTLE_LOG("            被动技能 ~w 生效, 反弹系数: ~w, 反弹伤害: ~w",
-                                                [?PSKILL_REBOUND * 1000 + RBSkillInfo#battle_skill.level,
+                                                [skill:get_skill_uid(?PSKILL_REBOUND, RBSkillInfo#battle_skill.level),
                                                  RBVal, RB0]),
                                     RB0;
                                 _ ->        % false
