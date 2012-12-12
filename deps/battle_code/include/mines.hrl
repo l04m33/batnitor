@@ -7,5 +7,7 @@
     context  = undefined        % anything
 }).
 
+-define(MINE_SIZE, 9).      % 9 x 9
+
 -endif.
 

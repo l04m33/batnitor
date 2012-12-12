@@ -123,6 +123,15 @@
 -define(SILVER_USE_ADD_DRESS_EXP,     2039).	%% 增加外形装扮消耗（包括坐骑、翅膀等）
 -define(SILVER_CHUANGONG,			  2040).	%% 用于传功
 
+%% 积分
+-define(POINT_FROM_TASK,			  1001).	%% 任务获得
+-define(POINT_FROM_ACTIVITY,		  1002).	%% 活动获得
+-define(POINT_FROM_JUNWEI_ROLE,		  1003).	%% 军威将领获得
+-define(POINT_FROM_GM,				  1004).	%% gm获得
+
+-define(POINT_USE_CHANGE,			  2001).	%% 用于兑换物品
+-define(POINT_USE_EMPLOY,			  2002).	%% 用于招募将领
+
 
 %%有一些操作，同时使用多种东西的
 -define(ONE_KEY_COMPLETE_QIHUN,?SILVER_ONE_KEY_COMPLETE_QIHUN).
@@ -164,6 +173,7 @@
 -define(HU_LAO_GUAN,				1047).      %% 虎牢关掉落
 -define(ITEM_FROM_SWORD,			1048).		%% 神剑活动掉落
 -define(ITEM_FROM_DEFENCE_MON,		1049).		%% 群魔乱舞打怪掉落
+-define(ITEM_FROM_CHANGE,			1050).		%% 积分兑换获得
 
 -define(ITEM_ADD_STACK,				2001).		%% 堆叠后增加（包括物品移动，物品生成，宝石拆卸、交易获得等情况）
 

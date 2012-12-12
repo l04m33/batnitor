@@ -62,6 +62,7 @@
 			guide_pid		  = none,		%% 每日指引模块
 			arena_pid         = none,		%% 竞技场模块
 			guaji_pid		  = none,		%% 挂机模块
+			sword_pid		  = none,		%% 神剑模块
 			junwei_role_pid   = none,		%% 军威将领模块
 			yunbiao_pid       = none,        %% 运镖模块
 			boss_pid          = none,         %%世界boss模块		  

@@ -145,6 +145,8 @@
 		comp_team_data = [],	%% 比武场队伍状态
 		comp_ball_data = [],	%% 比武场绣球状态
 		comp_speed_data= [],	%% 比武场加速状态
+		
+		ability_data   = 0,
 
 		fly_data       = [],
 		

@@ -6309,7 +6309,7 @@ skill_info(223001) ->
 		next_skill_id = 0
 	};
 
-%% 破阵攻心
+%% 天护之阵
 skill_info(224001) ->
 	#skill_info{
 		mode_id       = 224001,
@@ -12123,7 +12123,7 @@ skill_info(407001) ->
 		mode_id       = 407001,
 		class_id      = 407,
 		type          = 1,
-		effect        = 0,
+		effect        = 1,
 		level_up_exp  = 0,
 		next_skill_id = 0
 	};
@@ -12134,7 +12134,7 @@ skill_info(408001) ->
 		mode_id       = 408001,
 		class_id      = 408,
 		type          = 1,
-		effect        = 0,
+		effect        = 1,
 		level_up_exp  = 0,
 		next_skill_id = 0
 	};
@@ -12145,7 +12145,7 @@ skill_info(409001) ->
 		mode_id       = 409001,
 		class_id      = 409,
 		type          = 1,
-		effect        = 0,
+		effect        = 1,
 		level_up_exp  = 0,
 		next_skill_id = 0
 	};
@@ -12156,18 +12156,18 @@ skill_info(410001) ->
 		mode_id       = 410001,
 		class_id      = 410,
 		type          = 1,
-		effect        = 0,
+		effect        = 1,
 		level_up_exp  = 0,
 		next_skill_id = 0
 	};
 
-%% 冰凌筏
+%% 凝劲术
 skill_info(411001) ->
 	#skill_info{
 		mode_id       = 411001,
 		class_id      = 411,
 		type          = 1,
-		effect        = 0,
+		effect        = 1,
 		level_up_exp  = 0,
 		next_skill_id = 0
 	}.

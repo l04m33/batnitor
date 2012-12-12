@@ -9,7 +9,7 @@
 -define(ERR_NOT_ENOUGH_PRACTICE, 6).		%% 历练不足
 -define(ERR_IN_CD, 7).						%% CD未清完
 -define(ERR_SCENE_RESTRICT, 8).				%% 场景不允许
-%% -define(ERR_NOT_ENOUGH_HOLY_LEVEL, 9).		%% 主圣痕等级不足
+-define(ERR_NOT_ENOUGH_POINT, 9).			%% 积分不足
 -define(ERR_NOT_ENOUGH_MER_LEVEL, 10).		%% 佣兵等级不足
 -define(ERR_NOT_ENOUGH_POPULARITY, 11).		%% 威望不足
 -define(ERR_CARRER_NOT_ALLOWED, 12).		%% 职业不允许
@@ -282,6 +282,7 @@
  -define(ERR_TEAM_APPLY_IN_COMP, 30018).         %% 比武中，不能申请组队
  -define(ERR_TEAM_APPLY_IN_TEAM_SCENE,    30019).         %% 已经在副本中，不能申请组队
  -define(ERR_TEAM_APPLY_SUCCESS,    30020).         %% 组队申请已经发出
+ -define(ERR_TEAM_APPROVE_SUCCESS,    30021).         %% 组队审核通过通知已经发出，请等候
 
 %% 神剑
 -define(ERR_SWORD_NOT_START,32001). 		%% 天灵神剑活动未开始
@@ -299,6 +300,8 @@
 %% 魂石系统
 -define(ERR_HUNSHI_NOT_ENOUGH,			35001).			%% 魂石不足
 -define(ERR_hunshi_NOT_HAVE_TO_UP,			35002).			%% 魂珠已经升级到可达到的最大等级
+-define(ERR_HUNZHU_NOT_LEVELING,			35003).			%% 魂珠升级已经结束，请重新打开
+
 
 %% 打坐
 -define(ERR_NOT_IN_DAZUO,				49001).			%% 用户不在打坐状态

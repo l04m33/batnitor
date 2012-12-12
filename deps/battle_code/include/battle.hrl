@@ -85,6 +85,11 @@
 -define(BUFF_CAST_DMG_DOWN, 37). %% 输出伤害减少
 -define(BUFF_RECV_DMG_UP, 38).   %% 输入伤害增加
 
+-define(BUFF_DMG_ABSORB, 41).           %% 伤害吸收
+-define(BUFF_DMG_ABSORB_TARGET, 42).    %% 受到伤害后给别人加血
+
+-define(BUFF_CURSED,     43).    %% 被诅咒
+
 
 -define(BUFF_TEST,       12).
 
@@ -99,6 +104,7 @@
 -define(PSKILL_ANGER,      214).    %% 憤怒: 攻擊時能獲取更多的怒氣值
 -define(PSKILL_CALM,       207).    %% 破怒: 攻擊時會降低敵方的怒氣值
 -define(PSKILL_LIFE_DRAIN, 206).    %% 吸血
+-define(PSKILL_REBOUND,    219).    %% 反震
 
 %=============================================================================================
 % special skill definition

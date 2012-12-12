@@ -625,7 +625,12 @@ get_mer_list(ID, BattleData) ->
 	NArray         :: array().
 																					 
 get_mer_info(Camp, ID, MerList, MakeTeam, Array) ->
-    PlayerLevel = mod_role:get_main_level(ID),
+    PlayerLevel = case is_integer(ID) of
+        true ->
+            mod_role:get_main_level(ID);
+        false ->
+            0
+    end,
 
 	RoleFun = 
 		fun (Role, Acc) ->
@@ -702,13 +707,15 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array) ->
 			
 		?INFO(battle, "On Battle List = ~w", [List]),
 		
-		Leader  = 
-			case get_mer_leader(att, List) of
-			data_not_exist ->
-				hd(MerList);
-			L ->
-				L
-			end,
+		Leader = case get_mer_leader(Camp, List) of
+            data_not_exist ->
+                FirstRole = hd(MerList),
+                if 
+                    (Camp == att) -> FirstRole#role.gd_isBattle;
+                    (Camp == def) -> FirstRole#role.gd_isBattle + ?BATTLE_FIELD_SIZE div 2
+                end;
+            L -> L
+        end,
 		List1 = lists:foldl(RoleFun, [], List),
 		PInfo   = 
 			#player_info {
@@ -737,7 +744,7 @@ get_mer_leader(Camp, [Role | Rest]) ->
 			   
 %% role to battle status
 role_2_bs(ID, PlayerLevel, Role) ->
-	?INFO(battle, "ID = ~w", [Role#role.gd_roleRank]),
+	?INFO(battle, "ID = ~w", [ID]),
 	?INFO(battle, "Skill From Mer = ~w", [Role#role.gd_skill]),
 	{ActSkills, PasSkills} = transform_skill(Role#role.gd_skill),
 	
@@ -745,8 +752,24 @@ role_2_bs(ID, PlayerLevel, Role) ->
 	?INFO(battle, "StartLevel = ~w", [Role#role.star_lv]),
 	?INFO(battle, "p_att = ~w, hp = ~w, maxhp = ~w",[Role#role.p_att,Role#role.gd_currentHp,Role#role.gd_maxHp]),
 
-    {?LEVEL_ENABLE, MinExtraMPLevel} = data_enable_system:get(?BATTLE_EXTRA_MP),
-    {?LEVEL_ENABLE, MaxExtraMPLevel} = data_enable_system:get(?BATTLE_EXTRA_MP_END),
+    {?LEVEL_ENABLE, MinNewbieMPLevel} = data_enable_system:get(?BATTLE_EXTRA_MP),
+    {?LEVEL_ENABLE, MaxNewbieMPLevel} = data_enable_system:get(?BATTLE_EXTRA_MP_END),
+
+    NewbieMP = case PlayerLevel >= MinNewbieMPLevel andalso 
+            PlayerLevel =< MaxNewbieMPLevel of
+        true -> 70;
+        false -> 0
+    end,
+
+    AngryMP = case get_passive_skill_helper(?PSKILL_ANGER, PasSkills) of
+        {true, AngerSkillInfo} ->
+            {AngryMP0} = AngerSkillInfo#battle_skill.param,
+            ?BATTLE_LOG("被动技能 ~w 生效, 增加怒气 ~w", 
+                        [?PSKILL_ANGER * 1000 + AngerSkillInfo#battle_skill.level, AngryMP0]),
+            AngryMP0;
+        false ->
+            0
+    end,
 	
 	#battle_status {
 		id        = element(2, Role#role.key),
@@ -758,13 +781,9 @@ role_2_bs(ID, PlayerLevel, Role) ->
 		skill     = ActSkills,
 		%% skill    = [245001, 279001],
 		p_skill   = PasSkills,
-		hp        = Role#role.gd_currentHp ,
+		hp        = Role#role.gd_currentHp,
 		hp_max    = Role#role.gd_maxHp,
-        mp        = case PlayerLevel >= MinExtraMPLevel andalso 
-                            PlayerLevel =< MaxExtraMPLevel of
-                        true -> 70;
-                        false -> 0
-                    end,
+        mp        = min(100, NewbieMP + AngryMP),
 		p_att     = Role#role.p_att,
 		p_def     = Role#role.p_def,
 		m_att     = Role#role.m_att,
@@ -820,7 +839,7 @@ mon_2_bs(MonAttr, Pos, MonHp) ->
         luck    = MonAttr#mon_attr.luck,
         hit     = MonAttr#mon_attr.hit,
         crit    = MonAttr#mon_attr.crit,
-        is_lead = 0,
+        is_lead = false,
         is_alive = case CurHP of
                        0 -> false;
                        _ -> true
@@ -1405,7 +1424,26 @@ get_rebound(_Src, Tar, _AttSpec, Dm, BattleData) ->
                     ?BATTLE_LOG("            Buff类型: 反弹, 系数: ~w, 反弹伤害: ~w", [Rebound, RB0]),
                     RB0;
 				false ->
-					0
+                    case get_passive_skill(?PSKILL_REBOUND, Tar, BattleData) of
+                        {true, RBSkillInfo} ->
+                            {RBRate, RBVal} = RBSkillInfo#battle_skill.param,
+                            RBRand = random:uniform(),
+                            ?BATTLE_LOG("        被动技能 ~w, 几率: ~w, 随机数: ~w, 生效: ~w",
+                                        [?PSKILL_REBOUND * 1000 + RBSkillInfo#battle_skill.level, 
+                                         RBRate, RBRand, RBRand =< RBRate]),
+                            case RBRand =< RBRate of
+                                true ->
+                                    RB0 = round(Dm * RBVal),
+                                    ?BATTLE_LOG("            被动技能 ~w 生效, 反弹系数: ~w, 反弹伤害: ~w",
+                                                [?PSKILL_REBOUND * 1000 + RBSkillInfo#battle_skill.level,
+                                                 RBVal, RB0]),
+                                    RB0;
+                                _ ->        % false
+                                    0
+                            end;
+                        false ->
+                            0
+                    end
 			end,
             RB
 	end,
@@ -1428,7 +1466,8 @@ get_counter(Src, Tar, SkillId, _AttSpec, Dm, BattleData) ->
 					{value, #buff{value = Counter}} ->
                         ?BATTLE_LOG("        站位 ~w Buff效果: 反击", [Tar]),
                         ?BATTLE_LOG("            Buff类型: 反击, 系数: ~w", [Counter]),
-						Counter;            % TODO: WTF? 这个没实现的？
+						%Counter;            % TODO: WTF? 这个没实现的？
+                        0;
 					false ->
                         SrcStat = get_battle_status(Src, BattleData),
                         ParamX = 
@@ -1444,7 +1483,7 @@ get_counter(Src, Tar, SkillId, _AttSpec, Dm, BattleData) ->
                         ?BATTLE_LOG("        反击几率: ~w, 随机数: ~w, 反击触发: ~w",
                                     [CounterRate, CounterRand, CounterRand =< CounterRate]),
 						case CounterRand =< CounterRate of
-							true  -> 100;
+							true  -> 0; %100;
 							false -> 0
 						end
 				end
@@ -1456,18 +1495,25 @@ get_counter(Src, Tar, SkillId, _AttSpec, Dm, BattleData) ->
 % handling passive SKILL
 %==============================================================================================================
 
--spec get_passive_skill(SkillID, Pos, BattleData) -> false | {true, Level} when
+-spec get_passive_skill(SkillID, Pos, BattleData) -> false | {true, Skill} when
 	SkillID    :: integer(),
 	Pos        :: integer(),
-	Level      :: integer(),
-	BattleData :: #battle_data{}.
+	BattleData :: #battle_data{},
+    Skill      :: #battle_skill{}.
 
 get_passive_skill(SkillID, Pos, BattleData) ->
 	State = get_battle_status(Pos, BattleData),
-	case lists:keysearch(SkillID, 1, State#battle_status.p_skill) of
-		{value, {_, Level}} -> {true, Level};
-		false -> false
-	end.
+    get_passive_skill_helper(SkillID, State#battle_status.p_skill).
+
+get_passive_skill_helper(SkillID, [UID | Rest]) ->
+    case skill:get_skill_id_level(UID) of
+        {SkillID, Level} ->
+            {true, data_skill_table:get(SkillID, Level)};
+        _ ->
+            get_passive_skill_helper(SkillID, Rest)
+    end;
+get_passive_skill_helper(_SkillID, []) ->
+    false.
 
 %==============================================================================================================
 % handling buff value
@@ -1889,11 +1935,6 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
 			end
 		end,
 	
-	NTarStat =
-		if (NTar == Tar) -> TarStat; true -> get_battle_status(NTar, BattleData) end,
-	TarBuff =
-		NTarStat#battle_status.buff, 
-		
 	if (Skip == true) ->	   
 		attack(SkillId, Src, AttSpec, Rest, AttInfoList, BattleData);
 	true ->
@@ -1920,82 +1961,25 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
 				
 				print_battle_status(Src, BattleData),
 				print_battle_status(NTar, BattleData),
-				
-				MpAddByAtt = 
-                    case lists:keysearch(?BUFF_SCORN, #buff.name, NTarStat#battle_status.buff) of
-                        {value, #buff{value = _ScornV}} ->
-                            ?BATTLE_LOG("        站位 ~w Buff效果: 嘲讽", [NTar]),
-                            ?BATTLE_LOG("            Buff类型: 嘲讽, 怒气增加: ~w", [0]),
-                            0;
-						false -> 
-                            DataSkill = data_skill_table:get(SkillId, 1),   % XXX: 总是用 Lv.1 的配置……
-                            DataSkill#battle_skill.hit_mp_add
-					end,
-				
-				case lists:keysearch(?BUFF_ASSISTED, #buff.name, TarBuff) of
-					{value, #buff {data = Pos, by_rate = true, value = V}} when Pos =/= Tar, Tar == NTar ->	
 
-					AssStat = get_battle_status(Pos, BattleData),
-					if (AssStat#battle_status.is_alive == true) ->
-                        ?BATTLE_LOG("        站位 ~w Buff效果: 援护", [NTar]),
-                        ?BATTLE_LOG("            Buff类型: 被援护, 伤害减少系数: ~w, 援护者站位: ~w", [V, Pos]),
-		
-						AttInfo1 = 
-							#attack_info {
-								pos        = NTar,			  
-								is_miss    = false,
-								is_crit    = Cr,       			%% is critical? boolean()
-								hp_inc     = -round(Dm * V),    %% hp incretement
-								mp_inc     = -Ms + MpAddByAtt,  %% mp incretement
-								hp_absorb  = HpDrain,  			%% hp absorb >= 0
-								mp_absorb  = Ma,       			%% mp absorb >= 0
-								hp_counter = -Counter, 			%% counter strike
-								hp_rebound = -Rebound  			%% rebound damage
-							},
-						AttInfo2 = 
-							#attack_info {
-								pos        = Pos,			  
-								is_miss    = false,
-								is_crit    = Cr,       			
-								hp_inc     = -round(Dm * (1 - V)),    
-								mp_inc     = 0, 
-								hp_absorb  = 0,  			
-								mp_absorb  = 0,       			
-								hp_counter = 0, 			
-								hp_rebound = 0 
-							},
-						%% update the max damage
-						attack(SkillId, Src, AttSpec, Rest, [AttInfo1, AttInfo2 | AttInfoList], BattleData);
-					true ->
-						AttInfo  = 
-							#attack_info {
-								pos        = NTar,			  
-								is_miss    = false,
-								is_crit    = Cr,       			%% is critical? boolean()
-								hp_inc     = -Dm,      			%% hp incretement
-								mp_inc     = -Ms + MpAddByAtt,  %% mp incretement
-								hp_absorb  = HpDrain,  			%% hp absorb >= 0
-								mp_absorb  = Ma,       			%% mp absorb >= 0
-								hp_counter = -Counter, 			%% counter strike
-								hp_rebound = -Rebound  			%% rebound damage
-							},
-						attack(SkillId, Src, AttSpec, Rest, [AttInfo | AttInfoList], BattleData)
-					end;
-				_ ->
-					AttInfo  = 
-						#attack_info {
-							pos        = NTar,			  
-							is_miss    = false,
-							is_crit    = Cr,       			%% is critical? boolean()
-							hp_inc     = -Dm,      			%% hp incretement
-							mp_inc     = -Ms + MpAddByAtt,  %% mp incretement
-							hp_absorb  = HpDrain,  			%% hp absorb >= 0
-							mp_absorb  = Ma,       			%% mp absorb >= 0
-							hp_counter = -Counter, 			%% counter strike
-							hp_rebound = -Rebound  			%% rebound damage
-						},
-					attack(SkillId, Src, AttSpec, Rest, [AttInfo | AttInfoList], BattleData)
-				end
+                AttInfo  = #attack_info {
+                    pos        = NTar,			  
+                    is_miss    = false,
+                    is_crit    = Cr,       			%% is critical? boolean()
+                    hp_inc     = -Dm,      			%% hp incretement
+                    mp_inc     = -Ms,               %% mp incretement
+                    hp_absorb  = HpDrain,  			%% hp absorb >= 0
+                    mp_absorb  = Ma,       			%% mp absorb >= 0
+                    hp_counter = -Counter, 			%% counter strike
+                    hp_rebound = -Rebound  			%% rebound damage
+                },
+                {NewAttInfoList, _, _, _} = lists:foldl(fun buff_att_helper/2, 
+                                                        {[AttInfo], SkillId, NTar, BattleData},
+                                                        [{buff, ?BUFF_SCORN},
+                                                         {buff, ?BUFF_ASSISTED},
+                                                         {buff, ?BUFF_DMG_ABSORB_TARGET}]),
+                attack(SkillId, Src, AttSpec, Rest, 
+                       lists:reverse(NewAttInfoList) ++ AttInfoList, BattleData)
 		end
 	end;
 
@@ -2313,9 +2297,9 @@ settle_buff(Settle, Pos, [Buff | Rest], BuffList, BuffInfoList, State) ->
 					?BUFF_TOXIC ->
 						%% toxic lose hp per turn
 						?INFO(battle, "handling buff toxic.."),
-						HpMax  = State#battle_status.hp_max,
+						%HpMax  = State#battle_status.hp_max,
 						Hp     = State#battle_status.hp,
-						HpLost = get_hp_lose_value(HpMax, Buff),
+						HpLost = get_hp_lose_value(Hp, Buff),
                         ?BATTLE_LOG("站位 ~w Buff效果: 中毒", [Pos]),
                         ?BATTLE_LOG("    Buff类型: 中毒, 系数: ~w, 失血量: ~w", 
                                     [Buff#buff.value, HpLost]),
@@ -2360,8 +2344,52 @@ settle_buff(Settle, Pos, [Buff | Rest], BuffList, BuffInfoList, State) ->
 								duration  = max(0, Duration),
 								is_remove = (Duration =< 0)
 							},
-							State1 = State#battle_status {hp = NewHp, is_alive = true},
-							{BInfo, State1};
+                        State1 = State#battle_status {hp = NewHp, is_alive = true},
+                        {BInfo, State1};
+                    ?BUFF_CURSED ->
+                        ?BATTLE_LOG("站位 ~w Buff效果: 诅咒", [Pos]),
+                        ?BATTLE_LOG("    Buff类型: 被诅咒, 剩余回合数: ~w", [Duration]),
+						Hp    = State#battle_status.hp,
+                        Mp    = State#battle_status.mp,
+                        {BInfo, State1} = case Duration > 0 of
+                            true ->
+                                {
+                                    #buff_info {
+                                        name      = Buff#buff.name,
+                                        owner     = Pos,
+                                        settle    = Settle,
+                                        hp        = Hp,
+                                        mp        = Mp,
+                                        hp_inc    = 0,
+                                        mp_inc    = 0,
+                                        is_new    = false,
+                                        by_rate   = ByRate,
+                                        value     = Value,
+                                        duration  = max(0, Duration),
+                                        is_remove = (Duration =< 0)
+                                    },
+                                    State
+                                };
+                            false ->
+                                {
+                                    #buff_info {
+                                        name      = Buff#buff.name,
+                                        owner     = Pos,
+                                        settle    = Settle,
+                                        hp        = 0,
+                                        mp        = Mp,
+                                        hp_inc    = -Hp,
+                                        mp_inc    = 0,
+                                        is_new    = false,
+                                        by_rate   = ByRate,
+                                        value     = Value,
+                                        duration  = max(0, Duration),
+                                        is_remove = (Duration =< 0)
+                                    },
+                                    State#battle_status {hp = 0, is_alive = false}
+                                }
+                        end,
+                        {BInfo, State1};
 					_ ->
 						BInfo = #buff_info {
 							name      = Buff#buff.name,
@@ -2530,7 +2558,9 @@ is_command_set(BattleData) ->
 			PInfo = get_player_info(ID, BattleData),
 			Lead  = PInfo#player_info.lead,
 			Bs    = get_battle_status(Lead, BattleData),
-			Bs#battle_status.cmd =/= ?UNDEFINED
+            Bs#battle_status.is_lead =/= true orelse
+                (Bs#battle_status.is_alive =:= false orelse 
+                 Bs#battle_status.cmd =/= ?UNDEFINED)
 		end,
 	lists:all(F, IDList).
 
@@ -2709,8 +2739,8 @@ transform_skill([Elem | Rest], ActiveSkills, PassiveSkills) ->
 	Type      = SkillInfo#skill_info.type,
 	Effect    = SkillInfo#skill_info.effect,
 	
-	if (Effect == ?SKILL_EFFECT_BATTLE) ->		
-		if (Type =/= 2 andalso Type =/= 3) ->
+	if (Effect == ?SKILL_EFFECT_BATTLE) ->
+		if (Type =/= ?SKILL_GIFT andalso Type =/= ?SKILL_NORMAL) ->
 			transform_skill(Rest, [SkillID | ActiveSkills], PassiveSkills);
 		true ->
 			transform_skill(Rest, ActiveSkills, [SkillID | PassiveSkills])
@@ -3203,6 +3233,7 @@ trigger_plot(Plot, BattleData) ->
                 0 -> 
                     exit(no_pos_for_plot_role);     % never returns
                 _ -> 
+                    ?INFO(battle_plot, "Adding new role in pos ~w", [NPos]),
                     {set_battle_status(NPos, BS, BD),
                      NP#battle_plot{new_roles = [{NPos, BS} | NP#battle_plot.new_roles]}}
             end
@@ -3230,6 +3261,80 @@ fold_duplicate_items([{ItemID, Count, Bound} | Rest], AccItems) ->
     end,
     fold_duplicate_items(Rest, NDict).
 
+buff_att_helper({buff, ?BUFF_SCORN}, {AttInfoList, SkillID, Tar, BattleData}) ->
+    TarBuffList = (get_battle_status(Tar, BattleData))#battle_status.buff,
+    AttInfo = hd(AttInfoList),
+
+    AddedMP = case lists:keyfind(?BUFF_SCORN, #buff.name, TarBuffList) of
+        false ->
+            DataSkill = data_skill_table:get(SkillID, 1),   % XXX: 总是用 Lv.1 的配置……
+            DataSkill#battle_skill.hit_mp_add;
+        #buff{value = _ScornV} ->
+            ?BATTLE_LOG("        站位 ~w Buff效果: 嘲讽", [Tar]),
+            ?BATTLE_LOG("            Buff类型: 嘲讽, 怒气增加: ~w", [0]),
+            0
+    end,
+    
+    NAttInfo = AttInfo#attack_info {
+        mp_inc = AttInfo#attack_info.mp_inc + AddedMP
+    },
+    {[NAttInfo | tl(AttInfoList)], SkillID, Tar, BattleData};
+
+buff_att_helper({buff, ?BUFF_ASSISTED}, {AttInfoList, SkillID, Tar, BattleData}) ->
+    TarBuffList = (get_battle_status(Tar, BattleData))#battle_status.buff,
+    AttInfo = hd(AttInfoList),
+
+    case lists:keyfind(?BUFF_ASSISTED, #buff.name, TarBuffList) of
+        false ->
+            {AttInfoList, SkillID, Tar, BattleData};
+        #buff{data = Pos, by_rate = true, value = V} ->
+            AssStat = get_battle_status(Pos, BattleData),
+            if 
+                (AssStat#battle_status.is_alive == true) ->
+                    ?BATTLE_LOG("        站位 ~w Buff效果: 援护", [Tar]),
+                    ?BATTLE_LOG("            Buff类型: 被援护, 伤害减少系数: ~w, 援护者站位: ~w", [V, Pos]),
+
+                    NAttInfo = AttInfo#attack_info{
+                        hp_inc = round(AttInfo#attack_info.hp_inc * (1 - V))
+                    },
+                    AttInfo2 = #attack_info {
+                        pos        = Pos,
+                        is_miss    = false,
+                        is_crit    = false,
+                        hp_inc     = round(AttInfo#attack_info.hp_inc * V)
+                    },
+                    {[NAttInfo | tl(AttInfoList)] ++ [AttInfo2], SkillID, Tar, BattleData};
+
+                true ->
+                    {AttInfoList, SkillID, Tar, BattleData}
+            end
+    end;
+
+buff_att_helper({buff, ?BUFF_DMG_ABSORB_TARGET}, {AttInfoList, SkillID, Tar, BattleData}) ->
+    TarBuffList = (get_battle_status(Tar, BattleData))#battle_status.buff,
+    AttInfo = hd(AttInfoList),
+
+    case lists:keyfind(?BUFF_DMG_ABSORB_TARGET, #buff.name, TarBuffList) of
+        false ->
+            {AttInfoList, SkillID, Tar, BattleData};
+        #buff{data = Pos, by_rate = true, value = V} ->
+            AbsTarStat = get_battle_status(Pos, BattleData),
+            case AbsTarStat#battle_status.is_alive of
+                true ->
+                    ?BATTLE_LOG("        站位 ~w Buff效果: 伤害吸收", [Tar]),
+                    ?BATTLE_LOG("            Buff类型: 伤害被吸收, 系数: ~w, 吸收者站位: ~w", [V, Pos]),
+                    AttInfo2 = #attack_info {
+                        pos        = Pos,
+                        is_miss    = false,
+                        is_crit    = false,
+                        hp_inc     = -round(AttInfo#attack_info.hp_inc * V)
+                    },
+                    {AttInfoList ++ [AttInfo2], SkillID, Tar, BattleData};
+                false ->
+                    {AttInfoList, SkillID, Tar, BattleData}
+            end
+    end.
+
 
 -ifdef(debug).
 
@@ -3237,6 +3342,8 @@ format_buff(#buff{name = ?BUFF_SCORNED} = Buff) ->
     io_lib:format("    Buff类型: 被嘲讽, 嘲讽者站位: ~w", [Buff#buff.value]);
 format_buff(#buff{name = ?BUFF_ASSISTED} = Buff) ->
     io_lib:format("    Buff类型: 被援护, 系数: ~w, 援护者站位: ~w", [Buff#buff.value, Buff#buff.data]);
+format_buff(#buff{name = ?BUFF_DMG_ABSORB_TARGET} = Buff) ->
+    io_lib:format("    Buff类型: 伤害被吸收, 系数: ~w, 吸收者站位: ~w", [Buff#buff.value, Buff#buff.data]);
 format_buff(Buff) ->
     io_lib:format("    Buff类型: ~s, 系数: ~w", 
                   [buff_type_to_str(Buff#buff.name), Buff#buff.value]).
@@ -3285,7 +3392,12 @@ buff_type_to_str(Type) ->
         ?BUFF_CAST_DMG_UP -> "输出伤害+";
         ?BUFF_RECV_DMG_DOWN -> "输入伤害-";
         ?BUFF_CAST_DMG_DOWN -> "输出伤害-";
-        ?BUFF_RECV_DMG_UP -> "输入伤害+"
+        ?BUFF_RECV_DMG_UP -> "输入伤害+";
+
+        ?BUFF_DMG_ABSORB  -> "伤害吸收";
+        ?BUFF_DMG_ABSORB_TARGET -> "伤害被吸收";
+
+        ?BUFF_CURSED      -> "被诅咒"
     end.
 
 tag_to_buff_effect(Tag) ->
