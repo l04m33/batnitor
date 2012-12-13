@@ -5659,7 +5659,7 @@ get(242, 1) ->
 		level  = 1,
 		target = friend,
 		type   = 1,
-		param  = {20}    
+		param  = {0.2,20}    
 	};
 
 get(243, 1) -> 
@@ -5673,7 +5673,7 @@ get(243, 1) ->
 		level  = 1,
 		target = friend,
 		type   = 1,
-		param  = {0.4,0.2,0.2}    
+		param  = {0.15,0.4,0.2,0.2}    
 	};
 
 get(244, 1) -> 
@@ -5687,7 +5687,7 @@ get(244, 1) ->
 		level  = 1,
 		target = friend,
 		type   = 1,
-		param  = {}    
+		param  = {0.4}    
 	};
 
 get(245, 1) -> 
@@ -5715,7 +5715,7 @@ get(246, 1) ->
 		level  = 1,
 		target = friend,
 		type   = 1,
-		param  = {}    
+		param  = {0.3,0.2,0.1}    
 	};
 
 get(247, 1) -> 
@@ -5729,7 +5729,7 @@ get(247, 1) ->
 		level  = 1,
 		target = friend,
 		type   = 1,
-		param  = {}    
+		param  = {0.15,3}    
 	};
 
 get(248, 1) -> 

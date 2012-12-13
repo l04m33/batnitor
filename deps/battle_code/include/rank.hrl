@@ -19,7 +19,8 @@
 		worldBoss = 0, %% 上次活动中对世界boss的伤害
 		kingGuard = 0, %% 上次守卫国王击杀的怪物
 		yuanbiaoSilverUpdateTime = 0, %% 寻仙上次更新时间
-   		xunxian = 0, %% 召唤到南山老妖的总次数
+   		xunxian = 0, %% 召唤到南山老妖的总次数，
+        xunxianTotal = 0, %% 寻仙总次数
 		worldBossUpdateTime = 0 %%  世界boss上次更新时间
 	}
 ).
@@ -40,7 +41,8 @@
 		worldBossUpdateTime ={integer},
 		worldBoss = {integer},
 		kingGuard = {integer},
-		xunxian = {integer}
+		xunxian = {integer},
+        xunxianTotal = {integer}
     }
 ).
 

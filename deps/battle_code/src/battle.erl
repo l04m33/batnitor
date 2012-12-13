@@ -1453,21 +1453,20 @@ get_rebound(_Src, Tar, _AttSpec, Dm, BattleData) ->
 get_counter(Src, Tar, SkillId, _AttSpec, Dm, BattleData) ->
 	CT = if (SkillId =/= ?SKILL_COMMON_ATTACK_ID) ->
 		%% skill that is not common attack can not be countered.
-		0;
+		false;
 	true ->
 		TarStat = get_battle_status(Tar, BattleData),
 		Buffs = TarStat#battle_status.buff,
 		
 		case TarStat#battle_status.hp =< Dm of
 			true -> 
-				0; %% this player is now dead, so don't need to check counter
+				false; %% this player is now dead, so don't need to check counter
 			false ->
 				case lists:keysearch(?BUFF_COUNTER, #buff.name, Buffs) of
-					{value, #buff{value = Counter}} ->
+					{value, #buff{value = _Counter}} ->
                         ?BATTLE_LOG("        站位 ~w Buff效果: 反击", [Tar]),
-                        ?BATTLE_LOG("            Buff类型: 反击, 系数: ~w", [Counter]),
-						%Counter;            % TODO: WTF? 这个没实现的？
-                        0;
+                        ?BATTLE_LOG("            Buff类型: 反击"),
+						true;
 					false ->
                         SrcStat = get_battle_status(Src, BattleData),
                         ParamX = 
@@ -1483,13 +1482,26 @@ get_counter(Src, Tar, SkillId, _AttSpec, Dm, BattleData) ->
                         ?BATTLE_LOG("        反击几率: ~w, 随机数: ~w, 反击触发: ~w",
                                     [CounterRate, CounterRand, CounterRand =< CounterRate]),
 						case CounterRand =< CounterRate of
-							true  -> 0; %100;
-							false -> 0
+							true  -> true;
+							false -> false
 						end
 				end
 		end
 	end,
-    CT.
+
+    case CT of
+        true ->
+            ?BATTLE_LOG("        ......... 反击伤害计算 ........."),
+            CounterAttSpec = #attack_spec {
+                addition = 0.4,
+                targets  = [Src]
+            },
+            {_, CounterDmg} = do_attack(Tar, Src, CounterAttSpec, BattleData),
+            ?BATTLE_LOG("        ......... 反击伤害计算结束, 反击伤害: ~w .........", [CounterDmg]),
+            CounterDmg;
+        false ->
+            0
+    end.
 
 %==============================================================================================================
 % handling passive SKILL
@@ -1942,10 +1954,10 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
 		case pre_attack(Src, Tar, AttSpec, BattleData) of
 			false ->
 				%% miss target, so the other field in attack_info may be 0 (is_miss == true, is_crit = false) 
-				
 				?INFO(battle, "****************battle attack: ***************************************"),
 				AttInfo = #attack_info {pos = Tar, is_miss = true},
 				attack(SkillId, Src, AttSpec, Rest, [AttInfo | AttInfoList], BattleData);
+
 			true ->
 				%% TODO: may be change the AttSpec here
 				{Cr, Dm} = do_attack(Src, NTar, AttSpec, BattleData),
@@ -2498,26 +2510,44 @@ update_buffs(Pos, [{Buff, Rate, Op} | Rest], BuffInfoList, BattleData) ->
 			
 			case Op of
 				add ->
-					BuffInfo = 
-						#buff_info {
-							%% this field is always set to post, to let the client 
-							%% show the buff after the player using his skill
-							settle    = post,                   
-							name      = Buff#buff.name,
-							owner     = Pos,
-							hp        = State#battle_status.hp,
-							mp        = State#battle_status.mp,	
-							hp_inc    = 0,
-							mp_inc    = 0,
-							is_new    = true,
-							by_rate   = ByRate,
-							value     = Value,
-							duration  = Buff#buff.duration,
-							is_remove = false
-						},
-					NBattleData = add_buff(Buff, Pos, BattleData),
-					update_buffs(Pos, Rest, [BuffInfo | BuffInfoList], NBattleData);
-				
+                    DoAdd = case lists:member(Buff#buff.name, [?BUFF_CURSED]) of
+                        true ->
+                            case is_buff_exist(Buff#buff.name, State) of
+                                true  -> false;
+                                false -> true
+                            end;
+                        false ->
+                            true
+                    end,
+
+                    case DoAdd of
+                        true ->
+                            BuffInfo = 
+                                #buff_info {
+                                    %% this field is always set to post, to let the client 
+                                    %% show the buff after the player using his skill
+                                    settle    = post,                   
+                                    name      = Buff#buff.name,
+                                    owner     = Pos,
+                                    hp        = State#battle_status.hp,
+                                    mp        = State#battle_status.mp,	
+                                    hp_inc    = 0,
+                                    mp_inc    = 0,
+                                    is_new    = true,
+                                    by_rate   = ByRate,
+                                    value     = Value,
+                                    duration  = Buff#buff.duration,
+                                    is_remove = false
+                                },
+                            NBattleData = add_buff(Buff, Pos, BattleData),
+                            update_buffs(Pos, Rest, [BuffInfo | BuffInfoList], NBattleData);
+
+                        false ->
+                            ?BATTLE_LOG("Buff已存在，不叠加: "),
+                            ?BATTLE_LOG(format_buff(Buff)),
+                            update_buffs(Pos, Rest, BuffInfoList, BattleData)
+                    end;
+
 				remove ->
 					case is_buff_exist(Buff, Pos, BattleData) of
 						false ->
@@ -3280,13 +3310,13 @@ buff_att_helper({buff, ?BUFF_SCORN}, {AttInfoList, SkillID, Tar, BattleData}) ->
     },
     {[NAttInfo | tl(AttInfoList)], SkillID, Tar, BattleData};
 
-buff_att_helper({buff, ?BUFF_ASSISTED}, {AttInfoList, SkillID, Tar, BattleData}) ->
+buff_att_helper({buff, ?BUFF_ASSISTED}, {AttInfoList, SkillID, Tar, BattleData} = Orig) ->
     TarBuffList = (get_battle_status(Tar, BattleData))#battle_status.buff,
     AttInfo = hd(AttInfoList),
 
     case lists:keyfind(?BUFF_ASSISTED, #buff.name, TarBuffList) of
         false ->
-            {AttInfoList, SkillID, Tar, BattleData};
+            Orig;
         #buff{data = Pos, by_rate = true, value = V} ->
             AssStat = get_battle_status(Pos, BattleData),
             if 
@@ -3306,17 +3336,17 @@ buff_att_helper({buff, ?BUFF_ASSISTED}, {AttInfoList, SkillID, Tar, BattleData})
                     {[NAttInfo | tl(AttInfoList)] ++ [AttInfo2], SkillID, Tar, BattleData};
 
                 true ->
-                    {AttInfoList, SkillID, Tar, BattleData}
+                    Orig
             end
     end;
 
-buff_att_helper({buff, ?BUFF_DMG_ABSORB_TARGET}, {AttInfoList, SkillID, Tar, BattleData}) ->
+buff_att_helper({buff, ?BUFF_DMG_ABSORB_TARGET}, {AttInfoList, SkillID, Tar, BattleData} = Orig) ->
     TarBuffList = (get_battle_status(Tar, BattleData))#battle_status.buff,
     AttInfo = hd(AttInfoList),
 
     case lists:keyfind(?BUFF_DMG_ABSORB_TARGET, #buff.name, TarBuffList) of
         false ->
-            {AttInfoList, SkillID, Tar, BattleData};
+            Orig;
         #buff{data = Pos, by_rate = true, value = V} ->
             AbsTarStat = get_battle_status(Pos, BattleData),
             case AbsTarStat#battle_status.is_alive of
@@ -3331,8 +3361,30 @@ buff_att_helper({buff, ?BUFF_DMG_ABSORB_TARGET}, {AttInfoList, SkillID, Tar, Bat
                     },
                     {AttInfoList ++ [AttInfo2], SkillID, Tar, BattleData};
                 false ->
-                    {AttInfoList, SkillID, Tar, BattleData}
+                    Orig
             end
+    end;
+
+buff_att_helper({p_skill, ?PSKILL_REVIVE}, {AttInfoList, SkillID, Tar, BattleData} = Orig) ->
+    TarStat = get_battle_status(Tar, BattleData),
+    case get_passive_skill_helper(?PSKILL_REVIVE, TarStat#battle_status.p_skill) of
+        {true, RVSkillInfo} ->
+            {RVRate, RVCoef} = RVSkillInfo#battle_skill.param,
+            RVRand = random:uniform(),
+            case RVRand =< RVRate of
+                true ->
+                    NAttInfo  = #attack_info {
+                        pos        = Tar,			  
+                        is_miss    = false,
+                        is_crit    = false,
+                        hp_inc     = round(TarStat#battle_status.hp_max * RVCoef)
+                    },
+                    {AttInfoList ++ NAttInfo, SkillID, Tar, BattleData};
+                _ ->        % false
+                    Orig
+            end;
+        false ->
+            Orig
     end.
 
 

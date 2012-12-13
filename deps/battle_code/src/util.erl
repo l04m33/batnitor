@@ -602,7 +602,12 @@ reset_check_command() ->
 	put(last_seq, 65499 + 2).
 
 get_app_env(Env)->
-	{ok, Val} = application:get_env(server, Env),
+	case application:get_env(server, Env) of
+		{ok, Val} ->
+			Val;
+		_->
+			Val = undefined
+	end,
 	Val.
 
 get_log_app_env(Env) ->

@@ -11,8 +11,8 @@
 
 -define(INIT_MAP,           1100).  %% 起始地图
 -define(SPECIAL_MAP, 		1900). 	%% 原野村要做特殊的处理
--define(SPECIAL_NUM, 		20). 	%% 原野村虚拟房间的个数
--define(MAX_PLAYER_IN_ROOM, 70). 	%% 在原野村虚拟房间中的最大人数
+-define(SPECIAL_NUM, 		data_system:get(34)). 	%% 原野村虚拟房间的个数
+-define(MAX_PLAYER_IN_ROOM, data_system:get(33)). 	%% 在原野村虚拟房间中的最大人数
 -define(MOVE_CHECK_SCOPE,   8).
 
 -define(ETS_SCENE_ROOM,     ets_scene_room).

@@ -6581,7 +6581,7 @@ skill_info(248001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 105006
+		next_skill_id = 0
 	};
 
 %% 背水一战
@@ -6592,7 +6592,7 @@ skill_info(249001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 106006
+		next_skill_id = 0
 	};
 
 %% 战意激荡
@@ -6603,7 +6603,7 @@ skill_info(250001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 108006
+		next_skill_id = 0
 	};
 
 %% 霸刃连斩
@@ -6614,7 +6614,7 @@ skill_info(251001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 109006
+		next_skill_id = 0
 	};
 
 %% 横扫千军
@@ -6625,7 +6625,7 @@ skill_info(252001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 110006
+		next_skill_id = 0
 	};
 
 %% 暴怒冲锋
@@ -6658,7 +6658,7 @@ skill_info(255001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 113006
+		next_skill_id = 0
 	};
 
 %% 龙战八方
@@ -6680,7 +6680,7 @@ skill_info(257001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 116006
+		next_skill_id = 0
 	};
 
 %% 强兵咒
@@ -6691,7 +6691,7 @@ skill_info(258001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 117006
+		next_skill_id = 0
 	};
 
 %% 破军咒
@@ -6702,7 +6702,7 @@ skill_info(259001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 118006
+		next_skill_id = 0
 	};
 
 %% 削弱

@@ -5,7 +5,6 @@
 	gd_CurrentLevel  = 0,		%% 当前关数（1~10）
 	gd_LastTime 	 = 0,		%% 上次更新时间
 	gd_ResetTimes    = 0,		%% 重置次数
-	gd_Point 		 = 0,		%% 积分
 	gd_AchieveLevel  = 0,       %% 通关层数
 	gd_AchieveTime   = 0,		%% 通关时间
 	gd_MonsterList   = [],		%% 怪物列表
@@ -19,7 +18,6 @@
 	gd_CurrentLevel  = {integer},
 	gd_LastTime 	 = {integer},
 	gd_ResetTimes    = {integer},
-	gd_Point 		 = {integer},
 	gd_AchieveLevel  = {integer},
 	gd_AchieveTime	 = {integer},
 	gd_MonsterList   = {term},

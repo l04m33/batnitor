@@ -286,7 +286,7 @@
 
 %% 神剑
 -define(ERR_SWORD_NOT_START,32001). 		%% 天灵神剑活动未开始
--define(ERR_SWORD_LEVEL_UNMATCH, 32002).	%% 等级阶段不符合神剑要求
+-define(ERR_SWORD_LEVEL_UNMATCH, 32002).	%% 天灵神剑活动于30级开启
 -define(ERR_SWORD_LEVEL_UNMATCH_1,	32003). %% 需要等级30-49级
 -define(ERR_SWORD_LEVEL_UNMATCH_2,	32004). %% 需要等级50-69级
 -define(ERR_SWORD_LEVEL_UNMATCH_3,	32005). %% 需要达到70级以上

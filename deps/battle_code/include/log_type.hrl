@@ -128,6 +128,7 @@
 -define(POINT_FROM_ACTIVITY,		  1002).	%% 活动获得
 -define(POINT_FROM_JUNWEI_ROLE,		  1003).	%% 军威将领获得
 -define(POINT_FROM_GM,				  1004).	%% gm获得
+-define(POINT_FROM_CHANGE,			  1005).	%% 兑换获得
 
 -define(POINT_USE_CHANGE,			  2001).	%% 用于兑换物品
 -define(POINT_USE_EMPLOY,			  2002).	%% 用于招募将领
@@ -174,6 +175,7 @@
 -define(ITEM_FROM_SWORD,			1048).		%% 神剑活动掉落
 -define(ITEM_FROM_DEFENCE_MON,		1049).		%% 群魔乱舞打怪掉落
 -define(ITEM_FROM_CHANGE,			1050).		%% 积分兑换获得
+-define(ITEM_FROM_SWORD_2,			1051).		%% 神剑活动中勇猛掉落
 
 -define(ITEM_ADD_STACK,				2001).		%% 堆叠后增加（包括物品移动，物品生成，宝石拆卸、交易获得等情况）
 

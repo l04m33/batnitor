@@ -81,59 +81,68 @@ handle_skill(SkillUID, Src, Tar, BData) ->
 	?INFO(battle, "SkillUID = ~w", [SkillUID]),
     ?BATTLE_LOG("~n--------- 攻击者站位: ~w, 技能 ID: ~w ---------", [Src, SkillUID]),
 	BattleData = pre_handle_skill(Src, BData),
-	case battle:is_battle_end(BattleData) of
-		{true, _} -> BattleData;
-		false ->
-			SrcStat  = battle:get_battle_status(Src, BattleData),
-            case SrcStat#battle_status.is_alive of
-                true ->
-                    {SkillId, Level} = get_skill_id_level(SkillUID),	
-                    Skill    = data_skill_table:get(SkillId, Level),
-                    HpCost   = Skill#battle_skill.hp, 
-                    Cd       = Skill#battle_skill.cd,
-                    Param    = Skill#battle_skill.param,
-                    Hp       = max(1, round(SrcStat#battle_status.hp * (1 - HpCost))),
-                    MpCost   = Skill#battle_skill.mp,
-                    Mp       = max(0, SrcStat#battle_status.mp - MpCost),
-                
-                    %% update hp and mp
-                    NSrcStat    = SrcStat#battle_status {hp = Hp, mp = Mp},
-                    ?BATTLE_LOG("更新攻击者消耗, 血: ~w / ~w / ~w, 怒气: ~w / ~w / ~w",
-                                [SrcStat#battle_status.hp, Hp, Hp - SrcStat#battle_status.hp,
-                                 SrcStat#battle_status.mp, Mp, Mp - SrcStat#battle_status.mp]),
-                    BattleData1 = battle:set_battle_status(Src, NSrcStat, BattleData),
+    SrcStat = battle:get_battle_status(Src, BattleData),
+    %% 这里不用判断整场战斗是否结束，只要判断当前角色有没挂就好了，
+    %% 因为pre_handle_skill里的操作（目前）只能影响到当前角色，
+    %% 而战斗结束的判断在battle模块调用handle_skill之后会做
+    case SrcStat#battle_status.is_alive of
+        true ->
+            {SkillId, Level} = get_skill_id_level(SkillUID),	
+            Skill    = data_skill_table:get(SkillId, Level),
+            HpCost   = Skill#battle_skill.hp, 
+            Cd       = Skill#battle_skill.cd,
+            Param    = Skill#battle_skill.param,
+            Hp       = max(1, round(SrcStat#battle_status.hp * (1 - HpCost))),
+            MpCost   = Skill#battle_skill.mp,
+            Mp       = max(0, SrcStat#battle_status.mp - MpCost),
+        
+            %% update hp and mp
+            NSrcStat    = SrcStat#battle_status {hp = Hp, mp = Mp},
+            ?BATTLE_LOG("更新攻击者消耗, 血: ~w / ~w / ~w, 怒气: ~w / ~w / ~w",
+                        [SrcStat#battle_status.hp, Hp, Hp - SrcStat#battle_status.hp,
+                         SrcStat#battle_status.mp, Mp, Mp - SrcStat#battle_status.mp]),
+            BattleData1 = battle:set_battle_status(Src, NSrcStat, BattleData),
 
-                    AttPro  = battle:get_attack_pro(BattleData),
-                    NAttPro = 
-                        AttPro#attack_pro {
-                            %% set the unique ID here
-                            skillid = SkillUID,
-                            pos     = Src,
-                            hp      = Hp,
-                            mp      = Mp,
-                            hp_inc  = Hp - SrcStat#battle_status.hp,
-                            mp_inc  = Mp - SrcStat#battle_status.mp
-                        },
+            AttPro  = battle:get_attack_pro(BattleData),
+            NAttPro = 
+                AttPro#attack_pro {
+                    %% set the unique ID here
+                    skillid = SkillUID,
+                    pos     = Src,
+                    hp      = Hp,
+                    mp      = Mp,
+                    hp_inc  = Hp - SrcStat#battle_status.hp,
+                    mp_inc  = Mp - SrcStat#battle_status.mp
+                },
+    
+            BattleData2 = battle:set_attack_pro(NAttPro, BattleData1),
+            ?INFO(battle, "SkillId = ~w, Src = ~w, Tar = ~w, Level = ~w, Param = ~w", 
+                [SkillId, Src, Tar, Level, Param]),
             
-                    BattleData2 = battle:set_attack_pro(NAttPro, BattleData1),
-                    ?INFO(battle, "SkillId = ~w, Src = ~w, Tar = ~w, Level = ~w, Param = ~w", 
-                        [SkillId, Src, Tar, Level, Param]),
-                    
-                    NBattleData = handle_skill(SkillId, Src, Tar, Level, Param, BattleData2),
-                    %% update cd
-                    %% first reduce the cd value of each element in the cd list
-                    %% then add this cd into the list..
-                    battle:update_cd(Src, SkillUID, Cd, NBattleData);
+            NBattleData = handle_skill(SkillId, Src, Tar, Level, Param, BattleData2),
+            %% update cd
+            %% first reduce the cd value of each element in the cd list
+            %% then add this cd into the list..
+            battle:update_cd(Src, SkillUID, Cd, NBattleData);
 
-                false ->
-                    %% 在pre_handle_skill里的时候，Src有可能因为Buff直接挂掉
-                    %% 这时attack_pro里已经有buff_info了，可以说明Src已经挂掉，但是需要
-                    %% 客户端配合处理才行……
-                    ?BATTLE_LOG("Oops, 攻击者已经挂了……"),
-                    BattleData2 = battle:settle_buff(post, Src, BattleData),
-                    battle:update_cd(Src, 0, 0, BattleData2)
-            end
-	end.
+        false ->
+            %% 在pre_handle_skill里的时候，Src有可能因为Buff直接挂掉
+            %% 这时attack_pro里已经有buff_info了，可以说明Src已经挂掉，但是需要
+            %% 客户端配合处理才行……
+            ?BATTLE_LOG("Oops, 攻击者已经挂了……"),
+            AttPro  = battle:get_attack_pro(BattleData),
+            NAttPro = AttPro#attack_pro {
+                skillid = 0,
+                pos     = Src,
+                hp      = 0,
+                mp      = SrcStat#battle_status.mp,
+                hp_inc  = 0,
+                mp_inc  = 0
+            },
+            BattleData1 = battle:set_attack_pro(NAttPro, BattleData),
+            BattleData2 = battle:settle_buff(post, Src, BattleData1),       % XXX: 有必要吗……
+            battle:update_cd(Src, 0, 0, BattleData2)
+    end.
 
 %======================================================================================================
 % warrior skill
@@ -1067,7 +1076,7 @@ handle_skill(SkillId = 241, Src, Tar, _Level, Param, BattleData) ->
 %========================================================================================================
 
 %% 三魂回春: 对己方3个目标进行强力治疗并增加目标20点怒气值
-%% {增加怒气值}
+%% {治疗系数, 增加怒气值}
 handle_skill(SkillId = 242, Src, Tar, _Level, Param, BattleData) ->
 	List = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
 	NList = util:get_rand_list_elems(List, 3),
@@ -1076,7 +1085,7 @@ handle_skill(SkillId = 242, Src, Tar, _Level, Param, BattleData) ->
 		[
 			#assist_spec {
 				pos  = P,
-				eff  = [{mana, ?p1, false}, {heal, 3000, false}],
+				eff  = [{mana, ?p2, false}, {heal, ?p1, true}],
 				buff = []
 			} || P <- NList
 		],
@@ -1084,21 +1093,21 @@ handle_skill(SkillId = 242, Src, Tar, _Level, Param, BattleData) ->
 
 
 %% 元灵之光: 对己方3个目标进行治疗, 并概率性增加物理防御和法术防御
-%% {概率, 物理防御系数, 法术防御系数}
+%% {治疗系数, 概率, 物理防御系数, 法术防御系数}
 handle_skill(SkillId = 243, Src, Tar, _Level, Param, BattleData) ->
 	List  = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
 	NList = util:get_rand_list_elems(List, 3),
 	
-	Buffs = [#buff{name = ?BUFF_MDEF_UP, value = ?p3, by_rate = true, settle = post}, 
-			 #buff{name = ?BUFF_PDEF_UP, value = ?p2, by_rate = true, settle = post}],
+	Buffs = [#buff{name = ?BUFF_MDEF_UP, value = ?p4, by_rate = true, settle = post}, 
+			 #buff{name = ?BUFF_PDEF_UP, value = ?p3, by_rate = true, settle = post}],
 	
-	BuffOps = [{Buff, ?p1, add} || Buff <- Buffs],
+	BuffOps = [{Buff, ?p2, add} || Buff <- Buffs],
 	
 	AssSpecList = 
 		[
 			#assist_spec {
 				pos  = P,
-				eff  = [{heal, 300, false}],
+				eff  = [{heal, ?p1, true}],
 				buff = BuffOps	  
 			} || P <- NList
 		],
@@ -1106,8 +1115,8 @@ handle_skill(SkillId = 243, Src, Tar, _Level, Param, BattleData) ->
 
 
 %% 净衣术: 对一个目标进行较强的治疗, 并优先治疗气血较少的单位
-%% {}
-handle_skill(SkillId = 244, Src, Tar, _Level, _Param, BattleData) ->
+%% {治疗系数}
+handle_skill(SkillId = 244, Src, Tar, _Level, Param, BattleData) ->
 	List  = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
     {NTar, _} = battle:get_pos_by(hp, min, List, BattleData),
 
@@ -1115,19 +1124,20 @@ handle_skill(SkillId = 244, Src, Tar, _Level, _Param, BattleData) ->
 		[
 			#assist_spec {
 				pos  = NTar,
-				eff  = [{heal, 300, false}],
+				eff  = [{heal, ?p1, true}],
 				buff = []			  
 			}
 		],
 	battle:assist(SkillId, Src, AssSpecList, BattleData);
 
 %% 药王经: 对一个目标进行治疗,　增加物理防御和法术防御
+%% {治疗系数, 防御增加系数}
 handle_skill(SkillId = 245, Src, Tar, _Level, Param, BattleData) ->
     CandList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
     {NTar, _} = battle:get_pos_by(hp, min, CandList, BattleData),
 
 	Buffs = [#buff{name = ?BUFF_MDEF_UP, value = ?p2, duration = 2, by_rate = true, settle = post}, 
-			 #buff{name = ?BUFF_PDEF_UP, value = ?p1, duration = 2, by_rate = true, settle = post}],
+			 #buff{name = ?BUFF_PDEF_UP, value = ?p2, duration = 2, by_rate = true, settle = post}],
 	BuffOps = [{Buff, 1.0, add} || Buff <- Buffs],
 
 	AssSpecList = 
@@ -1135,18 +1145,18 @@ handle_skill(SkillId = 245, Src, Tar, _Level, Param, BattleData) ->
 			#assist_spec {
 				pos  = NTar,
 				rate = 1.0,
-				eff  = [{heal, 300, false}],
+				eff  = [{heal, ?p1, true}],
 				buff = BuffOps
 			}
 		],
 	battle:assist(SkillId, Src, AssSpecList, BattleData);
 
 %% 仙风万里
-%% {}
-handle_skill(SkillId = 246, Src, Tar, _Level, _Param, BattleData) ->
+%% {治疗系数, 伤害增加几率, 伤害增加系数}
+handle_skill(SkillId = 246, Src, Tar, _Level, Param, BattleData) ->
     CandList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
 
-	Buffs = [#buff{name = ?BUFF_ATT_UP, value = 30, duration = 2, by_rate = false, settle = post}],
+	Buffs = [#buff{name = ?BUFF_ATT_UP, value = ?p3, duration = 2, by_rate = true, settle = post}],
     {_, TarList} = lists:foldl(
         fun(_, {CList, AccList}) ->
             case CList of
@@ -1160,23 +1170,18 @@ handle_skill(SkillId = 246, Src, Tar, _Level, _Param, BattleData) ->
         {CandList, []},
         lists:seq(1, 3)),
 
-	BuffOps = [{Buff, 0.5, add} || Buff <- Buffs],
+	BuffOps = [{Buff, ?p2, add} || Buff <- Buffs],
 	AssSpecList = [#assist_spec{
                        pos = T, 
-                       eff = [{heal, 300, false}], 
+                       eff = [{heal, ?p1, true}], 
                        buff = BuffOps
                    } || T <- TarList],
 	battle:assist(SkillId, Src, AssSpecList, BattleData);
 
 %% 清心咒: 给随机一个己方目标加一个回血BUFF
-%% {}
-handle_skill(SkillId = 247, Src, Tar, _Level, _Param, BattleData) ->
-	SrcStat = battle:get_battle_status(Src, BattleData),
-	Att     = SrcStat#battle_status.m_att,
-	Lev     = SrcStat#battle_status.level,
-	V       = 0.6 * math:pow((Att * 0.49 + Lev * 12), 1.02),
-	
-	Buffs       = [#buff{name = ?BUFF_REFRESH, value = V, by_rate = false, duration = 3, settle = pre}],
+%% {回血系数, 持续回合数}
+handle_skill(SkillId = 247, Src, Tar, _Level, Param, BattleData) ->
+	Buffs       = [#buff{name = ?BUFF_REFRESH, value = ?p1, by_rate = true, duration = ?p2, settle = pre}],
 	BuffOps     = [{Buff, 1.0, add} || Buff <- Buffs],
 	AssSpecList = 
 		[
