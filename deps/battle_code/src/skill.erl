@@ -1507,7 +1507,8 @@ handle_skill(SkillId = 268, Src, Tar, _Level, Param, BattleData) ->
         by_rate = true,
         value   = ?p2,
         duration = 30,
-        settle  = post
+        settle  = post,
+        add_method = overlay
     },
 	AttSpec = #attack_spec {
         addition = ?p1,			  
@@ -1582,7 +1583,8 @@ handle_skill(SkillId = 273, Src, Tar, _Level, Param, BattleData) ->
 		#buff {
 			name     = ?BUFF_CURSED,
 			duration = ?p1,
-			settle   = post
+			settle   = post,
+            add_method = noop
 		},
     AssistSpec = #assist_spec{pos = Tar, buff = [{Buff, 1.0, add}]},
 	battle:assist(SkillId, Src, [AssistSpec], BattleData);

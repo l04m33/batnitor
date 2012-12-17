@@ -360,7 +360,8 @@
 		type,                %% buff_type()
 		duration,            %% integer()
 		settle = pre,        %% buff_settle()
-		by_rate = ?UNDEFINED %% boolean()
+		by_rate = ?UNDEFINED,%% boolean()
+        add_method = override %% override | overlay | noop
 	}		
 ).
 

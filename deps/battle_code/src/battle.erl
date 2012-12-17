@@ -868,6 +868,7 @@ mon_2_bs(MonAttr, Pos, MonHp) ->
         luck    = MonAttr#mon_attr.luck,
         hit     = MonAttr#mon_attr.hit,
         crit    = MonAttr#mon_attr.crit,
+        speed   = MonAttr#mon_attr.speed,
         is_lead = false,
         is_alive = case CurHP of
                        0 -> false;
@@ -2553,51 +2554,38 @@ update_buffs(Pos, [{Buff, Rate, Op} | Rest], BuffInfoList, BattleData) ->
 			update_buffs(Pos, Rest, BuffInfoList, BattleData);
 		false ->
 			State  = get_battle_status(Pos, BattleData),
-			ByRate = Buff#buff.by_rate,
-			Value  = if (ByRate == false) -> 
-						round(Buff#buff.value); 
-					 true -> 
-						round(Buff#buff.value * 100) 
-					 end,
 			
 			case Op of
 				add ->
-                    DoAdd = case lists:member(Buff#buff.name, [?BUFF_CURSED]) of
-                        true ->
-                            case is_buff_exist(Buff#buff.name, State) of
-                                true  -> false;
-                                false -> true
-                            end;
-                        false ->
-                            true
-                    end,
-
-                    case DoAdd of
-                        true ->
-                            BuffInfo = 
-                                #buff_info {
-                                    %% this field is always set to post, to let the client 
-                                    %% show the buff after the player using his skill
-                                    settle    = post,                   
-                                    name      = Buff#buff.name,
-                                    owner     = Pos,
-                                    hp        = State#battle_status.hp,
-                                    mp        = State#battle_status.mp,	
-                                    hp_inc    = 0,
-                                    mp_inc    = 0,
-                                    is_new    = true,
-                                    by_rate   = ByRate,
-                                    value     = Value,
-                                    duration  = Buff#buff.duration,
-                                    is_remove = false
-                                },
-                            NBattleData = add_buff(Buff, Pos, BattleData),
-                            update_buffs(Pos, Rest, [BuffInfo | BuffInfoList], NBattleData);
-
-                        false ->
-                            ?BATTLE_LOG("Buff已存在，不叠加: "),
-                            ?BATTLE_LOG(format_buff(Buff)),
-                            update_buffs(Pos, Rest, BuffInfoList, BattleData)
+                    {NBuff, NBattleData} = add_buff(Buff, Pos, BattleData),
+                    case NBuff of
+                        none ->
+                            update_buffs(Pos, Rest, BuffInfoList, NBattleData);
+                        _ ->
+                            ByRate = NBuff#buff.by_rate,
+                            Value  = if 
+                                ByRate == false -> 
+                                    round(NBuff#buff.value); 
+                                true -> 
+                                    round(NBuff#buff.value * 100) 
+                            end,
+                            BuffInfo = #buff_info {
+                                %% this field is always set to post, to let the client 
+                                %% show the buff after the player using his skill
+                                settle    = post,                   
+                                name      = NBuff#buff.name,
+                                owner     = Pos,
+                                hp        = State#battle_status.hp,
+                                mp        = State#battle_status.mp,	
+                                hp_inc    = 0,
+                                mp_inc    = 0,
+                                is_new    = true,
+                                by_rate   = ByRate,
+                                value     = Value,
+                                duration  = NBuff#buff.duration,
+                                is_remove = false
+                            },
+                            update_buffs(Pos, Rest, [BuffInfo | BuffInfoList], NBattleData)
                     end;
 
 				remove ->
@@ -2660,15 +2648,30 @@ get_buff_target([AttInfo | Rest], TarList) ->
 add_buff(Buff, Pos, BattleData) ->
 	State = get_battle_status(Pos, BattleData),
 	BList = State#battle_status.buff,
-	NState = 
-		case is_buff_exist(Buff, Pos, BattleData) of
-			false -> 
-				State#battle_status {buff = [Buff | BList]};
-			true ->
-				NBList = lists:keyreplace(Buff#buff.name, #buff.name, BList, Buff),
-				State#battle_status {buff = NBList}
-		end,
-	set_battle_status(Pos, NState, BattleData).
+    {NewBuff, NState} = case lists:keysearch(Buff#buff.name, #buff.name, BList) of
+        false -> 
+            {Buff, State#battle_status {buff = [Buff | BList]}};
+        {value, OldBuff} ->
+            NBList = case Buff#buff.add_method of
+                override ->
+                    ?BATTLE_LOG("Buff已存在, 覆盖: "),
+                    ?BATTLE_LOG(format_buff(Buff)),
+                    NBuff = Buff,
+                    lists:keyreplace(Buff#buff.name, #buff.name, BList, Buff);
+                overlay ->
+                    ?BATTLE_LOG("Buff已存在, 叠加: "),
+                    ?BATTLE_LOG(format_buff(Buff)),
+                    NBuff = Buff#buff{value = Buff#buff.value + OldBuff#buff.value},
+                    lists:keyreplace(NBuff#buff.name, #buff.name, BList, NBuff);
+                noop ->
+                    ?BATTLE_LOG("Buff已存在, 不做操作: "),
+                    ?BATTLE_LOG(format_buff(Buff)),
+                    NBuff = none,
+                    BList
+            end,
+            {NBuff, State#battle_status {buff = NBList}}
+    end,
+    {NewBuff, set_battle_status(Pos, NState, BattleData)}.
 
 %% 
 remove_buff(Buff, Pos, BattleData) ->
