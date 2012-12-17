@@ -33,6 +33,7 @@
 -define(EQUIP_TYPE_CLOAK,			3).					%% 披风
 -define(EQUIP_TYPE_SHOES,			4).					%% 鞋子
 -define(EQUIP_TYPE_RING,			5).					%% 戒指
+-define(EQUIP_TYPE_FASHION,			8).					%% 时装
 -define(EQUIP_TYPE_FRAGMENT,		10).				%% 装备碎片
 
 %% 材料小类型

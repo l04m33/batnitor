@@ -12,6 +12,8 @@
 	gd_school_point     = 0,		%% 当前师门积分
 	gd_king_point       = 0,		%% 守卫国王积分
 	gd_tower_point		= 0,		%% 爬塔积分
+	gd_guild_point		= 0,		%% 公会积分
+	gd_tot_guild_point	= 0,		%% 公会历史积分
 	gd_lingli           = 0		%% 灵力（求求暂时不要用啊，用了后果自负）
 	}).
 
@@ -29,6 +31,8 @@
 	gd_school_point     = {integer},
 	gd_king_point       = {integer},
 	gd_tower_point		= {integer},
+	gd_guild_point		= {integer},
+	gd_tot_guild_point	= {integer},
 	gd_lingli           = {integer}
 	}).
 

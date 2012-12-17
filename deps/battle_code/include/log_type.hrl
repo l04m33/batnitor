@@ -129,9 +129,11 @@
 -define(POINT_FROM_JUNWEI_ROLE,		  1003).	%% 军威将领获得
 -define(POINT_FROM_GM,				  1004).	%% gm获得
 -define(POINT_FROM_CHANGE,			  1005).	%% 兑换获得
+-define(POINT_FROM_DONATE,			  1006).	%% 捐献获得
 
 -define(POINT_USE_CHANGE,			  2001).	%% 用于兑换物品
 -define(POINT_USE_EMPLOY,			  2002).	%% 用于招募将领
+-define(POINT_USE_SKILL,			  2003).	%% 用于学习提升技能
 
 
 %%有一些操作，同时使用多种东西的

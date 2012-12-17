@@ -2593,7 +2593,7 @@ get(203, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {0.052,0.9,0.4}    
+		param  = {0.052,1,0.3}    
 	};
 
 get(203, 2) -> 
@@ -2607,7 +2607,7 @@ get(203, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {0.074,0.9,0.4}    
+		param  = {0.074,1,0.3}    
 	};
 
 get(203, 3) -> 
@@ -2621,7 +2621,7 @@ get(203, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {0.096,0.9,0.4}    
+		param  = {0.096,1,0.3}    
 	};
 
 get(203, 4) -> 
@@ -2635,7 +2635,7 @@ get(203, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {0.118,0.9,0.4}    
+		param  = {0.118,1,0.3}    
 	};
 
 get(203, 5) -> 
@@ -2649,7 +2649,7 @@ get(203, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {0.14,0.9,0.4}    
+		param  = {0.14,1,0.3}    
 	};
 
 get(203, 6) -> 
@@ -2663,7 +2663,7 @@ get(203, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {0.162,0.9,0.4}    
+		param  = {0.162,1,0.3}    
 	};
 
 get(203, 7) -> 
@@ -2677,7 +2677,7 @@ get(203, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {0.184,0.9,0.4}    
+		param  = {0.184,1,0.3}    
 	};
 
 get(203, 8) -> 
@@ -2691,7 +2691,7 @@ get(203, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {0.206,0.9,0.4}    
+		param  = {0.206,1,0.3}    
 	};
 
 get(203, 9) -> 
@@ -2705,7 +2705,7 @@ get(203, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {0.228,0.9,0.4}    
+		param  = {0.228,1,0.3}    
 	};
 
 get(203, 10) -> 
@@ -2719,7 +2719,7 @@ get(203, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {0.25,0.9,0.4}    
+		param  = {0.25,1,0.3}    
 	};
 
 get(204, 1) -> 
@@ -5925,7 +5925,7 @@ get(261, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {2}    
+		param  = {0.5,2}    
 	};
 
 get(262, 1) -> 
@@ -6177,7 +6177,7 @@ get(279, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {2}    
+		param  = {1,2}    
 	};
 
 get(280, 1) -> 
@@ -6233,7 +6233,7 @@ get(283, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.1}    
+		param  = {1,0.15,3}    
 	};
 
 get(284, 1) -> 
@@ -6247,7 +6247,7 @@ get(284, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.1}    
+		param  = {0.5,0.1,2}    
 	};
 
 get(285, 1) -> 

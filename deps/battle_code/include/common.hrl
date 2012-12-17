@@ -89,12 +89,11 @@
 %%如果用字符串，取字段value_s
 %%如果直接使用erlang的term，取字段value_t
 %% type 类型
-%% 招财进宝里的奖池总数
--define(G_SERVER_WEALTH_SILVER, 1).
-%% 投壶高级物品获得记录
--define(ADVANCE_ITEM_HISTORY_FROM_LOTTERY, 2).
-%% 投壶历史记录
--define(LOTTERY_HISTORY, 3).
+-define(G_SERVER_WEALTH_SILVER, 1). %% 招财进宝里的奖池总数 
+-define(ADVANCE_ITEM_HISTORY_FROM_LOTTERY, 2). %% 投壶高级物品获得记录
+-define(LOTTERY_HISTORY, 3). %% 投壶历史记录
+-define(G_SERVER_WEALTH_CD, 4).%%招财进宝获取大奖的cd
+ 
 -record(g_server_para,
 	{
 		type = 0,

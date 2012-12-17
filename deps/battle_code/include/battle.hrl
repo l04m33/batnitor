@@ -287,8 +287,9 @@
 		
 		damage_deal   = 0,
 		damage_suffer = 0,
-		is_lead, %%
-		is_alive = true
+		is_lead       = false,
+		is_alive      = true,
+        protectors    = []
 	}		
 ).
 

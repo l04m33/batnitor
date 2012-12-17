@@ -1,7 +1,9 @@
 -define(WEALTH_BAG_COMMON,1).
--define(WEALTH_BAG_AMAZE,2).
--define(WEALTH_BAG_DULUXE,3).
--define(WEALTH_BAG_SUPREME,4).
+-define(WEALTH_BAG_MINI,2).
+-define(WEALTH_BAG_AMAZE,3).
+-define(WEALTH_BAG_DULUXE,4).
+-define(WEALTH_BAG_SUPREME,5).
+
 
 -define(WEALTH_GAMBLE_1,0).
 -define(WEALTH_GAMBLE_10,1).

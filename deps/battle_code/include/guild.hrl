@@ -106,8 +106,8 @@
 		name,         
 	 	guild_id,
 		rank          = 5,     %% 职位，默认为屌丝
-		exp           = 0,     %% 功勋 exploit
-		total_exp     = 0,     %% 总功勋(历史功勋)
+		% exp           = 0,     %% 功勋 exploit
+		% total_exp     = 0,     %% 总功勋(历史功勋)
 		join_time     = 0,     %% 加入工会的时间
 		donate_time   = 0,     %% 最近一次捐献的时间
 		donate_count  = 0,     
@@ -122,8 +122,8 @@
 		name         = {string},
 		guild_id     = {integer}, 
 		rank         = {integer},
-		exp          = {integer},
-		total_exp    = {integer},
+		% exp          = {integer},
+		% total_exp    = {integer},
 		join_time    = {integer},
 		donate_time  = {integer},
 		donate_count = {integer},

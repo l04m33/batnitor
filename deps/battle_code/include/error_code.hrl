@@ -283,10 +283,11 @@
  -define(ERR_TEAM_APPLY_IN_TEAM_SCENE,    30019).         %% 已经在副本中，不能申请组队
  -define(ERR_TEAM_APPLY_SUCCESS,    30020).         %% 组队申请已经发出
  -define(ERR_TEAM_APPROVE_SUCCESS,    30021).         %% 组队审核通过通知已经发出，请等候
+ -define(ERR_TEAM_ADD_SUCCESS,    30022).         %% 加入队伍成功
 
 %% 神剑
 -define(ERR_SWORD_NOT_START,32001). 		%% 天灵神剑活动未开始
--define(ERR_SWORD_LEVEL_UNMATCH, 32002).	%% 天灵神剑活动于30级开启
+-define(ERR_SWORD_LEVEL_UNMATCH, 32002).	%% 天灵神剑活动30级开启
 -define(ERR_SWORD_LEVEL_UNMATCH_1,	32003). %% 需要等级30-49级
 -define(ERR_SWORD_LEVEL_UNMATCH_2,	32004). %% 需要等级50-69级
 -define(ERR_SWORD_LEVEL_UNMATCH_3,	32005). %% 需要达到70级以上
@@ -348,6 +349,7 @@
 -define(ERR_AREADY_HIGH_TYPE,			26008). %%您当前的镖车已是最高品质
 -define(ERR_JIXING_HIGHEST,				26009). %%当前吉星等级已经达到上限！
 -define(ERR_ROBER_LEVEL_TOO_LOWER,		26010). %%您还未到30级，不要做劫镖这么危险的事情啊
+-define(ERR_ROB_TASK_ACCEPT, 26011).			%%对方是菜鸟,请高抬贵手
 
 %% 种植
 -define(ERR_FENGDI_WATER,                16001).        %% 浇水次数超过2次     

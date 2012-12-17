@@ -186,19 +186,26 @@ battle_run(Event, BattleData) ->
 	
 	case is_battle_end(NBattleData) of
 		{true, Winner} ->
-			%% send 20005 to notify client, battle is complete!
-			Award = get_battle_award(NBattleData),
-			NBattleData1 = 
-				NBattleData#battle_data{
-					timeout = {Now, ?BATTLE_WAIT_QUIT},
-					winner  = Winner, 
-					award   = Award
-				},
-			?INFO(battle, "sending battle award"),
-			send_battle_award(NBattleData1),
-			?INFO(battle, "sending battle result"),
-			send_result_package(NBattleData1),
-			{next_state, battle_complete, NBattleData1, ?BATTLE_WAIT_QUIT};
+            case check_plot_trigger(NBattleData#battle_data{winner = ?UNDEFINED}) of
+                {true, Plot, NBattleData1} ->
+                    NBattleData2 = trigger_plot(Plot, start_new_round(NBattleData1)),
+                    {next_state, battle_plot, NBattleData2#battle_data {
+                        timeout = {Now, ?BATTLE_WAIT_PLOT}}, ?BATTLE_WAIT_PLOT};
+                false ->
+                    %% send 20005 to notify client, battle is complete!
+                    Award = get_battle_award(NBattleData),
+                    NBattleData1 = 
+                        NBattleData#battle_data{
+                            timeout = {Now, ?BATTLE_WAIT_QUIT},
+                            winner  = Winner, 
+                            award   = Award
+                        },
+                    ?INFO(battle, "sending battle award"),
+                    send_battle_award(NBattleData1),
+                    ?INFO(battle, "sending battle result"),
+                    send_result_package(NBattleData1),
+                    {next_state, battle_complete, NBattleData1, ?BATTLE_WAIT_QUIT}
+            end;
 		
 		false ->
 			if (Event == timeout) ->
@@ -642,13 +649,26 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array) ->
 		end,
 	
 	ArrayFun = 
-		fun (Role, Arr) ->
+		fun (Role, {Protectors, Arr}) ->
 			if (Camp == att) ->
 				Pos = Role#role.gd_isBattle;
 			true ->
 				Pos = Role#role.gd_isBattle + ?BATTLE_FIELD_SIZE div 2
 			end,
-			array:set(Pos, role_2_bs(ID, PlayerLevel, Role), Arr)
+            BS = role_2_bs(ID, PlayerLevel, Role),
+            {NProtectors, NBS} = case BS#battle_status.is_lead of
+                true ->
+                    {Protectors, BS#battle_status{protectors = Protectors}};
+                false ->
+                    case get_passive_skill_helper(?PSKILL_PROTECT, BS#battle_status.p_skill) of
+                        {true, PRSkillInfo} ->
+                            {PRRate, PRCoef} = PRSkillInfo#battle_skill.param,
+                            {[{Pos, {PRRate, PRCoef}} | Protectors], BS};
+                        false ->
+                            {Protectors, BS}
+                    end
+            end,
+            {NProtectors, array:set(Pos, NBS, Arr)}
 		end,
 			
 	if (MakeTeam == true) ->
@@ -657,46 +677,53 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array) ->
 		case catch mod_team:prepare_team_battle(ID) of
 			false ->
 				?INFO(battle, "not make team"),
-				List = mod_role:get_on_battle_list(ID),
+				List0 = mod_role:get_on_battle_list(ID),
 				PInfo = 
 					#player_info {
 						id       = ID, 
 						pid      = Ps#player_status.player_pid, 
-						lead     = get_mer_leader(Camp, List), 
-						mer_list = lists:foldl(RoleFun, [], List)
+						lead     = get_mer_leader(Camp, List0), 
+						mer_list = lists:foldl(RoleFun, [], List0)
 					},
-				NArray = lists:foldl(ArrayFun, Array, List),
+
+                % 排序为了保证主角在最后，可以给他设置protectors……
+                List  = lists:keysort(#role.gd_roleRank, List0),
+                {_, NArray} = lists:foldl(ArrayFun, {[], Array}, List),
 				{[PInfo], NArray};
 			
-			[{ID, List}, {ID2, List2}] ->
+			[{ID, List0}, {ID2, List20}] ->
 				?INFO(battle, "make team"),
-				?INFO(battle, "ID1 = ~w, RoleList1 = ~w", [ID, List]),
-				?INFO(battle, "ID2 = ~w, RoleList2 = ~w", [ID2, List2]),
+				?INFO(battle, "ID1 = ~w, RoleList1 = ~w", [ID, List0]),
+				?INFO(battle, "ID2 = ~w, RoleList2 = ~w", [ID2, List20]),
 				
 				{true, Ps2} = mod_player:is_online(ID2),
 				PInfo = 
 					#player_info {
 						id       = ID,		  
 						pid      = Ps#player_status.player_pid,
-						lead     = get_mer_leader(Camp, List),
-						mer_list = lists:foldl(RoleFun, [], List)
+						lead     = get_mer_leader(Camp, List0),
+						mer_list = lists:foldl(RoleFun, [], List0)
 					},
 				
 				PInfo2 = 
 					#player_info {
 						id       = ID2,
 						pid      = Ps2#player_status.player_pid, 
-						lead     = get_mer_leader(Camp, List2),
-						mer_list = lists:foldl(RoleFun, [], List2)
+						lead     = get_mer_leader(Camp, List20),
+						mer_list = lists:foldl(RoleFun, [], List20)
 					},
+
+                List  = lists:keysort(#role.gd_roleRank, List0),
+                List2 = lists:keysort(#role.gd_roleRank, List20),
 				
-				NArray = lists:foldl(ArrayFun, Array, List ++ List2),
+                {_, NArray0} = lists:foldl(ArrayFun, {[], Array}, List),
+                {_, NArray} = lists:foldl(ArrayFun, {[], NArray0}, List2),
 				{[PInfo, PInfo2], NArray};
 			_Other ->
 				?ERR(battle, "mod_team returns: ~w", [_Other])
 		end;
 	true -> %% maketeam = false;
-		List = 
+		List0 = 
 			if (MerList =/= []) ->
 				MerList;
 			true ->
@@ -705,9 +732,9 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array) ->
 				mod_role:get_on_battle_list(ID)
 			end,
 			
-		?INFO(battle, "On Battle List = ~w", [List]),
+		?INFO(battle, "On Battle List = ~w", [List0]),
 		
-		Leader = case get_mer_leader(Camp, List) of
+		Leader = case get_mer_leader(Camp, List0) of
             data_not_exist ->
                 FirstRole = hd(MerList),
                 if 
@@ -716,7 +743,7 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array) ->
                 end;
             L -> L
         end,
-		List1 = lists:foldl(RoleFun, [], List),
+		List1 = lists:foldl(RoleFun, [], List0),
 		PInfo   = 
 			#player_info {
 				id       = ID,
@@ -724,7 +751,9 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array) ->
 				lead     = Leader,
 				mer_list = List1
 			},
-		NArray = lists:foldl(ArrayFun, Array, List),
+
+        List = lists:keysort(#role.gd_roleRank, List0),
+        {_, NArray} = lists:foldl(ArrayFun, {[], Array}, List),
 		{[PInfo], NArray}
 	end.
 
@@ -1985,11 +2014,34 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
                     hp_counter = -Counter, 			%% counter strike
                     hp_rebound = -Rebound  			%% rebound damage
                 },
-                {NewAttInfoList, _, _, _} = lists:foldl(fun buff_att_helper/2, 
+                {NewAttInfoList0, _, _, _} = lists:foldl(fun buff_att_helper/2, 
                                                         {[AttInfo], SkillId, NTar, BattleData},
                                                         [{buff, ?BUFF_SCORN},
+                                                         % XXX ?PSKILL_PROTECT的效果也在?BUFF_ASSISTED里处理……
                                                          {buff, ?BUFF_ASSISTED},
-                                                         {buff, ?BUFF_DMG_ABSORB_TARGET}]),
+                                                         {buff, ?BUFF_DMG_ABSORB_TARGET},
+                                                         {p_skill, ?PSKILL_REVIVE}]),
+
+                %% 如果最后结算NTar会挂掉，清空它的反弹和反击伤害值……
+                %% 目前应该没实际作用，因为上面get_counter函数里已经判断过NTar会不会挂了
+                %% 但是如果以后上面的foldl里加入了增加伤害的东西，就一定要做下面的判断
+                NewAttInfoList = case Counter =/= 0 orelse Rebound =/= 0 of
+                    true ->
+                        NTarStat = get_battle_status(NTar, BattleData),
+                        case summarize_att_info(lists:reverse(NewAttInfoList0),
+                                                {NTarStat#battle_status.hp, 
+                                                 NTarStat#battle_status.mp}) of
+                            {0, _} ->
+                                ?BATTLE_LOG("        站位 ~w 已挂, 取消反击和反弹效果", [NTar]),
+                                DummyInfo = hd(NewAttInfoList0),
+                                [DummyInfo#attack_info{hp_counter = 0, hp_rebound = 0} | tl(NewAttInfoList0)];
+                            _Other ->
+                                NewAttInfoList0
+                        end;
+                    _ ->        % false
+                        NewAttInfoList0
+                end,
+
                 attack(SkillId, Src, AttSpec, Rest, 
                        lists:reverse(NewAttInfoList) ++ AttInfoList, BattleData)
 		end
@@ -2039,7 +2091,7 @@ handle_attack_info(SkillId, Src, AttInfoList, [AttInfo | Rest], BattleData) ->
 	case AttInfo#attack_info.is_miss    == true  orelse 
 		 SrcStat#battle_status.is_alive == false orelse 
 		 TarStat#battle_status.is_alive == false of
-		
+
 		true ->
 			NAttInfo = 
 				AttInfo#attack_info {
@@ -3230,9 +3282,9 @@ check_plot_trigger([P | Rest], BattleData, NewPlots) ->
     end.
 
 check_single_plot_trigger(#battle_plot{trigger = {?BATTLE_PLOT_TRIGGER_ROUNDS, Round}}, BattleData) ->
-    case BattleData#battle_data.round of
-        Round -> true;
-        _     -> false
+    case BattleData#battle_data.round >= Round of
+        true -> true;
+        _    -> false
     end;
 check_single_plot_trigger(#battle_plot{trigger = {?BATTLE_PLOT_TRIGGER_DEATH, Pos}}, BattleData) ->
     Stat = get_battle_status(Pos, BattleData),
@@ -3271,7 +3323,8 @@ trigger_plot(Plot, BattleData) ->
         {BattleData, Plot#battle_plot{new_roles = []}},
         Plot#battle_plot.new_roles),
     send_plot_package(NewPlot, BattleData1),
-    BattleData1#battle_data{attorder = get_att_order(BattleData1)}.
+    NewPosList = [P || {P, _} <- NewPlot#battle_plot.new_roles],
+    BattleData1#battle_data{attorder = BattleData1#battle_data.attorder ++ update_order_list(NewPosList, BattleData1)}.
 
 get_alive_num(BattleData) ->
     L = get_target_list(calc_range(0, ?ALL), BattleData),
@@ -3311,12 +3364,28 @@ buff_att_helper({buff, ?BUFF_SCORN}, {AttInfoList, SkillID, Tar, BattleData}) ->
     {[NAttInfo | tl(AttInfoList)], SkillID, Tar, BattleData};
 
 buff_att_helper({buff, ?BUFF_ASSISTED}, {AttInfoList, SkillID, Tar, BattleData} = Orig) ->
-    TarBuffList = (get_battle_status(Tar, BattleData))#battle_status.buff,
+    TarStat = get_battle_status(Tar, BattleData),
+    TarBuffList = TarStat#battle_status.buff,
     AttInfo = hd(AttInfoList),
 
     case lists:keyfind(?BUFF_ASSISTED, #buff.name, TarBuffList) of
         false ->
-            Orig;
+            %% XXX: ?PSKILL_PROTECT 的效果也在这里处理
+            case get_protector(TarStat#battle_status.protectors, BattleData) of
+                none -> Orig;
+                {Protector, {_PrRate, PrCoef}} -> 
+                    NAttInfo = AttInfo#attack_info{
+                        hp_inc = round(AttInfo#attack_info.hp_inc * (1 - PrCoef))
+                    },
+                    AttInfo2 = #attack_info {
+                        pos        = Protector,
+                        is_miss    = false,
+                        is_crit    = false,
+                        hp_inc     = round(AttInfo#attack_info.hp_inc * PrCoef)
+                    },
+                    {[NAttInfo | tl(AttInfoList)] ++ [AttInfo2], SkillID, Tar, BattleData}
+            end;
+                    
         #buff{data = Pos, by_rate = true, value = V} ->
             AssStat = get_battle_status(Pos, BattleData),
             if 
@@ -3369,23 +3438,75 @@ buff_att_helper({p_skill, ?PSKILL_REVIVE}, {AttInfoList, SkillID, Tar, BattleDat
     TarStat = get_battle_status(Tar, BattleData),
     case get_passive_skill_helper(?PSKILL_REVIVE, TarStat#battle_status.p_skill) of
         {true, RVSkillInfo} ->
-            {RVRate, RVCoef} = RVSkillInfo#battle_skill.param,
-            RVRand = random:uniform(),
-            case RVRand =< RVRate of
+            AttInfo = hd(AttInfoList),      % 这个位置总是对Tar的伤害，（目前）有且只有一次
+            NewRawHP = AttInfo#attack_info.hp_inc + TarStat#battle_status.hp,
+            case NewRawHP =< 0 of
                 true ->
-                    NAttInfo  = #attack_info {
-                        pos        = Tar,			  
-                        is_miss    = false,
-                        is_crit    = false,
-                        hp_inc     = round(TarStat#battle_status.hp_max * RVCoef)
-                    },
-                    {AttInfoList ++ NAttInfo, SkillID, Tar, BattleData};
-                _ ->        % false
+                    {RVRate, RVCoef} = RVSkillInfo#battle_skill.param,
+                    RVRand = random:uniform(),
+                    ?BATTLE_LOG("        站位 ~w 被动技能 ~w, 几率: ~w, 随机数: ~w, 生效: ~w",
+                                [Tar, skill:get_skill_uid(?PSKILL_REVIVE, 
+                                                          RVSkillInfo#battle_skill.level),
+                                 RVRate, RVRand, RVRand =< RVRate]),
+                    case RVRand =< RVRate of
+                        true ->
+                            RVHP = round(TarStat#battle_status.hp_max * RVCoef),
+                            NAttInfo = AttInfo#attack_info {
+                                hp_inc = -TarStat#battle_status.hp
+                            },
+                            NAttInfo1 = #attack_info {
+                                pos     = Tar,
+                                is_miss = false,
+                                is_crit = false,
+                                hp_inc  = RVHP
+                            },
+                            ?BATTLE_LOG("        站位 ~w 被动技能 ~w 生效", 
+                                        [Tar, skill:get_skill_uid(?PSKILL_REVIVE, 
+                                                                  RVSkillInfo#battle_skill.level)]),
+                            ?BATTLE_LOG("            新伤害: ~w, 加血: ~w", 
+                                        [TarStat#battle_status.hp, RVHP]),
+                            {[NAttInfo, NAttInfo1 | tl(AttInfoList)] , SkillID, Tar, BattleData};
+                        _ ->        % false
+                            Orig
+                    end;
+                
+                _ ->    % false
                     Orig
             end;
+
         false ->
             Orig
     end.
+
+
+get_protector([{Pos, {Rate, _Coef} = Params} | Rest], BattleData) ->
+    S = get_battle_status(Pos, BattleData),
+    case S#battle_status.is_alive of
+        true  -> 
+            PrRand = random:uniform(),
+            ?BATTLE_LOG("        站位 ~w 被动技能 ~wxxx, 几率: ~w, 随机数: ~w, 生效: ~w",
+                        [Pos, ?PSKILL_PROTECT, Rate, PrRand, PrRand =< Rate]),
+            case PrRand =< Rate of
+                true -> 
+                    ?BATTLE_LOG("        站位 ~w 被动技能 ~wxxx 生效:",
+                                [Pos, ?PSKILL_PROTECT]),
+                    ?BATTLE_LOG("            分担伤害系数: ~w", [_Coef]),
+                    {Pos, Params};
+                _ -> 
+                    get_protector(Rest, BattleData)
+            end;
+        false -> 
+            get_protector(Rest, BattleData)
+    end;
+get_protector([], _BattleData) ->
+    none.
+
+summarize_att_info([A | Rest], {CurHP, CurMP}) ->
+    NewHP = max(0, CurHP + A#attack_info.hp_inc),
+    NewMP = max(0, min(100, CurMP + A#attack_info.mp_inc)),
+    summarize_att_info(Rest, {NewHP, NewMP});
+summarize_att_info([], {CurHP, CurMP}) ->
+    {CurHP, CurMP}.
 
 
 -ifdef(debug).

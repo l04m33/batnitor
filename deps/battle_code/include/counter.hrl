@@ -24,8 +24,6 @@
 -define(COUNTER_YUNBIAO_ROBED_TIMES, 29).%%被劫次数记录
 -define(COUNTER_YUNBIAO_NUM, 30).   %%每天运镖总人数
 
--define(COUNTER_LOGIN_TIMES,31).    %%记录玩家每天登陆次数，用来发放每天登陆奖励
-
 %%boss
 -define(INSPIRE_SUCCES, 31).  %%鼓舞
 %% -define(GOLD_INSPIRE_SUCCES,  32).  %%金币鼓舞
@@ -34,6 +32,9 @@
 %%招财进宝
 -define(COUNTER_WEALTH_LUCK,34). %%招财进宝运势
 -define(COUNTER_WEALTH_GAMBLED,35). %%招财进宝次数
+-define(COUNTER_WEALTH_DISPLAY_LUCK,36). %%招财进宝显示给用户的运势
+
+-define(COUNTER_LOGIN_TIMES,37).    %%记录玩家每天登陆次数，用来发放每天登陆奖励
 
 -record (counter, {
 	key           = {0, 0},

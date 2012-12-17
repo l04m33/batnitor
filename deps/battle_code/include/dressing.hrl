@@ -17,10 +17,10 @@
 -record(dressing, {
 				   gd_DressKey			= {0, none},	%% 类型 {AccountID, horse|fashione|dress}
 				   gd_DressID			= 0,			%% 装备ID
-				   gd_IsShow			= 1,			%% 是否展示
+				   gd_IsShow			= 0,			%% 是否展示
 				   gd_TotExp			= 0,			%% 总经验
 				   gd_LastTime			= 0,			%% 上次升级经验时间
-				   gd_DressList			= [],			%% 可用装扮
+				   gd_DressList			= [1],			%% 可用装扮
 				   gd_IntLevel			= 0				%% 强化等级
 			  }).
 

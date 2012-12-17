@@ -11,8 +11,8 @@
 
 -define(INIT_MAP,           1100).  %% 起始地图
 -define(SPECIAL_MAP, 		1900). 	%% 原野村要做特殊的处理
--define(SPECIAL_NUM, 		data_system:get(34)). 	%% 原野村虚拟房间的个数
 -define(MAX_PLAYER_IN_ROOM, data_system:get(33)). 	%% 在原野村虚拟房间中的最大人数
+-define(SPECIAL_NUM, 		data_system:get(34)). 	%% 原野村虚拟房间的个数
 -define(MOVE_CHECK_SCOPE,   8).
 
 -define(ETS_SCENE_ROOM,     ets_scene_room).
@@ -150,6 +150,7 @@
 
 		fly_data       = [],
 		
+		fashion_data   = 0,		%% 时装数据
 		wing_data	   = 0,		%% 翅膀数据，目前为是否有翅膀这个状态
 		horse_data 	   = 0,		%% 坐骑数据
 		equip_data	   = #equip_info{},
@@ -163,5 +164,3 @@
 		move_queue_pid = none 	%% 移动广播进程
   }
 ).
-
-

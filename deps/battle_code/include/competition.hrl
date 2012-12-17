@@ -77,7 +77,7 @@
 
 -define(CACHE_COMP_TOP_REF, cache_util:get_register_name(comp_top_info)).
 
--define(TIME_CD_TEAM_BANNER, 60).
+-define(TIME_CD_TEAM_BANNER, 360).
 
 -define(TIME_CD_SPEED_UP, 60).
 -define(TIME_CD_CLOAKING, 60).
