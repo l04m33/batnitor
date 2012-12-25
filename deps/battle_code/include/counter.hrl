@@ -36,6 +36,8 @@
 
 -define(COUNTER_LOGIN_TIMES,37).    %%记录玩家每天登陆次数，用来发放每天登陆奖励
 
+-define(COUNTER_ANTI_TOO_MANY_BATTLE,38). %%防止每天刷怪太多次
+
 -record (counter, {
 	key           = {0, 0},
 	gd_updateTime = 0,				%% 更新时间

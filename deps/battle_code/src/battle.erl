@@ -373,7 +373,13 @@ handle_info(_Info, StateName, BattleData) ->
 %% Returns: any
 %% --------------------------------------------------------------------
 terminate(Reason, _StateName, BattleData) ->
-	?INFO(battle, "terminating.. Reason = ~w~n, BattleData = ~w", [Reason, BattleData]),
+    case Reason of
+        normal ->
+            ?INFO(battle, "terminating.. Reason = ~w~n, BattleData = ~w", [Reason, BattleData]);
+        _ ->
+            ?CHAT(battle, "服务器战斗进程挂了！看log看log！！"),
+            ?ERR(battle, "terminating.. Reason = ~w~n, BattleData = ~w", [Reason, BattleData])
+    end,
 	Winner = BattleData#battle_data.winner,
 	?INFO(battle, "Winner = ~w", [Winner]),
 	
@@ -775,7 +781,24 @@ get_mer_leader(Camp, [Role | Rest]) ->
 role_2_bs(ID, PlayerLevel, Role) ->
 	?INFO(battle, "ID = ~w", [ID]),
 	?INFO(battle, "Skill From Mer = ~w", [Role#role.gd_skill]),
-	{ActSkills, PasSkills} = transform_skill(Role#role.gd_skill),
+	{ActSkills0, PasSkills} = transform_skill(Role#role.gd_skill),
+
+    %% 因为AI要求按面板上的顺序从左到右发动技能，所以主角的技能要事先排一下序……
+    ActSkills = case Role#role.gd_roleRank of
+        1 ->
+            F = fun(UID1, UID2) ->
+                {SID1, Lv1} = skill:get_skill_id_level(UID1),
+                Info1 = data_skill_table:get(SID1, Lv1),
+
+                {SID2, Lv2} = skill:get_skill_id_level(UID2),
+                Info2 = data_skill_table:get(SID2, Lv2),
+
+                Info1#battle_skill.slot =< Info2#battle_skill.slot
+            end,
+            lists:sort(F, ActSkills0);
+        _ ->
+            ActSkills0
+    end,
 	
 	?INFO(battle, "ActSkills = ~w, PasSkills = ~w", [ActSkills, PasSkills]),
 	?INFO(battle, "StartLevel = ~w", [Role#role.star_lv]),
@@ -799,35 +822,45 @@ role_2_bs(ID, PlayerLevel, Role) ->
         false ->
             0
     end,
+
+    %% XXX: 现在只有主角有avatar信息
+    AvatarInfo = case is_integer(ID) andalso Role#role.gd_roleRank =:= 1 of
+        true ->
+            mod_dressing:getAllDress4Server(ID)
+                ++ mod_items:getMainRoleEquipInfo(ID);
+        _ ->    % false
+            []
+    end,
+    ?INFO(battle, "AvatarInfo = ~w", [AvatarInfo]),
 	
 	#battle_status {
-		id        = element(2, Role#role.key),
-		player_id = ID,
-		name      = Role#role.gd_name,      %% gd_name is a string, which means a list.
-		level     = Role#role.gd_roleLevel,
-		star      = Role#role.star_lv,
-		job       = Role#role.gd_careerID,
-		skill     = ActSkills,
-		%% skill    = [245001, 279001],
-		p_skill   = PasSkills,
-		hp        = Role#role.gd_currentHp,
-		hp_max    = Role#role.gd_maxHp,
+        id        = element(2, Role#role.key),
+        player_id = ID,
+        name      = Role#role.gd_name,      %% gd_name is a string, which means a list.
+        level     = Role#role.gd_roleLevel,
+        star      = Role#role.star_lv,
+        job       = Role#role.gd_careerID,
+        skill     = ActSkills,
+        p_skill   = PasSkills,
+        hp        = Role#role.gd_currentHp,
+        hp_max    = Role#role.gd_maxHp,
         mp        = min(100, NewbieMP + AngryMP),
-		p_att     = Role#role.p_att,
-		p_def     = Role#role.p_def,
-		m_att     = Role#role.m_att,
-		m_def     = Role#role.m_def,
-		dodge     = Role#role.gd_shanbi,
-		hit       = Role#role.gd_mingzhong,
-		agility   = Role#role.gd_minjie, 
-		speed     = Role#role.gd_speed,
-		break     = Role#role.gd_pojia,
+        p_att     = Role#role.p_att,
+        p_def     = Role#role.p_def,
+        m_att     = Role#role.m_att,
+        m_def     = Role#role.m_def,
+        dodge     = Role#role.gd_shanbi,
+        hit       = Role#role.gd_mingzhong,
+        agility   = Role#role.gd_minjie, 
+        speed     = Role#role.gd_speed,
+        break     = Role#role.gd_pojia,
         fatal     = Role#role.gd_zhiming,
-		crit      = Role#role.gd_baoji,
-		luck      = Role#role.gd_xingyun,
+        crit      = Role#role.gd_baoji,
+        luck      = Role#role.gd_xingyun,
         counter   = Role#role.gd_fanji,
         block     = Role#role.gd_gedang,
-		is_lead   = Role#role.gd_roleRank == 1 
+        is_lead   = Role#role.gd_roleRank == 1,
+        avatar_info = AvatarInfo
 	}.
 
 mon_2_bs(MonAttr, Pos, MonHp) ->
@@ -845,6 +878,8 @@ mon_2_bs(MonAttr, Pos, MonHp) ->
             end
     end,
     CurHP = min(MonAttr#mon_attr.hp, MaxHP),
+
+    ?INFO(battle, "mon at pos ~w, HP = ~w", [Pos, CurHP]),
     
     #battle_status {
         id      = MonAttr#mon_attr.id,
@@ -870,10 +905,7 @@ mon_2_bs(MonAttr, Pos, MonHp) ->
         crit    = MonAttr#mon_attr.crit,
         speed   = MonAttr#mon_attr.speed,
         is_lead = false,
-        is_alive = case CurHP of
-                       0 -> false;
-                       _ -> true
-                   end
+        is_alive = (CurHP > 0)
     }.
 
 get_mon_info(Camp, MonGroupID, Array) ->
@@ -1057,19 +1089,22 @@ set_battle_cmd(ID, Cmd, BattleData) ->
                             ?SKILL_COMMON_ATTACK
                     end,
 
+                    SkillIndex = State#battle_status.skill_index,
+
 					%% if Sid == 0 then we use AI to set command
 					if (Sid == 0) ->						 
-                        RealSID = if
-                            ScornedSID =/= 0 -> ScornedSID;
+                        {RealSID, NewSkillIndex} = if
+                            ScornedSID =/= 0 -> 
+                                {ScornedSID, SkillIndex};
                             true ->
-                                {AISid, _, _, _} = ai:get_skill(Lead, BattleData),
-                                AISid
+                                {AISid, _, _, NewSkillIndex0} = ai:get_skill(Lead, BattleData),
+                                {AISid, NewSkillIndex0}
                         end,
-                        case RealSID of
-                            ?SKILL_COMMON_ATTACK -> void;
-                            _ -> send_command_package(Lead, RealSID, BattleData)
-                        end,
-						NState = State#battle_status {cmd = {RealSID, Lead, 0}};
+                        send_command_package(Lead, RealSID, BattleData),
+
+                        Tar = ai:get_skill_target(RealSID, Lead, BattleData),
+                        ?INFO(battle, "Tar = ~w", [Tar]),
+						NState = State#battle_status {cmd = {RealSID, Lead, Tar}, skill_index = NewSkillIndex};
 
 					true ->
                         RealSID = if
@@ -1077,7 +1112,9 @@ set_battle_cmd(ID, Cmd, BattleData) ->
                             true -> Sid
                         end,
 
-						NState = State#battle_status {cmd = {RealSID, Lead, 0}},
+                        Tar = ai:get_skill_target(RealSID, Lead, BattleData),
+                        ?INFO(battle, "Tar = ~w", [Tar]),
+						NState = State#battle_status {cmd = {RealSID, Lead, Tar}},
 						?INFO(battle, "set battle cmd: Sid = ~w, Lead = ~w, Round = ~w, Timeout = ~w", 
 						  	[RealSID, Lead, Round, Timeout])
 					end,
@@ -1100,6 +1137,7 @@ handle_command_ex(BattleData, Repeat) ->
 	SIndex    = SrcStat#battle_status.skill_index,
 
 	?INFO(battle, "Calling Handle command Ex in Round ~w", [Round]),
+	?INFO(battle, "Src = ~w", [Src]),
 	
 	IsFaint = is_buff_exist(?BUFF_FAINT, SrcStat),
     if
@@ -1114,6 +1152,7 @@ handle_command_ex(BattleData, Repeat) ->
 	%% indicated by NBattleData
 	NBattleData = 
 		if (SrcStat#battle_status.is_alive == false) ->
+            ?INFO(battle, "Skip = true ?!"),
 			Skip = true,
 			BattleData;
 		true ->
@@ -1144,19 +1183,24 @@ handle_command_ex(BattleData, Repeat) ->
                                         {?SKILL_COMMON_ATTACK, Src, T, SIndex}
                                 end
 							end;
-						{S, Src, _} ->
+
+						{S, Src, OTar} ->
 							%% case (2): 
+                            ?INFO(battle, "OTar = ~w", [OTar]),
+                            T = case OTar > 0 andalso OTar =< ?BATTLE_FIELD_SIZE 
+                                    andalso (array:get(OTar, BattleData#battle_data.player))#battle_status.is_alive of
+                                true  -> OTar;
+                                false -> ai:get_skill_target(S, Src, BattleData)
+                            end,
+                            ?INFO(battle, "T = ~w", [T]),
 							case ai:validate_skill(S, Src, BattleData) of
 								true ->
 									?INFO(battle, "validation passed."),
-									T = ai:get_skill_target(S, Src, BattleData),
 									?INFO(battle, "Sid = ~w, Src = ~w, Tar = ~w", [S, Src, T]),
 									{S, Src, T, SIndex};
 								false ->
 									?INFO(battle, "validation not passed."),
-									T = ai:get_skill_target(?SKILL_COMMON_ATTACK, Src, BattleData),
 									{?SKILL_COMMON_ATTACK, Src, T, SIndex}
-									%% ai:get_skill_by_ai(Src, SrcStat#battle_status.id, BattleData)
 							end
 					end
 				end, 
@@ -1176,6 +1220,12 @@ handle_command_ex(BattleData, Repeat) ->
 			end,
 			
 			NSrcStat = get_battle_status(Src, BattleData1),	
+            case NSrcStat#battle_status.is_lead of
+                true ->
+                    ?INFO(battle, "Idx = ~w", [Idx]);
+                false ->
+                    void
+            end,
 			set_battle_status(Src, NSrcStat#battle_status {cmd = ?UNDEFINED, skill_index = Idx}, BattleData1)
 		end,
 		
@@ -1217,6 +1267,7 @@ handle_command_ex(BattleData, Repeat) ->
 		case is_battle_end(NBattleData1) of
 		{true, Camp} -> NBattleData1#battle_data{winner = Camp};
 		false ->
+            ?INFO(battle, "OrderList = ~w", [OrderList]),
 			case length(OrderList) of
 				1 -> 
 					if (NBattleData1#battle_data.round =:= 30) ->
@@ -1238,11 +1289,12 @@ handle_command_ex(BattleData, Repeat) ->
 			NBattleData2;
 		false ->
 			NOrderList = NBattleData2#battle_data.attorder,
+            ?INFO(battle, "NOrderList = ~w", [NOrderList]),
 			NextSrc = hd(NOrderList),
 			?INFO(battle, "NextSrc = ~w", [NextSrc]),
 			NextSrcStat = get_battle_status(NextSrc, NBattleData2),
-			case NextSrcStat#battle_status.is_lead == true orelse
-                    length(NOrderList) =:= get_alive_num(NBattleData2) of
+			case NextSrcStat#battle_status.is_lead == true 
+                    orelse length(OrderList) =:= 1 of
                 true ->
                     NBattleData2;
                 _ ->        % false
@@ -1506,7 +1558,8 @@ get_counter(Src, Tar, SkillId, _AttSpec, Dm, BattleData) ->
                                 false -> 1
                             end,
                         {AStar, DStar} = {SrcStat#battle_status.star, TarStat#battle_status.star},
-                        CounterRate = max(0, TarStat#battle_status.counter / 1666 + ParamX * 0.04 * (AStar - DStar)),
+                        CounterAttr = get_adjust_value(counter, TarStat#battle_status.counter, Tar, BattleData),
+                        CounterRate = max(0, CounterAttr / 1666 + ParamX * 0.04 * (AStar - DStar)),
 					
                         CounterRand = random:uniform(),
                         ?BATTLE_LOG("        反击几率: ~w, 随机数: ~w, 反击触发: ~w",
@@ -1607,6 +1660,7 @@ get_adjust_value(Tag, Attr, Pos, BattleData, ExtraBuff) ->
             dodge -> {?BUFF_DODGE_UP, ?BUFF_DODGE_DOWN};
             block -> {?BUFF_BLOCK_UP, ?BUFF_BLOCK_DOWN};
             fatal -> {?BUFF_FATAL_UP, ?BUFF_FATAL_DOWN};
+            counter -> {?BUFF_COUNTER_UP, ?BUFF_COUNTER_DOWN};
             cast_damage -> {?BUFF_CAST_DMG_UP, ?BUFF_CAST_DMG_DOWN};
             recv_damage -> {?BUFF_RECV_DMG_UP, ?BUFF_RECV_DMG_DOWN}
 		end,
@@ -1939,16 +1993,24 @@ attack(SkillId, Src, AttSpec, BattleData) ->
 -spec attack(SkillId, Src, AttSpec, Targets, BattleData) -> AttInfoList when
 	SkillId     :: integer(),
 	Src         :: integer(),
-	AttSpec     :: #attack_spec{},
+    AttSpec     :: #attack_spec{} | number(),
 	Targets     :: [integer()],
 	BattleData  :: #battle_data{},
 	AttInfoList :: [#attack_info{}].
+
+attack(SkillId, Src, AttRate, Targets, BattleData) when is_number(AttRate) ->
+    AttSpec = #attack_spec {
+        addition = AttRate,
+        targets  = Targets
+    },
+    attack(SkillId, Src, AttSpec, Targets, BattleData);
 
 attack(SkillId, Src, AttSpec, Targets, BattleData) ->
 	attack(SkillId, Src, AttSpec, Targets, [], BattleData).
 													  
 %% Travers the Target list, do some calculation, and put the result in the AttInfoList
 attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
+    ?INFO(battle, "AttSpec = ~w", [AttSpec]),
 
 	SrcStat = get_battle_status(Src, BattleData),
 	TarStat = get_battle_status(Tar, BattleData),
@@ -1980,12 +2042,12 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
 	if (Skip == true) ->	   
 		attack(SkillId, Src, AttSpec, Rest, AttInfoList, BattleData);
 	true ->
-        ?BATTLE_LOG("    目标站位: ~w", [Tar]),
-		case pre_attack(Src, Tar, AttSpec, BattleData) of
+        ?BATTLE_LOG("    目标站位: ~w", [NTar]),
+		case pre_attack(Src, NTar, AttSpec, BattleData) of
 			false ->
 				%% miss target, so the other field in attack_info may be 0 (is_miss == true, is_crit = false) 
 				?INFO(battle, "****************battle attack: ***************************************"),
-				AttInfo = #attack_info {pos = Tar, is_miss = true},
+				AttInfo = #attack_info {pos = NTar, is_miss = true},
 				attack(SkillId, Src, AttSpec, Rest, [AttInfo | AttInfoList], BattleData);
 
 			true ->
@@ -1998,7 +2060,7 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
 				
 				?INFO(battle, "****************battle attack: ***************************************"),
 				
-				?INFO(battle, "Skillid = ~w, Src = ~w, Tar = ~w, Crit = ~w, Damage = ~w, HpDrain = ~w, MpDrain = ~w", 
+				?INFO(battle, "Skillid = ~w, Src = ~w, NTar = ~w, Crit = ~w, Damage = ~w, HpDrain = ~w, MpDrain = ~w", 
 					  [SkillId, Src, NTar, Cr, Dm, HpDrain, Ma]),
 				
 				print_battle_status(Src, BattleData),
@@ -3018,6 +3080,7 @@ get_items_dispatch([Id | Rest], DropType, ItemInfo, DspList) ->
 			exclusive -> get_items_dispatch_2(ItemInfo)
 		end,
     Items1 = fold_duplicate_items(Items),
+    ?INFO(battle, "Items1 = ~w", [Items1]),
 	get_items_dispatch(Rest, DropType, ItemInfo, [{Id, Items1} | DspList]).
 
 get_items_dispatch_1(ItemInfo) ->
@@ -3053,6 +3116,7 @@ send_battle_award(BattleData) ->
 		andalso (Mod == pve) of
 	true ->
 		BinIDList = pt_20:write(20009, BattleData),
+        ?INFO(battle, "BinIDList = ~w", [BinIDList]),
 		send_player_package(BinIDList);
 	false ->
 		ok
@@ -3067,36 +3131,40 @@ send_battle_award(ID, BattleData) ->
 	
 	?INFO(battle, "sending battle award, Award = ~w, Items = ~w", [Award, Items]),
 
-	%% add practice
-	%% TODO: Add LogType
-	MerList = get_mer_list(ID, BattleData),
-	G = fun(Pos) ->
-			Stat = get_battle_status(Pos, BattleData),
-			mod_role:add_exp(ID, {Stat#battle_status.id, Exp}, ?EXP_FROM_BATTLE)
-		end,	
-	%% add exp
-	lists:foreach(G, MerList),
-	%% add item
-	IDItems = 
-		case lists:keysearch(ID, 1, Items) of
-			{value, {ID, Value}} -> Value;
-			false -> []
-		end,
-	case length(IDItems) == 0 of
-        false -> mod_team:update_item(ID, IDItems);
-        true ->skip
-    end,
-	?INFO(battle,"createItems, PlayerID = ~w, Itemlist = ~w", [ID, IDItems]),
-	
-    case BattleData#battle_data.type of
-        ?BATTLE_TYPE_DEFENCE ->
-            catch mod_economy:add_silver(ID, Silver, ?SILVER_FROM_DEFENCE_MON),
-            catch mod_items:createItems(ID, IDItems, ?ITEM_FROM_DEFENCE_MON);
-        _ ->
-            catch mod_economy:add_silver(ID, Silver, ?SILVER_FROM_MONSTER),
-            catch mod_items:createItems(ID, IDItems, ?ITEM_FROM_BATTLE)
-    end.
-		
+	%%目前存在无限挂机或者按键精灵24小时刷怪的问题。
+	%%需要加一个规则：与野外怪战斗超过800次，则无法获得经验奖励。
+	case check_anti_auto_battle(ID,BattleData) of
+		false->
+			MerList = get_mer_list(ID, BattleData),
+			G = fun(Pos) ->
+					Stat = get_battle_status(Pos, BattleData),
+					mod_role:add_exp(ID, {Stat#battle_status.id, Exp}, ?EXP_FROM_BATTLE)
+			end,	
+			%% add exp
+			lists:foreach(G, MerList),
+			%% add item
+			IDItems = 
+				case lists:keysearch(ID, 1, Items) of
+					{value, {ID, Value}} -> Value;
+					false -> []
+				end,
+			case length(IDItems) == 0 of
+		        false -> mod_team:update_item(ID, IDItems);
+		        true ->skip
+		    end,
+			?INFO(battle,"createItems, PlayerID = ~w, Itemlist = ~w", [ID, IDItems]),
+			
+		    case BattleData#battle_data.type of
+		        ?BATTLE_TYPE_DEFENCE ->
+		            catch mod_economy:add_silver(ID, Silver, ?SILVER_FROM_DEFENCE_MON),
+		            catch mod_items:createItems(ID, IDItems, ?ITEM_FROM_DEFENCE_MON);
+		        _ ->
+		            catch mod_economy:add_silver(ID, Silver, ?SILVER_FROM_MONSTER),
+		            catch mod_items:createItems(ID, IDItems, ?ITEM_FROM_BATTLE)
+		    end;
+		true ->
+			mod_err:send_err(ID,?ERR_BATTLE_TOO_MUCH_BATTLE_SINGLE_DAY)
+	end.
 %==============================================================================================================
 % Debug function
 %==============================================================================================================
@@ -3224,12 +3292,28 @@ mutate_attack(BattleData) ->
             BattleData
     end.
 
+get_n_pos_by(Type, MaxFlag, N, PosList, BattleData) ->
+    {_, TarList} = lists:foldl(
+        fun(_, {CList, AccList}) ->
+            case CList of
+                [] -> {CList, AccList};
+                _  ->
+                    {NP, _} = battle:get_pos_by(Type, MaxFlag, CList, BattleData),
+                    NCList = lists:delete(NP, CList),
+                    {NCList, [NP | AccList]}
+            end
+        end,
+        {PosList, []},
+        lists:seq(1, N)),
+    TarList.
+
 get_pos_by(Type, MaxFlag, PosList, BattleData) ->
-    FieldIdx = case Type of
-        hp -> #battle_status.hp;
-        mp -> #battle_status.mp;
-        p_def -> #battle_status.p_def;
-        m_pef -> #battle_status.m_def
+    {FieldIdx, TotalFieldIdx} = case Type of
+        hp     -> {#battle_status.hp, 0};
+        hp_rel -> {#battle_status.hp, #battle_status.hp_max};   % TotalFieldIdx非零代表按百分比算
+        mp     -> {#battle_status.mp, 0};                       % TotalFieldIdx是零代表按整数值算
+        p_def  -> {#battle_status.p_def, 0};
+        m_def  -> {#battle_status.m_def, 0}
     end,
     Op = case MaxFlag of
         max -> '>';
@@ -3237,17 +3321,26 @@ get_pos_by(Type, MaxFlag, PosList, BattleData) ->
     end,
     First = hd(PosList),
     FirstStat = get_battle_status(First, BattleData),
-    get_pos_by(PosList, BattleData, FieldIdx, Op, {First, element(FieldIdx, FirstStat)}).
+    FirstVal = case TotalFieldIdx of
+        0 -> element(FieldIdx, FirstStat);
+        _ -> element(FieldIdx, FirstStat) / element(TotalFieldIdx, FirstStat)
+    end,
+    get_pos_by(PosList, BattleData, {FieldIdx, TotalFieldIdx}, 
+               Op, {First, FirstVal}).
 
 get_pos_by([], _, _, _, {_CurMinPos, _CurMinVal} = Ret) ->
     Ret;
-get_pos_by([H | T], BattleData, FieldIdx, Op, {CurMinPos, CurMinVal}) ->
+get_pos_by([H | T], BattleData, {FieldIdx, TotalFieldIdx}, Op, {CurPos, CurVal}) ->
     Stat = get_battle_status(H, BattleData),
-    case erlang:Op(element(FieldIdx, Stat), CurMinVal) of
+    Val = case TotalFieldIdx of
+        0 -> element(FieldIdx, Stat);
+        _ -> element(FieldIdx, Stat) / element(TotalFieldIdx, Stat)
+    end,
+    case erlang:Op(Val, CurVal) of
         true ->
-            get_pos_by(T, BattleData, FieldIdx, Op, {H, element(FieldIdx, Stat)});
+            get_pos_by(T, BattleData, {FieldIdx, TotalFieldIdx}, Op, {H, Val});
         _ ->    % false
-            get_pos_by(T, BattleData, FieldIdx, Op, {CurMinPos, CurMinVal})
+            get_pos_by(T, BattleData, {FieldIdx, TotalFieldIdx}, Op, {CurPos, CurVal})
     end.
 
 transform_plot(ID, PlayerLevel, Plot) ->
@@ -3319,6 +3412,8 @@ trigger_plot(Plot, BattleData) ->
                     exit(no_pos_for_plot_role);     % never returns
                 _ -> 
                     ?INFO(battle_plot, "Adding new role in pos ~w", [NPos]),
+                    ?BATTLE_LOG("~n--------- 触发剧情, 加人 ---------"),
+                    dump_single_player(NPos, BS),
                     {set_battle_status(NPos, BS, BD),
                      NP#battle_plot{new_roles = [{NPos, BS} | NP#battle_plot.new_roles]}}
             end
@@ -3511,6 +3606,27 @@ summarize_att_info([A | Rest], {CurHP, CurMP}) ->
 summarize_att_info([], {CurHP, CurMP}) ->
     {CurHP, CurMP}.
 
+check_anti_auto_battle(Id,Battle_data)->
+	?INFO(battle,"battle data is ~w",[Battle_data]),
+	case Battle_data#battle_data.caller of
+		monster ->
+			?INFO(battle,"wild monster flight, check whether exceed each day max allow"),
+			mod_counter:add_counter(Id,?COUNTER_ANTI_TOO_MANY_BATTLE),
+			Counter = mod_counter:get_counter(Id,?COUNTER_ANTI_TOO_MANY_BATTLE),
+			%%判断次数是否超过
+			case Counter > data_system:get(36) of
+				true->
+					?INFO(battle,"battle more than 800 times, no award"),
+					true;
+				false->
+					?INFO(battle,"battle less than 800 times, no award"),
+					false
+			end;
+		_->
+			?INFO(battle,"caller is ~w",[Battle_data#battle_data.caller]),
+			false
+	end.
+
 
 -ifdef(debug).
 
@@ -3573,7 +3689,10 @@ buff_type_to_str(Type) ->
         ?BUFF_DMG_ABSORB  -> "伤害吸收";
         ?BUFF_DMG_ABSORB_TARGET -> "伤害被吸收";
 
-        ?BUFF_CURSED      -> "被诅咒"
+        ?BUFF_CURSED      -> "被诅咒";
+
+        ?BUFF_COUNTER_UP   -> "反击+";
+        ?BUFF_COUNTER_DOWN -> "反击-"
     end.
 
 tag_to_buff_effect(Tag) ->
@@ -3588,33 +3707,37 @@ tag_to_buff_effect(Tag) ->
         dodge -> "闪避";
         block -> "格挡";
         fatal -> "致命";
+        counter -> "反击";
         cast_damage -> "输出伤害";
         recv_damage -> "输入伤害"
     end.
 
 dump_player_list(BattleData) ->
     F = fun(Pos) ->
-        case array:get(Pos, BattleData#battle_data.player) of
-            undefined -> void;
-            P ->
-                ?BATTLE_LOG("站位: ~w, ID: ~w, 名字: ~s, 职业: ~w, 等级: ~w, 星级: ~w",
-                            [Pos, P#battle_status.id, P#battle_status.name, 
-                             P#battle_status.job, P#battle_status.level, P#battle_status.star]),
-                ?BATTLE_LOG("    血: ~w, 怒气: ~w, 物攻: ~w, 魔攻: ~w, 物防: ~w, 魔防: ~w", 
-                            [P#battle_status.hp, P#battle_status.mp, 
-                             P#battle_status.p_att, P#battle_status.m_att,
-                             P#battle_status.p_def, P#battle_status.m_def]),
-                ?BATTLE_LOG("    速度: ~w, 命中: ~w, 闪避: ~w, 暴击: ~w, 幸运: ~w, 反击: ~w, 格挡: ~w, 破甲: ~w, 敏捷: ~w", 
-                            [P#battle_status.speed, P#battle_status.hit, 
-                             P#battle_status.dodge, P#battle_status.crit,
-                             P#battle_status.luck, P#battle_status.counter,
-                             P#battle_status.block, P#battle_status.break,
-                             P#battle_status.agility]),
-                ?BATTLE_LOG("    技能: ~w", [P#battle_status.skill]),
-                ?BATTLE_LOG("    被动技能: ~w", [P#battle_status.p_skill])
-        end
+        dump_single_player(Pos, array:get(Pos, BattleData#battle_data.player))
     end,
     lists:foreach(F, lists:seq(1, ?BATTLE_FIELD_SIZE)).
+
+dump_single_player(Pos, P) ->
+    case P of
+        ?UNDEFINED -> void;
+        P ->
+            ?BATTLE_LOG("站位: ~w, ID: ~w, 名字: ~s, 职业: ~w, 等级: ~w, 星级: ~w",
+                        [Pos, P#battle_status.id, P#battle_status.name, 
+                         P#battle_status.job, P#battle_status.level, P#battle_status.star]),
+            ?BATTLE_LOG("    血: ~w, 怒气: ~w, 物攻: ~w, 魔攻: ~w, 物防: ~w, 魔防: ~w", 
+                        [P#battle_status.hp, P#battle_status.mp, 
+                         P#battle_status.p_att, P#battle_status.m_att,
+                         P#battle_status.p_def, P#battle_status.m_def]),
+            ?BATTLE_LOG("    速度: ~w, 命中: ~w, 闪避: ~w, 暴击: ~w, 幸运: ~w, 反击: ~w, 格挡: ~w, 破甲: ~w, 敏捷: ~w", 
+                        [P#battle_status.speed, P#battle_status.hit, 
+                         P#battle_status.dodge, P#battle_status.crit,
+                         P#battle_status.luck, P#battle_status.counter,
+                         P#battle_status.block, P#battle_status.break,
+                         P#battle_status.agility]),
+            ?BATTLE_LOG("    技能: ~w", [P#battle_status.skill]),
+            ?BATTLE_LOG("    被动技能: ~w", [P#battle_status.p_skill])
+    end.
 
 dump_brief_player_list(BattleData) ->
     F = fun(Pos) ->
@@ -3635,6 +3758,8 @@ buff_type_to_str(_) -> ok.
 tag_to_buff_effect(_) -> ok.
 
 dump_player_list(_) -> ok.
+
+dump_single_player(_, _) -> ok.
 
 dump_brief_player_list(_) -> ok.
 

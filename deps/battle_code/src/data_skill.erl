@@ -13073,125 +13073,125 @@ get_role_added_attri(222010) ->
 
 %%================================================
 %% 帮派技能消耗 技能ID -> {开启等级,消耗功勋,消耗银币} 
-get_guild_skill_cost(301001) -> {4,1680, 16900};
+get_guild_skill_cost(301001) -> {3,1680, 16900};
 
-get_guild_skill_cost(301002) -> {4,1920, 21100};
+get_guild_skill_cost(301002) -> {3,1920, 21100};
 
-get_guild_skill_cost(301003) -> {4,2160, 26300};
+get_guild_skill_cost(301003) -> {3,2160, 26300};
 
-get_guild_skill_cost(301004) -> {4,2520, 32900};
+get_guild_skill_cost(301004) -> {3,2520, 32900};
 
-get_guild_skill_cost(301005) -> {4,2760, 41100};
+get_guild_skill_cost(301005) -> {3,2760, 41100};
 
-get_guild_skill_cost(301006) -> {5,3240, 51400};
+get_guild_skill_cost(301006) -> {3,3240, 51400};
 
-get_guild_skill_cost(301007) -> {5,3600, 56500};
+get_guild_skill_cost(301007) -> {3,3600, 56500};
 
-get_guild_skill_cost(301008) -> {5,4080, 62100};
+get_guild_skill_cost(301008) -> {3,4080, 62100};
 
-get_guild_skill_cost(301009) -> {5,4680, 68200};
+get_guild_skill_cost(301009) -> {3,4680, 68200};
 
-get_guild_skill_cost(301010) -> {5,5280, 75000};
+get_guild_skill_cost(301010) -> {3,5280, 75000};
 
-get_guild_skill_cost(301011) -> {5,5880, 82400};
+get_guild_skill_cost(301011) -> {3,5880, 82400};
 
-get_guild_skill_cost(301012) -> {6,6600, 90600};
+get_guild_skill_cost(301012) -> {3,6600, 90600};
 
-get_guild_skill_cost(301013) -> {6,7320, 99500};
+get_guild_skill_cost(301013) -> {3,7320, 99500};
 
-get_guild_skill_cost(301014) -> {6,8160, 109400};
+get_guild_skill_cost(301014) -> {3,8160, 109400};
 
-get_guild_skill_cost(301015) -> {6,9000, 120200};
+get_guild_skill_cost(301015) -> {3,9000, 120200};
 
-get_guild_skill_cost(301016) -> {6,10080, 132100};
+get_guild_skill_cost(301016) -> {4,10080, 132100};
 
-get_guild_skill_cost(301017) -> {6,11400, 145100};
+get_guild_skill_cost(301017) -> {4,11400, 145100};
 
-get_guild_skill_cost(301018) -> {7,12960, 159500};
+get_guild_skill_cost(301018) -> {4,12960, 159500};
 
-get_guild_skill_cost(301019) -> {7,14760, 175200};
+get_guild_skill_cost(301019) -> {4,14760, 175200};
 
-get_guild_skill_cost(301020) -> {7,16680, 192600};
+get_guild_skill_cost(301020) -> {4,16680, 192600};
 
-get_guild_skill_cost(301021) -> {8,18960, 211600};
+get_guild_skill_cost(301021) -> {5,18960, 211600};
 
-get_guild_skill_cost(301022) -> {8,21600, 232500};
+get_guild_skill_cost(301022) -> {5,21600, 232500};
 
-get_guild_skill_cost(301023) -> {8,24480, 255500};
+get_guild_skill_cost(301023) -> {5,24480, 255500};
 
-get_guild_skill_cost(301024) -> {9,27840, 280800};
+get_guild_skill_cost(301024) -> {5,27840, 280800};
 
-get_guild_skill_cost(301025) -> {9,31680, 308600};
+get_guild_skill_cost(301025) -> {5,31680, 308600};
 
-get_guild_skill_cost(301026) -> {9,36000, 339100};
+get_guild_skill_cost(301026) -> {6,36000, 339100};
 
-get_guild_skill_cost(301027) -> {9,40920, 372600};
+get_guild_skill_cost(301027) -> {6,40920, 372600};
 
-get_guild_skill_cost(301028) -> {10,46440, 409500};
+get_guild_skill_cost(301028) -> {6,46440, 409500};
 
-get_guild_skill_cost(301029) -> {10,52800, 450000};
+get_guild_skill_cost(301029) -> {6,52800, 450000};
 
-get_guild_skill_cost(301030) -> {10,60000, 500000};
+get_guild_skill_cost(301030) -> {6,60000, 500000};
 
-get_guild_skill_cost(302001) -> {4,1680, 16900};
+get_guild_skill_cost(302001) -> {3,1680, 16900};
 
-get_guild_skill_cost(302002) -> {4,1920, 21100};
+get_guild_skill_cost(302002) -> {3,1920, 21100};
 
-get_guild_skill_cost(302003) -> {4,2160, 26300};
+get_guild_skill_cost(302003) -> {3,2160, 26300};
 
-get_guild_skill_cost(302004) -> {4,2520, 32900};
+get_guild_skill_cost(302004) -> {3,2520, 32900};
 
-get_guild_skill_cost(302005) -> {4,2760, 41100};
+get_guild_skill_cost(302005) -> {3,2760, 41100};
 
-get_guild_skill_cost(302006) -> {5,3240, 51400};
+get_guild_skill_cost(302006) -> {3,3240, 51400};
 
-get_guild_skill_cost(302007) -> {5,3600, 56500};
+get_guild_skill_cost(302007) -> {3,3600, 56500};
 
-get_guild_skill_cost(302008) -> {5,4080, 62100};
+get_guild_skill_cost(302008) -> {3,4080, 62100};
 
-get_guild_skill_cost(302009) -> {5,4680, 68200};
+get_guild_skill_cost(302009) -> {3,4680, 68200};
 
-get_guild_skill_cost(302010) -> {5,5280, 75000};
+get_guild_skill_cost(302010) -> {3,5280, 75000};
 
-get_guild_skill_cost(302011) -> {5,5880, 82400};
+get_guild_skill_cost(302011) -> {3,5880, 82400};
 
-get_guild_skill_cost(302012) -> {6,6600, 90600};
+get_guild_skill_cost(302012) -> {3,6600, 90600};
 
-get_guild_skill_cost(302013) -> {6,7320, 99500};
+get_guild_skill_cost(302013) -> {3,7320, 99500};
 
-get_guild_skill_cost(302014) -> {6,8160, 109400};
+get_guild_skill_cost(302014) -> {3,8160, 109400};
 
-get_guild_skill_cost(302015) -> {6,9000, 120200};
+get_guild_skill_cost(302015) -> {3,9000, 120200};
 
-get_guild_skill_cost(302016) -> {6,10080, 132100};
+get_guild_skill_cost(302016) -> {4,10080, 132100};
 
-get_guild_skill_cost(302017) -> {6,11400, 145100};
+get_guild_skill_cost(302017) -> {4,11400, 145100};
 
-get_guild_skill_cost(302018) -> {7,12960, 159500};
+get_guild_skill_cost(302018) -> {4,12960, 159500};
 
-get_guild_skill_cost(302019) -> {7,14760, 175200};
+get_guild_skill_cost(302019) -> {4,14760, 175200};
 
-get_guild_skill_cost(302020) -> {7,16680, 192600};
+get_guild_skill_cost(302020) -> {4,16680, 192600};
 
-get_guild_skill_cost(302021) -> {8,18960, 211600};
+get_guild_skill_cost(302021) -> {5,18960, 211600};
 
-get_guild_skill_cost(302022) -> {8,21600, 232500};
+get_guild_skill_cost(302022) -> {5,21600, 232500};
 
-get_guild_skill_cost(302023) -> {8,24480, 255500};
+get_guild_skill_cost(302023) -> {5,24480, 255500};
 
-get_guild_skill_cost(302024) -> {9,27840, 280800};
+get_guild_skill_cost(302024) -> {5,27840, 280800};
 
-get_guild_skill_cost(302025) -> {9,31680, 308600};
+get_guild_skill_cost(302025) -> {5,31680, 308600};
 
-get_guild_skill_cost(302026) -> {9,36000, 339100};
+get_guild_skill_cost(302026) -> {6,36000, 339100};
 
-get_guild_skill_cost(302027) -> {9,40920, 372600};
+get_guild_skill_cost(302027) -> {6,40920, 372600};
 
-get_guild_skill_cost(302028) -> {10,46440, 409500};
+get_guild_skill_cost(302028) -> {6,46440, 409500};
 
-get_guild_skill_cost(302029) -> {10,52800, 450000};
+get_guild_skill_cost(302029) -> {6,52800, 450000};
 
-get_guild_skill_cost(302030) -> {10,60000, 500000};
+get_guild_skill_cost(302030) -> {6,60000, 500000};
 
 get_guild_skill_cost(303001) -> {1,1400, 16900};
 
@@ -13209,49 +13209,49 @@ get_guild_skill_cost(303007) -> {2,3000, 56500};
 
 get_guild_skill_cost(303008) -> {2,3400, 62100};
 
-get_guild_skill_cost(303009) -> {3,3900, 68200};
+get_guild_skill_cost(303009) -> {2,3900, 68200};
 
-get_guild_skill_cost(303010) -> {3,4400, 75000};
+get_guild_skill_cost(303010) -> {2,4400, 75000};
 
-get_guild_skill_cost(303011) -> {4,4900, 82400};
+get_guild_skill_cost(303011) -> {3,4900, 82400};
 
-get_guild_skill_cost(303012) -> {4,5500, 90600};
+get_guild_skill_cost(303012) -> {3,5500, 90600};
 
-get_guild_skill_cost(303013) -> {4,6100, 99500};
+get_guild_skill_cost(303013) -> {3,6100, 99500};
 
-get_guild_skill_cost(303014) -> {5,6800, 109400};
+get_guild_skill_cost(303014) -> {3,6800, 109400};
 
-get_guild_skill_cost(303015) -> {5,7500, 120200};
+get_guild_skill_cost(303015) -> {3,7500, 120200};
 
-get_guild_skill_cost(303016) -> {5,8400, 132100};
+get_guild_skill_cost(303016) -> {4,8400, 132100};
 
-get_guild_skill_cost(303017) -> {6,9500, 145100};
+get_guild_skill_cost(303017) -> {4,9500, 145100};
 
-get_guild_skill_cost(303018) -> {6,10800, 159500};
+get_guild_skill_cost(303018) -> {4,10800, 159500};
 
-get_guild_skill_cost(303019) -> {6,12300, 175200};
+get_guild_skill_cost(303019) -> {4,12300, 175200};
 
-get_guild_skill_cost(303020) -> {7,13900, 192600};
+get_guild_skill_cost(303020) -> {4,13900, 192600};
 
-get_guild_skill_cost(303021) -> {7,15800, 211600};
+get_guild_skill_cost(303021) -> {5,15800, 211600};
 
-get_guild_skill_cost(303022) -> {7,18000, 232500};
+get_guild_skill_cost(303022) -> {5,18000, 232500};
 
-get_guild_skill_cost(303023) -> {8,20400, 255500};
+get_guild_skill_cost(303023) -> {5,20400, 255500};
 
-get_guild_skill_cost(303024) -> {8,23200, 280800};
+get_guild_skill_cost(303024) -> {5,23200, 280800};
 
-get_guild_skill_cost(303025) -> {8,26400, 308600};
+get_guild_skill_cost(303025) -> {5,26400, 308600};
 
-get_guild_skill_cost(303026) -> {9,30000, 339100};
+get_guild_skill_cost(303026) -> {6,30000, 339100};
 
-get_guild_skill_cost(303027) -> {9,34100, 372600};
+get_guild_skill_cost(303027) -> {6,34100, 372600};
 
-get_guild_skill_cost(303028) -> {9,38700, 409500};
+get_guild_skill_cost(303028) -> {6,38700, 409500};
 
-get_guild_skill_cost(303029) -> {10,44000, 450000};
+get_guild_skill_cost(303029) -> {6,44000, 450000};
 
-get_guild_skill_cost(303030) -> {10,50000, 500000};
+get_guild_skill_cost(303030) -> {6,50000, 500000};
 
 get_guild_skill_cost(304001) -> {1,1400, 16900};
 
@@ -13261,57 +13261,57 @@ get_guild_skill_cost(304003) -> {1,1800, 26300};
 
 get_guild_skill_cost(304004) -> {1,2100, 32900};
 
-get_guild_skill_cost(304005) -> {2,2300, 41100};
+get_guild_skill_cost(304005) -> {1,2300, 41100};
 
 get_guild_skill_cost(304006) -> {2,2700, 51400};
 
 get_guild_skill_cost(304007) -> {2,3000, 56500};
 
-get_guild_skill_cost(304008) -> {3,3400, 62100};
+get_guild_skill_cost(304008) -> {2,3400, 62100};
 
-get_guild_skill_cost(304009) -> {3,3900, 68200};
+get_guild_skill_cost(304009) -> {2,3900, 68200};
 
-get_guild_skill_cost(304010) -> {3,4400, 75000};
+get_guild_skill_cost(304010) -> {2,4400, 75000};
 
-get_guild_skill_cost(304011) -> {4,4900, 82400};
+get_guild_skill_cost(304011) -> {3,4900, 82400};
 
-get_guild_skill_cost(304012) -> {4,5500, 90600};
+get_guild_skill_cost(304012) -> {3,5500, 90600};
 
-get_guild_skill_cost(304013) -> {4,6100, 99500};
+get_guild_skill_cost(304013) -> {3,6100, 99500};
 
-get_guild_skill_cost(304014) -> {5,6800, 109400};
+get_guild_skill_cost(304014) -> {3,6800, 109400};
 
-get_guild_skill_cost(304015) -> {5,7500, 120200};
+get_guild_skill_cost(304015) -> {3,7500, 120200};
 
-get_guild_skill_cost(304016) -> {5,8400, 132100};
+get_guild_skill_cost(304016) -> {4,8400, 132100};
 
-get_guild_skill_cost(304017) -> {6,9500, 145100};
+get_guild_skill_cost(304017) -> {4,9500, 145100};
 
-get_guild_skill_cost(304018) -> {6,10800, 159500};
+get_guild_skill_cost(304018) -> {4,10800, 159500};
 
-get_guild_skill_cost(304019) -> {6,12300, 175200};
+get_guild_skill_cost(304019) -> {4,12300, 175200};
 
-get_guild_skill_cost(304020) -> {7,13900, 192600};
+get_guild_skill_cost(304020) -> {4,13900, 192600};
 
-get_guild_skill_cost(304021) -> {7,15800, 211600};
+get_guild_skill_cost(304021) -> {5,15800, 211600};
 
-get_guild_skill_cost(304022) -> {7,18000, 232500};
+get_guild_skill_cost(304022) -> {5,18000, 232500};
 
-get_guild_skill_cost(304023) -> {8,20400, 255500};
+get_guild_skill_cost(304023) -> {5,20400, 255500};
 
-get_guild_skill_cost(304024) -> {8,23200, 280800};
+get_guild_skill_cost(304024) -> {5,23200, 280800};
 
-get_guild_skill_cost(304025) -> {8,26400, 308600};
+get_guild_skill_cost(304025) -> {5,26400, 308600};
 
-get_guild_skill_cost(304026) -> {9,30000, 339100};
+get_guild_skill_cost(304026) -> {6,30000, 339100};
 
-get_guild_skill_cost(304027) -> {9,34100, 372600};
+get_guild_skill_cost(304027) -> {6,34100, 372600};
 
-get_guild_skill_cost(304028) -> {9,38700, 409500};
+get_guild_skill_cost(304028) -> {6,38700, 409500};
 
-get_guild_skill_cost(304029) -> {10,44000, 450000};
+get_guild_skill_cost(304029) -> {6,44000, 450000};
 
-get_guild_skill_cost(304030) -> {10,50000, 500000};
+get_guild_skill_cost(304030) -> {6,50000, 500000};
 
 get_guild_skill_cost(305001) -> {4,1400, 16900};
 
@@ -13323,55 +13323,55 @@ get_guild_skill_cost(305004) -> {4,2100, 32900};
 
 get_guild_skill_cost(305005) -> {4,2300, 41100};
 
-get_guild_skill_cost(305006) -> {5,2700, 51400};
+get_guild_skill_cost(305006) -> {4,2700, 51400};
 
-get_guild_skill_cost(305007) -> {5,3000, 56500};
+get_guild_skill_cost(305007) -> {4,3000, 56500};
 
-get_guild_skill_cost(305008) -> {5,3400, 62100};
+get_guild_skill_cost(305008) -> {4,3400, 62100};
 
-get_guild_skill_cost(305009) -> {5,3900, 68200};
+get_guild_skill_cost(305009) -> {4,3900, 68200};
 
-get_guild_skill_cost(305010) -> {5,4400, 75000};
+get_guild_skill_cost(305010) -> {4,4400, 75000};
 
-get_guild_skill_cost(305011) -> {5,4900, 82400};
+get_guild_skill_cost(305011) -> {4,4900, 82400};
 
-get_guild_skill_cost(305012) -> {6,5500, 90600};
+get_guild_skill_cost(305012) -> {4,5500, 90600};
 
-get_guild_skill_cost(305013) -> {6,6100, 99500};
+get_guild_skill_cost(305013) -> {4,6100, 99500};
 
-get_guild_skill_cost(305014) -> {6,6800, 109400};
+get_guild_skill_cost(305014) -> {4,6800, 109400};
 
-get_guild_skill_cost(305015) -> {6,7500, 120200};
+get_guild_skill_cost(305015) -> {4,7500, 120200};
 
-get_guild_skill_cost(305016) -> {6,8400, 132100};
+get_guild_skill_cost(305016) -> {4,8400, 132100};
 
-get_guild_skill_cost(305017) -> {6,9500, 145100};
+get_guild_skill_cost(305017) -> {4,9500, 145100};
 
-get_guild_skill_cost(305018) -> {7,10800, 159500};
+get_guild_skill_cost(305018) -> {4,10800, 159500};
 
-get_guild_skill_cost(305019) -> {7,12300, 175200};
+get_guild_skill_cost(305019) -> {4,12300, 175200};
 
-get_guild_skill_cost(305020) -> {7,13900, 192600};
+get_guild_skill_cost(305020) -> {4,13900, 192600};
 
-get_guild_skill_cost(305021) -> {7,15800, 211600};
+get_guild_skill_cost(305021) -> {5,15800, 211600};
 
-get_guild_skill_cost(305022) -> {7,18000, 232500};
+get_guild_skill_cost(305022) -> {5,18000, 232500};
 
-get_guild_skill_cost(305023) -> {8,20400, 255500};
+get_guild_skill_cost(305023) -> {5,20400, 255500};
 
-get_guild_skill_cost(305024) -> {8,23200, 280800};
+get_guild_skill_cost(305024) -> {5,23200, 280800};
 
-get_guild_skill_cost(305025) -> {8,26400, 308600};
+get_guild_skill_cost(305025) -> {5,26400, 308600};
 
-get_guild_skill_cost(305026) -> {8,30000, 339100};
+get_guild_skill_cost(305026) -> {6,30000, 339100};
 
-get_guild_skill_cost(305027) -> {9,34100, 372600};
+get_guild_skill_cost(305027) -> {6,34100, 372600};
 
-get_guild_skill_cost(305028) -> {9,38700, 409500};
+get_guild_skill_cost(305028) -> {6,38700, 409500};
 
-get_guild_skill_cost(305029) -> {9,44000, 450000};
+get_guild_skill_cost(305029) -> {6,44000, 450000};
 
-get_guild_skill_cost(305030) -> {9,50000, 500000};
+get_guild_skill_cost(305030) -> {6,50000, 500000};
 
 get_guild_skill_cost(306001) -> {2,1400, 16900};
 
@@ -13379,59 +13379,59 @@ get_guild_skill_cost(306002) -> {2,1600, 21100};
 
 get_guild_skill_cost(306003) -> {2,1800, 26300};
 
-get_guild_skill_cost(306004) -> {3,2100, 32900};
+get_guild_skill_cost(306004) -> {2,2100, 32900};
 
-get_guild_skill_cost(306005) -> {3,2300, 41100};
+get_guild_skill_cost(306005) -> {2,2300, 41100};
 
-get_guild_skill_cost(306006) -> {3,2700, 51400};
+get_guild_skill_cost(306006) -> {2,2700, 51400};
 
-get_guild_skill_cost(306007) -> {4,3000, 56500};
+get_guild_skill_cost(306007) -> {2,3000, 56500};
 
-get_guild_skill_cost(306008) -> {4,3400, 62100};
+get_guild_skill_cost(306008) -> {2,3400, 62100};
 
-get_guild_skill_cost(306009) -> {4,3900, 68200};
+get_guild_skill_cost(306009) -> {2,3900, 68200};
 
-get_guild_skill_cost(306010) -> {4,4400, 75000};
+get_guild_skill_cost(306010) -> {2,4400, 75000};
 
-get_guild_skill_cost(306011) -> {5,4900, 82400};
+get_guild_skill_cost(306011) -> {3,4900, 82400};
 
-get_guild_skill_cost(306012) -> {5,5500, 90600};
+get_guild_skill_cost(306012) -> {3,5500, 90600};
 
-get_guild_skill_cost(306013) -> {5,6100, 99500};
+get_guild_skill_cost(306013) -> {3,6100, 99500};
 
-get_guild_skill_cost(306014) -> {5,6800, 109400};
+get_guild_skill_cost(306014) -> {3,6800, 109400};
 
-get_guild_skill_cost(306015) -> {5,7500, 120200};
+get_guild_skill_cost(306015) -> {3,7500, 120200};
 
-get_guild_skill_cost(306016) -> {6,8400, 132100};
+get_guild_skill_cost(306016) -> {4,8400, 132100};
 
-get_guild_skill_cost(306017) -> {6,9500, 145100};
+get_guild_skill_cost(306017) -> {4,9500, 145100};
 
-get_guild_skill_cost(306018) -> {6,10800, 159500};
+get_guild_skill_cost(306018) -> {4,10800, 159500};
 
-get_guild_skill_cost(306019) -> {6,12300, 175200};
+get_guild_skill_cost(306019) -> {4,12300, 175200};
 
-get_guild_skill_cost(306020) -> {7,13900, 192600};
+get_guild_skill_cost(306020) -> {4,13900, 192600};
 
-get_guild_skill_cost(306021) -> {7,15800, 211600};
+get_guild_skill_cost(306021) -> {5,15800, 211600};
 
-get_guild_skill_cost(306022) -> {7,18000, 232500};
+get_guild_skill_cost(306022) -> {5,18000, 232500};
 
-get_guild_skill_cost(306023) -> {7,20400, 255500};
+get_guild_skill_cost(306023) -> {5,20400, 255500};
 
-get_guild_skill_cost(306024) -> {8,23200, 280800};
+get_guild_skill_cost(306024) -> {5,23200, 280800};
 
-get_guild_skill_cost(306025) -> {8,26400, 308600};
+get_guild_skill_cost(306025) -> {5,26400, 308600};
 
-get_guild_skill_cost(306026) -> {8,30000, 339100};
+get_guild_skill_cost(306026) -> {6,30000, 339100};
 
-get_guild_skill_cost(306027) -> {9,34100, 372600};
+get_guild_skill_cost(306027) -> {6,34100, 372600};
 
-get_guild_skill_cost(306028) -> {9,38700, 409500};
+get_guild_skill_cost(306028) -> {6,38700, 409500};
 
-get_guild_skill_cost(306029) -> {10,44000, 450000};
+get_guild_skill_cost(306029) -> {6,44000, 450000};
 
-get_guild_skill_cost(306030) -> {10,50000, 500000};
+get_guild_skill_cost(306030) -> {6,50000, 500000};
 
 get_guild_skill_cost(307001) -> {2,1400, 16900};
 
@@ -13439,59 +13439,59 @@ get_guild_skill_cost(307002) -> {2,1600, 21100};
 
 get_guild_skill_cost(307003) -> {2,1800, 26300};
 
-get_guild_skill_cost(307004) -> {3,2100, 32900};
+get_guild_skill_cost(307004) -> {2,2100, 32900};
 
-get_guild_skill_cost(307005) -> {3,2300, 41100};
+get_guild_skill_cost(307005) -> {2,2300, 41100};
 
-get_guild_skill_cost(307006) -> {3,2700, 51400};
+get_guild_skill_cost(307006) -> {2,2700, 51400};
 
-get_guild_skill_cost(307007) -> {4,3000, 56500};
+get_guild_skill_cost(307007) -> {2,3000, 56500};
 
-get_guild_skill_cost(307008) -> {4,3400, 62100};
+get_guild_skill_cost(307008) -> {2,3400, 62100};
 
-get_guild_skill_cost(307009) -> {4,3900, 68200};
+get_guild_skill_cost(307009) -> {2,3900, 68200};
 
-get_guild_skill_cost(307010) -> {4,4400, 75000};
+get_guild_skill_cost(307010) -> {2,4400, 75000};
 
-get_guild_skill_cost(307011) -> {5,4900, 82400};
+get_guild_skill_cost(307011) -> {3,4900, 82400};
 
-get_guild_skill_cost(307012) -> {5,5500, 90600};
+get_guild_skill_cost(307012) -> {3,5500, 90600};
 
-get_guild_skill_cost(307013) -> {5,6100, 99500};
+get_guild_skill_cost(307013) -> {3,6100, 99500};
 
-get_guild_skill_cost(307014) -> {5,6800, 109400};
+get_guild_skill_cost(307014) -> {3,6800, 109400};
 
-get_guild_skill_cost(307015) -> {5,7500, 120200};
+get_guild_skill_cost(307015) -> {3,7500, 120200};
 
-get_guild_skill_cost(307016) -> {6,8400, 132100};
+get_guild_skill_cost(307016) -> {4,8400, 132100};
 
-get_guild_skill_cost(307017) -> {6,9500, 145100};
+get_guild_skill_cost(307017) -> {4,9500, 145100};
 
-get_guild_skill_cost(307018) -> {6,10800, 159500};
+get_guild_skill_cost(307018) -> {4,10800, 159500};
 
-get_guild_skill_cost(307019) -> {6,12300, 175200};
+get_guild_skill_cost(307019) -> {4,12300, 175200};
 
-get_guild_skill_cost(307020) -> {7,13900, 192600};
+get_guild_skill_cost(307020) -> {4,13900, 192600};
 
-get_guild_skill_cost(307021) -> {7,15800, 211600};
+get_guild_skill_cost(307021) -> {5,15800, 211600};
 
-get_guild_skill_cost(307022) -> {7,18000, 232500};
+get_guild_skill_cost(307022) -> {5,18000, 232500};
 
-get_guild_skill_cost(307023) -> {7,20400, 255500};
+get_guild_skill_cost(307023) -> {5,20400, 255500};
 
-get_guild_skill_cost(307024) -> {8,23200, 280800};
+get_guild_skill_cost(307024) -> {5,23200, 280800};
 
-get_guild_skill_cost(307025) -> {8,26400, 308600};
+get_guild_skill_cost(307025) -> {5,26400, 308600};
 
-get_guild_skill_cost(307026) -> {8,30000, 339100};
+get_guild_skill_cost(307026) -> {6,30000, 339100};
 
-get_guild_skill_cost(307027) -> {9,34100, 372600};
+get_guild_skill_cost(307027) -> {6,34100, 372600};
 
-get_guild_skill_cost(307028) -> {9,38700, 409500};
+get_guild_skill_cost(307028) -> {6,38700, 409500};
 
-get_guild_skill_cost(307029) -> {10,44000, 450000};
+get_guild_skill_cost(307029) -> {6,44000, 450000};
 
-get_guild_skill_cost(307030) -> {10,50000, 500000};
+get_guild_skill_cost(307030) -> {6,50000, 500000};
 
 get_guild_skill_cost(308001) -> {2,1400, 16900};
 
@@ -13499,59 +13499,59 @@ get_guild_skill_cost(308002) -> {2,1600, 21100};
 
 get_guild_skill_cost(308003) -> {2,1800, 26300};
 
-get_guild_skill_cost(308004) -> {3,2100, 32900};
+get_guild_skill_cost(308004) -> {2,2100, 32900};
 
-get_guild_skill_cost(308005) -> {3,2300, 41100};
+get_guild_skill_cost(308005) -> {2,2300, 41100};
 
-get_guild_skill_cost(308006) -> {3,2700, 51400};
+get_guild_skill_cost(308006) -> {2,2700, 51400};
 
-get_guild_skill_cost(308007) -> {4,3000, 56500};
+get_guild_skill_cost(308007) -> {2,3000, 56500};
 
-get_guild_skill_cost(308008) -> {4,3400, 62100};
+get_guild_skill_cost(308008) -> {2,3400, 62100};
 
-get_guild_skill_cost(308009) -> {4,3900, 68200};
+get_guild_skill_cost(308009) -> {2,3900, 68200};
 
-get_guild_skill_cost(308010) -> {4,4400, 75000};
+get_guild_skill_cost(308010) -> {2,4400, 75000};
 
-get_guild_skill_cost(308011) -> {4,4900, 82400};
+get_guild_skill_cost(308011) -> {3,4900, 82400};
 
-get_guild_skill_cost(308012) -> {5,5500, 90600};
+get_guild_skill_cost(308012) -> {3,5500, 90600};
 
-get_guild_skill_cost(308013) -> {5,6100, 99500};
+get_guild_skill_cost(308013) -> {3,6100, 99500};
 
-get_guild_skill_cost(308014) -> {5,6800, 109400};
+get_guild_skill_cost(308014) -> {3,6800, 109400};
 
-get_guild_skill_cost(308015) -> {5,7500, 120200};
+get_guild_skill_cost(308015) -> {3,7500, 120200};
 
-get_guild_skill_cost(308016) -> {6,8400, 132100};
+get_guild_skill_cost(308016) -> {4,8400, 132100};
 
-get_guild_skill_cost(308017) -> {6,9500, 145100};
+get_guild_skill_cost(308017) -> {4,9500, 145100};
 
-get_guild_skill_cost(308018) -> {6,10800, 159500};
+get_guild_skill_cost(308018) -> {4,10800, 159500};
 
-get_guild_skill_cost(308019) -> {6,12300, 175200};
+get_guild_skill_cost(308019) -> {4,12300, 175200};
 
-get_guild_skill_cost(308020) -> {7,13900, 192600};
+get_guild_skill_cost(308020) -> {4,13900, 192600};
 
-get_guild_skill_cost(308021) -> {7,15800, 211600};
+get_guild_skill_cost(308021) -> {5,15800, 211600};
 
-get_guild_skill_cost(308022) -> {7,18000, 232500};
+get_guild_skill_cost(308022) -> {5,18000, 232500};
 
-get_guild_skill_cost(308023) -> {7,20400, 255500};
+get_guild_skill_cost(308023) -> {5,20400, 255500};
 
-get_guild_skill_cost(308024) -> {8,23200, 280800};
+get_guild_skill_cost(308024) -> {5,23200, 280800};
 
-get_guild_skill_cost(308025) -> {8,26400, 308600};
+get_guild_skill_cost(308025) -> {5,26400, 308600};
 
-get_guild_skill_cost(308026) -> {8,30000, 339100};
+get_guild_skill_cost(308026) -> {6,30000, 339100};
 
-get_guild_skill_cost(308027) -> {9,34100, 372600};
+get_guild_skill_cost(308027) -> {6,34100, 372600};
 
-get_guild_skill_cost(308028) -> {9,38700, 409500};
+get_guild_skill_cost(308028) -> {6,38700, 409500};
 
-get_guild_skill_cost(308029) -> {10,44000, 450000};
+get_guild_skill_cost(308029) -> {6,44000, 450000};
 
-get_guild_skill_cost(308030) -> {10,50000, 500000};
+get_guild_skill_cost(308030) -> {6,50000, 500000};
 
 get_guild_skill_cost(309001) -> {3,1400, 16900};
 
@@ -13565,53 +13565,53 @@ get_guild_skill_cost(309005) -> {3,2300, 41100};
 
 get_guild_skill_cost(309006) -> {3,2700, 51400};
 
-get_guild_skill_cost(309007) -> {4,3000, 56500};
+get_guild_skill_cost(309007) -> {3,3000, 56500};
 
-get_guild_skill_cost(309008) -> {4,3400, 62100};
+get_guild_skill_cost(309008) -> {3,3400, 62100};
 
-get_guild_skill_cost(309009) -> {4,3900, 68200};
+get_guild_skill_cost(309009) -> {3,3900, 68200};
 
-get_guild_skill_cost(309010) -> {4,4400, 75000};
+get_guild_skill_cost(309010) -> {3,4400, 75000};
 
-get_guild_skill_cost(309011) -> {4,4900, 82400};
+get_guild_skill_cost(309011) -> {3,4900, 82400};
 
-get_guild_skill_cost(309012) -> {5,5500, 90600};
+get_guild_skill_cost(309012) -> {3,5500, 90600};
 
-get_guild_skill_cost(309013) -> {5,6100, 99500};
+get_guild_skill_cost(309013) -> {3,6100, 99500};
 
-get_guild_skill_cost(309014) -> {5,6800, 109400};
+get_guild_skill_cost(309014) -> {3,6800, 109400};
 
-get_guild_skill_cost(309015) -> {5,7500, 120200};
+get_guild_skill_cost(309015) -> {3,7500, 120200};
 
-get_guild_skill_cost(309016) -> {6,8400, 132100};
+get_guild_skill_cost(309016) -> {4,8400, 132100};
 
-get_guild_skill_cost(309017) -> {6,9500, 145100};
+get_guild_skill_cost(309017) -> {4,9500, 145100};
 
-get_guild_skill_cost(309018) -> {6,10800, 159500};
+get_guild_skill_cost(309018) -> {4,10800, 159500};
 
-get_guild_skill_cost(309019) -> {6,12300, 175200};
+get_guild_skill_cost(309019) -> {4,12300, 175200};
 
-get_guild_skill_cost(309020) -> {7,13900, 192600};
+get_guild_skill_cost(309020) -> {4,13900, 192600};
 
-get_guild_skill_cost(309021) -> {7,15800, 211600};
+get_guild_skill_cost(309021) -> {5,15800, 211600};
 
-get_guild_skill_cost(309022) -> {7,18000, 232500};
+get_guild_skill_cost(309022) -> {5,18000, 232500};
 
-get_guild_skill_cost(309023) -> {7,20400, 255500};
+get_guild_skill_cost(309023) -> {5,20400, 255500};
 
-get_guild_skill_cost(309024) -> {8,23200, 280800};
+get_guild_skill_cost(309024) -> {5,23200, 280800};
 
-get_guild_skill_cost(309025) -> {8,26400, 308600};
+get_guild_skill_cost(309025) -> {5,26400, 308600};
 
-get_guild_skill_cost(309026) -> {8,30000, 339100};
+get_guild_skill_cost(309026) -> {6,30000, 339100};
 
-get_guild_skill_cost(309027) -> {9,34100, 372600};
+get_guild_skill_cost(309027) -> {6,34100, 372600};
 
-get_guild_skill_cost(309028) -> {9,38700, 409500};
+get_guild_skill_cost(309028) -> {6,38700, 409500};
 
-get_guild_skill_cost(309029) -> {10,44000, 450000};
+get_guild_skill_cost(309029) -> {6,44000, 450000};
 
-get_guild_skill_cost(309030) -> {10,50000, 500000};
+get_guild_skill_cost(309030) -> {6,50000, 500000};
 
 get_guild_skill_cost(310001) -> {1,1400, 16900};
 
@@ -13629,49 +13629,49 @@ get_guild_skill_cost(310007) -> {2,3000, 56500};
 
 get_guild_skill_cost(310008) -> {2,3400, 62100};
 
-get_guild_skill_cost(310009) -> {3,3900, 68200};
+get_guild_skill_cost(310009) -> {2,3900, 68200};
 
-get_guild_skill_cost(310010) -> {3,4400, 75000};
+get_guild_skill_cost(310010) -> {2,4400, 75000};
 
-get_guild_skill_cost(310011) -> {4,4900, 82400};
+get_guild_skill_cost(310011) -> {3,4900, 82400};
 
-get_guild_skill_cost(310012) -> {4,5500, 90600};
+get_guild_skill_cost(310012) -> {3,5500, 90600};
 
-get_guild_skill_cost(310013) -> {4,6100, 99500};
+get_guild_skill_cost(310013) -> {3,6100, 99500};
 
-get_guild_skill_cost(310014) -> {5,6800, 109400};
+get_guild_skill_cost(310014) -> {3,6800, 109400};
 
-get_guild_skill_cost(310015) -> {5,7500, 120200};
+get_guild_skill_cost(310015) -> {3,7500, 120200};
 
-get_guild_skill_cost(310016) -> {5,8400, 132100};
+get_guild_skill_cost(310016) -> {4,8400, 132100};
 
-get_guild_skill_cost(310017) -> {6,9500, 145100};
+get_guild_skill_cost(310017) -> {4,9500, 145100};
 
-get_guild_skill_cost(310018) -> {6,10800, 159500};
+get_guild_skill_cost(310018) -> {4,10800, 159500};
 
-get_guild_skill_cost(310019) -> {6,12300, 175200};
+get_guild_skill_cost(310019) -> {4,12300, 175200};
 
-get_guild_skill_cost(310020) -> {7,13900, 192600};
+get_guild_skill_cost(310020) -> {4,13900, 192600};
 
-get_guild_skill_cost(310021) -> {7,15800, 211600};
+get_guild_skill_cost(310021) -> {5,15800, 211600};
 
-get_guild_skill_cost(310022) -> {7,18000, 232500};
+get_guild_skill_cost(310022) -> {5,18000, 232500};
 
-get_guild_skill_cost(310023) -> {8,20400, 255500};
+get_guild_skill_cost(310023) -> {5,20400, 255500};
 
-get_guild_skill_cost(310024) -> {8,23200, 280800};
+get_guild_skill_cost(310024) -> {5,23200, 280800};
 
-get_guild_skill_cost(310025) -> {8,26400, 308600};
+get_guild_skill_cost(310025) -> {5,26400, 308600};
 
-get_guild_skill_cost(310026) -> {9,30000, 339100};
+get_guild_skill_cost(310026) -> {6,30000, 339100};
 
-get_guild_skill_cost(310027) -> {9,34100, 372600};
+get_guild_skill_cost(310027) -> {6,34100, 372600};
 
-get_guild_skill_cost(310028) -> {9,38700, 409500};
+get_guild_skill_cost(310028) -> {6,38700, 409500};
 
-get_guild_skill_cost(310029) -> {10,44000, 450000};
+get_guild_skill_cost(310029) -> {6,44000, 450000};
 
-get_guild_skill_cost(310030) -> {10,50000, 500000};
+get_guild_skill_cost(310030) -> {6,50000, 500000};
 
 get_guild_skill_cost(311001) -> {1,1400, 16900};
 
@@ -13681,57 +13681,57 @@ get_guild_skill_cost(311003) -> {1,1800, 26300};
 
 get_guild_skill_cost(311004) -> {1,2100, 32900};
 
-get_guild_skill_cost(311005) -> {2,2300, 41100};
+get_guild_skill_cost(311005) -> {1,2300, 41100};
 
 get_guild_skill_cost(311006) -> {2,2700, 51400};
 
 get_guild_skill_cost(311007) -> {2,3000, 56500};
 
-get_guild_skill_cost(311008) -> {3,3400, 62100};
+get_guild_skill_cost(311008) -> {2,3400, 62100};
 
-get_guild_skill_cost(311009) -> {3,3900, 68200};
+get_guild_skill_cost(311009) -> {2,3900, 68200};
 
-get_guild_skill_cost(311010) -> {3,4400, 75000};
+get_guild_skill_cost(311010) -> {2,4400, 75000};
 
-get_guild_skill_cost(311011) -> {4,4900, 82400};
+get_guild_skill_cost(311011) -> {3,4900, 82400};
 
-get_guild_skill_cost(311012) -> {4,5500, 90600};
+get_guild_skill_cost(311012) -> {3,5500, 90600};
 
-get_guild_skill_cost(311013) -> {4,6100, 99500};
+get_guild_skill_cost(311013) -> {3,6100, 99500};
 
-get_guild_skill_cost(311014) -> {5,6800, 109400};
+get_guild_skill_cost(311014) -> {3,6800, 109400};
 
-get_guild_skill_cost(311015) -> {5,7500, 120200};
+get_guild_skill_cost(311015) -> {3,7500, 120200};
 
-get_guild_skill_cost(311016) -> {5,8400, 132100};
+get_guild_skill_cost(311016) -> {4,8400, 132100};
 
-get_guild_skill_cost(311017) -> {6,9500, 145100};
+get_guild_skill_cost(311017) -> {4,9500, 145100};
 
-get_guild_skill_cost(311018) -> {6,10800, 159500};
+get_guild_skill_cost(311018) -> {4,10800, 159500};
 
-get_guild_skill_cost(311019) -> {6,12300, 175200};
+get_guild_skill_cost(311019) -> {4,12300, 175200};
 
-get_guild_skill_cost(311020) -> {7,13900, 192600};
+get_guild_skill_cost(311020) -> {4,13900, 192600};
 
-get_guild_skill_cost(311021) -> {7,15800, 211600};
+get_guild_skill_cost(311021) -> {5,15800, 211600};
 
-get_guild_skill_cost(311022) -> {7,18000, 232500};
+get_guild_skill_cost(311022) -> {5,18000, 232500};
 
-get_guild_skill_cost(311023) -> {8,20400, 255500};
+get_guild_skill_cost(311023) -> {5,20400, 255500};
 
-get_guild_skill_cost(311024) -> {8,23200, 280800};
+get_guild_skill_cost(311024) -> {5,23200, 280800};
 
-get_guild_skill_cost(311025) -> {8,26400, 308600};
+get_guild_skill_cost(311025) -> {5,26400, 308600};
 
-get_guild_skill_cost(311026) -> {9,30000, 339100};
+get_guild_skill_cost(311026) -> {6,30000, 339100};
 
-get_guild_skill_cost(311027) -> {9,34100, 372600};
+get_guild_skill_cost(311027) -> {6,34100, 372600};
 
-get_guild_skill_cost(311028) -> {9,38700, 409500};
+get_guild_skill_cost(311028) -> {6,38700, 409500};
 
-get_guild_skill_cost(311029) -> {10,44000, 450000};
+get_guild_skill_cost(311029) -> {6,44000, 450000};
 
-get_guild_skill_cost(311030) -> {10,50000, 500000};
+get_guild_skill_cost(311030) -> {6,50000, 500000};
 
 get_guild_skill_cost(312001) -> {3,1400, 16900};
 
@@ -13747,51 +13747,51 @@ get_guild_skill_cost(312006) -> {3,2700, 51400};
 
 get_guild_skill_cost(312007) -> {3,3000, 56500};
 
-get_guild_skill_cost(312008) -> {4,3400, 62100};
+get_guild_skill_cost(312008) -> {3,3400, 62100};
 
-get_guild_skill_cost(312009) -> {4,3900, 68200};
+get_guild_skill_cost(312009) -> {3,3900, 68200};
 
-get_guild_skill_cost(312010) -> {4,4400, 75000};
+get_guild_skill_cost(312010) -> {3,4400, 75000};
 
-get_guild_skill_cost(312011) -> {4,4900, 82400};
+get_guild_skill_cost(312011) -> {3,4900, 82400};
 
-get_guild_skill_cost(312012) -> {4,5500, 90600};
+get_guild_skill_cost(312012) -> {3,5500, 90600};
 
-get_guild_skill_cost(312013) -> {4,6100, 99500};
+get_guild_skill_cost(312013) -> {3,6100, 99500};
 
-get_guild_skill_cost(312014) -> {5,6800, 109400};
+get_guild_skill_cost(312014) -> {3,6800, 109400};
 
-get_guild_skill_cost(312015) -> {5,7500, 120200};
+get_guild_skill_cost(312015) -> {3,7500, 120200};
 
-get_guild_skill_cost(312016) -> {5,8400, 132100};
+get_guild_skill_cost(312016) -> {4,8400, 132100};
 
-get_guild_skill_cost(312017) -> {6,9500, 145100};
+get_guild_skill_cost(312017) -> {4,9500, 145100};
 
-get_guild_skill_cost(312018) -> {6,10800, 159500};
+get_guild_skill_cost(312018) -> {4,10800, 159500};
 
-get_guild_skill_cost(312019) -> {6,12300, 175200};
+get_guild_skill_cost(312019) -> {4,12300, 175200};
 
-get_guild_skill_cost(312020) -> {7,13900, 192600};
+get_guild_skill_cost(312020) -> {4,13900, 192600};
 
-get_guild_skill_cost(312021) -> {7,15800, 211600};
+get_guild_skill_cost(312021) -> {5,15800, 211600};
 
-get_guild_skill_cost(312022) -> {7,18000, 232500};
+get_guild_skill_cost(312022) -> {5,18000, 232500};
 
-get_guild_skill_cost(312023) -> {8,20400, 255500};
+get_guild_skill_cost(312023) -> {5,20400, 255500};
 
-get_guild_skill_cost(312024) -> {8,23200, 280800};
+get_guild_skill_cost(312024) -> {5,23200, 280800};
 
-get_guild_skill_cost(312025) -> {8,26400, 308600};
+get_guild_skill_cost(312025) -> {5,26400, 308600};
 
-get_guild_skill_cost(312026) -> {9,30000, 339100};
+get_guild_skill_cost(312026) -> {6,30000, 339100};
 
-get_guild_skill_cost(312027) -> {9,34100, 372600};
+get_guild_skill_cost(312027) -> {6,34100, 372600};
 
-get_guild_skill_cost(312028) -> {9,38700, 409500};
+get_guild_skill_cost(312028) -> {6,38700, 409500};
 
-get_guild_skill_cost(312029) -> {10,44000, 450000};
+get_guild_skill_cost(312029) -> {6,44000, 450000};
 
-get_guild_skill_cost(312030) -> {10,50000, 500000};
+get_guild_skill_cost(312030) -> {6,50000, 500000};
 
 get_guild_skill_cost(313001) -> {5,1400, 16900};
 
@@ -13809,49 +13809,49 @@ get_guild_skill_cost(313007) -> {5,3000, 56500};
 
 get_guild_skill_cost(313008) -> {5,3400, 62100};
 
-get_guild_skill_cost(313009) -> {6,3900, 68200};
+get_guild_skill_cost(313009) -> {5,3900, 68200};
 
-get_guild_skill_cost(313010) -> {6,4400, 75000};
+get_guild_skill_cost(313010) -> {5,4400, 75000};
 
-get_guild_skill_cost(313011) -> {6,4900, 82400};
+get_guild_skill_cost(313011) -> {5,4900, 82400};
 
-get_guild_skill_cost(313012) -> {6,5500, 90600};
+get_guild_skill_cost(313012) -> {5,5500, 90600};
 
-get_guild_skill_cost(313013) -> {6,6100, 99500};
+get_guild_skill_cost(313013) -> {5,6100, 99500};
 
-get_guild_skill_cost(313014) -> {6,6800, 109400};
+get_guild_skill_cost(313014) -> {5,6800, 109400};
 
-get_guild_skill_cost(313015) -> {6,7500, 120200};
+get_guild_skill_cost(313015) -> {5,7500, 120200};
 
-get_guild_skill_cost(313016) -> {6,8400, 132100};
+get_guild_skill_cost(313016) -> {5,8400, 132100};
 
-get_guild_skill_cost(313017) -> {6,9500, 145100};
+get_guild_skill_cost(313017) -> {5,9500, 145100};
 
-get_guild_skill_cost(313018) -> {7,10800, 159500};
+get_guild_skill_cost(313018) -> {5,10800, 159500};
 
-get_guild_skill_cost(313019) -> {7,12300, 175200};
+get_guild_skill_cost(313019) -> {5,12300, 175200};
 
-get_guild_skill_cost(313020) -> {7,13900, 192600};
+get_guild_skill_cost(313020) -> {5,13900, 192600};
 
-get_guild_skill_cost(313021) -> {7,15800, 211600};
+get_guild_skill_cost(313021) -> {5,15800, 211600};
 
-get_guild_skill_cost(313022) -> {7,18000, 232500};
+get_guild_skill_cost(313022) -> {5,18000, 232500};
 
-get_guild_skill_cost(313023) -> {8,20400, 255500};
+get_guild_skill_cost(313023) -> {5,20400, 255500};
 
-get_guild_skill_cost(313024) -> {8,23200, 280800};
+get_guild_skill_cost(313024) -> {5,23200, 280800};
 
-get_guild_skill_cost(313025) -> {8,26400, 308600};
+get_guild_skill_cost(313025) -> {6,26400, 308600};
 
-get_guild_skill_cost(313026) -> {9,30000, 339100};
+get_guild_skill_cost(313026) -> {6,30000, 339100};
 
-get_guild_skill_cost(313027) -> {9,34100, 372600};
+get_guild_skill_cost(313027) -> {6,34100, 372600};
 
-get_guild_skill_cost(313028) -> {9,38700, 409500};
+get_guild_skill_cost(313028) -> {6,38700, 409500};
 
-get_guild_skill_cost(313029) -> {10,44000, 450000};
+get_guild_skill_cost(313029) -> {6,44000, 450000};
 
-get_guild_skill_cost(313030) -> {10,50000, 500000};
+get_guild_skill_cost(313030) -> {6,50000, 500000};
 
 get_guild_skill_cost(314001) -> {4,1400, 16900};
 
@@ -13863,55 +13863,55 @@ get_guild_skill_cost(314004) -> {4,2100, 32900};
 
 get_guild_skill_cost(314005) -> {4,2300, 41100};
 
-get_guild_skill_cost(314006) -> {5,2700, 51400};
+get_guild_skill_cost(314006) -> {4,2700, 51400};
 
-get_guild_skill_cost(314007) -> {5,3000, 56500};
+get_guild_skill_cost(314007) -> {4,3000, 56500};
 
-get_guild_skill_cost(314008) -> {5,3400, 62100};
+get_guild_skill_cost(314008) -> {4,3400, 62100};
 
-get_guild_skill_cost(314009) -> {5,3900, 68200};
+get_guild_skill_cost(314009) -> {4,3900, 68200};
 
-get_guild_skill_cost(314010) -> {5,4400, 75000};
+get_guild_skill_cost(314010) -> {4,4400, 75000};
 
-get_guild_skill_cost(314011) -> {5,4900, 82400};
+get_guild_skill_cost(314011) -> {4,4900, 82400};
 
-get_guild_skill_cost(314012) -> {6,5500, 90600};
+get_guild_skill_cost(314012) -> {4,5500, 90600};
 
-get_guild_skill_cost(314013) -> {6,6100, 99500};
+get_guild_skill_cost(314013) -> {4,6100, 99500};
 
-get_guild_skill_cost(314014) -> {6,6800, 109400};
+get_guild_skill_cost(314014) -> {4,6800, 109400};
 
-get_guild_skill_cost(314015) -> {6,7500, 120200};
+get_guild_skill_cost(314015) -> {4,7500, 120200};
 
-get_guild_skill_cost(314016) -> {6,8400, 132100};
+get_guild_skill_cost(314016) -> {4,8400, 132100};
 
-get_guild_skill_cost(314017) -> {6,9500, 145100};
+get_guild_skill_cost(314017) -> {4,9500, 145100};
 
-get_guild_skill_cost(314018) -> {7,10800, 159500};
+get_guild_skill_cost(314018) -> {4,10800, 159500};
 
-get_guild_skill_cost(314019) -> {7,12300, 175200};
+get_guild_skill_cost(314019) -> {4,12300, 175200};
 
-get_guild_skill_cost(314020) -> {7,13900, 192600};
+get_guild_skill_cost(314020) -> {4,13900, 192600};
 
-get_guild_skill_cost(314021) -> {7,15800, 211600};
+get_guild_skill_cost(314021) -> {5,15800, 211600};
 
-get_guild_skill_cost(314022) -> {7,18000, 232500};
+get_guild_skill_cost(314022) -> {5,18000, 232500};
 
-get_guild_skill_cost(314023) -> {8,20400, 255500};
+get_guild_skill_cost(314023) -> {5,20400, 255500};
 
-get_guild_skill_cost(314024) -> {8,23200, 280800};
+get_guild_skill_cost(314024) -> {5,23200, 280800};
 
-get_guild_skill_cost(314025) -> {8,26400, 308600};
+get_guild_skill_cost(314025) -> {5,26400, 308600};
 
-get_guild_skill_cost(314026) -> {8,30000, 339100};
+get_guild_skill_cost(314026) -> {6,30000, 339100};
 
-get_guild_skill_cost(314027) -> {9,34100, 372600};
+get_guild_skill_cost(314027) -> {6,34100, 372600};
 
-get_guild_skill_cost(314028) -> {9,38700, 409500};
+get_guild_skill_cost(314028) -> {6,38700, 409500};
 
-get_guild_skill_cost(314029) -> {9,44000, 450000};
+get_guild_skill_cost(314029) -> {6,44000, 450000};
 
-get_guild_skill_cost(314030) -> {9,50000, 500000}.
+get_guild_skill_cost(314030) -> {6,50000, 500000}.
 
 
 %%================================================

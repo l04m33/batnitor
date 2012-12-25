@@ -19,6 +19,7 @@
 -include("items.hrl").
 -include("relation.hrl").
 -include("fengdi.hrl").
+-include("chuanqi.hrl").
  
 -include("arena.hrl").
 -include("monster.hrl").
@@ -64,6 +65,7 @@
 
 -include("lottery.hrl").
 -include("mines.hrl").
+-include("multiple_award.hrl").
 
 %%安全校验
 -define(TICKET, "SDFSDESF123DFSDF").
@@ -94,6 +96,9 @@
 -define(LOTTERY_HISTORY, 3). %% 投壶历史记录
 -define(G_SERVER_WEALTH_CD, 4).%%招财进宝获取大奖的cd
  
+-record (account_id_map, {account = "", id = 0}).
+-record (rolename_account_map, {rolename = "", account = ""}).
+
 -record(g_server_para,
 	{
 		type = 0,

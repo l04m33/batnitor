@@ -95,6 +95,7 @@
 -define(SILVER_FROM_COMP,					1052).	%%比武奖励获得
 -define(SILVER_FROM_MARSTOWER,				1053).	%%爬塔自动挑战获得
 -define(SILVER_FROM_DEFENCE_MON,			1054).	%%群魔乱舞打怪掉落
+-define(SILVER_FROM_VIP,					1055).	%%VIP获得
 
 -define(SILVER_GUILD_CREATE,2005).			%% 1004   公会创建消耗		wyx20111128 add
 -define(SILVER_BUY_ITEM_COST, 2009).        %% 1008   用于商店购买物品
@@ -178,6 +179,7 @@
 -define(ITEM_FROM_DEFENCE_MON,		1049).		%% 群魔乱舞打怪掉落
 -define(ITEM_FROM_CHANGE,			1050).		%% 积分兑换获得
 -define(ITEM_FROM_SWORD_2,			1051).		%% 神剑活动中勇猛掉落
+-define(ITEM_FROM_MYSTICAL_SHOP,	1052).		%% 神秘商店购买
 
 -define(ITEM_ADD_STACK,				2001).		%% 堆叠后增加（包括物品移动，物品生成，宝石拆卸、交易获得等情况）
 
@@ -322,3 +324,7 @@
 -define(TASK_STATE_COMPLETE,		2).			%% 完成任务
 -define(TASK_STATE_SUBMIT,			3).			%% 提交任务
 -define(TASK_STATE_GIVE_UP,			4).			%% 放弃任务
+
+
+%% 通用添加类型(不区分添加物品/经济类型，只区分来源)
+-define(GENERAL_ADD_CARD_CHANGE,		20000).		%% 新手卡兑换

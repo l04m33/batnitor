@@ -90,6 +90,9 @@
 
 -define(BUFF_CURSED,     43).    %% 被诅咒
 
+-define(BUFF_COUNTER_UP,    44).    %% 反击+
+-define(BUFF_COUNTER_DOWN,  45).    %% 反击-
+
 
 -define(BUFF_TEST,       12).
 
@@ -289,8 +292,9 @@
 		damage_suffer = 0,
 		is_lead       = false,
 		is_alive      = true,
-        protectors    = []
-	}		
+        protectors    = [],
+        avatar_info   = []
+	}
 ).
 
 -record(mon_group,
@@ -492,7 +496,9 @@
 		cd,
 		type,               %% super | common | passive
 		target,             %% self  | friend | enemy
-		param = {}
-	}	
+		param = {},
+        %% 这是用来标识技能在面板上排第几的，因为AI要求按顺序从左到右发动技能
+        slot = 0
+	}
 ).
 

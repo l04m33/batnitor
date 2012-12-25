@@ -17,7 +17,8 @@ get(100, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 0,
-		param  = {1}    
+		param  = {1},    
+		slot   = 0
 	};
 
 get(101, 1) -> 
@@ -31,7 +32,8 @@ get(101, 1) ->
 		level  = 1,
 		target = self,
 		type   = 2,
-		param  = {0.3}    
+		param  = {0.3},    
+		slot   = 0
 	};
 
 get(102, 1) -> 
@@ -45,7 +47,8 @@ get(102, 1) ->
 		level  = 1,
 		target = self,
 		type   = 2,
-		param  = {0.3}    
+		param  = {0.3},    
+		slot   = 0
 	};
 
 get(103, 1) -> 
@@ -59,7 +62,8 @@ get(103, 1) ->
 		level  = 1,
 		target = self,
 		type   = 2,
-		param  = {0.1}    
+		param  = {0.1},    
+		slot   = 0
 	};
 
 get(104, 1) -> 
@@ -73,7 +77,8 @@ get(104, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.75,0.4}    
+		param  = {0.75,0.4},    
+		slot   = 5
 	};
 
 get(104, 2) -> 
@@ -87,7 +92,8 @@ get(104, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 1,
-		param  = {0.8,0.45}    
+		param  = {0.8,0.45},    
+		slot   = 5
 	};
 
 get(104, 3) -> 
@@ -101,7 +107,8 @@ get(104, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 1,
-		param  = {0.85,0.5}    
+		param  = {0.85,0.5},    
+		slot   = 5
 	};
 
 get(104, 4) -> 
@@ -115,7 +122,8 @@ get(104, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 1,
-		param  = {0.9,0.55}    
+		param  = {0.9,0.55},    
+		slot   = 5
 	};
 
 get(104, 5) -> 
@@ -129,7 +137,8 @@ get(104, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 1,
-		param  = {0.95,0.6}    
+		param  = {0.95,0.6},    
+		slot   = 5
 	};
 
 get(104, 6) -> 
@@ -143,7 +152,8 @@ get(104, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 1,
-		param  = {1,0.65}    
+		param  = {1,0.65},    
+		slot   = 5
 	};
 
 get(104, 7) -> 
@@ -157,7 +167,8 @@ get(104, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 1,
-		param  = {1.05,0.7}    
+		param  = {1.05,0.7},    
+		slot   = 5
 	};
 
 get(104, 8) -> 
@@ -171,7 +182,8 @@ get(104, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 1,
-		param  = {1.1,0.75}    
+		param  = {1.1,0.75},    
+		slot   = 5
 	};
 
 get(104, 9) -> 
@@ -185,7 +197,8 @@ get(104, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 1,
-		param  = {1.15,0.8}    
+		param  = {1.15,0.8},    
+		slot   = 5
 	};
 
 get(104, 10) -> 
@@ -199,7 +212,8 @@ get(104, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 1,
-		param  = {1.2,0.85}    
+		param  = {1.2,0.85},    
+		slot   = 5
 	};
 
 get(105, 1) -> 
@@ -213,7 +227,8 @@ get(105, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {0.5,0.2,1}    
+		param  = {1,1.2,0.1,1},    
+		slot   = 4
 	};
 
 get(105, 2) -> 
@@ -227,7 +242,8 @@ get(105, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {0.55,0.23,1}    
+		param  = {1,1.25,0.13,1},    
+		slot   = 4
 	};
 
 get(105, 3) -> 
@@ -241,7 +257,8 @@ get(105, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {0.6,0.26,1}    
+		param  = {1,1.3,0.16,1},    
+		slot   = 4
 	};
 
 get(105, 4) -> 
@@ -255,7 +272,8 @@ get(105, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {0.65,0.29,1}    
+		param  = {1,1.35,0.2,1},    
+		slot   = 4
 	};
 
 get(105, 5) -> 
@@ -269,7 +287,8 @@ get(105, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {0.7,0.32,1}    
+		param  = {1,1.4,0.23,1},    
+		slot   = 4
 	};
 
 get(105, 6) -> 
@@ -283,7 +302,8 @@ get(105, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {0.75,0.35,1}    
+		param  = {1,1.45,0.26,1},    
+		slot   = 4
 	};
 
 get(105, 7) -> 
@@ -297,7 +317,8 @@ get(105, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {0.8,0.38,1}    
+		param  = {1,1.5,0.3,1},    
+		slot   = 4
 	};
 
 get(105, 8) -> 
@@ -311,7 +332,8 @@ get(105, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {0.85,0.42,1}    
+		param  = {1,1.55,0.33,1},    
+		slot   = 4
 	};
 
 get(105, 9) -> 
@@ -325,7 +347,8 @@ get(105, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {0.9,0.46,1}    
+		param  = {1,1.6,0.36,1},    
+		slot   = 4
 	};
 
 get(105, 10) -> 
@@ -339,7 +362,8 @@ get(105, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 4,
-		param  = {0.95,0.5,1}    
+		param  = {1,1.7,0.4,1},    
+		slot   = 4
 	};
 
 get(401, 1) -> 
@@ -353,7 +377,8 @@ get(401, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1.1}    
+		param  = {1.1},    
+		slot   = 1
 	};
 
 get(401, 2) -> 
@@ -367,7 +392,8 @@ get(401, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {1.13}    
+		param  = {1.13},    
+		slot   = 1
 	};
 
 get(401, 3) -> 
@@ -381,7 +407,8 @@ get(401, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {1.15}    
+		param  = {1.15},    
+		slot   = 1
 	};
 
 get(401, 4) -> 
@@ -395,7 +422,8 @@ get(401, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {1.18}    
+		param  = {1.18},    
+		slot   = 1
 	};
 
 get(401, 5) -> 
@@ -409,7 +437,8 @@ get(401, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {1.22}    
+		param  = {1.22},    
+		slot   = 1
 	};
 
 get(401, 6) -> 
@@ -423,7 +452,8 @@ get(401, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {1.26}    
+		param  = {1.26},    
+		slot   = 1
 	};
 
 get(401, 7) -> 
@@ -437,7 +467,8 @@ get(401, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {1.31}    
+		param  = {1.31},    
+		slot   = 1
 	};
 
 get(401, 8) -> 
@@ -451,7 +482,8 @@ get(401, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {1.36}    
+		param  = {1.36},    
+		slot   = 1
 	};
 
 get(401, 9) -> 
@@ -465,7 +497,8 @@ get(401, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {1.42}    
+		param  = {1.42},    
+		slot   = 1
 	};
 
 get(401, 10) -> 
@@ -479,7 +512,8 @@ get(401, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 4,
-		param  = {1.5}    
+		param  = {1.5},    
+		slot   = 1
 	};
 
 get(107, 1) -> 
@@ -493,7 +527,8 @@ get(107, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1,0.2}    
+		param  = {1.2,0.2},    
+		slot   = 3
 	};
 
 get(107, 2) -> 
@@ -507,7 +542,8 @@ get(107, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {1.02,0.23}    
+		param  = {1.23,0.23},    
+		slot   = 3
 	};
 
 get(107, 3) -> 
@@ -521,7 +557,8 @@ get(107, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {1.04,0.26}    
+		param  = {1.26,0.26},    
+		slot   = 3
 	};
 
 get(107, 4) -> 
@@ -535,7 +572,8 @@ get(107, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {1.06,0.29}    
+		param  = {1.3,0.29},    
+		slot   = 3
 	};
 
 get(107, 5) -> 
@@ -549,7 +587,8 @@ get(107, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {1.08,0.32}    
+		param  = {1.33,0.32},    
+		slot   = 3
 	};
 
 get(107, 6) -> 
@@ -563,7 +602,8 @@ get(107, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {1.1,0.35}    
+		param  = {1.36,0.35},    
+		slot   = 3
 	};
 
 get(107, 7) -> 
@@ -577,7 +617,8 @@ get(107, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {1.12,0.38}    
+		param  = {1.4,0.38},    
+		slot   = 3
 	};
 
 get(107, 8) -> 
@@ -591,7 +632,8 @@ get(107, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {1.14,0.42}    
+		param  = {1.43,0.42},    
+		slot   = 3
 	};
 
 get(107, 9) -> 
@@ -605,7 +647,8 @@ get(107, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {1.16,0.46}    
+		param  = {1.46,0.46},    
+		slot   = 3
 	};
 
 get(107, 10) -> 
@@ -619,7 +662,8 @@ get(107, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 4,
-		param  = {1.18,0.5}    
+		param  = {1.5,0.5},    
+		slot   = 3
 	};
 
 get(402, 1) -> 
@@ -633,7 +677,8 @@ get(402, 1) ->
 		level  = 1,
 		target = self,
 		type   = 4,
-		param  = {0.05}    
+		param  = {0.05},    
+		slot   = 3
 	};
 
 get(402, 2) -> 
@@ -647,7 +692,8 @@ get(402, 2) ->
 		level  = 2,
 		target = self,
 		type   = 4,
-		param  = {0.06}    
+		param  = {0.06},    
+		slot   = 3
 	};
 
 get(402, 3) -> 
@@ -661,7 +707,8 @@ get(402, 3) ->
 		level  = 3,
 		target = self,
 		type   = 4,
-		param  = {0.07}    
+		param  = {0.07},    
+		slot   = 3
 	};
 
 get(402, 4) -> 
@@ -675,7 +722,8 @@ get(402, 4) ->
 		level  = 4,
 		target = self,
 		type   = 4,
-		param  = {0.08}    
+		param  = {0.08},    
+		slot   = 3
 	};
 
 get(402, 5) -> 
@@ -689,7 +737,8 @@ get(402, 5) ->
 		level  = 5,
 		target = self,
 		type   = 4,
-		param  = {0.09}    
+		param  = {0.09},    
+		slot   = 3
 	};
 
 get(402, 6) -> 
@@ -703,7 +752,8 @@ get(402, 6) ->
 		level  = 6,
 		target = self,
 		type   = 4,
-		param  = {0.1}    
+		param  = {0.1},    
+		slot   = 3
 	};
 
 get(402, 7) -> 
@@ -717,7 +767,8 @@ get(402, 7) ->
 		level  = 7,
 		target = self,
 		type   = 4,
-		param  = {0.11}    
+		param  = {0.11},    
+		slot   = 3
 	};
 
 get(402, 8) -> 
@@ -731,7 +782,8 @@ get(402, 8) ->
 		level  = 8,
 		target = self,
 		type   = 4,
-		param  = {0.12}    
+		param  = {0.12},    
+		slot   = 3
 	};
 
 get(402, 9) -> 
@@ -745,7 +797,8 @@ get(402, 9) ->
 		level  = 9,
 		target = self,
 		type   = 4,
-		param  = {0.13}    
+		param  = {0.13},    
+		slot   = 3
 	};
 
 get(402, 10) -> 
@@ -759,7 +812,8 @@ get(402, 10) ->
 		level  = 10,
 		target = self,
 		type   = 4,
-		param  = {0.15}    
+		param  = {0.15},    
+		slot   = 3
 	};
 
 get(109, 1) -> 
@@ -773,7 +827,8 @@ get(109, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.8,0.7,0,0}    
+		param  = {1,0.8,0,0},    
+		slot   = 5
 	};
 
 get(109, 2) -> 
@@ -787,7 +842,8 @@ get(109, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 1,
-		param  = {0.8,0.75,0,0}    
+		param  = {1,0.9,0,0},    
+		slot   = 5
 	};
 
 get(109, 3) -> 
@@ -801,7 +857,8 @@ get(109, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 1,
-		param  = {0.8,0.75,0.4,0}    
+		param  = {1,0.9,0.2,0},    
+		slot   = 5
 	};
 
 get(109, 4) -> 
@@ -815,7 +872,8 @@ get(109, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 1,
-		param  = {0.8,0.75,0.45,0}    
+		param  = {1,0.9,0.3,0},    
+		slot   = 5
 	};
 
 get(109, 5) -> 
@@ -829,7 +887,8 @@ get(109, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 1,
-		param  = {0.8,0.75,0.5,0}    
+		param  = {1,0.9,0.4,0},    
+		slot   = 5
 	};
 
 get(109, 6) -> 
@@ -843,7 +902,8 @@ get(109, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 1,
-		param  = {0.8,0.75,0.5,0.25}    
+		param  = {1,0.9,0.5,0.1},    
+		slot   = 5
 	};
 
 get(109, 7) -> 
@@ -857,7 +917,8 @@ get(109, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 1,
-		param  = {0.8,0.75,0.5,0.3}    
+		param  = {1,0.9,0.5,0.2},    
+		slot   = 5
 	};
 
 get(109, 8) -> 
@@ -871,7 +932,8 @@ get(109, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 1,
-		param  = {0.8,0.75,0.5,0.35}    
+		param  = {1,0.9,0.5,0.3},    
+		slot   = 5
 	};
 
 get(109, 9) -> 
@@ -885,7 +947,8 @@ get(109, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 1,
-		param  = {0.8,0.75,0.5,0.4}    
+		param  = {1,0.9,0.5,0.4},    
+		slot   = 5
 	};
 
 get(109, 10) -> 
@@ -899,7 +962,8 @@ get(109, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 1,
-		param  = {0.8,0.75,0.5,0.45}    
+		param  = {1,0.9,0.5,0.5},    
+		slot   = 5
 	};
 
 get(110, 1) -> 
@@ -913,7 +977,8 @@ get(110, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {0.6}    
+		param  = {0.7},    
+		slot   = 4
 	};
 
 get(110, 2) -> 
@@ -927,7 +992,8 @@ get(110, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {0.65}    
+		param  = {0.75},    
+		slot   = 4
 	};
 
 get(110, 3) -> 
@@ -941,7 +1007,8 @@ get(110, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {0.7}    
+		param  = {0.8},    
+		slot   = 4
 	};
 
 get(110, 4) -> 
@@ -955,7 +1022,8 @@ get(110, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {0.75}    
+		param  = {0.85},    
+		slot   = 4
 	};
 
 get(110, 5) -> 
@@ -969,7 +1037,8 @@ get(110, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {0.8}    
+		param  = {0.9},    
+		slot   = 4
 	};
 
 get(110, 6) -> 
@@ -983,7 +1052,8 @@ get(110, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {0.85}    
+		param  = {0.95},    
+		slot   = 4
 	};
 
 get(110, 7) -> 
@@ -997,7 +1067,8 @@ get(110, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {0.9}    
+		param  = {1},    
+		slot   = 4
 	};
 
 get(110, 8) -> 
@@ -1011,7 +1082,8 @@ get(110, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {0.95}    
+		param  = {1.05},    
+		slot   = 4
 	};
 
 get(110, 9) -> 
@@ -1025,7 +1097,8 @@ get(110, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {1}    
+		param  = {1.1},    
+		slot   = 4
 	};
 
 get(110, 10) -> 
@@ -1039,7 +1112,8 @@ get(110, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 4,
-		param  = {1.05}    
+		param  = {1.2},    
+		slot   = 4
 	};
 
 get(403, 1) -> 
@@ -1053,7 +1127,8 @@ get(403, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1,0.1,2}    
+		param  = {1,0.1,2},    
+		slot   = 1
 	};
 
 get(403, 2) -> 
@@ -1067,7 +1142,8 @@ get(403, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {1,0.12,2}    
+		param  = {1,0.12,2},    
+		slot   = 1
 	};
 
 get(403, 3) -> 
@@ -1081,7 +1157,8 @@ get(403, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {1,0.14,2}    
+		param  = {1,0.14,2},    
+		slot   = 1
 	};
 
 get(403, 4) -> 
@@ -1095,7 +1172,8 @@ get(403, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {1,0.16,2}    
+		param  = {1,0.16,2},    
+		slot   = 1
 	};
 
 get(403, 5) -> 
@@ -1109,7 +1187,8 @@ get(403, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {1,0.18,2}    
+		param  = {1,0.18,2},    
+		slot   = 1
 	};
 
 get(403, 6) -> 
@@ -1123,7 +1202,8 @@ get(403, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {1,0.2,3}    
+		param  = {1,0.2,3},    
+		slot   = 1
 	};
 
 get(403, 7) -> 
@@ -1137,7 +1217,8 @@ get(403, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {1,0.22,3}    
+		param  = {1,0.22,3},    
+		slot   = 1
 	};
 
 get(403, 8) -> 
@@ -1151,7 +1232,8 @@ get(403, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {1,0.24,3}    
+		param  = {1,0.24,3},    
+		slot   = 1
 	};
 
 get(403, 9) -> 
@@ -1165,7 +1247,8 @@ get(403, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {1,0.27,3}    
+		param  = {1,0.27,3},    
+		slot   = 1
 	};
 
 get(403, 10) -> 
@@ -1179,7 +1262,8 @@ get(403, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 4,
-		param  = {1,0.3,3}    
+		param  = {1,0.3,3},    
+		slot   = 1
 	};
 
 get(112, 1) -> 
@@ -1193,7 +1277,8 @@ get(112, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1,0.3}    
+		param  = {1,0.3},    
+		slot   = 2
 	};
 
 get(112, 2) -> 
@@ -1207,7 +1292,8 @@ get(112, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {1.02,0.35}    
+		param  = {1.03,0.35},    
+		slot   = 2
 	};
 
 get(112, 3) -> 
@@ -1221,7 +1307,8 @@ get(112, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {1.04,0.4}    
+		param  = {1.06,0.4},    
+		slot   = 2
 	};
 
 get(112, 4) -> 
@@ -1235,7 +1322,8 @@ get(112, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {1.06,0.45}    
+		param  = {1.1,0.45},    
+		slot   = 2
 	};
 
 get(112, 5) -> 
@@ -1249,7 +1337,8 @@ get(112, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {1.08,0.5}    
+		param  = {1.13,0.5},    
+		slot   = 2
 	};
 
 get(112, 6) -> 
@@ -1263,7 +1352,8 @@ get(112, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {1.1,0.55}    
+		param  = {1.16,0.55},    
+		slot   = 2
 	};
 
 get(112, 7) -> 
@@ -1277,7 +1367,8 @@ get(112, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {1.12,0.6}    
+		param  = {12,0.6},    
+		slot   = 2
 	};
 
 get(112, 8) -> 
@@ -1291,7 +1382,8 @@ get(112, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {1.14,0.65}    
+		param  = {1.23,0.65},    
+		slot   = 2
 	};
 
 get(112, 9) -> 
@@ -1305,7 +1397,8 @@ get(112, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {1.16,0.72}    
+		param  = {1.26,0.7},    
+		slot   = 2
 	};
 
 get(112, 10) -> 
@@ -1319,7 +1412,8 @@ get(112, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 4,
-		param  = {1.18,0.8}    
+		param  = {1.3,0.8},    
+		slot   = 2
 	};
 
 get(113, 1) -> 
@@ -1333,7 +1427,8 @@ get(113, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1,1,2,0.3,0.1}    
+		param  = {1.25,1,2,0.2,0},    
+		slot   = 3
 	};
 
 get(113, 2) -> 
@@ -1347,7 +1442,8 @@ get(113, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {1.02,1,2,0.3,0.1}    
+		param  = {1.28,1,2,0.2,0},    
+		slot   = 3
 	};
 
 get(113, 3) -> 
@@ -1361,7 +1457,8 @@ get(113, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {1.04,1,2,0.3,0.1}    
+		param  = {1.31,1,2,0.2,0},    
+		slot   = 3
 	};
 
 get(113, 4) -> 
@@ -1375,7 +1472,8 @@ get(113, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {1.06,1,2,0.3,0.1}    
+		param  = {1.35,1,2,0.25,0.05},    
+		slot   = 3
 	};
 
 get(113, 5) -> 
@@ -1389,7 +1487,8 @@ get(113, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {1.08,1,2,0.3,0.1}    
+		param  = {1.38,1,2,0.25,0.05},    
+		slot   = 3
 	};
 
 get(113, 6) -> 
@@ -1403,7 +1502,8 @@ get(113, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {1.1,1,2,0.3,0.1}    
+		param  = {1.41,1,2,0.25,0.05},    
+		slot   = 3
 	};
 
 get(113, 7) -> 
@@ -1417,7 +1517,8 @@ get(113, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {1.12,1,2,0.3,0.1}    
+		param  = {1.44,1,2,0.3,0.1},    
+		slot   = 3
 	};
 
 get(113, 8) -> 
@@ -1431,7 +1532,8 @@ get(113, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {1.14,1,2,0.3,0.1}    
+		param  = {1.47,1,2,0.3,0.1},    
+		slot   = 3
 	};
 
 get(113, 9) -> 
@@ -1445,7 +1547,8 @@ get(113, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {1.16,1,2,0.3,0.1}    
+		param  = {1.5,1,2,0.3,0.1},    
+		slot   = 3
 	};
 
 get(113, 10) -> 
@@ -1459,7 +1562,8 @@ get(113, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 4,
-		param  = {1.18,1,2,0.3,0.1}    
+		param  = {1.55,1,2,0.4,0.1},    
+		slot   = 3
 	};
 
 get(114, 1) -> 
@@ -1473,7 +1577,8 @@ get(114, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.9}    
+		param  = {1.05},    
+		slot   = 5
 	};
 
 get(114, 2) -> 
@@ -1487,7 +1592,8 @@ get(114, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 1,
-		param  = {0.95}    
+		param  = {1.1},    
+		slot   = 5
 	};
 
 get(114, 3) -> 
@@ -1501,7 +1607,8 @@ get(114, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 1,
-		param  = {1}    
+		param  = {1.15},    
+		slot   = 5
 	};
 
 get(114, 4) -> 
@@ -1515,7 +1622,8 @@ get(114, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 1,
-		param  = {1.05}    
+		param  = {1.2},    
+		slot   = 5
 	};
 
 get(114, 5) -> 
@@ -1529,7 +1637,8 @@ get(114, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 1,
-		param  = {1.1}    
+		param  = {1.25},    
+		slot   = 5
 	};
 
 get(114, 6) -> 
@@ -1543,7 +1652,8 @@ get(114, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 1,
-		param  = {1.15}    
+		param  = {1.3},    
+		slot   = 5
 	};
 
 get(114, 7) -> 
@@ -1557,7 +1667,8 @@ get(114, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 1,
-		param  = {1.2}    
+		param  = {1.35},    
+		slot   = 5
 	};
 
 get(114, 8) -> 
@@ -1571,7 +1682,8 @@ get(114, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 1,
-		param  = {1.25}    
+		param  = {1.4},    
+		slot   = 5
 	};
 
 get(114, 9) -> 
@@ -1585,7 +1697,8 @@ get(114, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 1,
-		param  = {1.3}    
+		param  = {1.45},    
+		slot   = 5
 	};
 
 get(114, 10) -> 
@@ -1599,7 +1712,8 @@ get(114, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 1,
-		param  = {1.35}    
+		param  = {1.5},    
+		slot   = 5
 	};
 
 get(115, 1) -> 
@@ -1613,7 +1727,8 @@ get(115, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {0.5,0.3,100}    
+		param  = {0.7,0.3,200},    
+		slot   = 4
 	};
 
 get(115, 2) -> 
@@ -1627,7 +1742,8 @@ get(115, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {0.55,0.3,200}    
+		param  = {0.75,0.3,500},    
+		slot   = 4
 	};
 
 get(115, 3) -> 
@@ -1641,7 +1757,8 @@ get(115, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {0.6,0.3,350}    
+		param  = {0.8,0.3,800},    
+		slot   = 4
 	};
 
 get(115, 4) -> 
@@ -1655,7 +1772,8 @@ get(115, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {0.65,0.3,500}    
+		param  = {0.85,0.3,1100},    
+		slot   = 4
 	};
 
 get(115, 5) -> 
@@ -1669,7 +1787,8 @@ get(115, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {0.7,0.3,650}    
+		param  = {0.9,0.3,1400},    
+		slot   = 4
 	};
 
 get(115, 6) -> 
@@ -1683,7 +1802,8 @@ get(115, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {0.75,0.3,800}    
+		param  = {0.95,0.3,1700},    
+		slot   = 4
 	};
 
 get(115, 7) -> 
@@ -1697,7 +1817,8 @@ get(115, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {0.8,0.3,1000}    
+		param  = {1,0.3,2000},    
+		slot   = 4
 	};
 
 get(115, 8) -> 
@@ -1711,7 +1832,8 @@ get(115, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {0.85,0.3,1200}    
+		param  = {1.05,0.3,2300},    
+		slot   = 4
 	};
 
 get(115, 9) -> 
@@ -1725,7 +1847,8 @@ get(115, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {0.9,0.3,1400}    
+		param  = {1.1,0.3,2600},    
+		slot   = 4
 	};
 
 get(115, 10) -> 
@@ -1739,7 +1862,8 @@ get(115, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 4,
-		param  = {0.95,0.3,1600}    
+		param  = {1.2,0.3,3000},    
+		slot   = 4
 	};
 
 get(116, 1) -> 
@@ -1753,7 +1877,8 @@ get(116, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1,20,2}    
+		param  = {1,20,2},    
+		slot   = 1
 	};
 
 get(116, 2) -> 
@@ -1767,7 +1892,8 @@ get(116, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {1.02,30,2}    
+		param  = {1.03,30,2},    
+		slot   = 1
 	};
 
 get(116, 3) -> 
@@ -1781,7 +1907,8 @@ get(116, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {1.04,40,2}    
+		param  = {1.06,40,2},    
+		slot   = 1
 	};
 
 get(116, 4) -> 
@@ -1795,7 +1922,8 @@ get(116, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {1.06,50,2}    
+		param  = {1.1,50,2},    
+		slot   = 1
 	};
 
 get(116, 5) -> 
@@ -1809,7 +1937,8 @@ get(116, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {1.08,60,2}    
+		param  = {1.13,60,2},    
+		slot   = 1
 	};
 
 get(116, 6) -> 
@@ -1823,7 +1952,8 @@ get(116, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {1.1,70,2}    
+		param  = {1.16,70,2},    
+		slot   = 1
 	};
 
 get(116, 7) -> 
@@ -1837,7 +1967,8 @@ get(116, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {1.12,80,2}    
+		param  = {1.2,80,2},    
+		slot   = 1
 	};
 
 get(116, 8) -> 
@@ -1851,7 +1982,8 @@ get(116, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {1.14,90,2}    
+		param  = {1.23,90,2},    
+		slot   = 1
 	};
 
 get(116, 9) -> 
@@ -1865,7 +1997,8 @@ get(116, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {1.16,100,2}    
+		param  = {1.26,100,2},    
+		slot   = 1
 	};
 
 get(116, 10) -> 
@@ -1879,7 +2012,8 @@ get(116, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 4,
-		param  = {1.18,110,2}    
+		param  = {1.3,110,2},    
+		slot   = 1
 	};
 
 get(404, 1) -> 
@@ -1893,7 +2027,8 @@ get(404, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1,0.1}    
+		param  = {1,0.1},    
+		slot   = 2
 	};
 
 get(404, 2) -> 
@@ -1907,7 +2042,8 @@ get(404, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {1.02,0.15}    
+		param  = {1.02,0.15},    
+		slot   = 2
 	};
 
 get(404, 3) -> 
@@ -1921,7 +2057,8 @@ get(404, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {1.04,0.2}    
+		param  = {1.04,0.2},    
+		slot   = 2
 	};
 
 get(404, 4) -> 
@@ -1935,7 +2072,8 @@ get(404, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {1.06,0.25}    
+		param  = {1.06,0.25},    
+		slot   = 2
 	};
 
 get(404, 5) -> 
@@ -1949,7 +2087,8 @@ get(404, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {1.08,0.3}    
+		param  = {1.08,0.3},    
+		slot   = 2
 	};
 
 get(404, 6) -> 
@@ -1963,7 +2102,8 @@ get(404, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {1.1,0.35}    
+		param  = {1.1,0.35},    
+		slot   = 2
 	};
 
 get(404, 7) -> 
@@ -1977,7 +2117,8 @@ get(404, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {1.12,0.4}    
+		param  = {1.12,0.4},    
+		slot   = 2
 	};
 
 get(404, 8) -> 
@@ -1991,7 +2132,8 @@ get(404, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {1.14,0.45}    
+		param  = {1.14,0.45},    
+		slot   = 2
 	};
 
 get(404, 9) -> 
@@ -2005,7 +2147,8 @@ get(404, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {1.17,0.5}    
+		param  = {1.17,0.5},    
+		slot   = 2
 	};
 
 get(404, 10) -> 
@@ -2019,7 +2162,8 @@ get(404, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 4,
-		param  = {1.2,0.55}    
+		param  = {1.2,0.55},    
+		slot   = 2
 	};
 
 get(118, 1) -> 
@@ -2033,7 +2177,8 @@ get(118, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {0.75}    
+		param  = {0.75},    
+		slot   = 3
 	};
 
 get(118, 2) -> 
@@ -2047,7 +2192,8 @@ get(118, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {0.77}    
+		param  = {0.78},    
+		slot   = 3
 	};
 
 get(118, 3) -> 
@@ -2061,7 +2207,8 @@ get(118, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {0.79}    
+		param  = {0.81},    
+		slot   = 3
 	};
 
 get(118, 4) -> 
@@ -2075,7 +2222,8 @@ get(118, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {0.81}    
+		param  = {0.84},    
+		slot   = 3
 	};
 
 get(118, 5) -> 
@@ -2089,7 +2237,8 @@ get(118, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {0.83}    
+		param  = {0.87},    
+		slot   = 3
 	};
 
 get(118, 6) -> 
@@ -2103,7 +2252,8 @@ get(118, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {0.85}    
+		param  = {0.9},    
+		slot   = 3
 	};
 
 get(118, 7) -> 
@@ -2117,7 +2267,8 @@ get(118, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {0.87}    
+		param  = {0.93},    
+		slot   = 3
 	};
 
 get(118, 8) -> 
@@ -2131,7 +2282,8 @@ get(118, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {0.89}    
+		param  = {0.96},    
+		slot   = 3
 	};
 
 get(118, 9) -> 
@@ -2145,7 +2297,8 @@ get(118, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {0.91}    
+		param  = {1},    
+		slot   = 3
 	};
 
 get(118, 10) -> 
@@ -2159,7 +2312,8 @@ get(118, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 4,
-		param  = {0.93}    
+		param  = {1.05},    
+		slot   = 3
 	};
 
 get(119, 1) -> 
@@ -2173,7 +2327,8 @@ get(119, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1,0.1}    
+		param  = {1,0.1},    
+		slot   = 3
 	};
 
 get(119, 2) -> 
@@ -2187,7 +2342,8 @@ get(119, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {1.02,0.1}    
+		param  = {1.02,0.1},    
+		slot   = 3
 	};
 
 get(119, 3) -> 
@@ -2201,7 +2357,8 @@ get(119, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {1.04,0.1}    
+		param  = {1.04,0.1},    
+		slot   = 3
 	};
 
 get(119, 4) -> 
@@ -2215,7 +2372,8 @@ get(119, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {1.08,0.1}    
+		param  = {1.08,0.1},    
+		slot   = 3
 	};
 
 get(119, 5) -> 
@@ -2229,7 +2387,8 @@ get(119, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {1.1,0.1}    
+		param  = {1.1,0.1},    
+		slot   = 3
 	};
 
 get(119, 6) -> 
@@ -2243,7 +2402,8 @@ get(119, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {1.12,0.1}    
+		param  = {1.12,0.1},    
+		slot   = 3
 	};
 
 get(119, 7) -> 
@@ -2257,7 +2417,8 @@ get(119, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {1.14,0.1}    
+		param  = {1.14,0.1},    
+		slot   = 3
 	};
 
 get(119, 8) -> 
@@ -2271,7 +2432,8 @@ get(119, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {1.16,0.1}    
+		param  = {1.16,0.1},    
+		slot   = 3
 	};
 
 get(119, 9) -> 
@@ -2285,7 +2447,8 @@ get(119, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {1.18,0.1}    
+		param  = {1.18,0.1},    
+		slot   = 3
 	};
 
 get(119, 10) -> 
@@ -2299,7 +2462,8 @@ get(119, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 4,
-		param  = {1.2,0.1}    
+		param  = {1.2,0.1},    
+		slot   = 3
 	};
 
 get(201, 1) -> 
@@ -2313,7 +2477,8 @@ get(201, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {0.2,0.4}    
+		param  = {0.2,0.4},    
+		slot   = 0
 	};
 
 get(201, 2) -> 
@@ -2327,7 +2492,8 @@ get(201, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {0.24,0.4}    
+		param  = {0.24,0.4},    
+		slot   = 0
 	};
 
 get(201, 3) -> 
@@ -2341,7 +2507,8 @@ get(201, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {0.28,0.4}    
+		param  = {0.28,0.4},    
+		slot   = 0
 	};
 
 get(201, 4) -> 
@@ -2355,7 +2522,8 @@ get(201, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {0.32,0.4}    
+		param  = {0.32,0.4},    
+		slot   = 0
 	};
 
 get(201, 5) -> 
@@ -2369,7 +2537,8 @@ get(201, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {0.36,0.4}    
+		param  = {0.36,0.4},    
+		slot   = 0
 	};
 
 get(201, 6) -> 
@@ -2383,7 +2552,8 @@ get(201, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {0.4,0.4}    
+		param  = {0.4,0.4},    
+		slot   = 0
 	};
 
 get(201, 7) -> 
@@ -2397,7 +2567,8 @@ get(201, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {0.45,0.4}    
+		param  = {0.45,0.4},    
+		slot   = 0
 	};
 
 get(201, 8) -> 
@@ -2411,7 +2582,8 @@ get(201, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {0.5,0.4}    
+		param  = {0.5,0.4},    
+		slot   = 0
 	};
 
 get(201, 9) -> 
@@ -2425,7 +2597,8 @@ get(201, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {0.55,0.4}    
+		param  = {0.55,0.4},    
+		slot   = 0
 	};
 
 get(201, 10) -> 
@@ -2439,7 +2612,8 @@ get(201, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {0.6,0.4}    
+		param  = {0.6,0.4},    
+		slot   = 0
 	};
 
 get(202, 1) -> 
@@ -2453,7 +2627,8 @@ get(202, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {0.05,0.08}    
+		param  = {0.05,0.08},    
+		slot   = 0
 	};
 
 get(202, 2) -> 
@@ -2467,7 +2642,8 @@ get(202, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {0.065,0.08}    
+		param  = {0.065,0.08},    
+		slot   = 0
 	};
 
 get(202, 3) -> 
@@ -2481,7 +2657,8 @@ get(202, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {0.08,0.08}    
+		param  = {0.08,0.08},    
+		slot   = 0
 	};
 
 get(202, 4) -> 
@@ -2495,7 +2672,8 @@ get(202, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {0.095,0.08}    
+		param  = {0.095,0.08},    
+		slot   = 0
 	};
 
 get(202, 5) -> 
@@ -2509,7 +2687,8 @@ get(202, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {0.11,0.08}    
+		param  = {0.11,0.08},    
+		slot   = 0
 	};
 
 get(202, 6) -> 
@@ -2523,7 +2702,8 @@ get(202, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {0.125,0.08}    
+		param  = {0.125,0.08},    
+		slot   = 0
 	};
 
 get(202, 7) -> 
@@ -2537,7 +2717,8 @@ get(202, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {0.14,0.08}    
+		param  = {0.14,0.08},    
+		slot   = 0
 	};
 
 get(202, 8) -> 
@@ -2551,7 +2732,8 @@ get(202, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {0.16,0.08}    
+		param  = {0.16,0.08},    
+		slot   = 0
 	};
 
 get(202, 9) -> 
@@ -2565,7 +2747,8 @@ get(202, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {0.18,0.08}    
+		param  = {0.18,0.08},    
+		slot   = 0
 	};
 
 get(202, 10) -> 
@@ -2579,7 +2762,8 @@ get(202, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {0.2,0.08}    
+		param  = {0.2,0.08},    
+		slot   = 0
 	};
 
 get(203, 1) -> 
@@ -2593,7 +2777,8 @@ get(203, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {0.052,1,0.3}    
+		param  = {0.052,1,0.3},    
+		slot   = 0
 	};
 
 get(203, 2) -> 
@@ -2607,7 +2792,8 @@ get(203, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {0.074,1,0.3}    
+		param  = {0.074,1,0.3},    
+		slot   = 0
 	};
 
 get(203, 3) -> 
@@ -2621,7 +2807,8 @@ get(203, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {0.096,1,0.3}    
+		param  = {0.096,1,0.3},    
+		slot   = 0
 	};
 
 get(203, 4) -> 
@@ -2635,7 +2822,8 @@ get(203, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {0.118,1,0.3}    
+		param  = {0.118,1,0.3},    
+		slot   = 0
 	};
 
 get(203, 5) -> 
@@ -2649,7 +2837,8 @@ get(203, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {0.14,1,0.3}    
+		param  = {0.14,1,0.3},    
+		slot   = 0
 	};
 
 get(203, 6) -> 
@@ -2663,7 +2852,8 @@ get(203, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {0.162,1,0.3}    
+		param  = {0.162,1,0.3},    
+		slot   = 0
 	};
 
 get(203, 7) -> 
@@ -2677,7 +2867,8 @@ get(203, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {0.184,1,0.3}    
+		param  = {0.184,1,0.3},    
+		slot   = 0
 	};
 
 get(203, 8) -> 
@@ -2691,7 +2882,8 @@ get(203, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {0.206,1,0.3}    
+		param  = {0.206,1,0.3},    
+		slot   = 0
 	};
 
 get(203, 9) -> 
@@ -2705,7 +2897,8 @@ get(203, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {0.228,1,0.3}    
+		param  = {0.228,1,0.3},    
+		slot   = 0
 	};
 
 get(203, 10) -> 
@@ -2719,7 +2912,8 @@ get(203, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {0.25,1,0.3}    
+		param  = {0.25,1,0.3},    
+		slot   = 0
 	};
 
 get(204, 1) -> 
@@ -2733,7 +2927,8 @@ get(204, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(204, 2) -> 
@@ -2747,7 +2942,8 @@ get(204, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(204, 3) -> 
@@ -2761,7 +2957,8 @@ get(204, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(204, 4) -> 
@@ -2775,7 +2972,8 @@ get(204, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(204, 5) -> 
@@ -2789,7 +2987,8 @@ get(204, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(204, 6) -> 
@@ -2803,7 +3002,8 @@ get(204, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(204, 7) -> 
@@ -2817,7 +3017,8 @@ get(204, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(204, 8) -> 
@@ -2831,7 +3032,8 @@ get(204, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(204, 9) -> 
@@ -2845,7 +3047,8 @@ get(204, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(204, 10) -> 
@@ -2859,7 +3062,8 @@ get(204, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(205, 1) -> 
@@ -2873,7 +3077,8 @@ get(205, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {0.08,0.06}    
+		param  = {0.08,0.06},    
+		slot   = 0
 	};
 
 get(205, 2) -> 
@@ -2887,7 +3092,8 @@ get(205, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {0.1,0.08}    
+		param  = {0.1,0.08},    
+		slot   = 0
 	};
 
 get(205, 3) -> 
@@ -2901,7 +3107,8 @@ get(205, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {0.12,0.10}    
+		param  = {0.12,0.10},    
+		slot   = 0
 	};
 
 get(205, 4) -> 
@@ -2915,7 +3122,8 @@ get(205, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {0.14,0.12}    
+		param  = {0.14,0.12},    
+		slot   = 0
 	};
 
 get(205, 5) -> 
@@ -2929,7 +3137,8 @@ get(205, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {0.16,0.14}    
+		param  = {0.16,0.14},    
+		slot   = 0
 	};
 
 get(205, 6) -> 
@@ -2943,7 +3152,8 @@ get(205, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {0.18,0.16}    
+		param  = {0.18,0.16},    
+		slot   = 0
 	};
 
 get(205, 7) -> 
@@ -2957,7 +3167,8 @@ get(205, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {0.2,0.18}    
+		param  = {0.2,0.18},    
+		slot   = 0
 	};
 
 get(205, 8) -> 
@@ -2971,7 +3182,8 @@ get(205, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {0.22,0.21}    
+		param  = {0.22,0.21},    
+		slot   = 0
 	};
 
 get(205, 9) -> 
@@ -2985,7 +3197,8 @@ get(205, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {0.24,0.23}    
+		param  = {0.24,0.23},    
+		slot   = 0
 	};
 
 get(205, 10) -> 
@@ -2999,7 +3212,8 @@ get(205, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {0.26,0.25}    
+		param  = {0.26,0.25},    
+		slot   = 0
 	};
 
 get(206, 1) -> 
@@ -3013,7 +3227,8 @@ get(206, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {0.06,0.06}    
+		param  = {0.06,0.06},    
+		slot   = 0
 	};
 
 get(206, 2) -> 
@@ -3027,7 +3242,8 @@ get(206, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {0.08,0.08}    
+		param  = {0.08,0.08},    
+		slot   = 0
 	};
 
 get(206, 3) -> 
@@ -3041,7 +3257,8 @@ get(206, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {0.1,0.10}    
+		param  = {0.1,0.10},    
+		slot   = 0
 	};
 
 get(206, 4) -> 
@@ -3055,7 +3272,8 @@ get(206, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {0.12,0.12}    
+		param  = {0.12,0.12},    
+		slot   = 0
 	};
 
 get(206, 5) -> 
@@ -3069,7 +3287,8 @@ get(206, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {0.14,0.14}    
+		param  = {0.14,0.14},    
+		slot   = 0
 	};
 
 get(206, 6) -> 
@@ -3083,7 +3302,8 @@ get(206, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {0.16,0.16}    
+		param  = {0.16,0.16},    
+		slot   = 0
 	};
 
 get(206, 7) -> 
@@ -3097,7 +3317,8 @@ get(206, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {0.18,0.18}    
+		param  = {0.18,0.18},    
+		slot   = 0
 	};
 
 get(206, 8) -> 
@@ -3111,7 +3332,8 @@ get(206, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {0.2,0.20}    
+		param  = {0.2,0.20},    
+		slot   = 0
 	};
 
 get(206, 9) -> 
@@ -3125,7 +3347,8 @@ get(206, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {0.22,0.22}    
+		param  = {0.22,0.22},    
+		slot   = 0
 	};
 
 get(206, 10) -> 
@@ -3139,7 +3362,8 @@ get(206, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {0.25,0.25}    
+		param  = {0.25,0.25},    
+		slot   = 0
 	};
 
 get(207, 1) -> 
@@ -3153,7 +3377,8 @@ get(207, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {10,0.08}    
+		param  = {10,0.08},    
+		slot   = 0
 	};
 
 get(207, 2) -> 
@@ -3167,7 +3392,8 @@ get(207, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {12,0.10}    
+		param  = {12,0.10},    
+		slot   = 0
 	};
 
 get(207, 3) -> 
@@ -3181,7 +3407,8 @@ get(207, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {14,0.12}    
+		param  = {14,0.12},    
+		slot   = 0
 	};
 
 get(207, 4) -> 
@@ -3195,7 +3422,8 @@ get(207, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {16,0.14}    
+		param  = {16,0.14},    
+		slot   = 0
 	};
 
 get(207, 5) -> 
@@ -3209,7 +3437,8 @@ get(207, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {18,0.16}    
+		param  = {18,0.16},    
+		slot   = 0
 	};
 
 get(207, 6) -> 
@@ -3223,7 +3452,8 @@ get(207, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {20,0.18}    
+		param  = {20,0.18},    
+		slot   = 0
 	};
 
 get(207, 7) -> 
@@ -3237,7 +3467,8 @@ get(207, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {22,0.21}    
+		param  = {22,0.21},    
+		slot   = 0
 	};
 
 get(207, 8) -> 
@@ -3251,7 +3482,8 @@ get(207, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {24,0.24}    
+		param  = {24,0.24},    
+		slot   = 0
 	};
 
 get(207, 9) -> 
@@ -3265,7 +3497,8 @@ get(207, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {27,0.27}    
+		param  = {27,0.27},    
+		slot   = 0
 	};
 
 get(207, 10) -> 
@@ -3279,7 +3512,8 @@ get(207, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {30,0.3}    
+		param  = {30,0.3},    
+		slot   = 0
 	};
 
 get(208, 1) -> 
@@ -3293,7 +3527,8 @@ get(208, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(208, 2) -> 
@@ -3307,7 +3542,8 @@ get(208, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(208, 3) -> 
@@ -3321,7 +3557,8 @@ get(208, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(208, 4) -> 
@@ -3335,7 +3572,8 @@ get(208, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(208, 5) -> 
@@ -3349,7 +3587,8 @@ get(208, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(208, 6) -> 
@@ -3363,7 +3602,8 @@ get(208, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(208, 7) -> 
@@ -3377,7 +3617,8 @@ get(208, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(208, 8) -> 
@@ -3391,7 +3632,8 @@ get(208, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(208, 9) -> 
@@ -3405,7 +3647,8 @@ get(208, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(208, 10) -> 
@@ -3419,7 +3662,8 @@ get(208, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(209, 1) -> 
@@ -3433,7 +3677,8 @@ get(209, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(209, 2) -> 
@@ -3447,7 +3692,8 @@ get(209, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(209, 3) -> 
@@ -3461,7 +3707,8 @@ get(209, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(209, 4) -> 
@@ -3475,7 +3722,8 @@ get(209, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(209, 5) -> 
@@ -3489,7 +3737,8 @@ get(209, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(209, 6) -> 
@@ -3503,7 +3752,8 @@ get(209, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(209, 7) -> 
@@ -3517,7 +3767,8 @@ get(209, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(209, 8) -> 
@@ -3531,7 +3782,8 @@ get(209, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(209, 9) -> 
@@ -3545,7 +3797,8 @@ get(209, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(209, 10) -> 
@@ -3559,7 +3812,8 @@ get(209, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(210, 1) -> 
@@ -3573,7 +3827,8 @@ get(210, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(210, 2) -> 
@@ -3587,7 +3842,8 @@ get(210, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(210, 3) -> 
@@ -3601,7 +3857,8 @@ get(210, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(210, 4) -> 
@@ -3615,7 +3872,8 @@ get(210, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(210, 5) -> 
@@ -3629,7 +3887,8 @@ get(210, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(210, 6) -> 
@@ -3643,7 +3902,8 @@ get(210, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(210, 7) -> 
@@ -3657,7 +3917,8 @@ get(210, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(210, 8) -> 
@@ -3671,7 +3932,8 @@ get(210, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(210, 9) -> 
@@ -3685,7 +3947,8 @@ get(210, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(210, 10) -> 
@@ -3699,7 +3962,8 @@ get(210, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(211, 1) -> 
@@ -3713,7 +3977,8 @@ get(211, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(211, 2) -> 
@@ -3727,7 +3992,8 @@ get(211, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(211, 3) -> 
@@ -3741,7 +4007,8 @@ get(211, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(211, 4) -> 
@@ -3755,7 +4022,8 @@ get(211, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(211, 5) -> 
@@ -3769,7 +4037,8 @@ get(211, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(211, 6) -> 
@@ -3783,7 +4052,8 @@ get(211, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(211, 7) -> 
@@ -3797,7 +4067,8 @@ get(211, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(211, 8) -> 
@@ -3811,7 +4082,8 @@ get(211, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(211, 9) -> 
@@ -3825,7 +4097,8 @@ get(211, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(211, 10) -> 
@@ -3839,7 +4112,8 @@ get(211, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(212, 1) -> 
@@ -3853,7 +4127,8 @@ get(212, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(212, 2) -> 
@@ -3867,7 +4142,8 @@ get(212, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(212, 3) -> 
@@ -3881,7 +4157,8 @@ get(212, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(212, 4) -> 
@@ -3895,7 +4172,8 @@ get(212, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(212, 5) -> 
@@ -3909,7 +4187,8 @@ get(212, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(212, 6) -> 
@@ -3923,7 +4202,8 @@ get(212, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(212, 7) -> 
@@ -3937,7 +4217,8 @@ get(212, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(212, 8) -> 
@@ -3951,7 +4232,8 @@ get(212, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(212, 9) -> 
@@ -3965,7 +4247,8 @@ get(212, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(212, 10) -> 
@@ -3979,7 +4262,8 @@ get(212, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(213, 1) -> 
@@ -3993,7 +4277,8 @@ get(213, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(213, 2) -> 
@@ -4007,7 +4292,8 @@ get(213, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(213, 3) -> 
@@ -4021,7 +4307,8 @@ get(213, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(213, 4) -> 
@@ -4035,7 +4322,8 @@ get(213, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(213, 5) -> 
@@ -4049,7 +4337,8 @@ get(213, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(213, 6) -> 
@@ -4063,7 +4352,8 @@ get(213, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(213, 7) -> 
@@ -4077,7 +4367,8 @@ get(213, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(213, 8) -> 
@@ -4091,7 +4382,8 @@ get(213, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(213, 9) -> 
@@ -4105,7 +4397,8 @@ get(213, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(213, 10) -> 
@@ -4119,7 +4412,8 @@ get(213, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(214, 1) -> 
@@ -4133,7 +4427,8 @@ get(214, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {5}    
+		param  = {5},    
+		slot   = 0
 	};
 
 get(214, 2) -> 
@@ -4147,7 +4442,8 @@ get(214, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {10}    
+		param  = {10},    
+		slot   = 0
 	};
 
 get(214, 3) -> 
@@ -4161,7 +4457,8 @@ get(214, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {15}    
+		param  = {15},    
+		slot   = 0
 	};
 
 get(214, 4) -> 
@@ -4175,7 +4472,8 @@ get(214, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {20}    
+		param  = {20},    
+		slot   = 0
 	};
 
 get(214, 5) -> 
@@ -4189,7 +4487,8 @@ get(214, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {25}    
+		param  = {25},    
+		slot   = 0
 	};
 
 get(214, 6) -> 
@@ -4203,7 +4502,8 @@ get(214, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {30}    
+		param  = {30},    
+		slot   = 0
 	};
 
 get(214, 7) -> 
@@ -4217,7 +4517,8 @@ get(214, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {35}    
+		param  = {35},    
+		slot   = 0
 	};
 
 get(214, 8) -> 
@@ -4231,7 +4532,8 @@ get(214, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {40}    
+		param  = {40},    
+		slot   = 0
 	};
 
 get(214, 9) -> 
@@ -4245,7 +4547,8 @@ get(214, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {45}    
+		param  = {45},    
+		slot   = 0
 	};
 
 get(214, 10) -> 
@@ -4259,7 +4562,8 @@ get(214, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {50}    
+		param  = {50},    
+		slot   = 0
 	};
 
 get(215, 1) -> 
@@ -4273,7 +4577,8 @@ get(215, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {0.2}    
+		param  = {0.2},    
+		slot   = 0
 	};
 
 get(215, 2) -> 
@@ -4287,7 +4592,8 @@ get(215, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {0.2}    
+		param  = {0.2},    
+		slot   = 0
 	};
 
 get(215, 3) -> 
@@ -4301,7 +4607,8 @@ get(215, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {0.2}    
+		param  = {0.2},    
+		slot   = 0
 	};
 
 get(215, 4) -> 
@@ -4315,7 +4622,8 @@ get(215, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {0.2}    
+		param  = {0.2},    
+		slot   = 0
 	};
 
 get(215, 5) -> 
@@ -4329,7 +4637,8 @@ get(215, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {0.2}    
+		param  = {0.2},    
+		slot   = 0
 	};
 
 get(215, 6) -> 
@@ -4343,7 +4652,8 @@ get(215, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {0.2}    
+		param  = {0.2},    
+		slot   = 0
 	};
 
 get(215, 7) -> 
@@ -4357,7 +4667,8 @@ get(215, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {0.2}    
+		param  = {0.2},    
+		slot   = 0
 	};
 
 get(215, 8) -> 
@@ -4371,7 +4682,8 @@ get(215, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {0.2}    
+		param  = {0.2},    
+		slot   = 0
 	};
 
 get(215, 9) -> 
@@ -4385,7 +4697,8 @@ get(215, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {0.2}    
+		param  = {0.2},    
+		slot   = 0
 	};
 
 get(215, 10) -> 
@@ -4399,7 +4712,8 @@ get(215, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(216, 1) -> 
@@ -4413,7 +4727,8 @@ get(216, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(216, 2) -> 
@@ -4427,7 +4742,8 @@ get(216, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(216, 3) -> 
@@ -4441,7 +4757,8 @@ get(216, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(216, 4) -> 
@@ -4455,7 +4772,8 @@ get(216, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(216, 5) -> 
@@ -4469,7 +4787,8 @@ get(216, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(216, 6) -> 
@@ -4483,7 +4802,8 @@ get(216, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(216, 7) -> 
@@ -4497,7 +4817,8 @@ get(216, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(216, 8) -> 
@@ -4511,7 +4832,8 @@ get(216, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(216, 9) -> 
@@ -4525,7 +4847,8 @@ get(216, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(216, 10) -> 
@@ -4539,7 +4862,8 @@ get(216, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(217, 1) -> 
@@ -4553,7 +4877,8 @@ get(217, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(217, 2) -> 
@@ -4567,7 +4892,8 @@ get(217, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(217, 3) -> 
@@ -4581,7 +4907,8 @@ get(217, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(217, 4) -> 
@@ -4595,7 +4922,8 @@ get(217, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(217, 5) -> 
@@ -4609,7 +4937,8 @@ get(217, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(217, 6) -> 
@@ -4623,7 +4952,8 @@ get(217, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(217, 7) -> 
@@ -4637,7 +4967,8 @@ get(217, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(217, 8) -> 
@@ -4651,7 +4982,8 @@ get(217, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(217, 9) -> 
@@ -4665,7 +4997,8 @@ get(217, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(217, 10) -> 
@@ -4679,7 +5012,8 @@ get(217, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(218, 1) -> 
@@ -4693,7 +5027,8 @@ get(218, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(218, 2) -> 
@@ -4707,7 +5042,8 @@ get(218, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(218, 3) -> 
@@ -4721,7 +5057,8 @@ get(218, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(218, 4) -> 
@@ -4735,7 +5072,8 @@ get(218, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(218, 5) -> 
@@ -4749,7 +5087,8 @@ get(218, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(218, 6) -> 
@@ -4763,7 +5102,8 @@ get(218, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(218, 7) -> 
@@ -4777,7 +5117,8 @@ get(218, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(218, 8) -> 
@@ -4791,7 +5132,8 @@ get(218, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(218, 9) -> 
@@ -4805,7 +5147,8 @@ get(218, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(218, 10) -> 
@@ -4819,7 +5162,8 @@ get(218, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(219, 1) -> 
@@ -4833,7 +5177,8 @@ get(219, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {0.02,0.35}    
+		param  = {0.02,0.35},    
+		slot   = 0
 	};
 
 get(219, 2) -> 
@@ -4847,7 +5192,8 @@ get(219, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {0.04,0.35}    
+		param  = {0.04,0.35},    
+		slot   = 0
 	};
 
 get(219, 3) -> 
@@ -4861,7 +5207,8 @@ get(219, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {0.06,0.35}    
+		param  = {0.06,0.35},    
+		slot   = 0
 	};
 
 get(219, 4) -> 
@@ -4875,7 +5222,8 @@ get(219, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {0.08,0.35}    
+		param  = {0.08,0.35},    
+		slot   = 0
 	};
 
 get(219, 5) -> 
@@ -4889,7 +5237,8 @@ get(219, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {0.1,0.35}    
+		param  = {0.1,0.35},    
+		slot   = 0
 	};
 
 get(219, 6) -> 
@@ -4903,7 +5252,8 @@ get(219, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {0.12,0.35}    
+		param  = {0.12,0.35},    
+		slot   = 0
 	};
 
 get(219, 7) -> 
@@ -4917,7 +5267,8 @@ get(219, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {0.14,0.35}    
+		param  = {0.14,0.35},    
+		slot   = 0
 	};
 
 get(219, 8) -> 
@@ -4931,7 +5282,8 @@ get(219, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {0.16,0.35}    
+		param  = {0.16,0.35},    
+		slot   = 0
 	};
 
 get(219, 9) -> 
@@ -4945,7 +5297,8 @@ get(219, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {0.18,0.35}    
+		param  = {0.18,0.35},    
+		slot   = 0
 	};
 
 get(219, 10) -> 
@@ -4959,7 +5312,8 @@ get(219, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {0.2,0.35}    
+		param  = {0.2,0.35},    
+		slot   = 0
 	};
 
 get(220, 1) -> 
@@ -4973,7 +5327,8 @@ get(220, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(220, 2) -> 
@@ -4987,7 +5342,8 @@ get(220, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(220, 3) -> 
@@ -5001,7 +5357,8 @@ get(220, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(220, 4) -> 
@@ -5015,7 +5372,8 @@ get(220, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(220, 5) -> 
@@ -5029,7 +5387,8 @@ get(220, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(220, 6) -> 
@@ -5043,7 +5402,8 @@ get(220, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(220, 7) -> 
@@ -5057,7 +5417,8 @@ get(220, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(220, 8) -> 
@@ -5071,7 +5432,8 @@ get(220, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(220, 9) -> 
@@ -5085,7 +5447,8 @@ get(220, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(220, 10) -> 
@@ -5099,7 +5462,8 @@ get(220, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(221, 1) -> 
@@ -5113,7 +5477,8 @@ get(221, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(221, 2) -> 
@@ -5127,7 +5492,8 @@ get(221, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(221, 3) -> 
@@ -5141,7 +5507,8 @@ get(221, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(221, 4) -> 
@@ -5155,7 +5522,8 @@ get(221, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(221, 5) -> 
@@ -5169,7 +5537,8 @@ get(221, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(221, 6) -> 
@@ -5183,7 +5552,8 @@ get(221, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(221, 7) -> 
@@ -5197,7 +5567,8 @@ get(221, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(221, 8) -> 
@@ -5211,7 +5582,8 @@ get(221, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(221, 9) -> 
@@ -5225,7 +5597,8 @@ get(221, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(221, 10) -> 
@@ -5239,7 +5612,8 @@ get(221, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(222, 1) -> 
@@ -5253,7 +5627,8 @@ get(222, 1) ->
 		level  = 1,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(222, 2) -> 
@@ -5267,7 +5642,8 @@ get(222, 2) ->
 		level  = 2,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(222, 3) -> 
@@ -5281,7 +5657,8 @@ get(222, 3) ->
 		level  = 3,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(222, 4) -> 
@@ -5295,7 +5672,8 @@ get(222, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(222, 5) -> 
@@ -5309,7 +5687,8 @@ get(222, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(222, 6) -> 
@@ -5323,7 +5702,8 @@ get(222, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(222, 7) -> 
@@ -5337,7 +5717,8 @@ get(222, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(222, 8) -> 
@@ -5351,7 +5732,8 @@ get(222, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(222, 9) -> 
@@ -5365,7 +5747,8 @@ get(222, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(222, 10) -> 
@@ -5379,7 +5762,8 @@ get(222, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(223, 1) -> 
@@ -5393,7 +5777,8 @@ get(223, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1,0.5}    
+		param  = {1,0.5},    
+		slot   = 0
 	};
 
 get(224, 1) -> 
@@ -5407,7 +5792,8 @@ get(224, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1,0.5}    
+		param  = {1,0.5},    
+		slot   = 0
 	};
 
 get(225, 1) -> 
@@ -5421,7 +5807,8 @@ get(225, 1) ->
 		level  = 1,
 		target = self,
 		type   = 1,
-		param  = {0.5}    
+		param  = {0.5},    
+		slot   = 0
 	};
 
 get(226, 1) -> 
@@ -5435,7 +5822,8 @@ get(226, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.9,0.25}    
+		param  = {0.9,0.25},    
+		slot   = 0
 	};
 
 get(227, 1) -> 
@@ -5449,7 +5837,8 @@ get(227, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.9,100}    
+		param  = {0.9,100},    
+		slot   = 0
 	};
 
 get(228, 1) -> 
@@ -5463,7 +5852,8 @@ get(228, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1.5}    
+		param  = {1.5},    
+		slot   = 0
 	};
 
 get(229, 1) -> 
@@ -5477,7 +5867,8 @@ get(229, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1,0.4}    
+		param  = {1,0.4},    
+		slot   = 0
 	};
 
 get(230, 1) -> 
@@ -5491,7 +5882,8 @@ get(230, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1.6}    
+		param  = {1.3},    
+		slot   = 0
 	};
 
 get(231, 1) -> 
@@ -5505,7 +5897,8 @@ get(231, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.8}    
+		param  = {0.8},    
+		slot   = 0
 	};
 
 get(232, 1) -> 
@@ -5519,7 +5912,8 @@ get(232, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1.5,0.4,1}    
+		param  = {1.5,0.4,1},    
+		slot   = 0
 	};
 
 get(233, 1) -> 
@@ -5533,7 +5927,8 @@ get(233, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(234, 1) -> 
@@ -5547,7 +5942,8 @@ get(234, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.3,1.1}    
+		param  = {0.3,1.1},    
+		slot   = 0
 	};
 
 get(235, 1) -> 
@@ -5561,7 +5957,8 @@ get(235, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.7}    
+		param  = {0.7},    
+		slot   = 0
 	};
 
 get(236, 1) -> 
@@ -5575,7 +5972,8 @@ get(236, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1}    
+		param  = {1},    
+		slot   = 0
 	};
 
 get(237, 1) -> 
@@ -5589,7 +5987,8 @@ get(237, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1.5,0.3,25}    
+		param  = {1.5,0.3,25},    
+		slot   = 0
 	};
 
 get(238, 1) -> 
@@ -5603,7 +6002,8 @@ get(238, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.9,0.7}    
+		param  = {1,0.8},    
+		slot   = 0
 	};
 
 get(239, 1) -> 
@@ -5617,7 +6017,8 @@ get(239, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.7}    
+		param  = {0.7},    
+		slot   = 0
 	};
 
 get(240, 1) -> 
@@ -5631,7 +6032,8 @@ get(240, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.3,1.2}    
+		param  = {0.3,1.2},    
+		slot   = 0
 	};
 
 get(241, 1) -> 
@@ -5645,7 +6047,8 @@ get(241, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.8,0.3,25}    
+		param  = {1,0.3,40},    
+		slot   = 0
 	};
 
 get(242, 1) -> 
@@ -5659,7 +6062,8 @@ get(242, 1) ->
 		level  = 1,
 		target = friend,
 		type   = 1,
-		param  = {0.2,20}    
+		param  = {0.18,20},    
+		slot   = 0
 	};
 
 get(243, 1) -> 
@@ -5673,7 +6077,8 @@ get(243, 1) ->
 		level  = 1,
 		target = friend,
 		type   = 1,
-		param  = {0.15,0.4,0.2,0.2}    
+		param  = {0.15,0.4,0.2,0.2},    
+		slot   = 0
 	};
 
 get(244, 1) -> 
@@ -5687,7 +6092,8 @@ get(244, 1) ->
 		level  = 1,
 		target = friend,
 		type   = 1,
-		param  = {0.4}    
+		param  = {0.3},    
+		slot   = 0
 	};
 
 get(245, 1) -> 
@@ -5701,7 +6107,8 @@ get(245, 1) ->
 		level  = 1,
 		target = friend,
 		type   = 1,
-		param  = {0.3,0.3}    
+		param  = {0.3,0.3},    
+		slot   = 0
 	};
 
 get(246, 1) -> 
@@ -5715,7 +6122,8 @@ get(246, 1) ->
 		level  = 1,
 		target = friend,
 		type   = 1,
-		param  = {0.3,0.2,0.1}    
+		param  = {0.2,0.3,0.5},    
+		slot   = 0
 	};
 
 get(247, 1) -> 
@@ -5729,7 +6137,8 @@ get(247, 1) ->
 		level  = 1,
 		target = friend,
 		type   = 1,
-		param  = {0.15,3}    
+		param  = {0.15,3},    
+		slot   = 0
 	};
 
 get(248, 1) -> 
@@ -5743,7 +6152,8 @@ get(248, 1) ->
 		level  = 1,
 		target = friend,
 		type   = 1,
-		param  = {2}    
+		param  = {2},    
+		slot   = 0
 	};
 
 get(249, 1) -> 
@@ -5757,7 +6167,8 @@ get(249, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1.25}    
+		param  = {1.25},    
+		slot   = 0
 	};
 
 get(250, 1) -> 
@@ -5771,7 +6182,8 @@ get(250, 1) ->
 		level  = 1,
 		target = self,
 		type   = 1,
-		param  = {0.09}    
+		param  = {0.09},    
+		slot   = 0
 	};
 
 get(251, 1) -> 
@@ -5785,7 +6197,8 @@ get(251, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.8,0.6,0.28}    
+		param  = {0.8,0.6,0.28},    
+		slot   = 0
 	};
 
 get(252, 1) -> 
@@ -5799,7 +6212,8 @@ get(252, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.68}    
+		param  = {0.68},    
+		slot   = 0
 	};
 
 get(253, 1) -> 
@@ -5813,7 +6227,8 @@ get(253, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1,0.35,3}    
+		param  = {1,0.35,3},    
+		slot   = 0
 	};
 
 get(254, 1) -> 
@@ -5827,7 +6242,8 @@ get(254, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1,0.75}    
+		param  = {1,0.75},    
+		slot   = 0
 	};
 
 get(255, 1) -> 
@@ -5841,7 +6257,8 @@ get(255, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1.2}    
+		param  = {1.2},    
+		slot   = 0
 	};
 
 get(256, 1) -> 
@@ -5855,7 +6272,8 @@ get(256, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1.2}    
+		param  = {1.2},    
+		slot   = 0
 	};
 
 get(257, 1) -> 
@@ -5869,7 +6287,8 @@ get(257, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1,50,2}    
+		param  = {1,50,2},    
+		slot   = 0
 	};
 
 get(258, 1) -> 
@@ -5883,7 +6302,8 @@ get(258, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1.1,0.22}    
+		param  = {1.1,0.22},    
+		slot   = 0
 	};
 
 get(259, 1) -> 
@@ -5897,7 +6317,8 @@ get(259, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.85}    
+		param  = {0.85},    
+		slot   = 0
 	};
 
 get(260, 1) -> 
@@ -5911,7 +6332,8 @@ get(260, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.5}    
+		param  = {0.5},    
+		slot   = 0
 	};
 
 get(261, 1) -> 
@@ -5925,7 +6347,8 @@ get(261, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.5,2}    
+		param  = {0.5,2},    
+		slot   = 0
 	};
 
 get(262, 1) -> 
@@ -5939,7 +6362,8 @@ get(262, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1}    
+		param  = {1},    
+		slot   = 0
 	};
 
 get(263, 1) -> 
@@ -5953,7 +6377,8 @@ get(263, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.5,1}    
+		param  = {0.5,1},    
+		slot   = 0
 	};
 
 get(264, 1) -> 
@@ -5967,7 +6392,8 @@ get(264, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.9,0.5,0.5}    
+		param  = {0.9,0.5,0.5},    
+		slot   = 0
 	};
 
 get(265, 1) -> 
@@ -5981,7 +6407,8 @@ get(265, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1,0.99,1}    
+		param  = {1,0.99,1},    
+		slot   = 0
 	};
 
 get(266, 1) -> 
@@ -5995,7 +6422,8 @@ get(266, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1}    
+		param  = {1},    
+		slot   = 0
 	};
 
 get(267, 1) -> 
@@ -6009,7 +6437,8 @@ get(267, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1,0.5}    
+		param  = {1,0.5},    
+		slot   = 0
 	};
 
 get(268, 1) -> 
@@ -6023,7 +6452,8 @@ get(268, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1,0.2}    
+		param  = {1,0.2},    
+		slot   = 0
 	};
 
 get(269, 1) -> 
@@ -6037,7 +6467,8 @@ get(269, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(270, 1) -> 
@@ -6051,7 +6482,8 @@ get(270, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1,2}    
+		param  = {1,2},    
+		slot   = 0
 	};
 
 get(271, 1) -> 
@@ -6065,7 +6497,8 @@ get(271, 1) ->
 		level  = 1,
 		target = friend,
 		type   = 1,
-		param  = {0.5}    
+		param  = {0.5},    
+		slot   = 0
 	};
 
 get(272, 1) -> 
@@ -6079,7 +6512,8 @@ get(272, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1}    
+		param  = {1},    
+		slot   = 0
 	};
 
 get(273, 1) -> 
@@ -6093,7 +6527,8 @@ get(273, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {3}    
+		param  = {3},    
+		slot   = 0
 	};
 
 get(274, 1) -> 
@@ -6107,7 +6542,8 @@ get(274, 1) ->
 		level  = 1,
 		target = self,
 		type   = 1,
-		param  = {0.5}    
+		param  = {0.5},    
+		slot   = 0
 	};
 
 get(275, 1) -> 
@@ -6121,7 +6557,8 @@ get(275, 1) ->
 		level  = 1,
 		target = friend,
 		type   = 1,
-		param  = {0.5,2}    
+		param  = {0.5,2},    
+		slot   = 0
 	};
 
 get(276, 1) -> 
@@ -6135,7 +6572,8 @@ get(276, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1.5}    
+		param  = {1.5},    
+		slot   = 0
 	};
 
 get(277, 1) -> 
@@ -6149,7 +6587,8 @@ get(277, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.3}    
+		param  = {0.3},    
+		slot   = 0
 	};
 
 get(278, 1) -> 
@@ -6163,7 +6602,8 @@ get(278, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {0.5,2}    
+		param  = {0.5,2},    
+		slot   = 0
 	};
 
 get(279, 1) -> 
@@ -6177,7 +6617,8 @@ get(279, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1,2}    
+		param  = {1,2},    
+		slot   = 0
 	};
 
 get(280, 1) -> 
@@ -6191,7 +6632,8 @@ get(280, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1.2}    
+		param  = {1.2},    
+		slot   = 0
 	};
 
 get(281, 1) -> 
@@ -6205,7 +6647,8 @@ get(281, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1.2}    
+		param  = {1.2},    
+		slot   = 0
 	};
 
 get(282, 1) -> 
@@ -6219,7 +6662,8 @@ get(282, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.3,2}    
+		param  = {0.3,2},    
+		slot   = 0
 	};
 
 get(283, 1) -> 
@@ -6233,7 +6677,8 @@ get(283, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1,0.15,3}    
+		param  = {1,0.15,3},    
+		slot   = 0
 	};
 
 get(284, 1) -> 
@@ -6247,7 +6692,8 @@ get(284, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.5,0.1,2}    
+		param  = {0.5,0.1,2},    
+		slot   = 0
 	};
 
 get(285, 1) -> 
@@ -6261,7 +6707,8 @@ get(285, 1) ->
 		level  = 1,
 		target = self,
 		type   = 1,
-		param  = {0.5}    
+		param  = {0.5},    
+		slot   = 0
 	};
 
 get(286, 1) -> 
@@ -6275,7 +6722,8 @@ get(286, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.5,2}    
+		param  = {0.5,2},    
+		slot   = 0
 	};
 
 get(287, 1) -> 
@@ -6289,7 +6737,8 @@ get(287, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {2}    
+		param  = {0.5,2},    
+		slot   = 0
 	};
 
 get(288, 1) -> 
@@ -6303,7 +6752,8 @@ get(288, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1.2}    
+		param  = {1.2},    
+		slot   = 0
 	};
 
 get(289, 1) -> 
@@ -6317,7 +6767,8 @@ get(289, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1.2}    
+		param  = {1.2},    
+		slot   = 0
 	};
 
 get(301, 1) -> 
@@ -6331,7 +6782,8 @@ get(301, 1) ->
 		level  = 1,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 2) -> 
@@ -6345,7 +6797,8 @@ get(301, 2) ->
 		level  = 2,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 3) -> 
@@ -6359,7 +6812,8 @@ get(301, 3) ->
 		level  = 3,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 4) -> 
@@ -6373,7 +6827,8 @@ get(301, 4) ->
 		level  = 4,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 5) -> 
@@ -6387,7 +6842,8 @@ get(301, 5) ->
 		level  = 5,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 6) -> 
@@ -6401,7 +6857,8 @@ get(301, 6) ->
 		level  = 6,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 7) -> 
@@ -6415,7 +6872,8 @@ get(301, 7) ->
 		level  = 7,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 8) -> 
@@ -6429,7 +6887,8 @@ get(301, 8) ->
 		level  = 8,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 9) -> 
@@ -6443,7 +6902,8 @@ get(301, 9) ->
 		level  = 9,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 10) -> 
@@ -6457,7 +6917,8 @@ get(301, 10) ->
 		level  = 10,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 11) -> 
@@ -6471,7 +6932,8 @@ get(301, 11) ->
 		level  = 11,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 12) -> 
@@ -6485,7 +6947,8 @@ get(301, 12) ->
 		level  = 12,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 13) -> 
@@ -6499,7 +6962,8 @@ get(301, 13) ->
 		level  = 13,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 14) -> 
@@ -6513,7 +6977,8 @@ get(301, 14) ->
 		level  = 14,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 15) -> 
@@ -6527,7 +6992,8 @@ get(301, 15) ->
 		level  = 15,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 16) -> 
@@ -6541,7 +7007,8 @@ get(301, 16) ->
 		level  = 16,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 17) -> 
@@ -6555,7 +7022,8 @@ get(301, 17) ->
 		level  = 17,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 18) -> 
@@ -6569,7 +7037,8 @@ get(301, 18) ->
 		level  = 18,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 19) -> 
@@ -6583,7 +7052,8 @@ get(301, 19) ->
 		level  = 19,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 20) -> 
@@ -6597,7 +7067,8 @@ get(301, 20) ->
 		level  = 20,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 21) -> 
@@ -6611,7 +7082,8 @@ get(301, 21) ->
 		level  = 21,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 22) -> 
@@ -6625,7 +7097,8 @@ get(301, 22) ->
 		level  = 22,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 23) -> 
@@ -6639,7 +7112,8 @@ get(301, 23) ->
 		level  = 23,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 24) -> 
@@ -6653,7 +7127,8 @@ get(301, 24) ->
 		level  = 24,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 25) -> 
@@ -6667,7 +7142,8 @@ get(301, 25) ->
 		level  = 25,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 26) -> 
@@ -6681,7 +7157,8 @@ get(301, 26) ->
 		level  = 26,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 27) -> 
@@ -6695,7 +7172,8 @@ get(301, 27) ->
 		level  = 27,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 28) -> 
@@ -6709,7 +7187,8 @@ get(301, 28) ->
 		level  = 28,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 29) -> 
@@ -6723,7 +7202,8 @@ get(301, 29) ->
 		level  = 29,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(301, 30) -> 
@@ -6737,7 +7217,8 @@ get(301, 30) ->
 		level  = 30,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 1) -> 
@@ -6751,7 +7232,8 @@ get(302, 1) ->
 		level  = 1,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 2) -> 
@@ -6765,7 +7247,8 @@ get(302, 2) ->
 		level  = 2,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 3) -> 
@@ -6779,7 +7262,8 @@ get(302, 3) ->
 		level  = 3,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 4) -> 
@@ -6793,7 +7277,8 @@ get(302, 4) ->
 		level  = 4,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 5) -> 
@@ -6807,7 +7292,8 @@ get(302, 5) ->
 		level  = 5,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 6) -> 
@@ -6821,7 +7307,8 @@ get(302, 6) ->
 		level  = 6,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 7) -> 
@@ -6835,7 +7322,8 @@ get(302, 7) ->
 		level  = 7,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 8) -> 
@@ -6849,7 +7337,8 @@ get(302, 8) ->
 		level  = 8,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 9) -> 
@@ -6863,7 +7352,8 @@ get(302, 9) ->
 		level  = 9,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 10) -> 
@@ -6877,7 +7367,8 @@ get(302, 10) ->
 		level  = 10,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 11) -> 
@@ -6891,7 +7382,8 @@ get(302, 11) ->
 		level  = 11,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 12) -> 
@@ -6905,7 +7397,8 @@ get(302, 12) ->
 		level  = 12,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 13) -> 
@@ -6919,7 +7412,8 @@ get(302, 13) ->
 		level  = 13,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 14) -> 
@@ -6933,7 +7427,8 @@ get(302, 14) ->
 		level  = 14,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 15) -> 
@@ -6947,7 +7442,8 @@ get(302, 15) ->
 		level  = 15,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 16) -> 
@@ -6961,7 +7457,8 @@ get(302, 16) ->
 		level  = 16,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 17) -> 
@@ -6975,7 +7472,8 @@ get(302, 17) ->
 		level  = 17,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 18) -> 
@@ -6989,7 +7487,8 @@ get(302, 18) ->
 		level  = 18,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 19) -> 
@@ -7003,7 +7502,8 @@ get(302, 19) ->
 		level  = 19,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 20) -> 
@@ -7017,7 +7517,8 @@ get(302, 20) ->
 		level  = 20,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 21) -> 
@@ -7031,7 +7532,8 @@ get(302, 21) ->
 		level  = 21,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 22) -> 
@@ -7045,7 +7547,8 @@ get(302, 22) ->
 		level  = 22,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 23) -> 
@@ -7059,7 +7562,8 @@ get(302, 23) ->
 		level  = 23,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 24) -> 
@@ -7073,7 +7577,8 @@ get(302, 24) ->
 		level  = 24,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 25) -> 
@@ -7087,7 +7592,8 @@ get(302, 25) ->
 		level  = 25,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 26) -> 
@@ -7101,7 +7607,8 @@ get(302, 26) ->
 		level  = 26,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 27) -> 
@@ -7115,7 +7622,8 @@ get(302, 27) ->
 		level  = 27,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 28) -> 
@@ -7129,7 +7637,8 @@ get(302, 28) ->
 		level  = 28,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 29) -> 
@@ -7143,7 +7652,8 @@ get(302, 29) ->
 		level  = 29,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(302, 30) -> 
@@ -7157,7 +7667,8 @@ get(302, 30) ->
 		level  = 30,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 1) -> 
@@ -7171,7 +7682,8 @@ get(303, 1) ->
 		level  = 1,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 2) -> 
@@ -7185,7 +7697,8 @@ get(303, 2) ->
 		level  = 2,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 3) -> 
@@ -7199,7 +7712,8 @@ get(303, 3) ->
 		level  = 3,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 4) -> 
@@ -7213,7 +7727,8 @@ get(303, 4) ->
 		level  = 4,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 5) -> 
@@ -7227,7 +7742,8 @@ get(303, 5) ->
 		level  = 5,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 6) -> 
@@ -7241,7 +7757,8 @@ get(303, 6) ->
 		level  = 6,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 7) -> 
@@ -7255,7 +7772,8 @@ get(303, 7) ->
 		level  = 7,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 8) -> 
@@ -7269,7 +7787,8 @@ get(303, 8) ->
 		level  = 8,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 9) -> 
@@ -7283,7 +7802,8 @@ get(303, 9) ->
 		level  = 9,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 10) -> 
@@ -7297,7 +7817,8 @@ get(303, 10) ->
 		level  = 10,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 11) -> 
@@ -7311,7 +7832,8 @@ get(303, 11) ->
 		level  = 11,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 12) -> 
@@ -7325,7 +7847,8 @@ get(303, 12) ->
 		level  = 12,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 13) -> 
@@ -7339,7 +7862,8 @@ get(303, 13) ->
 		level  = 13,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 14) -> 
@@ -7353,7 +7877,8 @@ get(303, 14) ->
 		level  = 14,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 15) -> 
@@ -7367,7 +7892,8 @@ get(303, 15) ->
 		level  = 15,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 16) -> 
@@ -7381,7 +7907,8 @@ get(303, 16) ->
 		level  = 16,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 17) -> 
@@ -7395,7 +7922,8 @@ get(303, 17) ->
 		level  = 17,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 18) -> 
@@ -7409,7 +7937,8 @@ get(303, 18) ->
 		level  = 18,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 19) -> 
@@ -7423,7 +7952,8 @@ get(303, 19) ->
 		level  = 19,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 20) -> 
@@ -7437,7 +7967,8 @@ get(303, 20) ->
 		level  = 20,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 21) -> 
@@ -7451,7 +7982,8 @@ get(303, 21) ->
 		level  = 21,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 22) -> 
@@ -7465,7 +7997,8 @@ get(303, 22) ->
 		level  = 22,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 23) -> 
@@ -7479,7 +8012,8 @@ get(303, 23) ->
 		level  = 23,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 24) -> 
@@ -7493,7 +8027,8 @@ get(303, 24) ->
 		level  = 24,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 25) -> 
@@ -7507,7 +8042,8 @@ get(303, 25) ->
 		level  = 25,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 26) -> 
@@ -7521,7 +8057,8 @@ get(303, 26) ->
 		level  = 26,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 27) -> 
@@ -7535,7 +8072,8 @@ get(303, 27) ->
 		level  = 27,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 28) -> 
@@ -7549,7 +8087,8 @@ get(303, 28) ->
 		level  = 28,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 29) -> 
@@ -7563,7 +8102,8 @@ get(303, 29) ->
 		level  = 29,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(303, 30) -> 
@@ -7577,7 +8117,8 @@ get(303, 30) ->
 		level  = 30,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 1) -> 
@@ -7591,7 +8132,8 @@ get(304, 1) ->
 		level  = 1,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 2) -> 
@@ -7605,7 +8147,8 @@ get(304, 2) ->
 		level  = 2,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 3) -> 
@@ -7619,7 +8162,8 @@ get(304, 3) ->
 		level  = 3,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 4) -> 
@@ -7633,7 +8177,8 @@ get(304, 4) ->
 		level  = 4,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 5) -> 
@@ -7647,7 +8192,8 @@ get(304, 5) ->
 		level  = 5,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 6) -> 
@@ -7661,7 +8207,8 @@ get(304, 6) ->
 		level  = 6,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 7) -> 
@@ -7675,7 +8222,8 @@ get(304, 7) ->
 		level  = 7,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 8) -> 
@@ -7689,7 +8237,8 @@ get(304, 8) ->
 		level  = 8,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 9) -> 
@@ -7703,7 +8252,8 @@ get(304, 9) ->
 		level  = 9,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 10) -> 
@@ -7717,7 +8267,8 @@ get(304, 10) ->
 		level  = 10,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 11) -> 
@@ -7731,7 +8282,8 @@ get(304, 11) ->
 		level  = 11,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 12) -> 
@@ -7745,7 +8297,8 @@ get(304, 12) ->
 		level  = 12,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 13) -> 
@@ -7759,7 +8312,8 @@ get(304, 13) ->
 		level  = 13,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 14) -> 
@@ -7773,7 +8327,8 @@ get(304, 14) ->
 		level  = 14,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 15) -> 
@@ -7787,7 +8342,8 @@ get(304, 15) ->
 		level  = 15,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 16) -> 
@@ -7801,7 +8357,8 @@ get(304, 16) ->
 		level  = 16,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 17) -> 
@@ -7815,7 +8372,8 @@ get(304, 17) ->
 		level  = 17,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 18) -> 
@@ -7829,7 +8387,8 @@ get(304, 18) ->
 		level  = 18,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 19) -> 
@@ -7843,7 +8402,8 @@ get(304, 19) ->
 		level  = 19,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 20) -> 
@@ -7857,7 +8417,8 @@ get(304, 20) ->
 		level  = 20,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 21) -> 
@@ -7871,7 +8432,8 @@ get(304, 21) ->
 		level  = 21,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 22) -> 
@@ -7885,7 +8447,8 @@ get(304, 22) ->
 		level  = 22,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 23) -> 
@@ -7899,7 +8462,8 @@ get(304, 23) ->
 		level  = 23,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 24) -> 
@@ -7913,7 +8477,8 @@ get(304, 24) ->
 		level  = 24,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 25) -> 
@@ -7927,7 +8492,8 @@ get(304, 25) ->
 		level  = 25,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 26) -> 
@@ -7941,7 +8507,8 @@ get(304, 26) ->
 		level  = 26,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 27) -> 
@@ -7955,7 +8522,8 @@ get(304, 27) ->
 		level  = 27,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 28) -> 
@@ -7969,7 +8537,8 @@ get(304, 28) ->
 		level  = 28,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 29) -> 
@@ -7983,7 +8552,8 @@ get(304, 29) ->
 		level  = 29,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(304, 30) -> 
@@ -7997,7 +8567,8 @@ get(304, 30) ->
 		level  = 30,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 1) -> 
@@ -8011,7 +8582,8 @@ get(305, 1) ->
 		level  = 1,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 2) -> 
@@ -8025,7 +8597,8 @@ get(305, 2) ->
 		level  = 2,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 3) -> 
@@ -8039,7 +8612,8 @@ get(305, 3) ->
 		level  = 3,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 4) -> 
@@ -8053,7 +8627,8 @@ get(305, 4) ->
 		level  = 4,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 5) -> 
@@ -8067,7 +8642,8 @@ get(305, 5) ->
 		level  = 5,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 6) -> 
@@ -8081,7 +8657,8 @@ get(305, 6) ->
 		level  = 6,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 7) -> 
@@ -8095,7 +8672,8 @@ get(305, 7) ->
 		level  = 7,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 8) -> 
@@ -8109,7 +8687,8 @@ get(305, 8) ->
 		level  = 8,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 9) -> 
@@ -8123,7 +8702,8 @@ get(305, 9) ->
 		level  = 9,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 10) -> 
@@ -8137,7 +8717,8 @@ get(305, 10) ->
 		level  = 10,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 11) -> 
@@ -8151,7 +8732,8 @@ get(305, 11) ->
 		level  = 11,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 12) -> 
@@ -8165,7 +8747,8 @@ get(305, 12) ->
 		level  = 12,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 13) -> 
@@ -8179,7 +8762,8 @@ get(305, 13) ->
 		level  = 13,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 14) -> 
@@ -8193,7 +8777,8 @@ get(305, 14) ->
 		level  = 14,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 15) -> 
@@ -8207,7 +8792,8 @@ get(305, 15) ->
 		level  = 15,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 16) -> 
@@ -8221,7 +8807,8 @@ get(305, 16) ->
 		level  = 16,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 17) -> 
@@ -8235,7 +8822,8 @@ get(305, 17) ->
 		level  = 17,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 18) -> 
@@ -8249,7 +8837,8 @@ get(305, 18) ->
 		level  = 18,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 19) -> 
@@ -8263,7 +8852,8 @@ get(305, 19) ->
 		level  = 19,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 20) -> 
@@ -8277,7 +8867,8 @@ get(305, 20) ->
 		level  = 20,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 21) -> 
@@ -8291,7 +8882,8 @@ get(305, 21) ->
 		level  = 21,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 22) -> 
@@ -8305,7 +8897,8 @@ get(305, 22) ->
 		level  = 22,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 23) -> 
@@ -8319,7 +8912,8 @@ get(305, 23) ->
 		level  = 23,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 24) -> 
@@ -8333,7 +8927,8 @@ get(305, 24) ->
 		level  = 24,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 25) -> 
@@ -8347,7 +8942,8 @@ get(305, 25) ->
 		level  = 25,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 26) -> 
@@ -8361,7 +8957,8 @@ get(305, 26) ->
 		level  = 26,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 27) -> 
@@ -8375,7 +8972,8 @@ get(305, 27) ->
 		level  = 27,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 28) -> 
@@ -8389,7 +8987,8 @@ get(305, 28) ->
 		level  = 28,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 29) -> 
@@ -8403,7 +9002,8 @@ get(305, 29) ->
 		level  = 29,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(305, 30) -> 
@@ -8417,7 +9017,8 @@ get(305, 30) ->
 		level  = 30,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 1) -> 
@@ -8431,7 +9032,8 @@ get(306, 1) ->
 		level  = 1,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 2) -> 
@@ -8445,7 +9047,8 @@ get(306, 2) ->
 		level  = 2,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 3) -> 
@@ -8459,7 +9062,8 @@ get(306, 3) ->
 		level  = 3,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 4) -> 
@@ -8473,7 +9077,8 @@ get(306, 4) ->
 		level  = 4,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 5) -> 
@@ -8487,7 +9092,8 @@ get(306, 5) ->
 		level  = 5,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 6) -> 
@@ -8501,7 +9107,8 @@ get(306, 6) ->
 		level  = 6,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 7) -> 
@@ -8515,7 +9122,8 @@ get(306, 7) ->
 		level  = 7,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 8) -> 
@@ -8529,7 +9137,8 @@ get(306, 8) ->
 		level  = 8,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 9) -> 
@@ -8543,7 +9152,8 @@ get(306, 9) ->
 		level  = 9,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 10) -> 
@@ -8557,7 +9167,8 @@ get(306, 10) ->
 		level  = 10,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 11) -> 
@@ -8571,7 +9182,8 @@ get(306, 11) ->
 		level  = 11,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 12) -> 
@@ -8585,7 +9197,8 @@ get(306, 12) ->
 		level  = 12,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 13) -> 
@@ -8599,7 +9212,8 @@ get(306, 13) ->
 		level  = 13,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 14) -> 
@@ -8613,7 +9227,8 @@ get(306, 14) ->
 		level  = 14,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 15) -> 
@@ -8627,7 +9242,8 @@ get(306, 15) ->
 		level  = 15,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 16) -> 
@@ -8641,7 +9257,8 @@ get(306, 16) ->
 		level  = 16,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 17) -> 
@@ -8655,7 +9272,8 @@ get(306, 17) ->
 		level  = 17,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 18) -> 
@@ -8669,7 +9287,8 @@ get(306, 18) ->
 		level  = 18,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 19) -> 
@@ -8683,7 +9302,8 @@ get(306, 19) ->
 		level  = 19,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 20) -> 
@@ -8697,7 +9317,8 @@ get(306, 20) ->
 		level  = 20,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 21) -> 
@@ -8711,7 +9332,8 @@ get(306, 21) ->
 		level  = 21,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 22) -> 
@@ -8725,7 +9347,8 @@ get(306, 22) ->
 		level  = 22,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 23) -> 
@@ -8739,7 +9362,8 @@ get(306, 23) ->
 		level  = 23,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 24) -> 
@@ -8753,7 +9377,8 @@ get(306, 24) ->
 		level  = 24,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 25) -> 
@@ -8767,7 +9392,8 @@ get(306, 25) ->
 		level  = 25,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 26) -> 
@@ -8781,7 +9407,8 @@ get(306, 26) ->
 		level  = 26,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 27) -> 
@@ -8795,7 +9422,8 @@ get(306, 27) ->
 		level  = 27,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 28) -> 
@@ -8809,7 +9437,8 @@ get(306, 28) ->
 		level  = 28,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 29) -> 
@@ -8823,7 +9452,8 @@ get(306, 29) ->
 		level  = 29,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(306, 30) -> 
@@ -8837,7 +9467,8 @@ get(306, 30) ->
 		level  = 30,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 1) -> 
@@ -8851,7 +9482,8 @@ get(307, 1) ->
 		level  = 1,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 2) -> 
@@ -8865,7 +9497,8 @@ get(307, 2) ->
 		level  = 2,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 3) -> 
@@ -8879,7 +9512,8 @@ get(307, 3) ->
 		level  = 3,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 4) -> 
@@ -8893,7 +9527,8 @@ get(307, 4) ->
 		level  = 4,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 5) -> 
@@ -8907,7 +9542,8 @@ get(307, 5) ->
 		level  = 5,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 6) -> 
@@ -8921,7 +9557,8 @@ get(307, 6) ->
 		level  = 6,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 7) -> 
@@ -8935,7 +9572,8 @@ get(307, 7) ->
 		level  = 7,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 8) -> 
@@ -8949,7 +9587,8 @@ get(307, 8) ->
 		level  = 8,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 9) -> 
@@ -8963,7 +9602,8 @@ get(307, 9) ->
 		level  = 9,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 10) -> 
@@ -8977,7 +9617,8 @@ get(307, 10) ->
 		level  = 10,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 11) -> 
@@ -8991,7 +9632,8 @@ get(307, 11) ->
 		level  = 11,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 12) -> 
@@ -9005,7 +9647,8 @@ get(307, 12) ->
 		level  = 12,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 13) -> 
@@ -9019,7 +9662,8 @@ get(307, 13) ->
 		level  = 13,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 14) -> 
@@ -9033,7 +9677,8 @@ get(307, 14) ->
 		level  = 14,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 15) -> 
@@ -9047,7 +9692,8 @@ get(307, 15) ->
 		level  = 15,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 16) -> 
@@ -9061,7 +9707,8 @@ get(307, 16) ->
 		level  = 16,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 17) -> 
@@ -9075,7 +9722,8 @@ get(307, 17) ->
 		level  = 17,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 18) -> 
@@ -9089,7 +9737,8 @@ get(307, 18) ->
 		level  = 18,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 19) -> 
@@ -9103,7 +9752,8 @@ get(307, 19) ->
 		level  = 19,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 20) -> 
@@ -9117,7 +9767,8 @@ get(307, 20) ->
 		level  = 20,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 21) -> 
@@ -9131,7 +9782,8 @@ get(307, 21) ->
 		level  = 21,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 22) -> 
@@ -9145,7 +9797,8 @@ get(307, 22) ->
 		level  = 22,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 23) -> 
@@ -9159,7 +9812,8 @@ get(307, 23) ->
 		level  = 23,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 24) -> 
@@ -9173,7 +9827,8 @@ get(307, 24) ->
 		level  = 24,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 25) -> 
@@ -9187,7 +9842,8 @@ get(307, 25) ->
 		level  = 25,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 26) -> 
@@ -9201,7 +9857,8 @@ get(307, 26) ->
 		level  = 26,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 27) -> 
@@ -9215,7 +9872,8 @@ get(307, 27) ->
 		level  = 27,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 28) -> 
@@ -9229,7 +9887,8 @@ get(307, 28) ->
 		level  = 28,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 29) -> 
@@ -9243,7 +9902,8 @@ get(307, 29) ->
 		level  = 29,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(307, 30) -> 
@@ -9257,7 +9917,8 @@ get(307, 30) ->
 		level  = 30,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 1) -> 
@@ -9271,7 +9932,8 @@ get(308, 1) ->
 		level  = 1,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 2) -> 
@@ -9285,7 +9947,8 @@ get(308, 2) ->
 		level  = 2,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 3) -> 
@@ -9299,7 +9962,8 @@ get(308, 3) ->
 		level  = 3,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 4) -> 
@@ -9313,7 +9977,8 @@ get(308, 4) ->
 		level  = 4,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 5) -> 
@@ -9327,7 +9992,8 @@ get(308, 5) ->
 		level  = 5,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 6) -> 
@@ -9341,7 +10007,8 @@ get(308, 6) ->
 		level  = 6,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 7) -> 
@@ -9355,7 +10022,8 @@ get(308, 7) ->
 		level  = 7,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 8) -> 
@@ -9369,7 +10037,8 @@ get(308, 8) ->
 		level  = 8,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 9) -> 
@@ -9383,7 +10052,8 @@ get(308, 9) ->
 		level  = 9,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 10) -> 
@@ -9397,7 +10067,8 @@ get(308, 10) ->
 		level  = 10,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 11) -> 
@@ -9411,7 +10082,8 @@ get(308, 11) ->
 		level  = 11,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 12) -> 
@@ -9425,7 +10097,8 @@ get(308, 12) ->
 		level  = 12,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 13) -> 
@@ -9439,7 +10112,8 @@ get(308, 13) ->
 		level  = 13,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 14) -> 
@@ -9453,7 +10127,8 @@ get(308, 14) ->
 		level  = 14,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 15) -> 
@@ -9467,7 +10142,8 @@ get(308, 15) ->
 		level  = 15,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 16) -> 
@@ -9481,7 +10157,8 @@ get(308, 16) ->
 		level  = 16,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 17) -> 
@@ -9495,7 +10172,8 @@ get(308, 17) ->
 		level  = 17,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 18) -> 
@@ -9509,7 +10187,8 @@ get(308, 18) ->
 		level  = 18,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 19) -> 
@@ -9523,7 +10202,8 @@ get(308, 19) ->
 		level  = 19,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 20) -> 
@@ -9537,7 +10217,8 @@ get(308, 20) ->
 		level  = 20,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 21) -> 
@@ -9551,7 +10232,8 @@ get(308, 21) ->
 		level  = 21,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 22) -> 
@@ -9565,7 +10247,8 @@ get(308, 22) ->
 		level  = 22,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 23) -> 
@@ -9579,7 +10262,8 @@ get(308, 23) ->
 		level  = 23,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 24) -> 
@@ -9593,7 +10277,8 @@ get(308, 24) ->
 		level  = 24,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 25) -> 
@@ -9607,7 +10292,8 @@ get(308, 25) ->
 		level  = 25,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 26) -> 
@@ -9621,7 +10307,8 @@ get(308, 26) ->
 		level  = 26,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 27) -> 
@@ -9635,7 +10322,8 @@ get(308, 27) ->
 		level  = 27,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 28) -> 
@@ -9649,7 +10337,8 @@ get(308, 28) ->
 		level  = 28,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 29) -> 
@@ -9663,7 +10352,8 @@ get(308, 29) ->
 		level  = 29,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(308, 30) -> 
@@ -9677,7 +10367,8 @@ get(308, 30) ->
 		level  = 30,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 1) -> 
@@ -9691,7 +10382,8 @@ get(309, 1) ->
 		level  = 1,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 2) -> 
@@ -9705,7 +10397,8 @@ get(309, 2) ->
 		level  = 2,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 3) -> 
@@ -9719,7 +10412,8 @@ get(309, 3) ->
 		level  = 3,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 4) -> 
@@ -9733,7 +10427,8 @@ get(309, 4) ->
 		level  = 4,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 5) -> 
@@ -9747,7 +10442,8 @@ get(309, 5) ->
 		level  = 5,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 6) -> 
@@ -9761,7 +10457,8 @@ get(309, 6) ->
 		level  = 6,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 7) -> 
@@ -9775,7 +10472,8 @@ get(309, 7) ->
 		level  = 7,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 8) -> 
@@ -9789,7 +10487,8 @@ get(309, 8) ->
 		level  = 8,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 9) -> 
@@ -9803,7 +10502,8 @@ get(309, 9) ->
 		level  = 9,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 10) -> 
@@ -9817,7 +10517,8 @@ get(309, 10) ->
 		level  = 10,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 11) -> 
@@ -9831,7 +10532,8 @@ get(309, 11) ->
 		level  = 11,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 12) -> 
@@ -9845,7 +10547,8 @@ get(309, 12) ->
 		level  = 12,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 13) -> 
@@ -9859,7 +10562,8 @@ get(309, 13) ->
 		level  = 13,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 14) -> 
@@ -9873,7 +10577,8 @@ get(309, 14) ->
 		level  = 14,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 15) -> 
@@ -9887,7 +10592,8 @@ get(309, 15) ->
 		level  = 15,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 16) -> 
@@ -9901,7 +10607,8 @@ get(309, 16) ->
 		level  = 16,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 17) -> 
@@ -9915,7 +10622,8 @@ get(309, 17) ->
 		level  = 17,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 18) -> 
@@ -9929,7 +10637,8 @@ get(309, 18) ->
 		level  = 18,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 19) -> 
@@ -9943,7 +10652,8 @@ get(309, 19) ->
 		level  = 19,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 20) -> 
@@ -9957,7 +10667,8 @@ get(309, 20) ->
 		level  = 20,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 21) -> 
@@ -9971,7 +10682,8 @@ get(309, 21) ->
 		level  = 21,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 22) -> 
@@ -9985,7 +10697,8 @@ get(309, 22) ->
 		level  = 22,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 23) -> 
@@ -9999,7 +10712,8 @@ get(309, 23) ->
 		level  = 23,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 24) -> 
@@ -10013,7 +10727,8 @@ get(309, 24) ->
 		level  = 24,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 25) -> 
@@ -10027,7 +10742,8 @@ get(309, 25) ->
 		level  = 25,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 26) -> 
@@ -10041,7 +10757,8 @@ get(309, 26) ->
 		level  = 26,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 27) -> 
@@ -10055,7 +10772,8 @@ get(309, 27) ->
 		level  = 27,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 28) -> 
@@ -10069,7 +10787,8 @@ get(309, 28) ->
 		level  = 28,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 29) -> 
@@ -10083,7 +10802,8 @@ get(309, 29) ->
 		level  = 29,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(309, 30) -> 
@@ -10097,7 +10817,8 @@ get(309, 30) ->
 		level  = 30,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 1) -> 
@@ -10111,7 +10832,8 @@ get(310, 1) ->
 		level  = 1,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 2) -> 
@@ -10125,7 +10847,8 @@ get(310, 2) ->
 		level  = 2,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 3) -> 
@@ -10139,7 +10862,8 @@ get(310, 3) ->
 		level  = 3,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 4) -> 
@@ -10153,7 +10877,8 @@ get(310, 4) ->
 		level  = 4,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 5) -> 
@@ -10167,7 +10892,8 @@ get(310, 5) ->
 		level  = 5,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 6) -> 
@@ -10181,7 +10907,8 @@ get(310, 6) ->
 		level  = 6,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 7) -> 
@@ -10195,7 +10922,8 @@ get(310, 7) ->
 		level  = 7,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 8) -> 
@@ -10209,7 +10937,8 @@ get(310, 8) ->
 		level  = 8,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 9) -> 
@@ -10223,7 +10952,8 @@ get(310, 9) ->
 		level  = 9,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 10) -> 
@@ -10237,7 +10967,8 @@ get(310, 10) ->
 		level  = 10,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 11) -> 
@@ -10251,7 +10982,8 @@ get(310, 11) ->
 		level  = 11,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 12) -> 
@@ -10265,7 +10997,8 @@ get(310, 12) ->
 		level  = 12,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 13) -> 
@@ -10279,7 +11012,8 @@ get(310, 13) ->
 		level  = 13,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 14) -> 
@@ -10293,7 +11027,8 @@ get(310, 14) ->
 		level  = 14,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 15) -> 
@@ -10307,7 +11042,8 @@ get(310, 15) ->
 		level  = 15,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 16) -> 
@@ -10321,7 +11057,8 @@ get(310, 16) ->
 		level  = 16,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 17) -> 
@@ -10335,7 +11072,8 @@ get(310, 17) ->
 		level  = 17,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 18) -> 
@@ -10349,7 +11087,8 @@ get(310, 18) ->
 		level  = 18,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 19) -> 
@@ -10363,7 +11102,8 @@ get(310, 19) ->
 		level  = 19,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 20) -> 
@@ -10377,7 +11117,8 @@ get(310, 20) ->
 		level  = 20,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 21) -> 
@@ -10391,7 +11132,8 @@ get(310, 21) ->
 		level  = 21,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 22) -> 
@@ -10405,7 +11147,8 @@ get(310, 22) ->
 		level  = 22,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 23) -> 
@@ -10419,7 +11162,8 @@ get(310, 23) ->
 		level  = 23,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 24) -> 
@@ -10433,7 +11177,8 @@ get(310, 24) ->
 		level  = 24,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 25) -> 
@@ -10447,7 +11192,8 @@ get(310, 25) ->
 		level  = 25,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 26) -> 
@@ -10461,7 +11207,8 @@ get(310, 26) ->
 		level  = 26,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 27) -> 
@@ -10475,7 +11222,8 @@ get(310, 27) ->
 		level  = 27,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 28) -> 
@@ -10489,7 +11237,8 @@ get(310, 28) ->
 		level  = 28,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 29) -> 
@@ -10503,7 +11252,8 @@ get(310, 29) ->
 		level  = 29,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(310, 30) -> 
@@ -10517,7 +11267,8 @@ get(310, 30) ->
 		level  = 30,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 1) -> 
@@ -10531,7 +11282,8 @@ get(311, 1) ->
 		level  = 1,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 2) -> 
@@ -10545,7 +11297,8 @@ get(311, 2) ->
 		level  = 2,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 3) -> 
@@ -10559,7 +11312,8 @@ get(311, 3) ->
 		level  = 3,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 4) -> 
@@ -10573,7 +11327,8 @@ get(311, 4) ->
 		level  = 4,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 5) -> 
@@ -10587,7 +11342,8 @@ get(311, 5) ->
 		level  = 5,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 6) -> 
@@ -10601,7 +11357,8 @@ get(311, 6) ->
 		level  = 6,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 7) -> 
@@ -10615,7 +11372,8 @@ get(311, 7) ->
 		level  = 7,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 8) -> 
@@ -10629,7 +11387,8 @@ get(311, 8) ->
 		level  = 8,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 9) -> 
@@ -10643,7 +11402,8 @@ get(311, 9) ->
 		level  = 9,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 10) -> 
@@ -10657,7 +11417,8 @@ get(311, 10) ->
 		level  = 10,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 11) -> 
@@ -10671,7 +11432,8 @@ get(311, 11) ->
 		level  = 11,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 12) -> 
@@ -10685,7 +11447,8 @@ get(311, 12) ->
 		level  = 12,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 13) -> 
@@ -10699,7 +11462,8 @@ get(311, 13) ->
 		level  = 13,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 14) -> 
@@ -10713,7 +11477,8 @@ get(311, 14) ->
 		level  = 14,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 15) -> 
@@ -10727,7 +11492,8 @@ get(311, 15) ->
 		level  = 15,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 16) -> 
@@ -10741,7 +11507,8 @@ get(311, 16) ->
 		level  = 16,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 17) -> 
@@ -10755,7 +11522,8 @@ get(311, 17) ->
 		level  = 17,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 18) -> 
@@ -10769,7 +11537,8 @@ get(311, 18) ->
 		level  = 18,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 19) -> 
@@ -10783,7 +11552,8 @@ get(311, 19) ->
 		level  = 19,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 20) -> 
@@ -10797,7 +11567,8 @@ get(311, 20) ->
 		level  = 20,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 21) -> 
@@ -10811,7 +11582,8 @@ get(311, 21) ->
 		level  = 21,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 22) -> 
@@ -10825,7 +11597,8 @@ get(311, 22) ->
 		level  = 22,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 23) -> 
@@ -10839,7 +11612,8 @@ get(311, 23) ->
 		level  = 23,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 24) -> 
@@ -10853,7 +11627,8 @@ get(311, 24) ->
 		level  = 24,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 25) -> 
@@ -10867,7 +11642,8 @@ get(311, 25) ->
 		level  = 25,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 26) -> 
@@ -10881,7 +11657,8 @@ get(311, 26) ->
 		level  = 26,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 27) -> 
@@ -10895,7 +11672,8 @@ get(311, 27) ->
 		level  = 27,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 28) -> 
@@ -10909,7 +11687,8 @@ get(311, 28) ->
 		level  = 28,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 29) -> 
@@ -10923,7 +11702,8 @@ get(311, 29) ->
 		level  = 29,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(311, 30) -> 
@@ -10937,7 +11717,8 @@ get(311, 30) ->
 		level  = 30,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 1) -> 
@@ -10951,7 +11732,8 @@ get(312, 1) ->
 		level  = 1,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 2) -> 
@@ -10965,7 +11747,8 @@ get(312, 2) ->
 		level  = 2,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 3) -> 
@@ -10979,7 +11762,8 @@ get(312, 3) ->
 		level  = 3,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 4) -> 
@@ -10993,7 +11777,8 @@ get(312, 4) ->
 		level  = 4,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 5) -> 
@@ -11007,7 +11792,8 @@ get(312, 5) ->
 		level  = 5,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 6) -> 
@@ -11021,7 +11807,8 @@ get(312, 6) ->
 		level  = 6,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 7) -> 
@@ -11035,7 +11822,8 @@ get(312, 7) ->
 		level  = 7,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 8) -> 
@@ -11049,7 +11837,8 @@ get(312, 8) ->
 		level  = 8,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 9) -> 
@@ -11063,7 +11852,8 @@ get(312, 9) ->
 		level  = 9,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 10) -> 
@@ -11077,7 +11867,8 @@ get(312, 10) ->
 		level  = 10,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 11) -> 
@@ -11091,7 +11882,8 @@ get(312, 11) ->
 		level  = 11,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 12) -> 
@@ -11105,7 +11897,8 @@ get(312, 12) ->
 		level  = 12,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 13) -> 
@@ -11119,7 +11912,8 @@ get(312, 13) ->
 		level  = 13,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 14) -> 
@@ -11133,7 +11927,8 @@ get(312, 14) ->
 		level  = 14,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 15) -> 
@@ -11147,7 +11942,8 @@ get(312, 15) ->
 		level  = 15,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 16) -> 
@@ -11161,7 +11957,8 @@ get(312, 16) ->
 		level  = 16,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 17) -> 
@@ -11175,7 +11972,8 @@ get(312, 17) ->
 		level  = 17,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 18) -> 
@@ -11189,7 +11987,8 @@ get(312, 18) ->
 		level  = 18,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 19) -> 
@@ -11203,7 +12002,8 @@ get(312, 19) ->
 		level  = 19,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 20) -> 
@@ -11217,7 +12017,8 @@ get(312, 20) ->
 		level  = 20,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 21) -> 
@@ -11231,7 +12032,8 @@ get(312, 21) ->
 		level  = 21,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 22) -> 
@@ -11245,7 +12047,8 @@ get(312, 22) ->
 		level  = 22,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 23) -> 
@@ -11259,7 +12062,8 @@ get(312, 23) ->
 		level  = 23,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 24) -> 
@@ -11273,7 +12077,8 @@ get(312, 24) ->
 		level  = 24,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 25) -> 
@@ -11287,7 +12092,8 @@ get(312, 25) ->
 		level  = 25,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 26) -> 
@@ -11301,7 +12107,8 @@ get(312, 26) ->
 		level  = 26,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 27) -> 
@@ -11315,7 +12122,8 @@ get(312, 27) ->
 		level  = 27,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 28) -> 
@@ -11329,7 +12137,8 @@ get(312, 28) ->
 		level  = 28,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 29) -> 
@@ -11343,7 +12152,8 @@ get(312, 29) ->
 		level  = 29,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(312, 30) -> 
@@ -11357,7 +12167,8 @@ get(312, 30) ->
 		level  = 30,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 1) -> 
@@ -11371,7 +12182,8 @@ get(313, 1) ->
 		level  = 1,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 2) -> 
@@ -11385,7 +12197,8 @@ get(313, 2) ->
 		level  = 2,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 3) -> 
@@ -11399,7 +12212,8 @@ get(313, 3) ->
 		level  = 3,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 4) -> 
@@ -11413,7 +12227,8 @@ get(313, 4) ->
 		level  = 4,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 5) -> 
@@ -11427,7 +12242,8 @@ get(313, 5) ->
 		level  = 5,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 6) -> 
@@ -11441,7 +12257,8 @@ get(313, 6) ->
 		level  = 6,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 7) -> 
@@ -11455,7 +12272,8 @@ get(313, 7) ->
 		level  = 7,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 8) -> 
@@ -11469,7 +12287,8 @@ get(313, 8) ->
 		level  = 8,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 9) -> 
@@ -11483,7 +12302,8 @@ get(313, 9) ->
 		level  = 9,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 10) -> 
@@ -11497,7 +12317,8 @@ get(313, 10) ->
 		level  = 10,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 11) -> 
@@ -11511,7 +12332,8 @@ get(313, 11) ->
 		level  = 11,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 12) -> 
@@ -11525,7 +12347,8 @@ get(313, 12) ->
 		level  = 12,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 13) -> 
@@ -11539,7 +12362,8 @@ get(313, 13) ->
 		level  = 13,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 14) -> 
@@ -11553,7 +12377,8 @@ get(313, 14) ->
 		level  = 14,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 15) -> 
@@ -11567,7 +12392,8 @@ get(313, 15) ->
 		level  = 15,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 16) -> 
@@ -11581,7 +12407,8 @@ get(313, 16) ->
 		level  = 16,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 17) -> 
@@ -11595,7 +12422,8 @@ get(313, 17) ->
 		level  = 17,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 18) -> 
@@ -11609,7 +12437,8 @@ get(313, 18) ->
 		level  = 18,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 19) -> 
@@ -11623,7 +12452,8 @@ get(313, 19) ->
 		level  = 19,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 20) -> 
@@ -11637,7 +12467,8 @@ get(313, 20) ->
 		level  = 20,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 21) -> 
@@ -11651,7 +12482,8 @@ get(313, 21) ->
 		level  = 21,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 22) -> 
@@ -11665,7 +12497,8 @@ get(313, 22) ->
 		level  = 22,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 23) -> 
@@ -11679,7 +12512,8 @@ get(313, 23) ->
 		level  = 23,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 24) -> 
@@ -11693,7 +12527,8 @@ get(313, 24) ->
 		level  = 24,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 25) -> 
@@ -11707,7 +12542,8 @@ get(313, 25) ->
 		level  = 25,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 26) -> 
@@ -11721,7 +12557,8 @@ get(313, 26) ->
 		level  = 26,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 27) -> 
@@ -11735,7 +12572,8 @@ get(313, 27) ->
 		level  = 27,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 28) -> 
@@ -11749,7 +12587,8 @@ get(313, 28) ->
 		level  = 28,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 29) -> 
@@ -11763,7 +12602,8 @@ get(313, 29) ->
 		level  = 29,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(313, 30) -> 
@@ -11777,7 +12617,8 @@ get(313, 30) ->
 		level  = 30,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 1) -> 
@@ -11791,7 +12632,8 @@ get(314, 1) ->
 		level  = 1,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 2) -> 
@@ -11805,7 +12647,8 @@ get(314, 2) ->
 		level  = 2,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 3) -> 
@@ -11819,7 +12662,8 @@ get(314, 3) ->
 		level  = 3,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 4) -> 
@@ -11833,7 +12677,8 @@ get(314, 4) ->
 		level  = 4,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 5) -> 
@@ -11847,7 +12692,8 @@ get(314, 5) ->
 		level  = 5,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 6) -> 
@@ -11861,7 +12707,8 @@ get(314, 6) ->
 		level  = 6,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 7) -> 
@@ -11875,7 +12722,8 @@ get(314, 7) ->
 		level  = 7,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 8) -> 
@@ -11889,7 +12737,8 @@ get(314, 8) ->
 		level  = 8,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 9) -> 
@@ -11903,7 +12752,8 @@ get(314, 9) ->
 		level  = 9,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 10) -> 
@@ -11917,7 +12767,8 @@ get(314, 10) ->
 		level  = 10,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 11) -> 
@@ -11931,7 +12782,8 @@ get(314, 11) ->
 		level  = 11,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 12) -> 
@@ -11945,7 +12797,8 @@ get(314, 12) ->
 		level  = 12,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 13) -> 
@@ -11959,7 +12812,8 @@ get(314, 13) ->
 		level  = 13,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 14) -> 
@@ -11973,7 +12827,8 @@ get(314, 14) ->
 		level  = 14,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 15) -> 
@@ -11987,7 +12842,8 @@ get(314, 15) ->
 		level  = 15,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 16) -> 
@@ -12001,7 +12857,8 @@ get(314, 16) ->
 		level  = 16,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 17) -> 
@@ -12015,7 +12872,8 @@ get(314, 17) ->
 		level  = 17,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 18) -> 
@@ -12029,7 +12887,8 @@ get(314, 18) ->
 		level  = 18,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 19) -> 
@@ -12043,7 +12902,8 @@ get(314, 19) ->
 		level  = 19,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 20) -> 
@@ -12057,7 +12917,8 @@ get(314, 20) ->
 		level  = 20,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 21) -> 
@@ -12071,7 +12932,8 @@ get(314, 21) ->
 		level  = 21,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 22) -> 
@@ -12085,7 +12947,8 @@ get(314, 22) ->
 		level  = 22,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 23) -> 
@@ -12099,7 +12962,8 @@ get(314, 23) ->
 		level  = 23,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 24) -> 
@@ -12113,7 +12977,8 @@ get(314, 24) ->
 		level  = 24,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 25) -> 
@@ -12127,7 +12992,8 @@ get(314, 25) ->
 		level  = 25,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 26) -> 
@@ -12141,7 +13007,8 @@ get(314, 26) ->
 		level  = 26,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 27) -> 
@@ -12155,7 +13022,8 @@ get(314, 27) ->
 		level  = 27,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 28) -> 
@@ -12169,7 +13037,8 @@ get(314, 28) ->
 		level  = 28,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 29) -> 
@@ -12183,7 +13052,8 @@ get(314, 29) ->
 		level  = 29,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(314, 30) -> 
@@ -12197,7 +13067,8 @@ get(314, 30) ->
 		level  = 30,
 		target = self,
 		type   = 5,
-		param  = {}    
+		param  = {},    
+		slot   = 0
 	};
 
 get(106, 1) -> 
@@ -12211,7 +13082,8 @@ get(106, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1,20,2}    
+		param  = {1,20,2},    
+		slot   = 1
 	};
 
 get(106, 2) -> 
@@ -12225,7 +13097,8 @@ get(106, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {1.02,30,2}    
+		param  = {1.03,30,2},    
+		slot   = 1
 	};
 
 get(106, 3) -> 
@@ -12239,7 +13112,8 @@ get(106, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {1.04,40,2}    
+		param  = {1.06,40,2},    
+		slot   = 1
 	};
 
 get(106, 4) -> 
@@ -12253,7 +13127,8 @@ get(106, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {1.06,50,2}    
+		param  = {1.1,50,2},    
+		slot   = 1
 	};
 
 get(106, 5) -> 
@@ -12267,7 +13142,8 @@ get(106, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {1.08,60,2}    
+		param  = {1.13,60,2},    
+		slot   = 1
 	};
 
 get(106, 6) -> 
@@ -12281,7 +13157,8 @@ get(106, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {1.1,70,2}    
+		param  = {1.16,70,2},    
+		slot   = 1
 	};
 
 get(106, 7) -> 
@@ -12295,7 +13172,8 @@ get(106, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {1.12,80,2}    
+		param  = {1.2,80,2},    
+		slot   = 1
 	};
 
 get(106, 8) -> 
@@ -12309,7 +13187,8 @@ get(106, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {1.14,90,2}    
+		param  = {1.23,90,2},    
+		slot   = 1
 	};
 
 get(106, 9) -> 
@@ -12323,7 +13202,8 @@ get(106, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {1.16,100,2}    
+		param  = {1.26,100,2},    
+		slot   = 1
 	};
 
 get(106, 10) -> 
@@ -12337,7 +13217,8 @@ get(106, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 4,
-		param  = {1.18,110,2}    
+		param  = {1.3,110,2},    
+		slot   = 1
 	};
 
 get(108, 1) -> 
@@ -12351,7 +13232,8 @@ get(108, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1,6}    
+		param  = {1.1,6},    
+		slot   = 2
 	};
 
 get(108, 2) -> 
@@ -12365,7 +13247,8 @@ get(108, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {1.02,7}    
+		param  = {1.14,6},    
+		slot   = 2
 	};
 
 get(108, 3) -> 
@@ -12379,7 +13262,8 @@ get(108, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {1.04,8}    
+		param  = {1.18,6},    
+		slot   = 2
 	};
 
 get(108, 4) -> 
@@ -12393,7 +13277,8 @@ get(108, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {1.06,9}    
+		param  = {1.2,12},    
+		slot   = 2
 	};
 
 get(108, 5) -> 
@@ -12407,7 +13292,8 @@ get(108, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {1.08,10}    
+		param  = {1.24,12},    
+		slot   = 2
 	};
 
 get(108, 6) -> 
@@ -12421,7 +13307,8 @@ get(108, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {1.1,11}    
+		param  = {1.28,12},    
+		slot   = 2
 	};
 
 get(108, 7) -> 
@@ -12435,7 +13322,8 @@ get(108, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {1.12,12}    
+		param  = {1.3,20},    
+		slot   = 2
 	};
 
 get(108, 8) -> 
@@ -12449,7 +13337,8 @@ get(108, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {1.14,13}    
+		param  = {1.34,20},    
+		slot   = 2
 	};
 
 get(108, 9) -> 
@@ -12463,7 +13352,8 @@ get(108, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {1.16,14}    
+		param  = {1.38,20},    
+		slot   = 2
 	};
 
 get(108, 10) -> 
@@ -12477,7 +13367,8 @@ get(108, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 4,
-		param  = {1.18,15}    
+		param  = {1.4,25},    
+		slot   = 2
 	};
 
 get(111, 1) -> 
@@ -12491,7 +13382,8 @@ get(111, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1,20,2}    
+		param  = {1,20,2},    
+		slot   = 1
 	};
 
 get(111, 2) -> 
@@ -12505,7 +13397,8 @@ get(111, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {1.02,30,2}    
+		param  = {1.05,30,2},    
+		slot   = 1
 	};
 
 get(111, 3) -> 
@@ -12519,7 +13412,8 @@ get(111, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {1.04,40,2}    
+		param  = {1.1,40,2},    
+		slot   = 1
 	};
 
 get(111, 4) -> 
@@ -12533,7 +13427,8 @@ get(111, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {1.06,50,2}    
+		param  = {1.15,50,2},    
+		slot   = 1
 	};
 
 get(111, 5) -> 
@@ -12547,7 +13442,8 @@ get(111, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {1.08,60,2}    
+		param  = {1.2,60,2},    
+		slot   = 1
 	};
 
 get(111, 6) -> 
@@ -12561,7 +13457,8 @@ get(111, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {1.1,70,2}    
+		param  = {1.25,70,2},    
+		slot   = 1
 	};
 
 get(111, 7) -> 
@@ -12575,7 +13472,8 @@ get(111, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {1.12,80,2}    
+		param  = {1.3,80,2},    
+		slot   = 1
 	};
 
 get(111, 8) -> 
@@ -12589,7 +13487,8 @@ get(111, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {1.14,90,2}    
+		param  = {1.35,90,2},    
+		slot   = 1
 	};
 
 get(111, 9) -> 
@@ -12603,7 +13502,8 @@ get(111, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {1.16,100,2}    
+		param  = {1.4,100,2},    
+		slot   = 1
 	};
 
 get(111, 10) -> 
@@ -12617,7 +13517,8 @@ get(111, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 4,
-		param  = {1.18,110,2}    
+		param  = {1.45,110,2},    
+		slot   = 1
 	};
 
 get(117, 1) -> 
@@ -12631,7 +13532,8 @@ get(117, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1,11}    
+		param  = {1.1,10},    
+		slot   = 2
 	};
 
 get(117, 2) -> 
@@ -12645,7 +13547,8 @@ get(117, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {1.02,12}    
+		param  = {1.14,10},    
+		slot   = 2
 	};
 
 get(117, 3) -> 
@@ -12659,7 +13562,8 @@ get(117, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {1.04,13}    
+		param  = {1.18,10},    
+		slot   = 2
 	};
 
 get(117, 4) -> 
@@ -12673,7 +13577,8 @@ get(117, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {1.06,14}    
+		param  = {1.2,20},    
+		slot   = 2
 	};
 
 get(117, 5) -> 
@@ -12687,7 +13592,8 @@ get(117, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {1.08,15}    
+		param  = {1.24,20},    
+		slot   = 2
 	};
 
 get(117, 6) -> 
@@ -12701,7 +13607,8 @@ get(117, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {1.1,16}    
+		param  = {1.28,20},    
+		slot   = 2
 	};
 
 get(117, 7) -> 
@@ -12715,7 +13622,8 @@ get(117, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {1.12,17}    
+		param  = {1.3,30},    
+		slot   = 2
 	};
 
 get(117, 8) -> 
@@ -12729,7 +13637,8 @@ get(117, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {1.14,18}    
+		param  = {1.34,30},    
+		slot   = 2
 	};
 
 get(117, 9) -> 
@@ -12743,7 +13652,8 @@ get(117, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {1.16,19}    
+		param  = {1.38,30},    
+		slot   = 2
 	};
 
 get(117, 10) -> 
@@ -12757,7 +13667,8 @@ get(117, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 4,
-		param  = {1.18,20}    
+		param  = {1.4,40},    
+		slot   = 2
 	};
 
 get(405, 1) -> 
@@ -12771,7 +13682,8 @@ get(405, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1,0.5}    
+		param  = {1,0.5},    
+		slot   = 0
 	};
 
 get(406, 1) -> 
@@ -12785,7 +13697,8 @@ get(406, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.7,0.7,0.7,0.2,1}    
+		param  = {0.7,0.7,0.7,0.2,1},    
+		slot   = 0
 	};
 
 get(407, 1) -> 
@@ -12799,7 +13712,8 @@ get(407, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1,100,2}    
+		param  = {1,3,0.2,2},    
+		slot   = 0
 	};
 
 get(408, 1) -> 
@@ -12813,7 +13727,8 @@ get(408, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1,1}    
+		param  = {1.1,1},    
+		slot   = 0
 	};
 
 get(409, 1) -> 
@@ -12827,7 +13742,8 @@ get(409, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.8}    
+		param  = {0.8},    
+		slot   = 0
 	};
 
 get(410, 1) -> 
@@ -12841,7 +13757,8 @@ get(410, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1}    
+		param  = {1.2},    
+		slot   = 0
 	};
 
 get(411, 1) -> 
@@ -12855,7 +13772,8 @@ get(411, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.8,0.3,1}    
+		param  = {1,0.3,1},    
+		slot   = 0
 	};
 
 

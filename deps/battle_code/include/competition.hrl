@@ -1,3 +1,4 @@
+%% 玩家在比武场中的信息
 -record(comp_info, {
 					  gd_AccountID   = 0,				%% 账号ID
 					  gd_RoleLevel   = 0,				%% 角色等级
@@ -18,23 +19,23 @@
 					  gd_IsFreeze    = false			%% 是否使用定身丹
 					 }).
 
+%% 比武场全局状态
 -record(g_comp_status, {
+						key = key,
 						status = none,
-						apply_tref = none,
-						begin_tref = none,
-						end_tref = none,
 						first_bloods = [],
-						banner_trefs = []
+						banners = [],
+						apply_time = 0,
+						begin_time = 0,
+						end_time = 0,
+						apply_forbits = []
 					   }).
 
+%% 比武场个人状态
 -record(s_comp_status, {
 						id = 0,					%% 玩家ID
-						status = none,			%% 系统状态  'apply'|'begin'|'end'
 						apply_level = 0,		%% 报名等级
 						apply_time = 0,			%% 报名时间
-						
-						speed_tref = none,
-						cloaking_tref = none,
 						
 						revive_times = 0,		%% 使用复活丹次数
 						speed_time = 0,			%% 上次使用加速丹时间
@@ -44,28 +45,39 @@
 						fly_time=0				%% 上次使用传送丹时间
 					   }).
 
--record(comp_scene_state, {
-						   team_id     = 0,		%% 队伍 0-无  1-红队  2-蓝队
-						   is_ball     = 0,		%% 是否绣球 0-否  1-是
-						   is_speed_up = 0,		%% 是否加速 0-否  1-是
-						   is_cloaking = 0,		%% 是否隐身 0-否  1-是
-						   ability     = 0		%%   战斗力
+%% 比武场战斗信息
+-record(comp_battle_info, {
+							comp_level     = 0,
+							att_id         = 0,
+							att_win_score  = 0,
+							att_loss_score = 0,
+							att_is_ball    = 0,
+							att_con_win    = 0,
+							def_id         = 0,
+							def_win_score  = 0,
+							def_loss_score = 0,
+							def_is_ball    = 0,
+							def_con_win    = 0
 						   }).
 
+%% 比武场前三名信息
 -record(comp_top_info, {
-						gd_CompLevel = 0,			%% 比武场等级
-						gd_AccountID = 0,			%% 账号ID
-						gd_RoleID    = 0,			%% 角色ID
-						gd_Slogan    = "我就是比武冠军，来膜拜吧。"	%% 冠军口号
+						gd_CompLevel = 0,							%% 比武场等级
+						gd_AccountID = 0,							%% 账号ID
+						gd_RoleID    = 0,							%% 角色ID
+						gd_Slogan    = "我就是比武冠军，来膜拜吧。",	%% 冠军口号
+						gd_DressList = []							%% 其他装扮信息（坐骑、翅膀、装备等）
 					   }).
 
 -record(comp_top_info_types, {
 							  gd_CompLevel = {integer},		%% 比武等级
 							  gd_CompRank  = {integer},		%% 排名
 							  gd_RoleID    = {integer},		%% 角色ID
-							  gd_Slogan    = {string}		%% 冠军口号
+							  gd_Slogan    = {string},		%% 冠军口号
+							  gd_DressList = {term}		%% 其他装扮信息（坐骑、翅膀、装备等）
 							 }).
 
+%% 比武场奖励信息
 -record(comp_award_info, {
 						  gd_IsWin        = 0,		%% 是否胜利方 1-是 2-否
 						  gd_Rank         = 0,		%% 排名
@@ -101,3 +113,10 @@
 
 -define(COMP_CLEAR_PROTECT_COST,	10).		%% 清除战斗保护状态的金币
 -define(COMP_REVIVE_COST,			8).			%% 复活需要的金币
+
+-define(COMP_LEVEL_LIST, 		[1,2,3]).
+
+-define(COMP_BALL_Y,			1). %% 绣球
+-define(COMP_BALL_N,			0).	%% 非绣球
+-define(COMP_TEAM_RED,			1).	%% 红队
+-define(COMP_TEAM_BLUE,			2).	%% 蓝队

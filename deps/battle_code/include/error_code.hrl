@@ -32,6 +32,7 @@
 -define(ERR_ROLE_HAS_ITEMS,		29).		%% 请先脱下佣兵装备
 -define(ERR_SKILL_LEVEL_MAX,    30). 		%% 技能已达到最高级
 -define(ERR_SKILL_NUM_NOT_MATCH, 31).		%% 保留的技能个数不正确
+
 -define(ERR_MAP_CANNOT_GUAJI,    32).       %% 该地图不允许挂机
 -define(ERR_NOT_GUILD_SKILL,     33).       %% 技能不是公会技能
 -define(ERR_MUST_LEARN_FROM_ONE, 34).       %% 公会技能必须从一级学起
@@ -45,8 +46,8 @@
 -define(ERR_NO_ONBATTLE_ROLES,	 42).		%% 没有出战佣兵
 
 %% 场景
-%% -define(ERR_SCENE_NOT_COMPLETE,			11001).			%% 场景进度未完成
-%% -define(ERR_MOVE_CHECK_FAILED,			11002).			%% 场景 move check 失败
+-define(ERR_SCENE_FORBIT_FLY,			11001).			%% 骑上6级以上坐骑/装备10以上强化等级的翅膀才能飞哦
+%% -define(ERR_DRESS_FLY_FORBIT_DOWN_HORSE,			11002).			%% 场景 move check 失败
 %% -define(ERR_TEAM_SCENE_NOT_PERMITED,	11003).			%% 未达到进入组队场景要求
 
 %% 副本
@@ -244,13 +245,14 @@
 -define(GUILD_ERROR_APPLY_REACH_LIMIT,	19036).			%% 申请的工会的数目已经达到上限
 -define(GUILD_ERROR_APPLY_SUCCESS, 19037). %% 帮会申请通过
 -define(GUILD_ERROR_SEARCH_NULL, 19038). %% 搜索结果为空
+-define(GUILD_ERROR_RANK_FULL, 19039). %% 该职位已满
 
 %% 战斗系统
 -define(ERR_BATTLE_ATTACKER_IS_ON_BATTLE,    20001).   %% 玩家正在战斗
 -define(ERR_BATTLE_DEFENDER_IS_ON_BATTLE,    20002).   %% 被挑战的玩家正在战斗中
 -define(ERR_BATTLE_DEFENDER_IS_NOT_ON_LINE,  20003).   %% 被挑战的玩家不在线
 -define(ERR_BATTLE_MONSTER_IS_ON_BATTLE,	 20004).    %%当前怪物正在战斗中，请稍后再来
-
+-define(ERR_BATTLE_TOO_MUCH_BATTLE_SINGLE_DAY, 20005).  %%当天刷怪超过800次，没有经验
 
 %% CD系统
 %% -define(ERR_CD_TYPE_NOT_EXIST,			23001).			%% CD类型不存在
@@ -284,6 +286,7 @@
  -define(ERR_TEAM_APPLY_SUCCESS,    30020).         %% 组队申请已经发出
  -define(ERR_TEAM_APPROVE_SUCCESS,    30021).         %% 组队审核通过通知已经发出，请等候
  -define(ERR_TEAM_ADD_SUCCESS,    30022).         %% 加入队伍成功
+ -define(ERR_TEAM_APPLY_FULL,    30023).         %% 您申请的队伍人数已满
 
 %% 神剑
 -define(ERR_SWORD_NOT_START,32001). 		%% 天灵神剑活动未开始
@@ -336,7 +339,7 @@
 -define(ERR_PAY_TIMES_IS_FULL,18005).  		%%今日祝福次数已满
 -define(ERR_PAYED_TIMES_IS_FULL,18006).  		%%今日好友被祝福次数已满
 -define(ERR_REQUEST_ALREADY_SEND,18007).         %%今日好友被祝福次数已满
-
+-define(ERR_INVITE_IN_BLACK,18008).         %%今日好友被祝福次数已满
 %%运镖
 -define(ERR_ROB_TIMES_ZERO, 26000).     		%%您今天的打劫次数已满
 -define(ERR_ROBED_TIMES_ZERO, 26001).  			%%镖主很可怜了，手下留情吧
@@ -357,12 +360,14 @@
 %% 聊天
 -define(ERR_CAN_NOT_CHAT,         16003). %% 您当前处于禁言状态
 -define(ERR_PROHIBIT_WORD,16004).			%%含有敏感词
+-define(ERR_PROHIBIT_WORD_IN_TITLE,16015).           %%含有敏感词
 %%竞技系统
 -define(ERR_RANK_BEHIND, 31000).     %%您不能挑战后面哦
 -define(ERR_RANK_YOURSELF, 31001).     %%您不能挑战自己哦
 -define(ERR_NO_FIVE_CHALLENGE_TIMES, 31002). %%挑战次数没达到5次哦
 -define(ERR_REACH_THE_MAX_CHALLENGE_TIME, 31003). %%已达到最大挑战次数
 -define(ERR_ARENA_SYSTEM_NOT_OPEN, 31004).  %%竞技场30级开启
+-define(ERR_ARENA_CHALLENGE_LIST_CHANGE, 31005).  %%可挑战列表已发生变化
 
 %%boss
 -define(ERR_SILVER_INSPIRE_OVER, 62001). %%银币鼓舞达到最大
@@ -392,6 +397,8 @@
 -define(ERR_COMP_END_IN_ADVANCE,		37007).					%% 您所在等级段的比武已经结束
 -define(ERR_COMP_ALREADY_RAISE_BANNER,	37008).					%% 已经升旗了
 -define(ERR_COMP_NOT_COMP_TIME,			37009).					%% 现在不是比武活动时间，不能报名
+
+-define(ERR_DEFENCE_MONSTER_OUT_OF_RANGE, 40001).       %% 群魔乱舞怪物不在攻击距离之内
 
 -define(ERR_HAVE_CHALLENGER, 63001).					%% 通知客户端国王正在被其他人挑战
 -define(COMBAT_POWER_TOO_LOW, 63002).					%% 出战角色战斗力总和小于1000

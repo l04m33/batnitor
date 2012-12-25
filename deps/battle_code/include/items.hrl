@@ -33,6 +33,7 @@
 -define(EQUIP_TYPE_CLOAK,			3).					%% 披风
 -define(EQUIP_TYPE_SHOES,			4).					%% 鞋子
 -define(EQUIP_TYPE_RING,			5).					%% 戒指
+-define(EQUIP_TYPE_WING,			7).					%% 翅膀
 -define(EQUIP_TYPE_FASHION,			8).					%% 时装
 -define(EQUIP_TYPE_FRAGMENT,		10).				%% 装备碎片
 
@@ -128,7 +129,7 @@
 				   cfg_SellSilver = 0,
 				   cfg_IsThrow = 0, 
 				   cfg_IsUse = 0,
-				   cfg_IsInten = 1,
+				   cfg_IsInten = 0,
 				   cfg_IsAnnouncement = 0,
 				   cfg_IntenRate = 0,
 				   cfg_StackMax = 0,

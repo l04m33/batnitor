@@ -330,13 +330,13 @@ handle_skill(SkillId = 104, Src, Tar, Level, Param, BattleData) ->
 
 	battle:settle_and_add_buff(Src, BuffSpec, [], BattleData1);
 
-%% 坚若磐石: 随机攻击三个目标，并使己方全体所受伤害减少
-%% {攻击系数, 伤害减少系数, 持续回合数}
+%% 坚若磐石: 随机攻击N个目标，并使己方全体所受伤害减少
+%% {攻击人数, 攻击系数, 伤害减少系数, 持续回合数}
 handle_skill(SkillId = 105, Src, Tar, _Level, Param, BattleData) ->
     TarList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
     AttSpec = #attack_spec {
-        addition = ?p1,
-        targets  = util:get_rand_list_elems(TarList, 3),
+        addition = ?p2,
+        targets  = util:get_rand_list_elems(TarList, ?p1),
         buff     = [],
         debuff   = []
     },
@@ -345,8 +345,8 @@ handle_skill(SkillId = 105, Src, Tar, _Level, Param, BattleData) ->
 
     Buff = #buff {
         name = ?BUFF_RECV_DMG_DOWN,
-        value = ?p2,
-        duration = ?p3,
+        value = ?p3,
+        duration = ?p4,
         by_rate = true,
         settle = post
     },
@@ -1168,7 +1168,7 @@ handle_skill(SkillId = 241, Src, Tar, _Level, Param, BattleData) ->
 %% {治疗系数, 增加怒气值}
 handle_skill(SkillId = 242, Src, Tar, _Level, Param, BattleData) ->
 	List = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-	NList = util:get_rand_list_elems(List, 3),
+    NList = battle:get_n_pos_by(hp_rel, min, 3, List, BattleData),
 
 	AssSpecList = 
 		[
@@ -1185,7 +1185,7 @@ handle_skill(SkillId = 242, Src, Tar, _Level, Param, BattleData) ->
 %% {治疗系数, 概率, 物理防御系数, 法术防御系数}
 handle_skill(SkillId = 243, Src, Tar, _Level, Param, BattleData) ->
 	List  = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-	NList = util:get_rand_list_elems(List, 3),
+    NList = battle:get_n_pos_by(hp_rel, min, 3, List, BattleData),
 	
 	Buffs = [#buff{name = ?BUFF_MDEF_UP, value = ?p4, by_rate = true, settle = post}, 
 			 #buff{name = ?BUFF_PDEF_UP, value = ?p3, by_rate = true, settle = post}],
@@ -1207,7 +1207,7 @@ handle_skill(SkillId = 243, Src, Tar, _Level, Param, BattleData) ->
 %% {治疗系数}
 handle_skill(SkillId = 244, Src, Tar, _Level, Param, BattleData) ->
 	List  = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-    {NTar, _} = battle:get_pos_by(hp, min, List, BattleData),
+    {NTar, _} = battle:get_pos_by(hp_rel, min, List, BattleData),
 
 	AssSpecList = 
 		[
@@ -1223,7 +1223,7 @@ handle_skill(SkillId = 244, Src, Tar, _Level, Param, BattleData) ->
 %% {治疗系数, 防御增加系数}
 handle_skill(SkillId = 245, Src, Tar, _Level, Param, BattleData) ->
     CandList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-    {NTar, _} = battle:get_pos_by(hp, min, CandList, BattleData),
+    {NTar, _} = battle:get_pos_by(hp_rel, min, CandList, BattleData),
 
 	Buffs = [#buff{name = ?BUFF_MDEF_UP, value = ?p2, duration = 2, by_rate = true, settle = post}, 
 			 #buff{name = ?BUFF_PDEF_UP, value = ?p2, duration = 2, by_rate = true, settle = post}],
@@ -1246,18 +1246,7 @@ handle_skill(SkillId = 246, Src, Tar, _Level, Param, BattleData) ->
     CandList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
 
 	Buffs = [#buff{name = ?BUFF_ATT_UP, value = ?p3, duration = 2, by_rate = true, settle = post}],
-    {_, TarList} = lists:foldl(
-        fun(_, {CList, AccList}) ->
-            case CList of
-                [] -> {CList, AccList};
-                _  ->
-                    {NP, _} = battle:get_pos_by(hp, min, CList, BattleData),
-                    NCList = lists:delete(NP, CList),
-                    {NCList, [NP | AccList]}
-            end
-        end,
-        {CandList, []},
-        lists:seq(1, 3)),
+    TarList = battle:get_n_pos_by(hp_rel, min, 3, CandList, BattleData),
 
 	BuffOps = [{Buff, ?p2, add} || Buff <- Buffs],
 	AssSpecList = [#assist_spec{
@@ -1893,23 +1882,15 @@ handle_skill(SkillId = 406, Src, _Tar, _Level, Param, BattleData) ->
 % New skills 2012-12-04
 %======================================================================================================================
 
-%% 金刚护甲：敌人进行一次100%物理攻击，同时随机为己方3个目标增加固定值的物理防御和法术防御.
-%% {攻击系数, 增加物/魔防值, 持续回合}
+%% 对敌人进行一次物理攻击,造成{P1}的伤害,同时随机为己方{P2}个目标减免{P3}的伤害,持续{P4}回合
+%% {攻击系数, 减少伤害人数, 减少伤害系数, 持续回合}
 handle_skill(SkillID = 407, Src, Tar, _Level, Param, BattleData) ->
-    PBuff = #buff {
-        name     = ?BUFF_PDEF_UP,
-        value    = ?p2,
-        duration = ?p3,
+    Buff = #buff {
+        name     = ?BUFF_RECV_DMG_DOWN,
+        value    = ?p3,
+        duration = ?p4,
         settle   = post,
-        by_rate  = false
-    },
-
-    MBuff = #buff {
-        name     = ?BUFF_MDEF_UP,
-        value    = ?p2,
-        duration = ?p3,
-        settle   = post,
-        by_rate  = false
+        by_rate  = true
     },
 
     AttSpec = #attack_spec {
@@ -1921,8 +1902,8 @@ handle_skill(SkillID = 407, Src, Tar, _Level, Param, BattleData) ->
 	BattleData1 = battle:handle_attack_info(SkillID, Src, AttInfoList, BattleData),
 
     FriendList = battle:get_target_list(battle:calc_range(Src, ?ALLFRIENDLY), BattleData1),
-    FriendTarList = util:get_rand_list_elems(FriendList, 3),
-    BuffSpec = [{Pos, [{PBuff, 1.0, add}, {MBuff, 1.0, add}]} || Pos <- FriendTarList],
+    FriendTarList = util:get_rand_list_elems(FriendList, ?p2),
+    BuffSpec = [{Pos, [{Buff, 1.0, add}]} || Pos <- FriendTarList],
 	battle:settle_and_add_buff(Src, BuffSpec, [], BattleData1);
 
 %% 破阵攻心：进行一次物理攻击，造成100%伤害，如果命中则击晕目标一回合。

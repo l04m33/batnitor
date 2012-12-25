@@ -70,7 +70,7 @@
 		president,                  %% 工会主席ID
  	 	president_name,             %% 工会主席名字
 		dismiss_time    = 0,        %% 解散时间
-		max_member      = 20,       %% 最大人数
+		max_member      = 22,       %% 最大人数
 		members         = [],       %% 成员列表  list()
 		exp             = 0,        %% 功勋  exploit,
 		state           = normal,   %% normal | {dismiss, Time, TimerRef},

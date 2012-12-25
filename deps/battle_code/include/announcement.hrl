@@ -65,6 +65,11 @@
 -define(SEND_TOUHU, 66).
 -define(SEND_SWORD, 67).
 -define(SEND_HORSE_UP_LEVEL, 68).
+-define(SEND_SHENJIAN_WIN, 69).
+-define(SEND_SHENJIAN_LOSE, 70).
+-define(SEND_ITEM_CREATE_SWORD, 71).
+-define(SEND_ITEM_CREATE_MYSTICA, 72).
+-define(SEND_HORSE_CHANGE, 73).%%坐骑幻化
 
 
 -define(CARD_FROM_RESURRECTION, 1).
