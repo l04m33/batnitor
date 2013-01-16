@@ -1,5 +1,4 @@
 %% 日志处理
--define(debug, 1).
 
 -ifdef(debug).
 	-define(CHAT(Tag, Format), mod_chat:sendSelf(Tag, Format, [])).
