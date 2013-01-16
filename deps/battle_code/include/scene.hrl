@@ -8,6 +8,9 @@
 -define(SCENE_BOSS, 		6).		%% 世界BOSS竞技场地图
 -define(SCENE_MARSTOWER,    7).	    %% 英雄塔地图
 -define(SCENE_COMP,			8).		%% 比武地图
+-define(SCENE_STAGE,		10).	%% 挑战魂将
+-define(SCENE_DEFENCE,		11).	%% 群魔乱舞
+-define(SCENE_GUILD_HUNTING,12).	%% 帮会活动
 
 -define(INIT_MAP,           1100).  %% 起始地图
 -define(SPECIAL_MAP, 		1900). 	%% 原野村要做特殊的处理
@@ -33,6 +36,13 @@
 -define(SCENE_STATE_HORSE,		128).
 -define(SCENE_STATE_WING,		256).
 -define(SCENE_STATE_FASHION,	512).
+
+-define(SCENE_SPEED_NORMAL,		1).
+-define(SCENE_SPEED_RB,			2).
+-define(SCENE_SPEED_COMP,		5).
+-define(SCENE_SPEED_COMP_DRUG,	4).
+-define(SCENE_SPEED_FLY,		3).
+-define(SCENE_SPEED_FIRST_RB,	6).
 
 -define(ROOM_NUMBERS, 100).
 -define(MAX_PLAYER,   30).
@@ -132,6 +142,7 @@
 		
 		title          = 0,		%% int8:成就称号id
 		level          = 0,		%% int8:当前玩家主角等级
+        guild_id       = 0,     %% 帮派ID
 		guild_lv	   = 0,		%% 帮派等级
 		guild_name	   = "",	%% 帮派名称
 		role_rank	   = 2,		%% 1:游客, 2:普通玩家, 3:GM, 6:指导员
@@ -155,7 +166,20 @@
 		horse_data 	   = 0,		%% 坐骑数据
 		equip_data	   = #equip_info{},
 		
-		follow_role_data = 0,
+		follow_role_data = 0,	%% 跟随武将ID 0表示没跟随武将
+
+		king_data      = 0,		%% 是否国王 0-是 1-否
+		chief_disciple_data = 0,%% 首席弟子 0-否 1-虎卫 2-猛将  3-军师
+		
+		speed_data     = 0,		%% 移动速度
+		
+		show_data      = 0,     %% 变身ID（怪物的ID）
+		
+		supremacy_title_data   = 0, %% 至尊称号
+		legend_title_data      = 0, %% 传奇称号
+		achievement_title_data = 0, %% 成就称号
+		honour_title_data      = 0, %% 荣誉称号
+		special_title_data     = 0, %% 特殊称号
 		
 		stealth_data   = false,
 

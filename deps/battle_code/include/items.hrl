@@ -52,6 +52,7 @@
 -define(PROP_TYPE_HORN,			5).						%% 小喇叭
 -define(PROP_TYPE_FLY_SHOES,	6).						%% 小飞鞋
 -define(PROP_TYPE_TASK,			10).					%% 任务道具
+-define(PROP_TYPE_CHANGE_CARD,	26).					%% 变身卡
 
 %%宝石操作协议
 -define(ONE_STONE_ONCE, 0).
@@ -118,6 +119,7 @@
 
 -record(cfg_item, {
 				   cfg_ItemID = 0,
+				   cfg_Name = "",
 				   cfg_FirstType = 0,
 				   cfg_SecondType = 0,  %%装备位置
 				   cfg_GradeLevel = 0,      
@@ -143,7 +145,8 @@
 				   cfg_IsXilian = 1,
 				   cfg_IsQiling = 1,
 				   cfg_IsUpgrate = 1,
-				   cfg_IsUpquality = 1
+				   cfg_IsUpquality = 1,
+				   cfg_Sort = 1
 			  }).
 
 %% 神秘商店
@@ -160,6 +163,26 @@
 							  gd_FreeTimes     = {integer},
 							  gd_ItemList      = {term}
 							 }).
+
+-record(market,{
+				gd_id = 0,		%% 抢购的物品
+				gd_num = 0		%% 剩余数量
+				}).
+
+-record(market_types,{
+					gd_id = {integer},		%% 抢购的物品
+					gd_num = {integer}		%% 剩余数量
+					}).
+
+-record(market_account,{
+						key = {0,0},
+						gd_num = 0
+						}).
+
+-record(market_account_types,{
+							key = {{integer},{integer}},
+							gd_num = {integer}
+							}).
 
 -define(MYSTICAL_SHOP_OPEN_LEVEL, 30).
 -define(MYSTICAL_SHOP_FRESH_TIME, 21600).

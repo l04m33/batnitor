@@ -10,6 +10,7 @@
 
 -define(TASK_TYPE_CYCLIC_SCHOOL, 11).
 -define(TASK_TYPE_CYCLIC_GANK,   12).
+-define(TASK_TYPE_CYCLIC_DAILY,  13).
 
 -define(TASK_REWARD_EXP,    3).
 -define(TASK_REWARD_ITEM,   4).
@@ -68,6 +69,7 @@
         gd_completedList    :: [integer()],
         gd_receivedList     :: [#task_state{}],
         gd_curCyclicList    :: [integer()],
+        gd_dailyList        :: [integer()],
         gd_lastTime = 0
     }).
 
@@ -77,6 +79,7 @@
         gd_completedList    = {term},
         gd_receivedList     = {term},
         gd_curCyclicList    = {term},
+        gd_dailyList        = {term},
         gd_lastTime         = {integer}
     }).
 
@@ -99,6 +102,25 @@
         gd_taskState = {integer},   %% 0未领取，1领取，2完成
         gd_finishNum = {integer},
         gd_taskNum = {integer},     %% 每天任务数
+        gd_lastTime = {integer}
+    }).
+
+-record(task_trace,{
+        gd_accountID = 0,
+        gd_taskList = [],
+        gd_freezeTime = 0,
+        gd_taskNum =  0,
+        gd_freeTimes = 0,
+        gd_lastTime = 0
+    }).
+
+-record(task_trace_types,
+    {
+        gd_accountID ={integer},
+        gd_taskList = {term},
+        gd_freezeTime = {integer},
+        gd_taskNum =  {integer},
+        gd_freeTimes = {integer},
         gd_lastTime = {integer}
     }).
 

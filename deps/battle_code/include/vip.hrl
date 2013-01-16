@@ -23,12 +23,13 @@
 
 -define(VIP_TYPE_FEEDBACK,1).	%% 绑定元宝回馈
 -define(VIP_TYPE_BUFF,2).		%% VIP BUFF加成
--define(VIP_TYPE_FLYSHOE,3).	%% 小飞鞋
+-define(VIP_TYPE_HUNSHI,3).		%% 魂石
 -define(VIP_TYPE_SILVER,4).    %% 银币
 -define(VIP_TYPE_FEED,5).		%% 饲料
--define(VIP_TYPE_ZHAOCAI,6).	%% 招财进宝
--define(VIP_TYPE_XUNXIAN,7).    %% 寻仙
--define(VIP_TYPE_FLY,8).		%% 飞行
+-define(VIP_TYPE_FLYSHOE,6).	%% 小飞鞋
+-define(VIP_TYPE_ZHAOCAI,7).	%% 招财进宝
+-define(VIP_TYPE_XUNXIAN,8).    %% 寻仙
+-define(VIP_TYPE_FLY,999).		%% 飞行
 -define(VIP_TYPE_GUAJI,9).		%% 挂机
 -define(VIP_TYPE_DUNGEON,10).	%% 副本
 -define(VIP_TYPE_ARENA,12).		%% 竞技场

@@ -19,7 +19,8 @@
 		jungong = 0,
 		exp_status,
 		exp = 0,
-		goods_isbind = 0
+		goods_isbind = 0,
+		from = 0
 			   }).
 			   
 -record(mail_state, {

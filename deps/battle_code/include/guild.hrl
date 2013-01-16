@@ -44,6 +44,15 @@
 -define(GUILD_EVENT_UPGRADE_SKILL,  9).
 -define(GUILE_EVENT_LEARN_SKILL,   10).
 
+%% 帮派提醒时间
+
+%%审核申请提醒
+-define(GUILD_NOTIFY_APPLY,         0).
+%% 无提醒
+-define(GUILD_NOTIFY_NO,         1).
+%% 申请通过提醒
+-define(GUILD_NOTIFY_APPROVE,         2).
+
 %% 杂项
 %% 分页大小
 -define(GUILD_PAGE_SIZE, 10).
@@ -106,13 +115,12 @@
 		name,         
 	 	guild_id,
 		rank          = 5,     %% 职位，默认为屌丝
-		% exp           = 0,     %% 功勋 exploit
-		% total_exp     = 0,     %% 总功勋(历史功勋)
 		join_time     = 0,     %% 加入工会的时间
 		donate_time   = 0,     %% 最近一次捐献的时间
 		donate_count  = 0,     
 		welfare_time  = 0,     %% 最近一次领取福利的时间
-		leave_time    = 0      %% 离线时间，在线时为0
+		leave_time    = 0,      %% 离线时间，在线时为0
+        is_notify_app = 1 %% 是否有通知的事件，0 审核请求提醒，1 无提醒 2 加入帮会提醒
 	}		   
 ).
 
@@ -122,13 +130,12 @@
 		name         = {string},
 		guild_id     = {integer}, 
 		rank         = {integer},
-		% exp          = {integer},
-		% total_exp    = {integer},
 		join_time    = {integer},
 		donate_time  = {integer},
 		donate_count = {integer},
 		welfare_time = {integer},
-		leave_time   = {integer}
+		leave_time   = {integer},
+        is_notify_app = {integer}
 	}			
 ).
 

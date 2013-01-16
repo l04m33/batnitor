@@ -15,7 +15,8 @@
 	gd_guild_point		= 0,		%% 公会积分
 	gd_tot_guild_point	= 0,		%% 公会历史积分
 	gd_sword_point		= 0,		%% 神剑积分
-	gd_lingli           = 0		%% 灵力（求求暂时不要用啊，用了后果自负）
+	gd_lingli           = 0,		%% 灵力（求求暂时不要用啊，用了后果自负）
+    gd_gold_arrow       = 0		%% 黄金箭（帮派活动中用的）
 	}).
 
 -record(economy_types,{
@@ -35,7 +36,8 @@
 	gd_guild_point		= {integer},
 	gd_tot_guild_point	= {integer},
 	gd_sword_point		= {integer},
-	gd_lingli           = {integer}
+	gd_lingli           = {integer},
+    gd_gold_arrow       = {integer}
 	}).
 
 

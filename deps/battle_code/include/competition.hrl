@@ -16,6 +16,7 @@
 					  gd_IsLeave     = false,			%% 是否已经离开比武场
 					  gd_IsCloaking  = false,			%% 是否隐身
 					  gd_IsDouble    = false,			%% 是否使用双倍积分丹
+					  gd_DoubleTimes = 0,				%% 双倍丹使用次数
 					  gd_IsFreeze    = false			%% 是否使用定身丹
 					 }).
 

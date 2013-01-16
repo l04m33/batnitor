@@ -294,7 +294,7 @@ handle_skill(SkillId = ?SKILL_COMMON_ATTACK_ID, Src, Tar, _Level, Param, BattleD
 	battle:do_att_buff(Src, AttSpec, false, [Tar], NBattleData);
 
 
-%% {攻击系数, 伤害减少系数}
+%% {攻击系数, 伤害减少系数, 伤害修正系数}
 handle_skill(SkillId = 104, Src, Tar, Level, Param, BattleData) ->	
 	Buff      = #buff{name = ?BUFF_SCORN,   duration = 1, settle = post, by_rate = true,  value = ?p2},
 	Debuff    = #buff{name = ?BUFF_SCORNED, duration = 1, settle = post, by_rate = false, value = Src},
@@ -304,25 +304,25 @@ handle_skill(SkillId = 104, Src, Tar, Level, Param, BattleData) ->
 
 	TarList   = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
     RealTargets = util:get_rand_list_elems(TarList, 3), 
-	AttSpec   = 
-		#attack_spec {
-			addition = ?p1,
-			targets  = RealTargets,
-			buff     = [],
-			debuff   = []
-		},
+
+    %% GZ0814(梁泳欣) 13:53:29
+    %% 军师无双技能，龙战八方：
+    %% 伤害公式修改为（伤害*（2-n*a））,其中n为攻击的目标个数（实际的目标数，不是按照等级算出来的那个目标个数上限），a为修正参数。
+    %% 描述修改为：随机对敌方Y人造成X的法术伤害，如果剩余敌人少于攻击目标数，则伤害会有加成。
+    %% 虎卫无双技能，威震四方也是 这样弄 
+    TarNum = length(RealTargets),
+    DmgAlterRate = 2 - TarNum * ?p3,
+
+	AttSpec = #attack_spec {
+        addition = ?p1 * DmgAlterRate,
+        targets  = RealTargets,
+        buff     = [],
+        debuff   = []
+    },
 	AttInfoList = battle:attack(SkillId, Src, AttSpec, AttSpec#attack_spec.targets, BattleData),
 	BattleData1 = battle:handle_attack_info(SkillId, Src, AttInfoList, BattleData),
 
-    HitList = lists:foldl(
-        fun(A, HitAcc) ->
-            case A#attack_info.is_miss of
-                true  -> HitAcc;
-                false -> [A#attack_info.pos | HitAcc]
-            end
-        end,
-        [],
-        AttInfoList),
+    HitList = battle:get_hit_list(AttInfoList, BattleData1),
 
     ScornNum = min(3, (Level + 2) div 3),
     RandScornList = util:get_rand_list_elems(HitList, ScornNum),
@@ -400,9 +400,9 @@ handle_skill(SkillId = 402, Src, _Tar, _Level, Param, BattleData) ->
 %% 霸刃连斩: 对同一个目标连续攻击N次, N视等级而决定
 %% {攻击系数1, 攻击系数2, 攻击系数3, 攻击系数4}
 handle_skill(SkillId = 109, Src, Tar, Level, Param, BattleData) ->		
-	F = fun(N, {C, Data}) ->
+	F = fun(N, {T, C, Data}) ->
 			if (C == false) ->
-				{false, Data};	   
+				{T, false, Data};
 			true ->
 				Addition =
 					case N of
@@ -414,27 +414,37 @@ handle_skill(SkillId = 109, Src, Tar, Level, Param, BattleData) ->
 				
 				AttSpec = 
 					#attack_spec {
-						targets  = [Tar],
+						targets  = [T],
 						addition = Addition
 					},
 				
 				%% we must use attack/5 here to avoid settle the buff
-				AttInfoList = battle:attack(SkillId, Src, AttSpec, [Tar], Data), 			
+				AttInfoList = battle:attack(SkillId, Src, AttSpec, [T], Data), 			
 				Data1   = battle:handle_attack_info(SkillId, Src, AttInfoList, Data),
 				SrcStat = battle:get_battle_status(Src, Data1),
-				TarStat = battle:get_battle_status(Tar, Data1),
+				TarStat = battle:get_battle_status(T, Data1),
 				
 				?INFO(skill, "Tar Hp = ~w", [TarStat#battle_status.hp]),
 	
-				if (SrcStat#battle_status.is_alive == false orelse 
-					TarStat#battle_status.is_alive == false) ->
-					{false, Data1};
-				true ->
-					{true, Data1}
-				end
+                %% 如果目标挂了，选个新的……
+                if
+                    SrcStat#battle_status.is_alive == false ->
+                        {T, false, Data1};
+                    TarStat#battle_status.is_alive == false ->
+                        TList = battle:get_target_list(battle:calc_range(T, ?ALLFRIENDLY), Data1),
+                        case TList of
+                            [] ->
+                                {T, false, Data1};
+                            _ ->
+                                [NewT | _] = util:get_rand_list_elems(TList, 1),
+                                {NewT, true, Data1}
+                        end;
+                    true ->
+                        {T, true, Data1}
+                end
 			end
 		end,
-	{_, NBattleData} = lists:foldl(F, {true, BattleData}, lists:seq(1, min(4, 1 + (Level + 2) div 3))),
+	{_, _, NBattleData} = lists:foldl(F, {Tar, true, BattleData}, lists:seq(1, min(4, 1 + (Level + 2) div 3))),
 	%% no buff to add
 	battle:do_att_buff(Src, #attack_spec{}, true, [], NBattleData);
 
@@ -536,7 +546,7 @@ handle_skill(SkillId = 113, Src, Tar, _, Param, BattleData) ->
                 by_rate  = false,
                 value    = 0,
                 duration = Rounds,
-                settle   = pre 
+                settle   = post
             },
         
             #attack_spec {
@@ -553,7 +563,7 @@ handle_skill(SkillId = 113, Src, Tar, _, Param, BattleData) ->
 %======================================================================================================
 
 %% 龙战八方: 奥义技 ,对敌方N个目标造成一定百分比的伤害, N由等级决定
-%% {攻击系数}
+%% {攻击系数, 伤害修正系数}
 handle_skill(SkillId = 114, Src, Tar, Level, Param, BattleData) ->
 	List = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
 	NList = 
@@ -561,14 +571,21 @@ handle_skill(SkillId = 114, Src, Tar, Level, Param, BattleData) ->
 		   (Level =< 6) -> util:get_rand_list_elems(List, 4);
 			true -> List
 		end,
-	
-	AttSpec = 
-		#attack_spec {
-			addition = ?p1,
-			targets  = NList		  
-		},
-	
-	battle:attack(SkillId, Src, AttSpec, BattleData);
+
+    %% GZ0814(梁泳欣) 13:53:29
+    %% 军师无双技能，龙战八方：
+    %% 伤害公式修改为（伤害*（1.8-n*a））,其中n为攻击的目标个数（实际的目标数，不是按照等级算出来的那个目标个数上限），a为修正参数。
+    %% 描述修改为：随机对敌方Y人造成X的法术伤害，如果剩余敌人少于攻击目标数，则伤害会有加成。
+    %% 虎卫无双技能，威震四方也是 这样弄 
+    TarNum = length(NList),
+    DmgAlterRate = 1.8 - TarNum * ?p2,
+
+	AttSpec = #attack_spec {
+        addition = ?p1 * DmgAlterRate,
+        targets  = NList
+    },
+
+    battle:attack(SkillId, Src, AttSpec, BattleData);
 
 %% 奇门遁甲:	小奥义, 对敌方三个目标进行一次法术攻击，有一定概率附加固定伤害
 %% {攻击系数, 附加伤害概率, 固定附加伤害}
@@ -711,15 +728,7 @@ handle_skill(SkillId = 223, Src, Tar, _Level, Param, BattleData) ->
 	AttInfoList = battle:attack(SkillId, Src, AttSpec, AttSpec#attack_spec.targets, BattleData),
 	BattleData1 = battle:handle_attack_info(SkillId, Src, AttInfoList, BattleData),
 
-    HitList = lists:foldl(
-        fun(A, HitAcc) ->
-            case A#attack_info.is_miss of
-                true  -> HitAcc;
-                false -> [A#attack_info.pos | HitAcc]
-            end
-        end,
-        [],
-        AttInfoList),
+    HitList = battle:get_hit_list(AttInfoList, BattleData1),
 
 	BuffSpec = [{Src, BuffOps} | lists:map(fun(Pos) -> {Pos, DebuffOps} end, HitList)],
 
@@ -746,15 +755,7 @@ handle_skill(SkillId = 405, Src, Tar, _Level, Param, BattleData) ->
 	AttInfoList = battle:attack(SkillId, Src, AttSpec, AttSpec#attack_spec.targets, BattleData),
 	BattleData1 = battle:handle_attack_info(SkillId, Src, AttInfoList, BattleData),
 
-    HitList = lists:foldl(
-        fun(A, HitAcc) ->
-            case A#attack_info.is_miss of
-                true  -> HitAcc;
-                false -> [A#attack_info.pos | HitAcc]
-            end
-        end,
-        [],
-        AttInfoList),
+    HitList = battle:get_hit_list(AttInfoList, BattleData1),
 
 	BuffSpec = [{Src, BuffOps} | lists:map(fun(Pos) -> {Pos, DebuffOps} end, HitList)],
 
@@ -770,7 +771,7 @@ handle_skill(SkillId = 224, Src, Tar, _Level, Param, BattleData) ->
 	DebuffOps = [{Debuff, 1.0, add}],
 
 	TarList   = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-    RealTargets = util:get_rand_list_elems(TarList, 3),
+    RealTargets = util:get_rand_list_elems(TarList, 2),
 	AttSpec   = 
 		#attack_spec {
 			addition = ?p1,
@@ -781,15 +782,7 @@ handle_skill(SkillId = 224, Src, Tar, _Level, Param, BattleData) ->
 	AttInfoList = battle:attack(SkillId, Src, AttSpec, AttSpec#attack_spec.targets, BattleData),
 	BattleData1 = battle:handle_attack_info(SkillId, Src, AttInfoList, BattleData),
 
-    HitList = lists:foldl(
-        fun(A, HitAcc) ->
-            case A#attack_info.is_miss of
-                true  -> HitAcc;
-                false -> [A#attack_info.pos | HitAcc]
-            end
-        end,
-        [],
-        AttInfoList),
+    HitList = battle:get_hit_list(AttInfoList, BattleData1),
 
 	BuffSpec = [{Src, BuffOps} | lists:map(fun(Pos) -> {Pos, DebuffOps} end, HitList)],
 
@@ -947,7 +940,7 @@ handle_skill(SkillId = 232, Src, Tar, _Level, Param, BattleData) ->
 		#buff {
 			name     = ?BUFF_FAINT,	   
 			duration = ?p3,
-			settle   = pre
+			settle   = post
 		},
 	
 	AttSpec = 
@@ -1397,7 +1390,7 @@ handle_skill(SkillId = 263, Src, Tar, _Level, Param, BattleData) ->
 		#buff {
 			name = ?BUFF_FAINT,	   
 			duration = ?p2,
-			settle = pre			
+			settle = post
 		},
 	AttSpec = 
 		#attack_spec {
@@ -1853,13 +1846,19 @@ handle_skill(SkillId = 406, Src, _Tar, _Level, Param, BattleData) ->
                 NBSpec = case FirstAttInfo#attack_info.is_miss of
                     true  -> BSpec;
                     false -> 
-                        Buff = #buff {
-                            name  = ?BUFF_FAINT,
-                            value = 0,
-                            duration = ?p5,
-                            settle = post
-                        },
-                        [{T, [{Buff, ?p4, add}]} | BSpec]
+                        TStat = battle:get_battle_status(T, Data1),
+                        case TStat#battle_status.is_alive of
+                            true ->
+                                Buff = #buff {
+                                    name  = ?BUFF_FAINT,
+                                    value = 0,
+                                    duration = ?p5,
+                                    settle = post
+                                },
+                                [{T, [{Buff, ?p4, add}]} | BSpec];
+                            false ->
+                                BSpec
+                        end
                 end,
 				
 				TarList = battle:get_target_list(battle:calc_range(T, ?ALLFRIENDLY), Data1),
@@ -1913,7 +1912,7 @@ handle_skill(SkillID = 408, Src, Tar, _Level, Param, BattleData) ->
         name     = ?BUFF_FAINT,
         value    = 0,
         duration = ?p2,
-        settle   = pre,
+        settle   = post,
         by_rate  = false
     },
 
@@ -1937,11 +1936,11 @@ handle_skill(SkillID = 409, Src, Tar, _Level, Param, BattleData) ->
     },
 	battle:attack(SkillID, Src, AttSpec, BattleData);
 
-%% 虎啸破：群体物理攻击，随机打击三个目标，对每个目标都造成100%伤害。
+%% 虎啸破：群体物理攻击，随机打击两个目标，对每个目标都造成100%伤害。
 %% {攻击系数}
 handle_skill(SkillID = 410, Src, Tar, _Level, Param, BattleData) ->
     EnemyList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
-    TarList = util:get_rand_list_elems(EnemyList, 3),
+    TarList = util:get_rand_list_elems(EnemyList, 2),
 
     AttSpec = #attack_spec {
         addition = ?p1,
@@ -1960,13 +1959,30 @@ handle_skill(SkillID = 411, Src, Tar, _Level, Param, BattleData) ->
         by_rate  = false,
         value    = 0,
         duration = ?p3,
-        settle   = pre 
+        settle   = post
     },
 
     AttSpec = #attack_spec {
         addition = ?p1,
         targets  = TarList,
         debuff   = [{Buff, ?p2, add}]
+    },
+	battle:attack(SkillID, Src, AttSpec, BattleData);
+
+%% 世界boss的技能
+%% {攻击系数, 加致命点数, 持续回合}
+handle_skill(SkillID = 123, Src, Tar, _Level, Param, BattleData) ->
+    Buff = #buff {
+        name     = ?BUFF_FATAL_UP,
+        duration = ?p3,
+        value    = ?p2,
+        by_rate  = false,
+        settle   = post
+    },
+	AttSpec = #attack_spec {
+        addition = ?p1,
+        targets  = [Tar],
+        buff     = [{Buff, 1.0, add}]
     },
 	battle:attack(SkillID, Src, AttSpec, BattleData);
 

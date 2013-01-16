@@ -51,6 +51,8 @@
 -define(SEND_ITEM_CREATE_WORLD_BOSS, 48).
 -define(SEND_ITEM_CREATE_KING, 49).
 -define(SEND_ITEM_CREATE, 50).
+-define(SEND_ITEM_CREATE_WISD, 53).
+-define(SEND_ITEM_CREATE_BOSS, 54).
 -define(SEND_ITEM_CREATE_DEFENCE, 40).
 -define(SEND_VIP, 55).
 -define(SEND_COMP_FIRST_BLOOD, 56).
@@ -61,6 +63,7 @@
 -define(SEND_TEAM_RECRUIT, 61).
 -define(SEND_SOUL_BALL, 62).
 -define(SEND_WEALTH, 63).
+-define(SEND_GUARD_FOR_KING_RANK, 64).
 -define(SEND_COMP_REMOVE_BANNER, 65).
 -define(SEND_TOUHU, 66).
 -define(SEND_SWORD, 67).
@@ -70,7 +73,11 @@
 -define(SEND_ITEM_CREATE_SWORD, 71).
 -define(SEND_ITEM_CREATE_MYSTICA, 72).
 -define(SEND_HORSE_CHANGE, 73).%%坐骑幻化
-
+-define(SEND_VIP_UP, 74).
+-define(SEND_KING_LOGIN, 75).
+-define(SEND_GUILD_RECRUIT, 76).
+-define(SEND_TAOHUAYUN, 77).
+-define(SEND_STAGE_BEST_KILL, 78).
 
 -define(CARD_FROM_RESURRECTION, 1).
 -define(CARD_FROM_HUNTING,      2).

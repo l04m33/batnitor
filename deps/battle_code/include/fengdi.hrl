@@ -32,8 +32,10 @@
 %% 浇水多少次土地可以变成肥沃
 -define(FERTILITY_TIMES,	5).
 
+%% 好友封底信息列表每页显示页数
+-define(FRIEDN_WATER_INFO_ENTRIES_PER_PAGE, 9).
 %% 每天最多浇水次数
--define(MAX_WATER_PERDAY,   50).
+-define(MAX_WATER_PERDAY,   20).
 
 %% 土地的最大数量
 -define(MAX_LAND,			6).

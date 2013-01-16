@@ -53,10 +53,10 @@
 -define(CACHE_YUN_BIAO, cache_util:get_register_name(yun_biao)).
 -define(MAX_YUN_BIAO_TIMES, 5).					%%最大运镖次数
 -define(GEM_PROBABILITY, [30, 30, 19, 19, 2]).	%%策划给的概率
--define(GOODSHELL_PROBABILITY, [33,33,34]).		%%镖车大卖概率
+-define(GOODSHELL_PROBABILITY, [5,13,87]).		%%镖车大卖概率
 -define(Onekey_refresh_VipRequire, 5).			%%一键刷新vip等级要求
 -define(ROB_TIMES, 3).							%%打劫次数	
--define(ROBED_TIMES, 2).						%%被劫次数
+-define(ROBED_TIMES, 1).						%%被劫次数
 -define(CACHE_ZHUANYUN_REF,cache_util:get_register_name(zhuanyun)).
 
 -define(FACTOR_RECORD, {1.3,1.2,1}).

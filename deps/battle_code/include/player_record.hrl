@@ -45,6 +45,7 @@
 			items_pid         = none,   	%% 玩家物品系统进程
 			task_pid          = none,		%% 玩家任务系统进程
 			task_jungong_pid  = none,		%% 军功任务进程
+			task_trace_pid	  = none,		%% 悬赏任务进程
 			story_pid         = none,		%% 玩家的剧情进度进程
 			battle_pid        = undefined,	%% 战斗进程
 			relation_pid      = none, 		%% cjr 管理好友相关信息进程
@@ -72,7 +73,12 @@
 			competition_pid   = none,		%% 比武模块
 			wealth_pid 		  = none,		%% 招财进宝
 			lottery_pid		  = none,		%% 投壶模块
-			dressing_pid      = none		%% 外形装扮（包括坐骑、换装、翅膀等）
+			dressing_pid      = none,		%% 外形装扮（包括坐骑、换装、翅膀等）
+			gift_pid		  = none, 		%% 礼物模块(各种首次大礼)
+			stage_pid		  = none,		%% 挑战魂将(闯关)
+			online_effect_pid = none,		%% 在线效果持续时间
+			online_award_pid  = none,		%% 在线奖励
+			title_pid         = none		%% 称号模块
 	}).
 
 %%用户登录数据表

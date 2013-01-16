@@ -11,4 +11,8 @@
 	end_time = 0					%% 失效时间
 	}).
 
--define(SYSTEM_AWARD_CARD_CHANGE, 1).			%% 新手卡兑换
+-define(SYSTEM_AWARD_CARD_CHANGE,	1).			%% 新手卡兑换
+-define(SYSTEM_AWARD_BOSS,			2).			%% 世界boss
+-define(SYSTEM_AWARD_YUNBIAO,		3).			%% 运镖
+-define(SYSTEM_AWARD_BIND_PHONE,    4).			%% 绑定手机
+-define(SYSTEM_AWARD_STAGE,			5).			%% 挑战魂将

@@ -1,7 +1,7 @@
 -define(INIT_KING_MONSTER_ID, 400).		%% 定义第一个国王的怪物ID
 -define(INIT_KING_MONSTER_NAME, "国王").		%% 定义第一个国王的怪物名字
 -define(CHALLENGE_KING_CACHE_REF, cache_util:get_register_name(challenge_king)).
--define(FIRST_CHALLENGE_KING_ASK_COMBAT, 10000).		%% 定义第一次挑战国王所需战斗力
+-define(FIRST_CHALLENGE_KING_ASK_LEVEL, 40).		%% 定义第一次挑战国王所需等级
 
 -define(NOTICE_BY_COMBAT,	0).		%% 战斗力超过1w时通知
 -define(NOTICE_BY_ARENA,	1).		%% 竞技场第一名时通知
@@ -13,6 +13,8 @@
 
 -define(HAVE_NOT_NOTICE,	0).		%% 未通知获得挑战国王资格
 -define(HAVE_NOTICE,		1).		%% 通知过获得挑战国王资格
+
+-define(NOTICE_CHALLENGE_KING_TEXT, "乱世谁称王！三国乱世等级达40级即可获得挑战国王的资格！谁将成为神勇无比的新国王！").
 
 -record(challenge_king,
 	{
@@ -26,7 +28,7 @@
 	{
 		fkey = {term},
 		king_id = {integer},
-		challenger_id = {integer}
+		challenger_id = {term}
 	}
 ).
 

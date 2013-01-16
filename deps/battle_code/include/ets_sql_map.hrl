@@ -50,7 +50,7 @@
 						  mapper,				%% 对应于map记录
 						  cache_ref,			%% 该缓存的注册名称，没有注册则为pid(TODO：目前还每支持飞注册进程)
 						  update_index,			%% gen_cache对应的ets中做了修改了记录的索引
-						  update_interval = 30*60000, %% 缓存数据更新到数据库的间隔(ms)
+						  update_interval = 5*60000, %% 缓存数据更新到数据库的间隔(ms)
 						  call_back,				%% gen_cache增删查改4个方法对应的call_back函数
   						  update_timer = undefined
 						  }).
@@ -82,6 +82,6 @@
 
 %% gen_cache的选项
 -record(gen_cache_opt, {
-		update_interval = 30*60000,		%% 如果需要区别对待就在这里设置
+		update_interval = 5*60000,		%% 如果需要区别对待就在这里设置
 		pre_load = false				%% 是否要预加载数据
 	}).

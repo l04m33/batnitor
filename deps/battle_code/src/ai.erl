@@ -112,14 +112,15 @@ get_skill(Src, BattleData) ->
 	
 	case get_super_skill(SList) of
 		false ->
-			get_skill_1(SIndex, SLen, SList, Src, BattleData);
+			get_skill_1(SIndex, SIndex, SLen, SList, Src, BattleData);
 		{true, SkillUID} ->
 			case validate_skill(SkillUID, Src, BattleData) of
 				true  -> 
 					Tar = get_skill_target(SkillUID, Src, BattleData),
 					{SkillUID, Src, Tar, SIndex};
 				false ->
-					get_skill_1(SIndex, SLen, SList, Src, BattleData)
+                    ?INFO(ai, "Skill ~w not valid", [SkillUID]),
+					get_skill_1(SIndex, SIndex, SLen, SList, Src, BattleData)
 			end
 	end.
 
@@ -133,18 +134,19 @@ get_super_skill([SkillUID | Rest]) ->
 		get_super_skill(Rest)
 	end.
 
-get_skill_1(SIndex, SLen, _SList, Src, BattleData) when SIndex > SLen ->
+get_skill_1(SIndex, OldIndex, SLen, _SList, Src, BattleData) when SIndex >= OldIndex + SLen ->
 	Tar = get_skill_target(?SKILL_COMMON_ATTACK, Src, BattleData),
 	{?SKILL_COMMON_ATTACK, Src, Tar, 1};
 
-get_skill_1(SIndex, SLen, SList, Src, BattleData) ->
-	SkillUID = lists:nth(SIndex, SList),
+get_skill_1(SIndex, OldIndex, SLen, SList, Src, BattleData) ->
+	SkillUID = lists:nth((SIndex - 1) rem SLen + 1, SList),
 	case validate_skill(SkillUID, Src, BattleData) of
 		true ->
 			Tar = get_skill_target(SkillUID, Src, BattleData),
 			{SkillUID, Src, Tar, SIndex rem SLen + 1};
 		false ->
-			get_skill_1(SIndex + 1, SLen, SList, Src, BattleData)
+            ?INFO(ai, "Skill ~w not valid", [SkillUID]),
+			get_skill_1(SIndex + 1, OldIndex, SLen, SList, Src, BattleData)
 	end.
 
 

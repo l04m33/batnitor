@@ -20,13 +20,15 @@
 -include("relation.hrl").
 -include("fengdi.hrl").
 -include("chuanqi.hrl").
- 
+ -include("gen_timer.hrl").
 -include("arena.hrl").
 -include("monster.hrl").
 -include("uid_server.hrl"). 
 -include("log_type.hrl"). 
 -include("pet.hrl"). 
 -include("counter.hrl"). 
+-include("per_counter.hrl").
+-include("sword.hrl").
 
 -include("team.hrl").
 -include("code_log.hrl").
@@ -66,6 +68,10 @@
 -include("lottery.hrl").
 -include("mines.hrl").
 -include("multiple_award.hrl").
+-include("stage.hrl").
+-include("online_effect.hrl").
+-include("title.hrl").
+-include("guild_hunting.hrl").
 
 %%安全校验
 -define(TICKET, "SDFSDESF123DFSDF").
@@ -95,9 +101,13 @@
 -define(ADVANCE_ITEM_HISTORY_FROM_LOTTERY, 2). %% 投壶高级物品获得记录
 -define(LOTTERY_HISTORY, 3). %% 投壶历史记录
 -define(G_SERVER_WEALTH_CD, 4).%%招财进宝获取大奖的cd
+-define(G_SERVER_MARKET_END_TIME, 5). %% 商城抢购结束时间
+-define(G_SERVER_STAGE, 6). %% 挑战魂将(闯关)
+-define(G_SERVER_DEFENCE_PLAYER_NUM, 7).    %% 上次参加群魔乱舞的人数
  
 -record (account_id_map, {account = "", id = 0}).
 -record (rolename_account_map, {rolename = "", account = ""}).
+-record (old_player_account_map, {gd_account = ""}).
 
 -record(g_server_para,
 	{

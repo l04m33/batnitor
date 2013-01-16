@@ -72,13 +72,14 @@
         timer_apply_after/4,
         timer_send_after/2,
         erlang_send_after/3,
-        cancel_all_timer/0
+        cancel_all_timer/0,
+        cancel_timer_by_name/2
     ]).
 
 timer_apply_after(TimeToWait, Mod, Fun, Args) ->
 	case timer:apply_after(TimeToWait, Mod, Fun, Args) of
 	{ok, Ref} ->
-		process_put_ref({timer, Ref});
+		process_put_ref({timer, {Mod, Fun, Args}, Ref});
 	_ ->
 		false
 	end.
@@ -86,14 +87,14 @@ timer_apply_after(TimeToWait, Mod, Fun, Args) ->
 timer_send_after(TimeToWait, Msg) ->
 	case timer:send_after(TimeToWait, Msg) of
 	{ok, Ref} ->
-		process_put_ref({timer, Ref});
+		process_put_ref({timer, Msg, Ref});
 	_ ->
 		false
 	end.
 	
 erlang_send_after(TimeToWait, Dest, Msg) ->
 	Ref = erlang:send_after(TimeToWait, Dest, Msg),
-	process_put_ref({erlang, Ref}).
+	process_put_ref({erlang, Msg, Ref}).
 	
 process_put_ref(Ref) ->
 	RefList = get_all_ref(),
@@ -111,11 +112,23 @@ get_all_ref() ->
 cancel_all_timer() ->
 	[rm_timer(Timer) || Timer <- get_all_ref()].
 	
+cancel_timer_by_name(Type, Name) ->
+	F = 
+	fun({TimerType, TimerName, TimerRef}) ->
+		case Type =:= TimerType andalso Name =:= TimerName of
+		true ->
+			rm_timer({TimerType, TimerName, TimerRef});
+		false ->
+			ok
+		end
+	end,
+	[F(TimerData) || TimerData <- get_all_ref()].
+	
 rm_timer(Timer) ->
 	case Timer of
-	{timer, Ref} ->
+	{timer, _Name, Ref} ->
 		timer:cancel(Ref);
-	{erlang, Ref} ->
+	{erlang, _Name, Ref} ->
 		erlang:cancel_timer(Ref)
 	end.
 

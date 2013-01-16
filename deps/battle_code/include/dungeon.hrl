@@ -34,14 +34,42 @@
 	isPass			= {integer}	
 	}).
 
--record(dungeon_status,{
-	gd_accountId    = 0,
-	gd_state		= []
+-record(dungeon_guaji,{
+	key  = {0,0},   %% {playerid,dungeonid}
+	times      = 0,
+	end_time   = 0,
+	timer_ref  = none
 	}).
 
--record(dungeon_status_types,{
-	gd_accountId    = {integer},
-	gd_state		= {term}
+-record (dungeon_state, {
+	player_id         = 0,
+	scene_id		  = 0,		%% 当前副本的地图id
+	npc_id			  = 0,      %% 进入时候的NPCID
+	left_process  	  = [],		%% 当前副本的剩余进度
+	process_level	  = 1,		%% 当前副本的难度
+	enter_level		  = 0,		%% 进入时的等级
+	max_att_damage    = 0,		%% 攻击最高伤害
+	total_round       = 0,		%% 副本打完时的战斗回合数（每次累积）
+	total_damage_recv = 0,		%% 副本打完时的个人承受的总伤害(每次累积)
+	seckill			  = 0,		%% 秒杀数据
+	extra_process	  = [],		%% 特殊怪
+	award_id          = -1
+	%% 转盘奖励id，-1：副本没完成，0：副本完成但没产生奖励，> 0：奖励产生了
+	}).	
+
+-record(dungeon_state_types, {
+	player_id         = {integer},
+	scene_id		  = {integer},		
+	npc_id			  = {integer},      
+	left_process  	  = {term},			
+	process_level	  = {integer},
+	enter_level		  = {integer},		
+	max_att_damage    = {integer},		
+	total_round       = {integer},		
+	total_damage_recv = {integer},
+	seckill			  = {integer},	
+	extra_process	  = {term},	
+	award_id          = {integer}
 	}).
 
 -record (dungeon_process, {

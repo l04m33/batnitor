@@ -67,3 +67,12 @@
 -define(BATTLE_EXTRA_MP,        34).
 -define(BATTLE_EXTRA_MP_END,    33).
 
+-define(SYSTEM_ONLINE_AWARD, 45).
+-define(SYSTEM_ONLINE_AWARD_TYPE, 11).
+
+-define(SYSTEM_GUILD_HUNTING, 42).
+-define(SYSTEM_GUILD_HUNTING_LEVEL, 46).
+-define(SYSTEM_GUILD_HUNTING_TYPE, 10).
+
+-define(SYSTEM_TASK_TRACE,	 44).  %% 悬赏任务
+-define(SYSTEM_TASK_TRACE_TYPE,	 12).  %% 悬赏任务

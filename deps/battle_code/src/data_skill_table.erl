@@ -77,7 +77,7 @@ get(104, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.75,0.4},    
+		param  = {1,0.4,0.31},    
 		slot   = 5
 	};
 
@@ -92,7 +92,7 @@ get(104, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 1,
-		param  = {0.8,0.45},    
+		param  = {1,0.43,0.3},    
 		slot   = 5
 	};
 
@@ -107,7 +107,7 @@ get(104, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 1,
-		param  = {0.85,0.5},    
+		param  = {1,0.46,0.28},    
 		slot   = 5
 	};
 
@@ -122,7 +122,7 @@ get(104, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 1,
-		param  = {0.9,0.55},    
+		param  = {1,0.5,0.266},    
 		slot   = 5
 	};
 
@@ -137,7 +137,7 @@ get(104, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 1,
-		param  = {0.95,0.6},    
+		param  = {1,0.55,0.25},    
 		slot   = 5
 	};
 
@@ -152,7 +152,7 @@ get(104, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 1,
-		param  = {1,0.65},    
+		param  = {1,0.6,0.233},    
 		slot   = 5
 	};
 
@@ -167,7 +167,7 @@ get(104, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 1,
-		param  = {1.05,0.7},    
+		param  = {1,0.65,0.216},    
 		slot   = 5
 	};
 
@@ -182,7 +182,7 @@ get(104, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 1,
-		param  = {1.1,0.75},    
+		param  = {1,0.7,0.2},    
 		slot   = 5
 	};
 
@@ -197,7 +197,7 @@ get(104, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 1,
-		param  = {1.15,0.8},    
+		param  = {1,0.75,0.183},    
 		slot   = 5
 	};
 
@@ -212,7 +212,7 @@ get(104, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 1,
-		param  = {1.2,0.85},    
+		param  = {1,0.8,0.166},    
 		slot   = 5
 	};
 
@@ -1367,7 +1367,7 @@ get(112, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {12,0.6},    
+		param  = {1.2,0.6},    
 		slot   = 2
 	};
 
@@ -1577,7 +1577,7 @@ get(114, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1.05},    
+		param  = {1,0.27},    
 		slot   = 5
 	};
 
@@ -1592,7 +1592,7 @@ get(114, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 1,
-		param  = {1.1},    
+		param  = {1,0.25},    
 		slot   = 5
 	};
 
@@ -1607,7 +1607,7 @@ get(114, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 1,
-		param  = {1.15},    
+		param  = {1,0.23},    
 		slot   = 5
 	};
 
@@ -1622,7 +1622,7 @@ get(114, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 1,
-		param  = {1.2},    
+		param  = {1,0.22},    
 		slot   = 5
 	};
 
@@ -1637,7 +1637,7 @@ get(114, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 1,
-		param  = {1.25},    
+		param  = {1,0.2},    
 		slot   = 5
 	};
 
@@ -1652,7 +1652,7 @@ get(114, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 1,
-		param  = {1.3},    
+		param  = {1,0.18},    
 		slot   = 5
 	};
 
@@ -1667,7 +1667,7 @@ get(114, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 1,
-		param  = {1.35},    
+		param  = {1,0.165},    
 		slot   = 5
 	};
 
@@ -1682,7 +1682,7 @@ get(114, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 1,
-		param  = {1.4},    
+		param  = {1,0.15},    
 		slot   = 5
 	};
 
@@ -1697,7 +1697,7 @@ get(114, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 1,
-		param  = {1.45},    
+		param  = {1,0.133},    
 		slot   = 5
 	};
 
@@ -1712,7 +1712,7 @@ get(114, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 1,
-		param  = {1.5},    
+		param  = {1,0.117},    
 		slot   = 5
 	};
 
@@ -4472,7 +4472,7 @@ get(214, 4) ->
 		level  = 4,
 		target = self,
 		type   = 3,
-		param  = {20},    
+		param  = {25},    
 		slot   = 0
 	};
 
@@ -4487,7 +4487,7 @@ get(214, 5) ->
 		level  = 5,
 		target = self,
 		type   = 3,
-		param  = {25},    
+		param  = {35},    
 		slot   = 0
 	};
 
@@ -4502,7 +4502,7 @@ get(214, 6) ->
 		level  = 6,
 		target = self,
 		type   = 3,
-		param  = {30},    
+		param  = {45},    
 		slot   = 0
 	};
 
@@ -4517,7 +4517,7 @@ get(214, 7) ->
 		level  = 7,
 		target = self,
 		type   = 3,
-		param  = {35},    
+		param  = {55},    
 		slot   = 0
 	};
 
@@ -4532,7 +4532,7 @@ get(214, 8) ->
 		level  = 8,
 		target = self,
 		type   = 3,
-		param  = {40},    
+		param  = {70},    
 		slot   = 0
 	};
 
@@ -4547,7 +4547,7 @@ get(214, 9) ->
 		level  = 9,
 		target = self,
 		type   = 3,
-		param  = {45},    
+		param  = {85},    
 		slot   = 0
 	};
 
@@ -4562,7 +4562,7 @@ get(214, 10) ->
 		level  = 10,
 		target = self,
 		type   = 3,
-		param  = {50},    
+		param  = {100},    
 		slot   = 0
 	};
 
@@ -5792,7 +5792,7 @@ get(224, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1,0.5},    
+		param  = {0.8,0.8},    
 		slot   = 0
 	};
 
@@ -6272,7 +6272,7 @@ get(256, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1.2},    
+		param  = {1,0.26},    
 		slot   = 0
 	};
 
@@ -6527,7 +6527,7 @@ get(273, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {3},    
+		param  = {5},    
 		slot   = 0
 	};
 
@@ -6617,7 +6617,7 @@ get(279, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1,2},    
+		param  = {1,1},    
 		slot   = 0
 	};
 
@@ -13226,7 +13226,7 @@ get(108, 1) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 108,	
 		level  = 1,
@@ -13241,7 +13241,7 @@ get(108, 2) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 108,	
 		level  = 2,
@@ -13256,7 +13256,7 @@ get(108, 3) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 108,	
 		level  = 3,
@@ -13271,7 +13271,7 @@ get(108, 4) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 108,	
 		level  = 4,
@@ -13286,7 +13286,7 @@ get(108, 5) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 108,	
 		level  = 5,
@@ -13301,7 +13301,7 @@ get(108, 6) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 108,	
 		level  = 6,
@@ -13316,7 +13316,7 @@ get(108, 7) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 108,	
 		level  = 7,
@@ -13331,7 +13331,7 @@ get(108, 8) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 108,	
 		level  = 8,
@@ -13346,7 +13346,7 @@ get(108, 9) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 108,	
 		level  = 9,
@@ -13361,7 +13361,7 @@ get(108, 10) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 108,	
 		level  = 10,
@@ -13526,7 +13526,7 @@ get(117, 1) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 117,	
 		level  = 1,
@@ -13541,7 +13541,7 @@ get(117, 2) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 117,	
 		level  = 2,
@@ -13556,7 +13556,7 @@ get(117, 3) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 117,	
 		level  = 3,
@@ -13571,7 +13571,7 @@ get(117, 4) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 117,	
 		level  = 4,
@@ -13586,7 +13586,7 @@ get(117, 5) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 117,	
 		level  = 5,
@@ -13601,7 +13601,7 @@ get(117, 6) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 117,	
 		level  = 6,
@@ -13616,7 +13616,7 @@ get(117, 7) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 117,	
 		level  = 7,
@@ -13631,7 +13631,7 @@ get(117, 8) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 117,	
 		level  = 8,
@@ -13646,7 +13646,7 @@ get(117, 9) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 117,	
 		level  = 9,
@@ -13661,7 +13661,7 @@ get(117, 10) ->
 		hp     = 0,       
 		mp     = 0,
 		mp_add = 30,
-		hit_mp_add = 20,
+		hit_mp_add = 0,
 		cd     = 2,     
 		id     = 117,	
 		level  = 10,
@@ -13757,7 +13757,7 @@ get(410, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {1.2},    
+		param  = {1.3},    
 		slot   = 0
 	};
 
@@ -13773,6 +13773,21 @@ get(411, 1) ->
 		target = enemy,
 		type   = 1,
 		param  = {1,0.3,1},    
+		slot   = 0
+	};
+
+get(123, 1) -> 
+	#battle_skill {
+		hp     = 0,       
+		mp     = 0,
+		mp_add = 30,
+		hit_mp_add = 20,
+		cd     = 0,     
+		id     = 123,	
+		level  = 1,
+		target = enemy,
+		type   = 4,
+		param  = {1.03,30,1},    
 		slot   = 0
 	};
 

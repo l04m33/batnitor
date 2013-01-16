@@ -4,6 +4,7 @@
 
 -define(BATTLE_FIELD_SIZE,        12).
 -define(BATTLE_ROW_SIZE,           3).
+-define(BATTLE_WAIT_CLIENT_INIT,    data_battle:get_wait_client_init_time()).
 -define(BATTLE_WAIT_BEGIN,     data_battle:get_wait_begin_time()).
 -define(BATTLE_WAIT_FINISH,    data_battle:get_wait_finish_time()).
 -define(BATTLE_WAIT_PLOT,      data_battle:get_wait_plot_time()).
@@ -11,17 +12,33 @@
 -define(BATTLE_WAIT_QUIT,      data_battle:get_wait_quit_time()).
 -define(UNDEFINED, undefined).
 
--define(BOSS_POSITION, 9).
+-define(BOSS_POSITION, 8).
 
 %==========================================================================================
 % battle type
 %==========================================================================================
 
--define(BATTLE_TYPE_ARENA, 5).
--define(BATTLE_TYPE_BOSS, 10).
--define(BATTLE_TYPE_CHALLENGE_KING, 15).
--define(BATTLE_TYPE_SWORD,	32).
--define(BATTLE_TYPE_DEFENCE,    33).
+-define(BATTLE_TYPE_ARENA,              1).
+-define(BATTLE_TYPE_BOSS,               2).
+-define(BATTLE_TYPE_CHALLENGE_KING,     3).
+-define(BATTLE_TYPE_SWORD,              4).
+-define(BATTLE_TYPE_DEFENCE,            5).
+-define(BATTLE_TYPE_MARS_TOWER_KING,    6).
+-define(BATTLE_TYPE_SLAVE,              7).
+-define(BATTLE_TYPE_MARS_TOWER,			8).
+-define(BATTLE_TYPE_STAGE,				9).
+
+-define(BATTLE_TYPE_PLOTTED,    127).   % 特殊类型：剧情战斗
+
+-define(BATTLE_END_DISRUPTED, 1).
+-define(BATTLE_END_NORMAL,    0).
+
+-define(BATTLE_OFFLINE_PVP_TYPES, 
+        [?BATTLE_TYPE_ARENA,
+         ?BATTLE_TYPE_BOSS,
+         ?BATTLE_TYPE_CHALLENGE_KING,
+         ?BATTLE_TYPE_MARS_TOWER_KING,
+         ?BATTLE_TYPE_SLAVE]).
 
 
 %% Range define.
@@ -93,6 +110,9 @@
 -define(BUFF_COUNTER_UP,    44).    %% 反击+
 -define(BUFF_COUNTER_DOWN,  45).    %% 反击-
 
+-define(BUFF_ATT_ENHANCE, 46).   %% 越战越勇
+-define(BUFF_ATT_WORSEN,  47).   %% 越战越挫
+
 
 -define(BUFF_TEST,       12).
 
@@ -108,6 +128,11 @@
 -define(PSKILL_CALM,       207).    %% 破怒: 攻擊時會降低敵方的怒氣值
 -define(PSKILL_LIFE_DRAIN, 206).    %% 吸血
 -define(PSKILL_REBOUND,    219).    %% 反震
+-define(PSKILL_HP_BOOST,   101).    %% 正气诀，加一定百分比的气血上限
+-define(PSKILL_DEF_IGNORE, 102).    %% 突刺诀，忽视目标一定百分比的防御
+-define(PSKILL_CRIT_BOOST, 103).    %% 凝神诀，增加自己一定百分比的暴击
+
+-define(NSKILL_CRIT,       204).    %% 加暴击
 
 %=============================================================================================
 % special skill definition
@@ -209,19 +234,21 @@
 
 -record(battle_start, %% startup information
 	{
-		mod,                %% pve, pvp...	 
-	 	type       = 0,     %% 
-		att_id,             %% Attacker's ID
-		att_mer    = [],    %% Attacker's mercenary list
-		def_id,             %% Defender's ID
-		def_mer    = [],    %% Defender's Mercenary list
-	 	monster,            %% MonsterID
-        monster_hp = ?HP_MAX,   %% Monster HP, can be a list or an integer
-        plot       = [],    %% [#battle_plot{}]
-		maketeam   = false, %% true | false
-		checklist  = [],    %% [check_spec()]
-		caller,             %% caller module's name or pid
-		callback            %% term()
+		mod,                    %% pve, pvp...	 
+	 	type            = 0,    %% 
+		att_id,                 %% Attacker's ID
+		att_mer         = [],   %% Attacker's mercenary list
+        att_avatar_info = [],   %% Attacker's avatar info
+		def_id,                 %% Defender's ID
+		def_mer         = [],   %% Defender's Mercenary list
+        def_avatar_info = [],   %% Defender's avatar info
+	 	monster,                %% MonsterID
+        monster_hp      = ?HP_MAX,  %% Monster HP, can be a list or an integer
+        plot            = [],   %% [#battle_plot{}]
+		maketeam        = false,%% true | false
+		checklist       = [],   %% [check_spec()]
+		caller,                 %% caller module's name or pid
+		callback                %% term()
 	}
 ).
 
@@ -264,6 +291,7 @@
 		star          = 0,
 		skill         = [],
 		p_skill       = [],
+        n_skill       = [],
 	 	hp,
 		hp_max,
 		mp            = 0,
@@ -351,7 +379,8 @@
 		finish_play = true,  %% true | false | quit :: quit is when client quit the battle(ask for clearing)
 		online      = true,  %% true | false
 		lead,
-	 	mer_list
+	 	mer_list,
+        ready = false
 	}		
 ).
 
@@ -424,6 +453,7 @@
 		assist_pos = 0,     %% may be assist by other member
 	 	is_miss    = true, %% is miss?
 	 	is_crit    = false, %% is critical hit?
+        is_block   = false, %% 是否有格挡效果
 		hp         = 0,
 		mp         = 0,
 		hp_inc     = 0,     %% hp's incretement

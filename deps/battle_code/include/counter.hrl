@@ -16,13 +16,14 @@
 -define(COUNTER_CYCLIC_TASK_MAX,    19). %% 循环任务已接次数
 
 -define(COUNTER_ARENA_WARD, 20).   %%竞技场每天奖励计数
--define(COUNTER_ARENA_CHALLENGE_TIMES, 15). %%竞技场每天挑战次数
--define(COUNTER_ARENA_BUY_CHALLENGE_TIMES, 31).
+-define(COUNTER_ARENA_CHALLENGE_TIMES, 21). %%竞技场每天挑战次数
+-define(COUNTER_ARENA_BUY_CHALLENGE_TIMES, 22).
 -define(COUNTER_YUNBIAO_ZHUANYUN_TIMES, 26).%%运镖转运次数记录
 -define(COUNTER_YUNBIAO_TIMES, 27).%%运镖次数记录
 -define(COUNTER_YUNBIAO_ROB_TIMES,28).%%劫镖次数记录
 -define(COUNTER_YUNBIAO_ROBED_TIMES, 29).%%被劫次数记录
 -define(COUNTER_YUNBIAO_NUM, 30).   %%每天运镖总人数
+
 
 %%boss
 -define(INSPIRE_SUCCES, 31).  %%鼓舞
@@ -37,6 +38,9 @@
 -define(COUNTER_LOGIN_TIMES,37).    %%记录玩家每天登陆次数，用来发放每天登陆奖励
 
 -define(COUNTER_ANTI_TOO_MANY_BATTLE,38). %%防止每天刷怪太多次
+-define(COUNTER_ONLINE_AWARD_INDEX,40). %%在线奖励次数
+
+-define(COUNTER_DAZUO_TIME,	39).	%% 打坐时间每天不超过30分钟
 
 -record (counter, {
 	key           = {0, 0},

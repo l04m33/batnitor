@@ -10,8 +10,10 @@
 -define(UPDAT_BOSS_RABKING_TIME, 3000).%%定时刷新伤害排行榜
 
 -define(BOSS_RANK_LENGTH, 10). %%boss 排行榜长度
--define(BEGIN_BROADCAST_TIME, {5,0,0}).%%早上5点开始广播
--define(OVER_BROADCAST_TIME,{16,0,0}). %%16点boss战斗开始，停止播放
+-define(BROADCAST_TIME, [{{15,0,0},{16,0,0},"下午4点"}, {{9,30,0},{10,30,0},"上午10点30分"}]).%%15点开始广播
+
+-define(BOSS_TIME_LIST, [{37500, 37800, 39000}, {57300, 57600, 58800}]). %% 早上BOSS开启时间
+
 
 %% used by data_boss.erl to set time config 
 -record(boss_time,
@@ -69,7 +71,8 @@
 		damage_value = 0 ,          %% how many damages this player deal to the boss
         damage_rep_award = 0 ,   	%% 单次伤害换算的声望奖励累加值
 		state  = 0  ,     			%% 0 在boss场景外，1在boss场景里面
-		last_damage_value = 0		%% 上单场打boss伤害
+		last_damage_value = 0,		%% 上单场打boss伤害
+		last_battle_time = 0		%% 玩家上次发起世界boss战斗时间
 	}
 ).
 
@@ -77,3 +80,5 @@
 				fkey = boss_hp,
 				hp_value = 0}).
 
+-define(BOSS_SCENE_STATE_LIVE,	0).		%% 可打boss状态
+-define(BOSS_SCENE_STATE_DIE,	1).		%% 处于死亡cd状态
