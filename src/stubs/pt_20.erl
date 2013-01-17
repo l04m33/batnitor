@@ -8,9 +8,9 @@
 	Cmd :: integer(),
 	Bin :: binary().
 
-read(20000, _) ->
+read(20000, <<NoUse:8>>) ->
 	?INFO(battle, "read 20000"),
-	{ok, void};
+	{ok, NoUse};
 
 read(20001, <<SkillId:32>>) ->
 	?INFO(battle, "read 20001: SkillId = ~w", [SkillId]),
@@ -20,12 +20,18 @@ read(20001, <<SkillId:32>>) ->
 		_ -> {ok, SkillId}
 	end;
 
+read(20002, <<NoUse:8>>) ->
+	{ok, NoUse};
+
 %% auto set command
 read(20007, _Bin) ->
 	{ok, <<>>};
 
 read(20008, <<Dummy:8>>) ->
 	{ok, Dummy};
+
+read(20012, <<NoUse:8>>) ->
+    {ok, NoUse};
 
 read(20100, <<MonsterUniqueId:32>>) ->
 	{ok, MonsterUniqueId};
@@ -42,6 +48,7 @@ read(_Cmd, _Bin) ->
 	Bin :: binary().
 %% pve battle 
 write(20000, BattleData) ->
+    gen_fsm:send_event(self(), {ready, get(id)}),
     gen_fsm:send_event(self(), {set_cmd, get(id), 0}),
 	Type     = BattleData#battle_data.type,
 	MonId    = BattleData#battle_data.monster,
@@ -119,22 +126,22 @@ write(20003, BattleData) ->
 	pt:pack(20003, <<Type:8, Round:8, Bin/binary>>);
 
 	
-write(20005, BattleData) ->
+write(20005, {BattleData, BattleEndState}) ->
     gen_fsm:send_event(self(), {quit, get(id)}),
     calc_simulator_result(BattleData),
 	Type = BattleData#battle_data.type,
 	Winner = BattleData#battle_data.winner,
 	
-	AttIdList = battle:get_ids(att, BattleData),
-	DefIdList = battle:get_ids(def, BattleData),
+	AttIdList = battle:get_ids(att, BattleData, online),
+	DefIdList = battle:get_ids(def, BattleData, online),
 	
 	case Winner of
 		att -> 
-			[{ID, pt:pack(20005, <<Type:8, 1:8>>)}  || ID <- AttIdList] ++
-			[{ID, pt:pack(20005, <<Type:8, 11:8>>)} || ID <- DefIdList];
+			[{ID, pt:pack(20005, <<Type:8, 1:8,  BattleEndState:8>>)}  || ID <- AttIdList] ++
+			[{ID, pt:pack(20005, <<Type:8, 11:8, BattleEndState:8>>)} || ID <- DefIdList];
 		def ->
-			[{ID, pt:pack(20005, <<Type:8, 11:8>>)} || ID <- AttIdList] ++
-			[{ID, pt:pack(20005, <<Type:8, 1:8>>)}  || ID <- DefIdList]
+			[{ID, pt:pack(20005, <<Type:8, 11:8, BattleEndState:8>>)} || ID <- AttIdList] ++
+			[{ID, pt:pack(20005, <<Type:8, 1:8,  BattleEndState:8>>)}  || ID <- DefIdList]
 	end;
 
 
@@ -150,12 +157,28 @@ write(20006, {Pos, BattleData}) ->
 write(20007, {Pos, SkillID}) ->
 	pt:pack(20007, <<Pos:8, SkillID:32>>);
 
-write(20009, #battle_data{award = Award}) ->
-	Exp     = Award#battle_award.exp,
+write(20009, Battle_data) ->
+	Award = Battle_data#battle_data.award,
+	%%这是一个坑，希望别掉人~
+	%%每天刷野怪800次的话，不给经验
+	case Battle_data#battle_data.caller of
+		monster ->
+			case mod_counter:get_counter(get(id),?COUNTER_ANTI_TOO_MANY_BATTLE) < data_system:get(36) of
+				true->
+					Exp     = Award#battle_award.exp;
+				false->
+					Exp = 0
+			end;
+		_->
+			Exp     = Award#battle_award.exp
+	end,
+
 	Silver  = Award#battle_award.silver,
 	Pts     = 0,
 	Donate  = Award#battle_award.donate,
 	Items   = Award#battle_award.items,
+
+    ?INFO(battle, "Items = ~w", [Items]),
 	
 	F = fun({ID, Item}, Acc) ->
 			Len = length(Item),
@@ -176,20 +199,35 @@ write(20010, MonsterHPList) ->
 write(20011, AddedRate) ->
     pt:pack(20011, <<AddedRate:16>>);
 
-%% write(20009, {ID, Award}) ->
-%% 	Exp     = Award#battle_award.exp,
-%% 	Gold    = Award#battle_award.gold,
-%% 	Pts     = 0,
-%% 	Donate  = Award#battle_award.donate,
-%% 	Items   = 
-%% 		case lists:keysearch(ID, 1, Award#battle_award.items) of
-%% 			false -> [];
-%% 			{value, {ID, I}} -> I
-%% 		end,
-%% 	Len     = length(Items),
-%% 	ItemBin = get_item_bin(Items),
-%% 	pt:pack(20009, <<Exp:32, Gold:32, Pts:32, Donate:32, Len:16, ItemBin/binary>>);
-	
+write(20012, Plot) ->
+    [PrePlot, PostPlot | _] = Plot#battle_plot.plots,
+    NewRoles = Plot#battle_plot.new_roles,
+
+    F = fun({Pos, BS}, AccBin) ->
+        % XXX: 这里只分自己的佣兵和敌人，没有队友
+        RoleType = case Pos > (?BATTLE_FIELD_SIZE div 2) of
+            true -> 3;  % 敌人
+            _    -> 1   % 自己
+        end,
+
+        <<AccBin/binary,
+          (BS#battle_status.id):16,
+          Pos:8,
+          (BS#battle_status.level):8,
+          (BS#battle_status.hp):32,
+          (BS#battle_status.mp):16,
+          (BS#battle_status.hp_max):32,
+          (BS#battle_status.mp_max):16,
+          (pt:write_string(BS#battle_status.name))/binary,
+          (pt:write_string(""))/binary,
+          RoleType:8>>
+    end,
+    Payload = lists:foldl(F, <<PrePlot:32, PostPlot:32, (length(NewRoles)):16>>, NewRoles),
+    pt:pack(20012, Payload);
+
+write(20013, NewSkillID) ->
+    pt:pack(20013, <<NewSkillID:32>>);
+
 write(_Cmd, _Data) ->
 	erlang:exit("protocol error: ").
 
@@ -206,7 +244,7 @@ get_mer_bin(BinList, [Tag | Rest], MerList, BattleData) ->
 			def_mem  -> lists:nth(2, BattleData#battle_data.defender)
 		end,
 	ID = PInfo#player_info.id,
-	if (is_integer(ID)) -> %% monster has no id, id will be *undefined*
+	if (is_integer(ID) andalso PInfo#player_info.online =:= true) -> %% monster has no id, id will be *undefined*
 		Bin = get_mer_bin_1(Tag, MerList, BattleData),
 		get_mer_bin([{ID, Bin} | BinList], Rest, MerList, BattleData);
 	true ->
@@ -232,23 +270,23 @@ get_mer_bin_1(MerBin, Tag1, [{Tag2, Pos} | Rest], BattleData) ->
 		   (Tag1 == def_mem  andalso Tag2 == def_lead) -> 2;
 			true -> 3
 		end,
-	 
+
 	Status = battle:get_battle_status(Pos, BattleData),
 	ID     = Status#battle_status.id,
 	Hp     = Status#battle_status.hp,
 	HpMax  = Status#battle_status.hp_max,
 	Mp     = Status#battle_status.mp,
-	MpMax  = 100,
+	MpMax  = Status#battle_status.mp_max,
 	Level  = Status#battle_status.level,
 	Name   = pt:write_string(Status#battle_status.name),
-	Avatar = pt:write_string(""),
-	
+	Avatar = pt:write_equip_wing_horse(Status#battle_status.avatar_info),
+
 	SkillNum = length(Status#battle_status.skill),
 	SkillBin = get_skill_bin(Status#battle_status.skill) ,
-	
+
 	Bin = <<ID:16, Pos:8, Level:8, Hp:32, Mp:16, HpMax:32, MpMax:16, Name/binary, 
 			Avatar/binary, Type:8, SkillNum:16, SkillBin/binary>>,
-	
+
 	get_mer_bin_1(<<MerBin/binary, Bin/binary>>, Tag1, Rest, BattleData).
 
 get_tar_bin(AttInfoList) ->
@@ -272,6 +310,7 @@ get_tar_bin_1(TarBin, Index, [AttInfo | Rest]) ->
 	Pos    = AttInfo#attack_info.pos,
 	Hit    = if (AttInfo#attack_info.is_miss == true) -> 1; true -> 0 end,
 	Crit   = if (AttInfo#attack_info.is_crit == true) -> 1; true -> 0 end,
+    Block  = if (AttInfo#attack_info.is_block == true) -> 1; true -> 0 end,
 	Hp     = round(AttInfo#attack_info.hp),
 	Mp     = AttInfo#attack_info.mp,
 	HpInc  = round(AttInfo#attack_info.hp_inc),
@@ -281,11 +320,11 @@ get_tar_bin_1(TarBin, Index, [AttInfo | Rest]) ->
 	HpCnt  = round(AttInfo#attack_info.hp_counter),
 	MpReb  = 0,
 		
-	?INFO(battle, "AssPos = ~w, Pos = ~w, Hit = ~w, Crit = ~w, " ++ 
+	?INFO(battle, "AssPos = ~w, Pos = ~w, Hit = ~w, Crit = ~w, Block =~w, " ++ 
 			  "Hp = ~w, Mp = ~w, HpInc = ~w, MpInc = ~w, HpReb = ~w, HpCnt = ~w", 
-		  [AssPos, Pos, Hit, Crit, Hp, Mp, HpInc, MpInc, HpReb, HpCnt]),
+		  [AssPos, Pos, Hit, Crit, Block, Hp, Mp, HpInc, MpInc, HpReb, HpCnt]),
 	
-	NTarBin = <<TarBin/binary, AssPos:8, Pos:8, Crit:8, Hit:8, Hp:32,
+	NTarBin = <<TarBin/binary, AssPos:8, Pos:8, Crit:8, Block:8, Hit:8, Hp:32,
 				 Mp:16, HpInc:32, MpInc:16, HpCnt:32, HpReb:32, MpReb:16, HpAbs:32, Index:8>>,
 
 	get_tar_bin_1(NTarBin, Index, Rest).
@@ -430,22 +469,22 @@ get_item_bin(Bin, [{ItemID, Count, _} | Rest]) ->
 	get_item_bin(NBin, Rest).
 
 
-get_battle_status(Pos, BattleData) ->
-    array:get(Pos, BattleData#battle_data.player).
-
 get_battle_hp_list(Winner, BattleData) ->
     case Winner of
-            att -> get_battle_hp_list(1, ?BATTLE_FIELD_SIZE div 2 + 1, [], BattleData);
-            def -> get_battle_hp_list(?BATTLE_FIELD_SIZE div 2 + 1, ?BATTLE_FIELD_SIZE + 1, [], BattleData)
+        att -> get_battle_hp_list(1, ?BATTLE_FIELD_SIZE div 2 + 1, [], BattleData);
+        def -> get_battle_hp_list(?BATTLE_FIELD_SIZE div 2 + 1, ?BATTLE_FIELD_SIZE + 1, [], BattleData)
     end.
+
+get_battle_status(Pos, BattleData) ->
+    array:get(Pos, BattleData#battle_data.player).
 
 get_battle_hp_list(Limit, Limit, List, _BattleData) -> List;
 get_battle_hp_list(Index, Limit, List, BattleData) ->
     Stat = get_battle_status(Index, BattleData),
     if (Stat == ?UNDEFINED) ->
-            get_battle_hp_list(Index + 1, Limit, List, BattleData);
+        get_battle_hp_list(Index + 1, Limit, List, BattleData);
     true ->
-            get_battle_hp_list(Index + 1, Limit, [{Index, Stat#battle_status.hp} | List], BattleData)
+        get_battle_hp_list(Index + 1, Limit, [{Index, Stat#battle_status.hp} | List], BattleData)
     end.
 
 calc_simulator_result(BattleData) ->
@@ -454,6 +493,5 @@ calc_simulator_result(BattleData) ->
     AttHPList = get_battle_hp_list(att, BattleData),
     Rounds = BattleData#battle_data.round,
     {PlayerRoleID, MonsterGroupID, MaxGroupID, SimTimes, MaxSimTimes} = BattleData#battle_data.callback,
-    gen_server:cast(batnitor_simulator, {battle_finish, {PlayerRoleID, MonsterGroupID, MaxGroupID, SimTimes, MaxSimTimes, 
-                                                         Winner, Rounds, AttHPList, DefHPList}}).
+    gen_server:cast(batnitor_simulator, {battle_finish, {PlayerRoleID, MonsterGroupID, MaxGroupID, SimTimes, MaxSimTimes, Winner, Rounds, AttHPList, DefHPList}}).
 

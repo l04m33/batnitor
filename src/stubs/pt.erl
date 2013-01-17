@@ -12,7 +12,8 @@
             pack/2,
             write_string/1,
 			write_id_byte/2,
-			binary_to_id_list/4	
+			binary_to_id_list/4,
+			write_equip_wing_horse/1	
         ]).
 -include("common.hrl").
 
@@ -84,5 +85,48 @@ read_string(Bin) ->
             {[],<<>>}
     end.
 
-
+%% 类别定义：
+%%    坐骑：1，翅膀：2，武器：3，铠甲：4，披风：5，鞋子：6，戒指：7
+write_equip_wing_horse(DataList) ->
+	?INFO(scene, "DataList = ~w", [DataList]),
+	write_equip_wing_horse(DataList, <<(length(DataList)):16>>).
+write_equip_wing_horse([{wing, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 2:8, Datat:32>>);
+write_equip_wing_horse([{horse, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 1:8, Datat:32>>);	
+write_equip_wing_horse([{weapon, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 3:8, Datat:32>>);
+write_equip_wing_horse([{kaijia, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 4:8, Datat:32>>);
+write_equip_wing_horse([{pifeng, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 5:8, Datat:32>>);
+write_equip_wing_horse([{shoes, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 6:8, Datat:32>>);
+write_equip_wing_horse([{ring, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 7:8, Datat:32>>);
+write_equip_wing_horse([{ability, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 8:8, Datat:32>>);
+write_equip_wing_horse([{fashion, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 9:8, Datat:32>>);
+write_equip_wing_horse([{king, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 10:8, Datat:32>>);
+write_equip_wing_horse([{chief_disciple, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 11:8, Datat:32>>);
+write_equip_wing_horse([{speed, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 12:8, Datat:32>>);
+write_equip_wing_horse([{change, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 13:8, Datat:32>>);
+write_equip_wing_horse([{role, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 20:8, Datat:32>>);
+write_equip_wing_horse([{supremacy_title, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 30:8, Datat:32>>);
+write_equip_wing_horse([{legend_title, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 31:8, Datat:32>>);
+write_equip_wing_horse([{achievement_title, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 32:8, Datat:32>>);
+write_equip_wing_horse([{honour_title, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 33:8, Datat:32>>);
+write_equip_wing_horse([{special_title, Datat} | Rest], Packet) ->
+	write_equip_wing_horse(Rest, <<Packet/binary, 34:8, Datat:32>>);
+write_equip_wing_horse([], Packet) -> Packet.
 
