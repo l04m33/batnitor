@@ -66,7 +66,21 @@ handle_call(check_data_all_set, _From, State) ->
     {reply, Reply, State};
 
 handle_call(get_calculated_monster_attr, _From, State) ->
-    Reply = [prepare_mon_attr(M) || M <- State#state.roles_order],
+    Reply = lists:map(
+        fun(M) ->
+            case (catch prepare_mon_attr(M)) of
+                {'EXIT', _Reason} ->
+                    #mon_attr{
+                        id      = M,
+                        name    = "",
+                        skills  = [],
+                        _       = 0
+                    };
+                MonAttr ->
+                    MonAttr
+            end
+        end,
+        State#state.roles_order),
     {reply, Reply, State};
 
 handle_call({get_rounds_list_by_mon_group, MonGroupID}, _From, State) ->
