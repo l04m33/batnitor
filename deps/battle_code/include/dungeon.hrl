@@ -16,7 +16,8 @@
 	bestRank		= 0,            %% 最佳的名次
 	score	      	= 0,
 	firstFlag		= 0,			%% 第一次进入要控制剧情播放
-	isPass			= 0				%% 是否通关
+	isPass			= 0,			%% 是否通关
+	offlineTimes	= 0
 	}).
 
 -record (dungeon_types, {
@@ -31,7 +32,8 @@
 	bestRank		= {integer},
 	score			= {integer},
 	firstFlag		= {integer},
-	isPass			= {integer}	
+	isPass			= {integer},
+	offlineTimes	= {integer}
 	}).
 
 -record(dungeon_guaji,{

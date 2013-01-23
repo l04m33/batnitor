@@ -341,6 +341,7 @@
 -define(FROM_ACTIVITY,			10035).		%% 系统活动获得
 -define(FROM_GUILD_HUNTING,     10036).		%% 帮派活动获得
 -define(FROM_STAGE,				10037).		%% 在挑战魂将中获得
+-define(FROM_RUSH_RANK,         10038).     %% 在冲榜活动获得
 
 %% 常用操作
 -define(FROM_CHARGE,			11001).		%% 充值获得

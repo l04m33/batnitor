@@ -32,7 +32,7 @@ get(101, 1) ->
 		level  = 1,
 		target = self,
 		type   = 2,
-		param  = {0.3},    
+		param  = {0.1},    
 		slot   = 0
 	};
 
@@ -47,7 +47,7 @@ get(102, 1) ->
 		level  = 1,
 		target = self,
 		type   = 2,
-		param  = {0.3},    
+		param  = {0.1},    
 		slot   = 0
 	};
 
@@ -227,7 +227,7 @@ get(105, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1,1.2,0.1,1},    
+		param  = {1,1.2,0.3,1},    
 		slot   = 4
 	};
 
@@ -242,7 +242,7 @@ get(105, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {1,1.25,0.13,1},    
+		param  = {1,1.25,0.32,1},    
 		slot   = 4
 	};
 
@@ -257,7 +257,7 @@ get(105, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {1,1.3,0.16,1},    
+		param  = {1,1.3,0.34,1},    
 		slot   = 4
 	};
 
@@ -272,7 +272,7 @@ get(105, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {1,1.35,0.2,1},    
+		param  = {1,1.35,0.37,1},    
 		slot   = 4
 	};
 
@@ -287,7 +287,7 @@ get(105, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {1,1.4,0.23,1},    
+		param  = {1,1.4,0.39,1},    
 		slot   = 4
 	};
 
@@ -302,7 +302,7 @@ get(105, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {1,1.45,0.26,1},    
+		param  = {1,1.45,0.41,1},    
 		slot   = 4
 	};
 
@@ -317,7 +317,7 @@ get(105, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {1,1.5,0.3,1},    
+		param  = {1,1.5,0.43,1},    
 		slot   = 4
 	};
 
@@ -332,7 +332,7 @@ get(105, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {1,1.55,0.33,1},    
+		param  = {1,1.55,0.45,1},    
 		slot   = 4
 	};
 
@@ -347,7 +347,7 @@ get(105, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {1,1.6,0.36,1},    
+		param  = {1,1.6,0.47,1},    
 		slot   = 4
 	};
 
@@ -362,7 +362,7 @@ get(105, 10) ->
 		level  = 10,
 		target = enemy,
 		type   = 4,
-		param  = {1,1.7,0.4,1},    
+		param  = {1,1.7,0.5,1},    
 		slot   = 4
 	};
 
@@ -5957,7 +5957,7 @@ get(235, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 1,
-		param  = {0.7},    
+		param  = {0.9},    
 		slot   = 0
 	};
 

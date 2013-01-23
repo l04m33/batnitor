@@ -27,6 +27,9 @@
 %%		24,		%%比武
 %% 	]).
 
+-define(GUILD_SYSTEM, 3).
+-define(GUILD_SYSTEM_ENABLE_TYPE, 2).
+
 -define(ARENA_SYSTEM, 13).
 -define(ARENA_SYSTEM_ENABLE_TYPE, 3).
 
@@ -76,3 +79,9 @@
 
 -define(SYSTEM_TASK_TRACE,	 44).  %% 悬赏任务
 -define(SYSTEM_TASK_TRACE_TYPE,	 12).  %% 悬赏任务
+
+-define(ANSWER,		49).  %% 问答系统
+-define(ANSWER_TYPE,	13).
+
+-define(SYSTEM_RUSH_RANK,     50).  %% 问答系统
+-define(SYSTEM_RUSH_RANK_TYPE, 14).

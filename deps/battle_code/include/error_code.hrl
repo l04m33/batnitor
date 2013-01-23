@@ -125,7 +125,7 @@
 -define(ERR_MARKET_ITEM_NOT_EXIT,			12053).		%% 抢购物品已刷新，请重新打开商城
 -define(ERR_MARKET_BUY_MAX,					12054).		%% 限购次数已满
 -define(ERR_MARKET_ITEM_MAX,				12055).		%% 该商品已被抢购一空
-
+-define(ERR_XILIAN_CANT_TAKE,				12056).		%% 每次只能选取一个洗练结果
 
 -define(ERR_ITEM_SPLIT_NUM,				12069).			%% 物品拆分数量错
 
@@ -180,6 +180,17 @@
 -define(ERR_OFFICIAL_ONE_KEY_NOT_ENOUGH,13006).			%% 一键升级器魂金钱不足
 -define(ERR_OFFICIAL_LEVEL_FULL,        13007).         %% 器魂等级已到达最高级
 -define(ERR_BATTLE_FREE,                13008).         %% 你已经通过战斗获得自用
+-define(ERR_SLAVE_BATTLE_FOR_SELF,      13014).         %% 不能抓自己为奴隶
+-define(ERR_SLAVE_ALREADY_SLAVED,      13015).         %% 已经是奴隶了
+-define(ERR_SLAVE_NOT_OPEN,             13016).         %% 该玩家还未开启奴隶系统
+
+%% 答题活动
+-define(ERR_ANSWER_TIME_NOREACH,		13009).			%% 还没到答题时间
+-define(ERR_ANSWER_TIME_OVER,			13010).			%% 答题时间已结束
+-define(ERR_ANSWER_HAVE_TAKE,			13011).			%% 答案选定后不能更改
+-define(ERR_ANSWER_EFFECT_HAVE_USE,		13012).			%% 一次只能使用一种锦囊
+-define(ERR_ANSWER_PROP_OVER,			13013).			%% 该种道具已用光
+-define(ERR_ANSWER_PROP_TIME_ERR,		13014).			%% 只能在阅题时间使用锦囊
 
 %%邮件系统
 -define(ERR_MAIL_WRONG_TITLE,            14001).        %%邮件标题错误
@@ -222,6 +233,7 @@
 %% -define(GUILD_ERROR_DISMISS_NOCONDITION,19011).			%% 解散条件不足
 -define(GUILD_ERROR_ALREADY_GET_WELFARE,	19012).			%% 您今天已经领取过福利了
 -define(GUILD_ERROR_HISMERIT_NOTENOUGH,	    19013).			%% 历史功勋不足
+-define(GUILD_ERROR_SYSTEM_NOT_OPEN,        19019).         %% 帮派系统还未开启
 
 -define(GUILD_ERROR_ADD_OTHER_GUILD,		19014).			%% 已经加入其它帮派
 -define(GUILD_ERROR_RECRUIT_MEMBER_MAX,		19015).			%% 工会成员数量已经到达上线
@@ -251,6 +263,8 @@
 -define(GUILD_ERROR_RANK_FULL, 19039). %% 该职位已满
 
 -define(GUILD_HUNTING_ERROR_GOLD_ARROW_NOT_ENOUGH, 19040).  %% 帮派活动里的黄金箭数量不足
+-define(GUILD_HUNTING_ERROR_PENDING,               19041).  %% 还没到活动时间
+-define(GUILD_HUNTING_ERROR_NOT_IN_GUILD,          19042).  %% 还没加入帮派哦～
 
 %% 战斗系统
 -define(ERR_BATTLE_ATTACKER_IS_ON_BATTLE,    20001).   %% 玩家正在战斗
@@ -298,6 +312,7 @@
  -define(ERR_TEAM_APPLY_FULL,    30023).         %% 您申请的队伍人数已满
  -define(ERR_TEAM_IN_CAN_TEAM_SCENE,    30024).         %% 您申请的队伍人数已满
  -define(ERR_TEAM_NOT_IN_ANY_TEAM,    30025).         %% 您不在队伍中
+ -define(ERR_TEAM_NOT_ACCEPT_IN_NOW,    30026).         %% 当前场景汇总，您不能接受组队
 
 %% 神剑
 -define(ERR_SWORD_NOT_START,32001). 		%% 天灵神剑活动未开始
@@ -366,7 +381,7 @@
 -define(ERR_ROBER_IS_SO_SMALL, 26006).   		%%您不能以强示弱，欺压小辈哦
 -define(ERR_YUNBIAO_FIRST_FINISH_NOW,	26007). %%请您先把手上的镖车送到目的地！
 -define(ERR_AREADY_HIGH_TYPE,			26008). %%您当前的镖车已是最高品质
--define(ERR_JIXING_HIGHEST,				26009). %%当前吉星等级已经达到上限！
+-define(ERR_JIXING_HIGHEST,				26009). %%当前桃花运势已经是最高等级了！
 -define(ERR_ROBER_LEVEL_TOO_LOWER,		26010). %%您还未到30级，不要做劫镖这么危险的事情啊
 -define(ERR_ROB_TASK_ACCEPT, 26011).			%%对方是菜鸟,请高抬贵手
 
@@ -426,6 +441,7 @@
 
 -define(ERR_DEFENCE_MONSTER_OUT_OF_RANGE, 40001).       %% 群魔乱舞怪物不在攻击距离之内
 -define(ERR_DEFENCE_BATTLE_START_UP,      40002).       %% 群魔乱舞无法发起战斗
+-define(ERR_DEFENCE_PENDING,              40003).       %% 群魔乱舞活动还没开始哦
 
 -define(ERR_HAVE_CHALLENGER, 63001).					%% 通知客户端国王正在被其他人挑战
 -define(COMBAT_POWER_TOO_LOW, 63002).					%% 玩家等级不到40级，无法挑战国王
@@ -465,10 +481,17 @@
 -define(ERR_STAGE_FLOOR_NOT_OPEN,		43006).		%% 该层尚未开启
 -define(ERR_STAGE_FLOOR_OUT_OF_RANGE,	43007).		%% 超出可跳转范围
 -define(ERR_STAGE_NOT_EXISTS_RESET_FLOOR,	43008).	%% 没有需要重置的关卡
+-define(ERR_STAGE_HAS_OTHER_MONSTER,	43009).		%% 请先清完小怪再攻击boss吧！
 
 %% =========================== 在线奖励相关错误码 ===============================
 -define(ERR_ONLINE_AWARD_TIME,			44000).		%% 在线奖励领取还没到时间领取
 -define(ERR_ONLINE_AWARD_MAX,			44001).		%% 今天在线奖励已经全部领完
 
 %% =========================== 称号系统相关错误码 ===============================
--define(ERR_TITLE_NOT_ACHIEVE,			45000).		%% 称号未达成
+-define(ERR_TITLE_NOT_ACHIEVE,			52000).		%% 称号未达成
+
+
+%% =========================== 冲榜活动 ====================================
+-define(ERR_RUSH_GET_AWARD_ALREADY,      36201).    %%已经领取
+-define(ERR_RUSH_GET_NOT_OK,             36202).    %% 未达成 
+-define(ERR_RUSH_IS_OVER,             36203).    %% 开服活动已经结束 

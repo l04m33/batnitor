@@ -25,9 +25,16 @@
 -define(LEGEND_TYPE_ACHIEVEMENT,		8).
 -define(LEGEND_TYPE_EQUIP_QUALITY,		9).
 -define(LEGEND_TYPE_STONE_LEVEL,		10).
--define(LEGEND_TYPE_STONE_1,			11).
--define(LEGEND_TYPE_STONE_2,			12).
+-define(LEGEND_TYPE_OFFICE_LEISURE,		11).
+-define(LEGEND_TYPE_CANDYSTAR_STAGE,	12).
 -define(LEGEND_TYPE_MAX_SKILL_LEVEL,	13).
+
+%% ========================= 荣誉称号分类 ============================= %%
+-define(HONOUR_TYPE_MANOR,			1).		%% 领地战第一
+-define(HONOUR_TYPE_GUILD,			2).		%% 公会排名第一
+-define(HONOUR_TYPE_DEFENCE,		3).		%% 群魔乱舞
+-define(HONOUR_TYPE_COMP,			4).		%% 比武冠军
+-define(HONOUR_TYPE_HONOUR_SCORE,	5).		%% 荣誉排行版第一
 
 %% ========================== 至尊称号 ============================= %%
 -define(SUPREMACY_INDEX_ABILITY,			1).		%% 战斗力至尊称号

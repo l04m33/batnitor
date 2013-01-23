@@ -162,18 +162,18 @@ battle_wait_for_client({ready, ID}, BattleData) ->
 	{Now, Timeout} = time_remain(BattleData),
     case get_player_info(ID, BattleData) of
         false ->
-            ?INFO(battle_dbg, "get_player_info(...) = false ?!"),
+            ?INFO(battle, "get_player_info(...) = false ?!"),
             {next_state, battle_wait_for_client, BattleData#battle_data {
                 timeout = {Now, Timeout}}, Timeout};
         PInfo ->
             NBattleData = set_player_info(ID, PInfo#player_info{ready = true}, BattleData),
             case is_all_players_ready(NBattleData) of
                 true ->
-                    ?INFO(battle_dbg, "All players ready"),
+                    ?INFO(battle, "All players ready"),
                     {next_state, battle_run, NBattleData#battle_data {
                         timeout = {now(), ?BATTLE_WAIT_BEGIN}}, ?BATTLE_WAIT_BEGIN};
                 false ->
-                    ?INFO(battle_dbg, "Not all players ready"),
+                    ?INFO(battle, "Not all players ready"),
                     {next_state, battle_wait_for_client, NBattleData#battle_data {
                         timeout = {Now, Timeout}}, Timeout}
             end
@@ -206,29 +206,40 @@ battle_run(Event, BattleData) ->
 		case Event of
 			%% if (Cmd == 0) then client ask us to set the command for him/her
 			{set_cmd, ID, Cmd} ->
-				BattleData1 = set_battle_cmd(ID, Cmd, BattleData),
-                BattleData1;
+                case check_and_set_cd(set_cmd_cd, ID, -1000) of
+                    true ->
+                        BattleData1 = set_battle_cmd(ID, Cmd, BattleData),
+                        BattleData1;
+                    false ->        % 发包太快，忽略
+                        BattleData
+                end;
 			{finish_play, ID} ->
-				%% every time we have sent the result to the client, 
-				%% we have to wait the client send us a signal to indicate the client has played the result
-				%% if so, we'll do another calculation
-				case get_player_info(ID, BattleData) of
-					false ->
-						BattleData;
-					Info ->
-						NInfo = Info#player_info{finish_play = true},
-						BattleData1 = set_player_info(ID, NInfo, BattleData),
-										
-						case is_all_finish_play(BattleData1) of
-							true -> 
-								%% trigger a new battle action if all finish play
-								BattleData2 = handle_command_ex(BattleData1, true),
-								BattleData2;
-							false ->
-								BattleData1
-						end
-				end;
+                case check_and_set_cd(finish_play_cd, ID, -1000) of
+                    true ->
+                        %% every time we have sent the result to the client, 
+                        %% we have to wait the client send us a signal to indicate the client has played the result
+                        %% if so, we'll do another calculation
+                        case get_player_info(ID, BattleData) of
+                            false ->
+                                BattleData;
+                            Info ->
+                                NInfo = Info#player_info{finish_play = true},
+                                BattleData1 = set_player_info(ID, NInfo, BattleData),
+                                                
+                                case is_all_finish_play(BattleData1) of
+                                    true -> 
+                                        %% trigger a new battle action if all finish play
+                                        BattleData2 = handle_command_ex(BattleData1, true),
+                                        BattleData2;
+                                    false ->
+                                        BattleData1
+                                end
+                        end;
+                    false ->        % 发包太快，忽略
+                        BattleData
+                end;
 			timeout ->
+                ?BATTLE_LOG("--------- 超时！ ---------"),
 				?INFO(battle, "timeout... Timeout = ~w", [Timeout]),
 				%% trigger a new battle action if timeout
 				BattleData1 = handle_command_ex(BattleData, true),
@@ -311,6 +322,30 @@ battle_plot(_Event, BattleData) ->
 	{Now, Timeout} = time_remain(BattleData),
     {next_state, battle_plot, BattleData#battle_data {
         timeout = {Now, Timeout}}, Timeout}.
+
+%% 这里处理这个消息是为了让客户端表现得比较自然，
+%% 不会出现动画还没播完就不能选技能的现象
+battle_complete({set_cmd, ID, Cmd}, BattleData) ->
+	{Now, Timeout} = time_remain(BattleData),
+	case check_player(ID, BattleData) of
+        false ->
+            void;
+        {true, _} ->
+            Info = get_player_info(ID, BattleData),
+            case Cmd of
+                0 ->
+                    %% catch住，免得人死光了ai:get_skill/2报错
+                    try
+                        {AISid, _, _, _, _} = ai:get_skill(Info#player_info.lead, BattleData),
+                        send_command_package(Info#player_info.lead, AISid, BattleData)
+                    catch _:_ ->
+                        send_command_package(Info#player_info.lead, ?SKILL_COMMON_ATTACK, BattleData)
+                    end;
+                Sid when is_integer(Sid) ->
+                    send_command_confirm_package(ID, Sid)
+            end
+    end,
+	{next_state, battle_complete, BattleData#battle_data {timeout = {Now, Timeout}}, Timeout};
 
 battle_complete(timeout, BattleData) ->
 	{stop, normal, BattleData};
@@ -744,7 +779,7 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array, Type) ->
             {0, false}
     end,
 
-    ?INFO(battle_dbg, "PlayerOnline = ~w", [PlayerOnline]),
+    ?INFO(battle, "PlayerOnline = ~w", [PlayerOnline]),
 
 	RoleFun = 
 		fun (Role, Acc) ->
@@ -925,7 +960,7 @@ role_2_bs(ID, PlayerLevel, Role) ->
 
     NewbieMP = case PlayerLevel >= MinNewbieMPLevel andalso 
             PlayerLevel =< MaxNewbieMPLevel of
-        true -> 70;
+        true -> 80;
         false -> 0
     end,
 
@@ -1225,27 +1260,13 @@ set_battle_cmd(ID, Cmd, BattleData) ->
 					Lead   = Info#player_info.lead,
 					State  = get_battle_status(Lead, BattleData),
 
-                    %% 被嘲讽的家伙只能用普通攻击……
-                    ScornedSID = case lists:keyfind(?BUFF_SCORNED, #buff.name, State#battle_status.buff) of
-                        false -> 0;
-                        _ -> 
-                            ?BATTLE_LOG("~n--------- 攻击者站位: ~w ---------", [Lead]),
-                            ?BATTLE_LOG("站位 ~w Buff效果: 嘲讽", [Lead]),
-                            ?BATTLE_LOG("    Buff类型: 被嘲讽, 新技能ID: ~w", [?SKILL_COMMON_ATTACK]),
-                            ?SKILL_COMMON_ATTACK
-                    end,
-
-                    SkillIndex = State#battle_status.skill_index,
+                    %% 这里本来要检查玩家是否带“被嘲讽”buff的，但是会造成
+                    %% 玩家被嘲讽的那个回合从一开始就不能选到技能，所以把
+                    %% 检查放到发动技能之前做好了……
 
 					%% if Sid == 0 then we use AI to set command
 					if (Sid == 0) ->						 
-                        {RealSID, NewSkillIndex} = if
-                            ScornedSID =/= 0 -> 
-                                {ScornedSID, SkillIndex};
-                            true ->
-                                {AISid, _, _, NewSkillIndex0} = ai:get_skill(Lead, BattleData),
-                                {AISid, NewSkillIndex0}
-                        end,
+                        {RealSID, _, _, NewSkillIndex, _} = ai:get_skill(Lead, BattleData),
                         send_command_package(Lead, RealSID, BattleData),
 
                         Tar = ai:get_skill_target(RealSID, Lead, BattleData),
@@ -1253,14 +1274,10 @@ set_battle_cmd(ID, Cmd, BattleData) ->
 						NState = State#battle_status {cmd = {RealSID, Lead, Tar}, skill_index = NewSkillIndex};
 
 					true ->
-                        RealSID0 = if
-                            ScornedSID =/= 0 -> ScornedSID;
-                            true -> Sid
-                        end,
-
-                        RealSID = case ai:validate_skill(RealSID0, Lead, BattleData) of
-                            true  -> RealSID0;
-                            false -> ?SKILL_COMMON_ATTACK
+                        RealSID = case ai:validate_skill(Sid, Lead, BattleData) of
+                            true  -> Sid;
+                            false -> ?SKILL_COMMON_ATTACK;
+                            {false, _} -> ?SKILL_COMMON_ATTACK
                         end,
                         send_command_confirm_package(ID, RealSID),
 
@@ -1309,9 +1326,9 @@ handle_command_ex(BattleData, Repeat) ->
 			BattleData;
 		true ->
 			Skip = false,
-			{Sid, Src, Tar, Idx} = 
+			{Sid, Src, Tar, Idx, SkillStat} = 
 				if (IsFaint == true) -> 
-					{0, Src, 0, SIndex};
+					{0, Src, 0, SIndex, ?BATTLE_SKILL_STAT_NORMAL};
 				true ->
 					?INFO(battle, "Preset Src = ~w, Cmd = ~w", [Src, SrcStat#battle_status.cmd]),
 		
@@ -1336,7 +1353,7 @@ handle_command_ex(BattleData, Repeat) ->
 							if 
                                 NeedRandSkill =:= false ->
                                     T = ai:get_skill_target(?SKILL_COMMON_ATTACK, Src, BattleData),
-                                    {?SKILL_COMMON_ATTACK, Src, T, SIndex};
+                                    {?SKILL_COMMON_ATTACK, Src, T, SIndex, ?BATTLE_SKILL_STAT_NORMAL};
                                 true ->  
                                     %% 这里是怪物AI，处理嘲讽buff选技能的逻辑……
                                     case lists:keyfind(?BUFF_SCORNED, #buff.name, SrcStat#battle_status.buff) of
@@ -1347,34 +1364,52 @@ handle_command_ex(BattleData, Repeat) ->
                                             ?BATTLE_LOG("站位 ~w Buff效果: 嘲讽", [Src]),
                                             ?BATTLE_LOG("    Buff类型: 被嘲讽, 新技能ID: ~w", [?SKILL_COMMON_ATTACK]),
                                             T = ai:get_skill_target(?SKILL_COMMON_ATTACK, Src, BattleData),
-                                            {?SKILL_COMMON_ATTACK, Src, T, SIndex}
+                                            {?SKILL_COMMON_ATTACK, Src, T, SIndex, ?BATTLE_SKILL_STAT_SCORNED}
                                     end
 							end;
 
 						{S, Src, OTar} ->
 							%% case (2): 
+
+                            %% 可能在选了技能之后被嘲讽了，这里要再检查一下……
+                            NewS = case lists:keyfind(?BUFF_SCORNED, #buff.name, SrcStat#battle_status.buff) of
+                                false -> S;
+                                _     -> ?SKILL_COMMON_ATTACK
+                            end,
                             ?INFO(battle, "OTar = ~w", [OTar]),
                             T = case OTar > 0 andalso OTar =< ?BATTLE_FIELD_SIZE 
                                     andalso (array:get(OTar, BattleData#battle_data.player))#battle_status.is_alive of
                                 true  -> OTar;
-                                false -> ai:get_skill_target(S, Src, BattleData)
+                                false -> ai:get_skill_target(NewS, Src, BattleData)
                             end,
                             ?INFO(battle, "T = ~w", [T]),
-							case ai:validate_skill(S, Src, BattleData) of
-								true ->
-									?INFO(battle, "validation passed."),
-									?INFO(battle, "Sid = ~w, Src = ~w, Tar = ~w", [S, Src, T]),
-									{S, Src, T, SIndex};
-								false ->
-									?INFO(battle, "validation not passed."),
-									{?SKILL_COMMON_ATTACK, Src, T, SIndex}
-							end
+                            case NewS of
+                                ?SKILL_COMMON_ATTACK ->
+                                    ?INFO(battle, "NewS = ~w, S = ~w", [NewS, S]),
+                                    case NewS =:= S of
+                                        true ->
+                                            {NewS, Src, T, SIndex, ?BATTLE_SKILL_STAT_NORMAL};
+                                        false ->
+                                            {NewS, Src, T, SIndex, ?BATTLE_SKILL_STAT_SCORNED}
+                                    end;
+                                _ ->
+                                    case ai:validate_skill(NewS, Src, BattleData) of
+                                        true ->
+                                            ?INFO(battle, "validation passed."),
+                                            ?INFO(battle, "Sid = ~w, Src = ~w, Tar = ~w", [NewS, Src, T]),
+                                            {NewS, Src, T, SIndex, ?BATTLE_SKILL_STAT_NORMAL};
+                                        false ->
+                                            ?INFO(battle, "validation not passed."),
+                                            {?SKILL_COMMON_ATTACK, Src, T, SIndex, ?BATTLE_SKILL_STAT_NORMAL};
+                                        {false, ValidateStat} ->
+                                            ?INFO(battle, "validation not passed. ValidateStat = ~w", [ValidateStat]),
+                                            {?SKILL_COMMON_ATTACK, Src, T, SIndex, ValidateStat}
+                                    end
+                            end
 					end
 				end, 
 			
-			%% order package
-			send_order_package(BattleData),
-			BattleData1 = skill:handle_skill(Sid, Src, Tar, BattleData),
+			BattleData1 = skill:handle_skill(Sid, SkillStat, Src, Tar, BattleData),
 
 			%% procedure package
 			send_procedure_package(BattleData1),
@@ -1449,6 +1484,13 @@ handle_command_ex(BattleData, Repeat) ->
 					NBattleData1#battle_data {attorder = update_order_list(tl(OrderList), NBattleData1)}
 			end
 		end,
+    
+    case Skip of
+        false ->
+            send_order_package(NBattleData2);
+        _ ->
+            void
+    end,
 	
 	%% notice: is_battle_end returns false | {true, camp()}
 	case (Repeat == false orelse is_battle_end(NBattleData2) =/= false) of
@@ -2229,10 +2271,19 @@ attack(SkillId, Src, AttSpec, Targets, BattleData) ->
         false ->
             AttSpec
     end,
-	attack(SkillId, Src, NAttSpec, Targets, [], BattleData).
+
+    AdditionList = case is_number(NAttSpec#attack_spec.addition) of
+        true ->
+            lists:duplicate(length(Targets), NAttSpec#attack_spec.addition);
+        false ->
+            NAttSpec#attack_spec.addition
+    end,
+
+	attack(SkillId, Src, NAttSpec#attack_spec{addition = AdditionList}, Targets, [], BattleData).
 													  
 %% Travers the Target list, do some calculation, and put the result in the AttInfoList
-attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
+attack(SkillId, Src, AttSpec = #attack_spec{addition = [CurAddition | RestAddition]}, 
+       [Tar | Rest], AttInfoList, BattleData) ->
     ?INFO(battle, "AttSpec = ~w", [AttSpec]),
 
 	SrcStat = get_battle_status(Src, BattleData),
@@ -2263,7 +2314,8 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
 		end,
 	
 	if (Skip == true) ->	   
-		attack(SkillId, Src, AttSpec, Rest, AttInfoList, BattleData);
+		attack(SkillId, Src, AttSpec#attack_spec{addition = RestAddition}, 
+               Rest, AttInfoList, BattleData);
 	true ->
         ?BATTLE_LOG("    目标站位: ~w", [NTar]),
 		case pre_attack(Src, NTar, AttSpec, BattleData) of
@@ -2271,11 +2323,12 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
 				%% miss target, so the other field in attack_info may be 0 (is_miss == true, is_crit = false) 
 				?INFO(battle, "battle attack: "),
 				AttInfo = #attack_info {pos = NTar, is_miss = true},
-				attack(SkillId, Src, AttSpec, Rest, [AttInfo | AttInfoList], BattleData);
+				attack(SkillId, Src, AttSpec#attack_spec{addition = RestAddition}, 
+                       Rest, [AttInfo | AttInfoList], BattleData);
 
 			true ->
 				%% TODO: may be change the AttSpec here
-				{Cr, Bl, Dm} = do_attack(Src, NTar, AttSpec, BattleData),
+				{Cr, Bl, Dm} = do_attack(Src, NTar, AttSpec#attack_spec{addition = CurAddition}, BattleData),
 				HpDrain  = get_hp_absorb(Src, NTar, AttSpec, Dm, BattleData),
 				{Ma, Ms} = get_mp_absorb(Src, NTar, AttSpec, BattleData), %% MpDrain = {MpAdd, MpSub}
 				Rebound  = get_rebound(Src, NTar, AttSpec, Dm, BattleData),
@@ -2329,8 +2382,8 @@ attack(SkillId, Src, AttSpec, [Tar | Rest], AttInfoList, BattleData) ->
                         NewAttInfoList0
                 end,
 
-                attack(SkillId, Src, AttSpec, Rest, 
-                       lists:reverse(NewAttInfoList) ++ AttInfoList, BattleData)
+                attack(SkillId, Src, AttSpec#attack_spec{addition = RestAddition}, 
+                       Rest, lists:reverse(NewAttInfoList) ++ AttInfoList, BattleData)
 		end
 	end;
 
@@ -2526,7 +2579,7 @@ assist_1(Src, Tar, [Eff | Rest], AttInfo, BattleData) ->
 			heal ->
 				Inc = 
 					if (ByRate == true) ->
-						round(TarStat#battle_status.hp * Value);
+						round(TarStat#battle_status.hp_max * Value);
 					true ->
 						Value
 					end,
@@ -2618,6 +2671,7 @@ settle_buff(Settle, Pos, BattleData) ->
 	Buffs = State#battle_status.buff,
 	%% when return from settle_buff/6, NState's buff list has already change to the new one.
 	{BuffInfoList, NState} = settle_buff(Settle, Pos, Buffs, [], [], State),
+    ?INFO(battle, "Pos = ~w, BuffInfoList = ~w", [Pos, BuffInfoList]),
 	
 	BattleData1 = set_battle_status(Pos, NState, BattleData),
 	add_buff_info(BuffInfoList, BattleData1).
@@ -2728,7 +2782,7 @@ settle_buff(Settle, Pos, [Buff | Rest], BuffList, BuffInfoList, State) ->
                                         mp_inc    = 0,
                                         is_new    = false,
                                         by_rate   = ByRate,
-                                        value     = Value,
+                                        value     = max(0, Duration),
                                         duration  = max(0, Duration),
                                         is_remove = (Duration =< 0)
                                     },
@@ -2746,7 +2800,7 @@ settle_buff(Settle, Pos, [Buff | Rest], BuffList, BuffInfoList, State) ->
                                         mp_inc    = 0,
                                         is_new    = false,
                                         by_rate   = ByRate,
-                                        value     = Value,
+                                        value     = max(0, Duration),
                                         duration  = max(0, Duration),
                                         is_remove = (Duration =< 0)
                                     },
@@ -3423,6 +3477,7 @@ send_battle_award(ID, BattleData) ->
 					GenAward = 
 					#gen_award{
 						economy = #economy{ gd_silver = Silver },
+						items = IDItems,
 						log_type = ?FROM_STAGE
 					},
 					Mail = 
@@ -3508,7 +3563,7 @@ test_pvp(ID1, ID2) ->
 	Start = 
 		#battle_start {
 			mod       = pvp,
-		 	type      = ?BATTLE_TYPE_ARENA,     		%% 
+		 	type      = 0,     		%% 
 			att_id    = ID1,   		%% Attacker's ID
 			att_mer   = [],    		%% Attacker's mercenary list
 			def_id    = NID2,  		%% Defender's ID
@@ -3960,6 +4015,19 @@ notify_team_complete(Camp, BattleData) ->
             ok
     end.
 
+check_and_set_cd(CDName, PlayerID, CDTime) ->
+    Now = util:longunixtime(),
+    LastTime = case erlang:get({CDName, PlayerID}) of
+        undefined -> 0;
+        T -> T
+    end,
+    case Now - LastTime >= CDTime of
+        true ->
+            erlang:put({CDName, PlayerID}, Now),
+            true;
+        _ ->        % false
+            false
+    end.
 
 -ifdef(debug).
 

@@ -37,6 +37,7 @@
 -define(VIP_TYPE_YUNBIAO,14).	%% 运镖
 -define(VIP_TYPE_JUNGONG_TASK,15).%% 军工任务
 -define(VIP_TYPE_DAZUO,21).		%% 打坐
+-define(VIP_TYPE_ANSWER,11).	%% 答题
 
 
 

@@ -28,6 +28,7 @@
 			id                = 0,
 			
 			%% 与进程相关的
+            rush_rank_pid     = none,       %% 冲榜活动
 			soul_ball_pid     = none,       %% 魂珠系统
 			notice_pid        = none,       %% 事件提醒
 			rank_pid		  = none,		%% 排行榜     
@@ -64,6 +65,7 @@
 			arena_pid         = none,		%% 竞技场模块
 			guaji_pid		  = none,		%% 挂机模块
 			sword_pid		  = none,		%% 神剑模块
+			answer_pid		  = none,		%% 问答活动模块
 			junwei_role_pid   = none,		%% 军威将领模块
 			yunbiao_pid       = none,        %% 运镖模块
 			boss_pid          = none,         %%世界boss模块		  

@@ -42,6 +42,11 @@
 
 -define(COUNTER_DAZUO_TIME,	39).	%% 打坐时间每天不超过30分钟
 
+-define(COUNTER_ANSWER_5,	41).	%% 答题道具：天机显现
+-define(COUNTER_ANSWER_6,	42).	%% 答题道具：去伪存真
+-define(COUNTER_ANSWER_7,	43).	%% 答题道具：双倍积分
+
+
 -record (counter, {
 	key           = {0, 0},
 	gd_updateTime = 0,				%% 更新时间

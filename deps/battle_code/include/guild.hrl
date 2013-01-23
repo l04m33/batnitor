@@ -61,7 +61,8 @@
 %% gen_cache
 -define(CACHE_GUILD_INFO, cache_util:get_register_name(guild_info)).
 -define(CACHE_GUILD_MEM,  cache_util:get_register_name(guild_member)).
-
+-define(CACHE_GUILD_EVENT,  cache_util:get_register_name(guild_event_list)).
+       
 %% this table's information will *not* update to the database. 
 -record(guild_state,
 	{
@@ -84,7 +85,6 @@
 		exp             = 0,        %% 功勋  exploit,
 		state           = normal,   %% normal | {dismiss, Time, TimerRef},
 		manifesto       = "",       %% 工会宣言
-		event,                      %% #guild_event_tab{}
 		apply_list      = []        %% {ID, AppTime} list
 	}		
 ).
@@ -104,7 +104,6 @@
 		exp            = {integer},
 		state          = {term},
 		manifesto      = {string},
-		event          = {term},
 		apply_list     = {term}   
 	}		
 ).
@@ -145,6 +144,20 @@
 		time,
 		content
 	}	
+).
+
+-record(guild_event_list,
+     {
+         guild_id,
+         event_list_content
+     }
+).
+
+-record(guild_event_list_types,
+     {
+         guild_id = {integer},
+         event_list_content = {term}
+     }
 ).
 
 -record(guild_event_tab,

@@ -22,9 +22,13 @@
 -define(ETS_SCENE_INFO,     ets_scene_info).
 -define(ETS_MASK_INFO,      ets_mask_info).
 
--define(CELL_HEIGHT, 12).
--define(CELL_WIDTH,  12).
+-define(CELL_HEIGHT, 10).
+-define(CELL_WIDTH,  15).
 -define(SCENE_CACHE_REF, cache_util:get_register_name(position)).
+
+-define(CLIENT_BLOCK_SIZE, 30).
+-define(HALF_CLIENT_BLOCK_SIZE, 15).
+-define(TO_CLIENT_COORD(N), (N * ?CLIENT_BLOCK_SIZE + ?HALF_CLIENT_BLOCK_SIZE)).
 
 -define(SCENE_STATE_RB,			1).
 -define(SCENE_STATE_BATTLE,		2).
@@ -182,6 +186,8 @@
 		special_title_data     = 0, %% 特殊称号
 		
 		stealth_data   = false,
+
+		die_data	   = 0,
 
 		path           = [],
 		send_pid       = 0,		%% 玩家的广播进程ID列表

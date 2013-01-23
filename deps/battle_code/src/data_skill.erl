@@ -12184,17 +12184,17 @@ get_fixed_cost(8) -> 80.
 
 %%================================================
 %% 根据平均天赋值获取对应的技能孔数量
-get_skill_hole_nums(AverageTalent) when AverageTalent >= 350 -> 6;
+get_skill_hole_nums(AverageTalent) when AverageTalent >= 300 -> 6;
 
-get_skill_hole_nums(AverageTalent) when AverageTalent >= 300 -> 5;
+get_skill_hole_nums(AverageTalent) when AverageTalent >= 250 -> 5;
 
-get_skill_hole_nums(AverageTalent) when AverageTalent >= 250 -> 4;
+get_skill_hole_nums(AverageTalent) when AverageTalent >= 200 -> 4;
 
-get_skill_hole_nums(AverageTalent) when AverageTalent >= 200 -> 3;
+get_skill_hole_nums(AverageTalent) when AverageTalent >= 150 -> 3;
 
-get_skill_hole_nums(AverageTalent) when AverageTalent >= 150 -> 2;
+get_skill_hole_nums(AverageTalent) when AverageTalent >= 100 -> 2;
 
-get_skill_hole_nums(AverageTalent) when AverageTalent >= 60 -> 1;
+get_skill_hole_nums(AverageTalent) when AverageTalent >= 50 -> 1;
 
 get_skill_hole_nums(AverageTalent) when AverageTalent >= 0 -> 0.
 
@@ -13044,19 +13044,18 @@ get_role_added_attri(222010) ->
 get_role_added_attri(101001) ->
 	#role_update_attri{
 		gd_liliang    = 0,
-		gd_maxHp      = 200
+		gd_maxHp      = 100
 	};
 
 get_role_added_attri(102001) ->
 	#role_update_attri{
-		gd_liliang    = 0,
-		gd_pojia      = 200
+		gd_liliang    = 0
 	};
 
 get_role_added_attri(103001) ->
 	#role_update_attri{
 		gd_liliang    = 0,
-		gd_baoji      = 200
+		gd_baoji      = 100
 	}.
 
 

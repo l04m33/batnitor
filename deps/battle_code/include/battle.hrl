@@ -1,7 +1,3 @@
-
-
-
-
 -define(BATTLE_FIELD_SIZE,        12).
 -define(BATTLE_ROW_SIZE,           3).
 -define(BATTLE_WAIT_CLIENT_INIT,    data_battle:get_wait_client_init_time()).
@@ -32,6 +28,12 @@
 
 -define(BATTLE_END_DISRUPTED, 1).
 -define(BATTLE_END_NORMAL,    0).
+
+-define(BATTLE_SKILL_STAT_NORMAL,           0).
+-define(BATTLE_SKILL_STAT_MP_NOT_ENOUGH,    1).
+-define(BATTLE_SKILL_STAT_HP_NOT_ENOUGH,    2).
+-define(BATTLE_SKILL_STAT_SCORNED,          3).
+-define(BATTLE_SKILL_STAT_IN_CD,            4).
 
 -define(BATTLE_OFFLINE_PVP_TYPES, 
         [?BATTLE_TYPE_ARENA,
@@ -433,9 +435,10 @@
 %% every skill or action produce a attack_pro
 -record(attack_pro,
 	{
-		is_miss,           %% at least hit one target
+		is_miss,          %% at least hit one target
 		pos,
 		skillid,
+        skill_stat,       %% MP不足或者被嘲讽的时候不能用技能，用这个字段来提示玩家
 		hp = 0,           %% final hp
 		mp = 0,           %% final mp 
 		hp_inc = 0,       %% hp affected by skill

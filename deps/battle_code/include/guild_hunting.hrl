@@ -18,7 +18,7 @@
 -define(GUILD_HUNTING_BONUS_TIME_2, (2*60*1000)).
 -define(GUILD_HUNTING_BONUS_TIME_3, (1*60*1000)).
 
--define(GUILD_HUNTING_DAILY_START_TIME, {19, 30, 0}).
+-define(GUILD_HUNTING_DAILY_START_TIME, {20, 40, 0}).
 
 -define(GUILD_HUNTING_MON_STATE_NORMAL,  1).
 -define(GUILD_HUNTING_MON_STATE_BOOSTED, 2).
@@ -27,10 +27,11 @@
 
 -define(GUILD_HUNTING_CD_INTERVAL, 2).      % in seconds
 
--define(GUILD_HUNTING_NORMAL_REWARD,  data_guild_hunting:get_misc_setting(1)).
+-define(GUILD_HUNTING_NORMAL_REWARD(Lv),  data_guild_hunting:get_reward_by_level(Lv)).
 
 -define(GUILD_HUNTING_CRATE_REWARD,         data_guild_hunting:get_misc_setting(13)).
 -define(GUILD_HUNTING_GREATER_CRATE_REWARD, data_guild_hunting:get_misc_setting(14)).
+-define(GUILD_HUNTING_TOP_CRATE_REWARD,     data_guild_hunting:get_misc_setting(20)).
 
 -define(GUILD_HUNTING_CRATE_DROP_RATE, data_guild_hunting:get_misc_setting(12)).
 -define(GUILD_HUNTING_BOSS_CRATE_DROP_RATE, data_guild_hunting:get_misc_setting(18)).
@@ -58,5 +59,17 @@
 -record(gh_player_info, {
     id,
     last_attack_time}).
+
+-record(guild_ranking_state, {
+    keys,
+    name,
+    top_players}).
+
+-record(player_ranking_state, {
+    keys,
+    name,
+    attack_times,
+    total_coins,
+    total_merit}).
 
 -endif.

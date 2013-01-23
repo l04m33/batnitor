@@ -11,7 +11,7 @@
 -define(STAGE_BOSS_KILL,		2).	%% BOSS被击杀
 
 %% 定义挑战魂将层数范围
--define(STAGE_FLOOR_RANGE, {1, 6}).
+-define(STAGE_FLOOR_RANGE, {1, 12}).
 
 %% 定义挑战魂将开启等级
 -define(STAGE_OPEN_LEVEL,	40).

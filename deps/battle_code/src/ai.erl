@@ -36,10 +36,11 @@
 %===================================================================================================
 
 %% SkillID is unique skill id 6-digits number
--spec validate_skill(SkillId, Src, BattleData) -> boolean() when
+-spec validate_skill(SkillId, Src, BattleData) -> true | false | {false, Reason} when
 	SkillId    :: integer(),
 	Src        :: integer(),
-	BattleData :: #battle_data{}.
+	BattleData :: #battle_data{},
+    Reason     :: integer().
 
 validate_skill(SkillUID, Src, BattleData) ->
 	SrcStat = battle:get_battle_status(Src, BattleData),
@@ -68,13 +69,13 @@ validate_skill(SkillUID, SkillId, Level, Src, BattleData) ->
 			
 			if (Stat#battle_status.mp < Mp)  -> 
 				   ?INFO(skill, "Mp not enough. "),
-				   false;
+				   {false, ?BATTLE_SKILL_STAT_MP_NOT_ENOUGH};
 			   (Stat#battle_status.hp =< Hp) -> 
 				   ?INFO(skill, "Hp not enough. "),
-				   false; 
+				   {false, ?BATTLE_SKILL_STAT_HP_NOT_ENOUGH}; 
 			   (InCd == true) -> 
 				   ?INFO(skill, "in CD state. CD list = ~w", [Stat#battle_status.cd]),
-				   false;
+				   {false, ?BATTLE_SKILL_STAT_IN_CD};
 			   true -> true
 			end
 	end.
@@ -100,7 +101,7 @@ is_learn_skill(_SkillId, []) ->
 %===================================================================================================
 
 -spec get_skill(integer(), #battle_data{}) -> 
-	{SkillUID :: integer(), Src :: integer(), Tar :: integer(), Index :: integer()}.
+    {SkillUID :: integer(), Src :: integer(), Tar :: integer(), Index :: integer(), SkillStat :: integer()}.
 				
 get_skill(Src, BattleData) -> 
 	SrcStat = battle:get_battle_status(Src, BattleData),
@@ -117,8 +118,11 @@ get_skill(Src, BattleData) ->
 			case validate_skill(SkillUID, Src, BattleData) of
 				true  -> 
 					Tar = get_skill_target(SkillUID, Src, BattleData),
-					{SkillUID, Src, Tar, SIndex};
+					{SkillUID, Src, Tar, SIndex, ?BATTLE_SKILL_STAT_NORMAL};
 				false ->
+                    ?INFO(ai, "Skill ~w not valid", [SkillUID]),
+					get_skill_1(SIndex, SIndex, SLen, SList, Src, BattleData);
+				{false, _} ->
                     ?INFO(ai, "Skill ~w not valid", [SkillUID]),
 					get_skill_1(SIndex, SIndex, SLen, SList, Src, BattleData)
 			end
@@ -136,15 +140,18 @@ get_super_skill([SkillUID | Rest]) ->
 
 get_skill_1(SIndex, OldIndex, SLen, _SList, Src, BattleData) when SIndex >= OldIndex + SLen ->
 	Tar = get_skill_target(?SKILL_COMMON_ATTACK, Src, BattleData),
-	{?SKILL_COMMON_ATTACK, Src, Tar, 1};
+	{?SKILL_COMMON_ATTACK, Src, Tar, 1, ?BATTLE_SKILL_STAT_NORMAL};
 
 get_skill_1(SIndex, OldIndex, SLen, SList, Src, BattleData) ->
 	SkillUID = lists:nth((SIndex - 1) rem SLen + 1, SList),
 	case validate_skill(SkillUID, Src, BattleData) of
 		true ->
 			Tar = get_skill_target(SkillUID, Src, BattleData),
-			{SkillUID, Src, Tar, SIndex rem SLen + 1};
+			{SkillUID, Src, Tar, SIndex rem SLen + 1, ?BATTLE_SKILL_STAT_NORMAL};
 		false ->
+            ?INFO(ai, "Skill ~w not valid", [SkillUID]),
+			get_skill_1(SIndex + 1, OldIndex, SLen, SList, Src, BattleData);
+		{false, _} ->
             ?INFO(ai, "Skill ~w not valid", [SkillUID]),
 			get_skill_1(SIndex + 1, OldIndex, SLen, SList, Src, BattleData)
 	end.
@@ -166,9 +173,15 @@ get_skill_target(SkillUID, Src, BattleData) ->
 			get_random_target(Camp, BattleData);
 		enemy ->
 			Camp = if (Src =< ?BATTLE_FIELD_SIZE div 2) -> def; true -> att end,
-			get_random_target(Camp, BattleData)
+            case {BattleData#battle_data.type, Camp} of
+                {?BATTLE_TYPE_BOSS, att} ->        % 世界BOSS打玩家的时候要先打武将再打主角……
+                    get_random_mer_target(Camp, BattleData);
+                _ ->
+                    %get_random_target(Camp, BattleData)
+                    get_random_target(Camp, BattleData)
+            end
 	end.
-		
+
 
 %% choose a random target from the BattleData of the camp
 -spec get_random_target(Camp, BattleData) -> Tar when
@@ -188,6 +201,34 @@ get_random_target(Camp, BattleData) ->
 		end,
 	Len = length(List),
 	lists:nth(random:uniform(Len), List).
+
+get_random_mer_target(Camp, BattleData) ->
+	List0 = case Camp of
+        att ->
+            battle:get_target_list(
+                battle:calc_range(1, ?ALLFRIENDLY), BattleData);
+        def ->
+            battle:get_target_list(
+                battle:calc_range(?BATTLE_FIELD_SIZE div 2 + 1, ?ALLFRIENDLY), BattleData)
+    end,
+
+    List = util:randomize(List0),
+    case look_for_mer(List, BattleData) of
+        not_found ->
+            Len = length(List),
+            lists:nth(random:uniform(Len), List);
+        {ok, MerPos} ->
+            MerPos
+    end.
+
+look_for_mer([Pos | RestPos], BattleData) ->
+    BStat = battle:get_battle_status(Pos, BattleData),
+    case BStat#battle_status.is_lead of
+        false -> {ok, Pos};
+        true  -> look_for_mer(RestPos, BattleData)
+    end;
+look_for_mer([], _BattleData) ->
+    not_found.
 
 
 %=========================================================================================================
@@ -273,6 +314,7 @@ parse_skills([Skill | Rest], Src, BattleData) ->
 	
 	case validate_skill(ID, Src, BattleData) of
 		false -> parse_skills(Rest, Src, BattleData);
+		{false, _} -> parse_skills(Rest, Src, BattleData);
 		true  ->
 			TarList = 
 				case TarType of

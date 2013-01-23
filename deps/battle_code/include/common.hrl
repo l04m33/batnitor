@@ -3,6 +3,7 @@
 
 -include("chief_disciple.hrl").
 -include("rank.hrl").
+
 -include("soul_ball.hrl").
 -include("cool_down.hrl").
 -include("temp_bag.hrl").
@@ -29,6 +30,11 @@
 -include("counter.hrl"). 
 -include("per_counter.hrl").
 -include("sword.hrl").
+
+-include("answer.hrl").
+
+-include("rush_rank.hrl").
+
 
 -include("team.hrl").
 -include("code_log.hrl").

@@ -1,6 +1,7 @@
 %% 玩家在比武场中的信息
 -record(comp_info, {
 					  gd_AccountID   = 0,				%% 账号ID
+					  gd_CompPid     = 0,				%% 个人比武模块PID
 					  gd_RoleLevel   = 0,				%% 角色等级
 					  gd_Score       = 0,				%% 荣誉积分
 					  gd_KillNum     = 0,				%% 杀人数
@@ -22,14 +23,15 @@
 
 %% 比武场全局状态
 -record(g_comp_status, {
-						key = key,
-						status = none,
-						first_bloods = [],
-						banners = [],
-						apply_time = 0,
-						begin_time = 0,
-						end_time = 0,
-						apply_forbits = []
+						key = key,				%% 查询记录用
+						status = none,			%% none | 'apply' | 'begin' | 'end'
+						first_bloods = [],		%% 记录各个级别的第一滴血已经被拿了
+						banners = [],			%% 记录各个级别的旗帜被升起
+						apply_time = 0,			%% 记录本次比武开始报名时间
+						begin_time = 0,			%% 记录本次比武开始时间
+						end_time = 0,			%% 记录本次比武结束时间
+						apply_forbits = [],		%% 记录各个级别比武已经提前结束
+						level_list = [1,2,3]	%% 记录各个级别对应的实际级别（用于高级比武场人不够被分到低级比武场的情况）
 					   }).
 
 %% 比武场个人状态
@@ -48,17 +50,17 @@
 
 %% 比武场战斗信息
 -record(comp_battle_info, {
-							comp_level     = 0,
-							att_id         = 0,
-							att_win_score  = 0,
-							att_loss_score = 0,
-							att_is_ball    = 0,
-							att_con_win    = 0,
-							def_id         = 0,
-							def_win_score  = 0,
-							def_loss_score = 0,
-							def_is_ball    = 0,
-							def_con_win    = 0
+							comp_level     = 0,	%% 比武级别
+							att_id         = 0,	%% 攻击者ID
+							att_win_score  = 0,	%% 攻击者胜利获得积分
+							att_loss_score = 0,	%% 攻击者失败获得积分
+							att_is_ball    = 0, %% 攻击者是否绣球
+							att_con_win    = 0, %% 攻击者连胜场次
+							def_id         = 0,	%% 防御者ID
+							def_win_score  = 0, %% 防御者胜利获得积分
+							def_loss_score = 0, %% 防御者失败获得积分
+							def_is_ball    = 0,	%% 防御者是否绣球
+							def_con_win    = 0	%% 防御者
 						   }).
 
 %% 比武场前三名信息
@@ -75,7 +77,7 @@
 							  gd_CompRank  = {integer},		%% 排名
 							  gd_RoleID    = {integer},		%% 角色ID
 							  gd_Slogan    = {string},		%% 冠军口号
-							  gd_DressList = {term}		%% 其他装扮信息（坐骑、翅膀、装备等）
+							  gd_DressList = {term}			%% 其他装扮信息（坐骑、翅膀、装备等）
 							 }).
 
 %% 比武场奖励信息

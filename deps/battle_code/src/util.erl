@@ -73,7 +73,9 @@
         timer_send_after/2,
         erlang_send_after/3,
         cancel_all_timer/0,
-        cancel_timer_by_name/2
+        cancel_timer_by_name/2,
+        is_in_list/2,
+        rand/3
     ]).
 
 timer_apply_after(TimeToWait, Mod, Fun, Args) ->
@@ -205,6 +207,30 @@ rand(Min, Max) ->
     %% random:seed(erlang:now()),
     M = Min - 1,
     random:uniform(Max - M) + M.
+    
+%% 从一个范围内随机取出N个数
+rand(Min, Max, N) ->
+	case Max - Min < N of
+	true ->
+		lists:seq(Min, Max);
+	false ->
+		rand(Min, Max, N, [])
+	end.
+	
+rand(_Min, _Max, 0, Res) ->
+	Res;
+rand(Min, Max, N, Res) ->
+	Val = rand(Min, Max),
+	case is_in_list(Res, Val) of
+	true ->
+		rand(Min, Max, N, Res);
+	false ->
+		rand(Min, Max, N - 1, [Val|Res])
+	end.
+	
+is_in_list(List, Ele) ->
+	Res = [E || E <- List, E =:= Ele],
+	length(Res) > 0.
 
 %%向上取整
 ceil(N) ->

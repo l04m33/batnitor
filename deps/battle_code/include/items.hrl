@@ -184,5 +184,17 @@
 							gd_num = {integer}
 							}).
 
+-record(xilian_info,{
+					 key ={0,0},
+					 is_can_take = 0,
+					 info_list = []  %% [[{type,value}]]
+					 }).
+
+-record(xilian_info_types,{
+					 key = {{integer},{integer}},
+					 is_can_take = {integer},
+					 info_list = {term}
+					 }).
+
 -define(MYSTICAL_SHOP_OPEN_LEVEL, 30).
 -define(MYSTICAL_SHOP_FRESH_TIME, 21600).

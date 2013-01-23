@@ -1,6 +1,6 @@
 -module(skill).
 -include("common.hrl").
--export([handle_skill/4, handle_skill/6, get_skill_id_level/1, get_skill_uid/2]).
+-export([handle_skill/5, handle_skill/6, get_skill_id_level/1, get_skill_uid/2]).
 
 
 -ifdef(debug).
@@ -45,42 +45,45 @@ get_skill_id_level(SkillUID) ->
 get_skill_uid(SkillID, Level) ->
 	SkillID * 1000 + Level.
 
--spec pre_handle_skill(Src, BattleData) -> #battle_data{} when 
+-spec pre_handle_skill(Src, BattleData, SkillStat) -> #battle_data{} when 
 	Src        :: integer(),
+    SkillStat  :: integer(),
 	BattleData :: #battle_data{}.
 
-pre_handle_skill(Src, BattleData) ->
+pre_handle_skill(Src, BattleData, SkillStat) ->
 	State  = battle:get_battle_status(Src, BattleData),
 	AttPro = 
 		#attack_pro {
 			skillid = 0,
 			pos = Src,
 			hp = State#battle_status.hp,
-			mp = State#battle_status.mp	
+			mp = State#battle_status.mp,
+            skill_stat = SkillStat
 		},
-	
+
 	?INFO(skill, "Src = ~w, hp = ~w", [Src, State#battle_status.hp]),
-	
+
 	BattleData1  = battle:add_attack_pro(AttPro, BattleData),
 	_BattleData2 = battle:settle_buff(pre, Src, BattleData1).
 
 %% handle_skill/4
--spec handle_skill(SkillUID, Src, Tar, BattleData) -> #battle_data{} when
-	SkillUID   :: integer(),
+-spec handle_skill(SkillUID, SkillStat, Src, Tar, BattleData) -> #battle_data{} when
+    SkillUID   :: integer(),
+    SkillStat  :: integer(),
 	Src        :: integer(),
 	Tar        :: integer(),
 	BattleData :: #battle_data{}.
 
-handle_skill(0, Src, 0, BData) -> %% for faint, just generate a 'blank' structure
+handle_skill(0, SkillStat, Src, 0, BData) -> %% for faint, just generate a 'blank' structure
 	?INFO(battle, "Fainting..."),
-	BattleData  = pre_handle_skill(Src, BData), 
+	BattleData  = pre_handle_skill(Src, BData, SkillStat), 
 	BattleData1 = battle:settle_buff(post, Src, BattleData),
 	battle:update_cd(Src, 0, 0, BattleData1);
 
-handle_skill(SkillUID, Src, Tar, BData) ->
+handle_skill(SkillUID, SkillStat, Src, Tar, BData) ->
 	?INFO(battle, "SkillUID = ~w", [SkillUID]),
     ?BATTLE_LOG("~n--------- 攻击者站位: ~w, 技能 ID: ~w ---------", [Src, SkillUID]),
-	BattleData = pre_handle_skill(Src, BData),
+	BattleData = pre_handle_skill(Src, BData, SkillStat),
     SrcStat = battle:get_battle_status(Src, BattleData),
     %% 这里不用判断整场战斗是否结束，只要判断当前角色有没挂就好了，
     %% 因为pre_handle_skill里的操作（目前）只能影响到当前角色，
@@ -1321,17 +1324,19 @@ handle_skill(_Skill = 254, Src, Tar, Level, Param, BattleData) ->
 %% 破军之势
 %% {攻击系数, 速度减少系数}
 handle_skill(Skill = 255, Src, Tar, _Level, Param, BattleData) ->
-    Buff = 
-        #buff {
-            name     = ?BUFF_FAINT,
-            by_rate  = false,
-            duration = 1,
-            settle   = post
-        },
+    TarList = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
+    {RealTar, _} = battle:get_pos_by(mp, max, TarList, BattleData),
+
+    Buff = #buff {
+        name     = ?BUFF_FAINT,
+        by_rate  = false,
+        duration = 1,
+        settle   = post
+    },
     
     AttSpec = #attack_spec {
         addition = ?p1,
-        targets  = [Tar],
+        targets  = [RealTar],
         debuff   = [{Buff, 1.0, add}]                           
     },
     battle:attack(Skill, Src, AttSpec, BattleData);

@@ -52,7 +52,11 @@
 						  update_index,			%% gen_cache对应的ets中做了修改了记录的索引
 						  update_interval = 5*60000, %% 缓存数据更新到数据库的间隔(ms)
 						  call_back,				%% gen_cache增删查改4个方法对应的call_back函数
-  						  update_timer = undefined
+  						  update_timer = undefined,
+						  lookup_counter = 0,		%%查找次数
+						  insert_counter = 0,        %%插入次数
+						  update_counter = 0,		%%更新次数
+						  delete_counter = 0		%%删除次数
 						  }).
 
 %% 以下4个字段对应的格式为{module, function}
