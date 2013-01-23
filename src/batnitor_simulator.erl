@@ -212,7 +212,7 @@ start_one_battle(MonGroupID, MaxGroupID, SimTimes, MaxSimTimes) ->
             PosList = lists:keysort(2, MonGroup#mon_group.pos),
             case PosList of
                 [{PlayerRoleID, _} | _] ->
-                    case prepare_mon_attr(MonGroup) of
+                    case (catch prepare_mon_attr(MonGroup)) of
                         {ok, _} ->
                             ?I("Starting battle process...."),
                             Start = #battle_start {
@@ -249,6 +249,11 @@ start_one_battle(MonGroupID, MaxGroupID, SimTimes, MaxSimTimes) ->
                         {bad_roles, BadRolesList} ->
                             append_battle_result(PlayerRoleID, MonGroupID, SimTimes,
                                                  lists:flatten(io_lib:format("Role ID not found: ~w", [BadRolesList]))), 
+                            error;
+                        
+                        {'EXIT', Reason} ->
+                            append_battle_result(PlayerRoleID, MonGroupID, SimTimes,
+                                                 lists:flatten(io_lib:format("prepare_mon_attr failed: ~w", [Reason]))),
                             error
                     end;
 
