@@ -1183,8 +1183,8 @@ handle_skill(SkillId = 243, Src, Tar, _Level, Param, BattleData) ->
 	List  = battle:get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
     NList = battle:get_n_pos_by(hp_rel, min, 3, List, BattleData),
 	
-	Buffs = [#buff{name = ?BUFF_MDEF_UP, value = ?p4, by_rate = true, settle = post}, 
-			 #buff{name = ?BUFF_PDEF_UP, value = ?p3, by_rate = true, settle = post}],
+	Buffs = [#buff{name = ?BUFF_MDEF_UP, value = ?p4, by_rate = true, settle = post, duration = 1}, 
+			 #buff{name = ?BUFF_PDEF_UP, value = ?p3, by_rate = true, settle = post, duration = 1}],
 	
 	BuffOps = [{Buff, ?p2, add} || Buff <- Buffs],
 	
