@@ -68,6 +68,7 @@
         schedule_timer/3,
         cancel_timer/1,
         get_daily_event_timeout/1,
+        get_daily_event_timeout/2,
         deep_list_foldl/3,
         timer_apply_after/4,
         timer_send_after/2,
@@ -75,8 +76,52 @@
         cancel_all_timer/0,
         cancel_timer_by_name/2,
         is_in_list/2,
-        rand/3
+        rand/3,
+        check_and_set_cd/3,
+        clear_cd/2,
+        g_2_unix_second/1,
+        u_2_gregorian_second/1,
+        u_2_week/1,
+        is_diff_week/1,
+		get_list_index/2,
+		record_add/2,
+		record_merge/2,
+        record_multiple/2,
+		caculate_attri/5,
+		caculate_attri2/5,
+		one_time_cultivation/8,
+		get_next_level/3,
+		get_next_levelingId/3,
+        get_time_2_activty_end/1,	
+		get_rand_list_element/1
     ]).
+
+get_time_2_activty_end(Day) ->
+    Now_time = calendar:local_time(), 
+    Now_second = calendar:datetime_to_gregorian_seconds(Now_time),
+    {Start_Y,Start_M,Start_D} = util:get_app_env(server_first_run),
+    Start_second = calendar:datetime_to_gregorian_seconds({{Start_Y,Start_M,Start_D },{0,0,0}}),
+    Start_second - Now_second + ?SECONDS_PER_DAY * Day + unixtime().
+
+%% 格里尼治时间戳转unix时间戳
+g_2_unix_second(G) ->
+    G_Second = calendar:datetime_to_gregorian_seconds(calendar:local_time()),
+    G_Second + unixtime() - G.
+
+%% unix时间戳转格里尼治时间戳
+u_2_gregorian_second(U) ->
+    G_Second = calendar:datetime_to_gregorian_seconds(calendar:local_time()),
+    G_Second - unixtime() + U.
+
+%% unix时间戳转{年,周}
+u_2_week(U) ->
+    Seconds = u_2_gregorian_second(U),
+    {Date,_Time} = calendar:gregorian_seconds_to_datetime(Seconds),
+    calendar:iso_week_number(Date).
+
+%% 是否是不同一周
+is_diff_week(Unix_timestamp) ->
+    u_2_week(Unix_timestamp) /= calendar:iso_week_number().
 
 timer_apply_after(TimeToWait, Mod, Fun, Args) ->
 	case timer:apply_after(TimeToWait, Mod, Fun, Args) of
@@ -116,15 +161,17 @@ cancel_all_timer() ->
 	
 cancel_timer_by_name(Type, Name) ->
 	F = 
-	fun({TimerType, TimerName, TimerRef}) ->
+	fun({TimerType, TimerName, TimerRef}, TimerList) ->
 		case Type =:= TimerType andalso Name =:= TimerName of
 		true ->
-			rm_timer({TimerType, TimerName, TimerRef});
+			rm_timer({TimerType, TimerName, TimerRef}),
+			TimerList;
 		false ->
-			ok
+			[{TimerType, TimerName, TimerRef}|TimerList]
 		end
 	end,
-	[F(TimerData) || TimerData <- get_all_ref()].
+	RestTimerList = lists:foldl(F, [], get_all_ref()),
+	put(all_timer_ref_in_process, RestTimerList).
 	
 rm_timer(Timer) ->
 	case Timer of
@@ -231,6 +278,23 @@ rand(Min, Max, N, Res) ->
 is_in_list(List, Ele) ->
 	Res = [E || E <- List, E =:= Ele],
 	length(Res) > 0.
+
+%% 从一个随机列表（[{Ele1, Rand1}, {Ele2, Rand2}, ...]）中随机取出一个元素
+get_rand_list_element(List) ->
+	F = fun({_E, R}, S) ->
+			S + R
+		end,
+	MaxRand = lists:foldl(F, 0, List),
+	Rand = util:rand(1, MaxRand),
+	get_element(List, Rand).
+
+get_element([{Ele, R}|Rest], Rand) ->
+	case Rand > R of
+		true ->
+			get_element(Rest, Rand - R);
+		false ->
+			Ele
+	end.
 
 %%向上取整
 ceil(N) ->
@@ -620,16 +684,18 @@ check_command(Binary1)->
 	 Server_seq = case get(last_seq) of
 	 undefined->
 	 	%%cjr,为了便于测试,我们会从65500开始
-	 	65499;
+	 	65501;
 	 Num->
 	 	if 
-	 			Num == 65535->-1;
+	 			%%Num == 65535->-1;
+				Num == -1->65535;
 	 			true->Num
 	 		end 
 	 end,
 	
 	 if
-	 	Server_seq+1 /= Seq ->
+	 	%%Server_seq+1 /= Seq ->
+		Server_seq-1 /= Seq ->
 	 		Ret = false;
 	 	true->
 	 		put(last_seq,Seq),
@@ -704,7 +770,9 @@ cancel_timer({OldTimerRef, Msg}) ->
     none.
 
 get_daily_event_timeout(DailyStartTime) ->
-    Now = {Date, Time} = calendar:local_time(),
+    get_daily_event_timeout(DailyStartTime, calendar:local_time()).
+
+get_daily_event_timeout(DailyStartTime, Now = {Date, Time}) ->
     NowSecs = calendar:datetime_to_gregorian_seconds(Now),
     TOSeconds = case Time >= DailyStartTime of
         true ->
@@ -728,3 +796,229 @@ deep_list_foldl(F, Acc, [E | Rest]) when not is_list(E) ->
 deep_list_foldl(_, Acc, []) ->
     Acc.
 
+check_and_set_cd(CDName, PlayerID, CDTime) ->
+    Now = util:longunixtime(),
+    LastTime = case erlang:get({CDName, PlayerID}) of
+        undefined -> 0;
+        T -> T
+    end,
+    case Now - LastTime >= CDTime of
+        true ->
+            erlang:put({CDName, PlayerID}, Now),
+            true;
+        _ ->        % false
+            false
+    end.
+
+clear_cd(CDName, PlayerID) ->
+    erlang:erase({CDName, PlayerID}).
+
+get_list_index(List,Ele)->
+	get_list_index_helper(List,Ele,0).
+
+get_list_index_helper([],_Ele,_Index)-> 0;
+get_list_index_helper([H|T],Ele,Index)->
+	if 
+		H == Ele -> Index+1;
+		true-> get_list_index_helper(T,Ele,Index+1)
+	end.
+%只能是数字的相加
+record_add(Rec1,Rec2) ->
+	[H1|T1] = tuple_to_list(Rec1),
+	[H2|T2] = tuple_to_list(Rec2),
+	case H1 =:= H2 andalso length(T1) =:= length(T2) of
+		true ->
+			AccList = lists:zipwith(fun(X,Y) when is_integer(X), is_integer(Y)-> X+Y end, T1, T2),
+			list_to_tuple([H1|AccList])
+	end.
+
+%只能是数字的叠加
+record_merge(Rec1,Rec2) ->
+	[H1|T1] = tuple_to_list(Rec1),
+	[H2|T2] = tuple_to_list(Rec2),
+	case H1 =:= H2 andalso length(T1) =:= length(T2) of
+		true ->
+			F = fun(X,Y) when is_integer(X), is_integer(Y)-> 
+					case X == 0 orelse Y == 0 of
+						true -> X + Y;
+						false -> erlang:max(X, Y)
+					end
+				end,
+			AccList = lists:zipwith(F, T1, T2),
+			list_to_tuple([H1|AccList])
+	end.
+
+%记录的倍数
+record_multiple(Rec,Num) ->
+	[H|T] = tuple_to_list(Rec),
+	F = fun(X) -> 
+			case is_integer(X) of
+                true ->
+                    erlang:trunc(X * Num);
+                false ->
+                    X
+            end
+		end,
+	AccList = lists:map(F, T),
+	list_to_tuple([H|AccList]).
+
+%计算一键修炼、研习等所加成的属性接口		
+caculate_attri(MinId,MaxId,UpLevel,AccRec,F) ->
+    F1 = fun(Level) ->
+ 			util:caculate_attri2(MinId,MaxId,Level,AccRec,F)
+ 	end,
+    RecList = [F1(N) || N <- lists:seq(1, UpLevel)],
+	lists:foldl(fun(Rec,AccRec1) -> util:record_merge(Rec, AccRec1) end, AccRec, RecList).
+
+%caculate_attri是修炼到了最后一个id, caculate_attri2没有修炼到最后一个id
+caculate_attri2(Id1,Id2,Level,AccRec,F) ->
+	IdList1 = lists:seq(Id1, Id2),
+	LevelList1 = lists:duplicate(length(IdList1), Level),
+	TupleList1 = lists:zip(IdList1, LevelList1),
+	List = lists:map(F, TupleList1),
+	lists:foldl(fun(Rec,AccRec1) -> util:record_merge(Rec, AccRec1) end, AccRec, List).		
+
+%一次修炼通用接口(人物Id,人物等级，所需升级等级，使用物品id,数量，元宝，铜币，消耗钱财类型)
+one_time_cultivation(PlayerId,RoleLevel,NeedLevel,ItemId,Num,Gold,Silver,UseMoneyType) ->	
+	case RoleLevel >=  NeedLevel of
+		false ->%人物等级不足
+			mod_err:send_err(PlayerId, ?ERR_NOT_ENOUGH_MER_LEVEL),
+			skip;
+		true ->	
+			case ItemId /= 0 of
+				true ->%需要使用物品，计算需要使用的铜币或元宝
+					case mod_items:has_items(PlayerId, ItemId, Num) of
+						true ->	
+							check_and_use_silver_and_gold(PlayerId,ItemId,Num,Gold,Silver,UseMoneyType);							
+						false ->
+							mod_err:send_err(PlayerId, ?ERR_ITEM_NOT_ENOUGH),
+							skip
+					end;
+				false ->%不需要使用物品
+					check_and_use_silver_and_gold(PlayerId,ItemId,Num,Gold,Silver,UseMoneyType)
+			end
+	end.
+
+check_and_use_silver_and_gold(PlayerId,ItemId,Num,Gold,Silver,UseMoneyType) ->
+	case Silver /= 0 of
+		true ->%需要花费铜币
+			case mod_economy:check_silver(PlayerId, Silver) of 
+				true ->
+					case Gold /= 0 of
+						true ->%需要花费元宝
+							case mod_economy:check_gold(PlayerId, Silver, UseMoneyType) of 
+								true ->
+									mod_economy:use_silver(PlayerId, Silver, UseMoneyType),
+									mod_economy:use_gold(PlayerId, Silver, UseMoneyType),										
+									case ItemId /= 0 of
+										true ->%直接使用物品，外层已经判断出有足够的物品
+											mod_items:useNumByItemID(PlayerId, ItemId, Num),
+											ok;
+										false ->
+											ok
+									end;									
+								false ->
+									mod_err:send_err(PlayerId, ?ERR_NOT_ENOUGH_GOLD),
+									skip
+							end;
+						false ->%不需要花费元宝，直接扣除铜币
+							mod_economy:use_silver(PlayerId, Silver, UseMoneyType),								
+							case ItemId /= 0 of
+								true ->
+									mod_items:useNumByItemID(PlayerId, ItemId, Num),
+									ok;
+								false ->
+									ok
+							end																																																
+					end;																								
+				false ->
+					mod_err:send_err(PlayerId, ?ERR_NOT_ENOUGH_SILVER),
+					skip
+			end;
+		false ->%不需要花费铜币
+			case Gold /= 0 of
+				true ->%直接使用元宝
+					case mod_economy:check_and_use_gold(PlayerId, Gold, UseMoneyType) of 
+						true ->
+							case ItemId /= 0 of
+								true ->
+									mod_items:useNumByItemID(PlayerId, ItemId, Num),
+									ok;
+								false ->
+									ok
+							end;
+						false ->
+							mod_err:send_err(PlayerId, ?ERR_NOT_ENOUGH_GOLD),
+							skip
+					end;
+				false ->%不需要花费元宝
+					case ItemId /= 0 of
+						true ->
+							mod_items:useNumByItemID(PlayerId, ItemId, Num),
+							ok;
+						false ->
+							ok
+					end
+			end											
+	end.	
+
+%% 根据规则获取下一轮修炼的等级
+get_next_level(MaxId,Id,Level) ->
+	case Id == MaxId of
+		true ->
+			Level + 1;
+		false ->
+			Level
+	end.
+
+%% 根据规则获取下一个要修炼的id
+get_next_levelingId(MinId,MaxId,Id) ->
+	case Id == MaxId of
+		true ->
+			MinId;
+		false ->
+			Id + 1
+	end.
+loop_judge(PlayerId,LevelingId,CurLevel,RoleLevel,OwnItemList,OwnSilver,CostItemList,OldSilverCost) ->
+	case CurLevel >= data_zhenfa:get_max_level() of
+        true ->
+            mod_err:send_err(PlayerId, ?ERR_ZHENFA_LEVEL_FULL),
+			[LevelingId,CurLevel,CostItemList,OldSilverCost];
+        false ->
+        	NeedLevel = data_zhenfa:get_needlevel_by_yanxi(CurLevel+1),
+        	?INFO(zhenfa,"Needlevel:~w",[NeedLevel]),       			
+			case RoleLevel >=  NeedLevel of
+				false ->
+					mod_err:send_err(PlayerId, ?ERR_NOT_ENOUGH_MER_LEVEL),
+					[LevelingId,CurLevel,CostItemList,OldSilverCost];
+				true ->			
+					NewLevelingId = util:get_next_levelingId(?MIN_ZHENFA_ID,?MAX_ZHENFA_ID,LevelingId),
+					{ItemId,Num} = data_zhenfa:get_need_items(NewLevelingId,CurLevel+1),
+					case lists:keyfind(ItemId, 1, OwnItemList) of
+						false ->
+							mod_err:send_err(PlayerId, ?ERR_ITEM_NOT_ENOUGH),
+							[LevelingId,CurLevel,CostItemList,OldSilverCost];
+						Tuple ->
+							{_,Num1} = Tuple,
+							case Num1 >= Num of
+								true ->	
+									NewTuple = {ItemId,Num1 - Num},
+									NewOwnList = lists:keyreplace(ItemId, 1, OwnItemList, NewTuple),
+									NewCostItemList	= [{ItemId,Num}|CostItemList],							
+									SilverCost = data_zhenfa:get_leveling_cost(CurLevel+1),
+									NewSilverCost = OldSilverCost + SilverCost,
+									case OwnSilver >= NewSilverCost of 
+										true ->
+											NewLevel = util:get_next_level(?MAX_ZHENFA_ID, NewLevelingId, CurLevel),
+											loop_judge(PlayerId,NewLevelingId,NewLevel,RoleLevel,NewOwnList,OwnSilver,NewCostItemList,NewSilverCost);
+										false ->
+											mod_err:send_err(PlayerId, ?ERR_NOT_ENOUGH_SILVER),
+											[LevelingId,CurLevel,CostItemList,OldSilverCost]
+									end;
+							false ->
+									mod_err:send_err(PlayerId, ?ERR_ITEM_NOT_ENOUGH),
+									[LevelingId,CurLevel,CostItemList,OldSilverCost]
+							end
+					end
+			end
+    end.

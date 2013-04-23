@@ -14,7 +14,7 @@
 -define(STAGE_FLOOR_RANGE, {1, 12}).
 
 %% 定义挑战魂将开启等级
--define(STAGE_OPEN_LEVEL,	40).
+-define(STAGE_OPEN_LEVEL,	45).
 
 %% 定义玩家每层挑战信息
 -record(stage_floor_info, 

@@ -196,8 +196,32 @@ write(20010, MonsterHPList) ->
     Payload = list_to_binary([<<(length(MonsterHPList)):16>> | BinList]),
     pt:pack(20010, Payload);
 
-write(20011, AddedRate) ->
-    pt:pack(20011, <<AddedRate:16>>);
+write(20011, BattleData) when is_record(BattleData, battle_data) ->
+    IDList = battle:get_online_ids(BattleData),
+    BuffWriter = fun(B, {Len, AccBin}) ->
+            Type = B#buff.name,
+            Value = B#buff.value,
+            Show = ?G_BUFF_SHOW,
+            {Len + 1, <<AccBin/binary, Type:8, Value:16, Show:8>>}
+        end,
+    lists:map(fun(ID) ->
+            PInfo = battle:get_player_info(ID, BattleData),
+            GBuffList = PInfo#player_info.g_buffs,
+            {Len, BuffBin} = lists:foldl(BuffWriter, {0, <<>>}, GBuffList),
+            {ID, pt:pack(20011, <<Len:16, BuffBin/binary>>)}
+        end,
+        IDList);
+
+write(20011, GBuffList) when is_list(GBuffList) ->
+    BuffWriter = fun(B, {Len, AccBin}) ->
+            Type = B#buff.name,
+            Value = B#buff.value,
+            Show = ?G_BUFF_SHOW,
+            {Len + 1, <<AccBin/binary, Type:8, Value:16, Show:8>>}
+        end,
+    {Len, BuffBin} = lists:foldl(BuffWriter, {0, <<>>}, GBuffList),
+    pt:pack(20011, <<Len:16, BuffBin/binary>>);
+
 
 write(20012, Plot) ->
     [PrePlot, PostPlot | _] = Plot#battle_plot.plots,

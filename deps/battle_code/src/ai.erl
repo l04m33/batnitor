@@ -10,7 +10,8 @@
 	get_skill_by_ai/3, 
 	validate_skill/3,
 	get_skill/2,
-	get_skill_target/3]).
+	get_skill_target/3,
+    transform_ai/3]).
 
 -type ai_attr() :: hp | mp | p_att | m_att | p_def | m_def.
 -type ai_cmp()  :: lt | gt | le | ge | max | min.
@@ -110,23 +111,37 @@ get_skill(Src, BattleData) ->
 	SLen    = length(SList),
 	
 	?INFO(ai, "Src = ~w, SList = ~w", [Src, SList]),
-	
-	case get_super_skill(SList) of
-		false ->
-			get_skill_1(SIndex, SIndex, SLen, SList, Src, BattleData);
-		{true, SkillUID} ->
-			case validate_skill(SkillUID, Src, BattleData) of
-				true  -> 
-					Tar = get_skill_target(SkillUID, Src, BattleData),
-					{SkillUID, Src, Tar, SIndex, ?BATTLE_SKILL_STAT_NORMAL};
-				false ->
-                    ?INFO(ai, "Skill ~w not valid", [SkillUID]),
-					get_skill_1(SIndex, SIndex, SLen, SList, Src, BattleData);
-				{false, _} ->
-                    ?INFO(ai, "Skill ~w not valid", [SkillUID]),
-					get_skill_1(SIndex, SIndex, SLen, SList, Src, BattleData)
-			end
-	end.
+
+    %% TODO: 把 [] 换成真的 AI 设定……
+    {AISkillUID, _AISpeakID, AITarList} = parse_ai_settings(Src, SrcStat#battle_status.ai, BattleData),
+
+    case AISkillUID of
+        0 ->
+            case get_super_skill(SList) of
+                false ->
+                    get_skill_1(SIndex, SIndex, SLen, SList, Src, BattleData);
+                {true, SkillUID} ->
+                    case validate_skill(SkillUID, Src, BattleData) of
+                        true  -> 
+                            Tar = get_skill_target(SkillUID, Src, BattleData),
+                            {SkillUID, Src, Tar, SIndex, ?BATTLE_SKILL_STAT_NORMAL};
+                        false ->
+                            ?INFO(ai, "Skill ~w not valid", [SkillUID]),
+                            get_skill_1(SIndex, SIndex, SLen, SList, Src, BattleData);
+                        {false, _} ->
+                            ?INFO(ai, "Skill ~w not valid", [SkillUID]),
+                            get_skill_1(SIndex, SIndex, SLen, SList, Src, BattleData)
+                    end
+            end;
+        _ ->
+            Tar = case AITarList of
+                [] ->
+                    get_skill_target(AISkillUID, Src, BattleData);
+                _ ->
+                    {ai_override, AITarList}
+            end,
+            {AISkillUID, Src, Tar, SIndex, ?BATTLE_SKILL_STAT_NORMAL}
+    end.
 
 get_super_skill([]) -> false;
 get_super_skill([SkillUID | Rest]) ->
@@ -473,73 +488,118 @@ intersect([List]) -> List;
 intersect([List1, List2 | Rest]) ->
 	intersect([intersect(List1, List2) | Rest]).
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+parse_target_spec(Src, {target, Camp, PositionSpec}, BattleData) ->
+    case Camp of
+        rival ->
+            RawList = battle:get_target_list(battle:calc_range(Src, ?ALLENEMY), BattleData),
+            case PositionSpec of
+                front ->
+                    battle:get_first_row(RawList, ?BATTLE_ROW_SIZE, BattleData);
+                rear ->
+                    battle:get_last_row(RawList, ?BATTLE_ROW_SIZE, BattleData)
+            end;
+        friendly ->
+            RawList = battle:get_target_list(battle:calc_range(Src, ?ALLFRIENDLY), BattleData),
+            case PositionSpec of
+                front ->
+                    battle:get_first_row(RawList, ?BATTLE_ROW_SIZE, BattleData);
+                rear ->
+                    battle:get_last_row(RawList, ?BATTLE_ROW_SIZE, BattleData)
+            end
+    end.
+
+parse_ai_result(Src, CurAI, BattleData) ->
+    case CurAI of
+        {_, Act} ->
+            {action, AISkill, AISpeak} = Act,
+            TarList = [];
+        {_, Act, TarSpec} ->
+            {action, AISkill, AISpeak} = Act,
+            TarList = parse_target_spec(Src, TarSpec, BattleData)
+    end,
+    {AISkill, AISpeak, TarList}.
+
+parse_ai_settings(_Src, [], _BattleData) ->
+    {0, 0, []};
+parse_ai_settings(Src, [CurAI | Rest], BattleData) ->
+    Cond = element(1, CurAI),
+    case Cond of
+        {round, RoundN} ->
+            if 
+                BattleData#battle_data.round =:= RoundN ->
+                    parse_ai_result(Src, CurAI, BattleData);
+                true ->
+                    parse_ai_settings(Src, Rest, BattleData)
+            end;
+        {hp, Pos, Percentage} ->
+            case battle:get_rel_hp(Pos, BattleData) < Percentage of
+                true ->
+                    parse_ai_result(Src, CurAI, BattleData);
+                false ->
+                    parse_ai_settings(Src, Rest, BattleData)
+            end;
+        {rear_all_dead, Pos} ->
+            RawList = battle:get_target_list(battle:calc_range(Pos, ?ALLFRIENDLY), BattleData),
+            RearRowList = battle:get_last_row(RawList, ?BATTLE_ROW_SIZE, BattleData),
+            case lists:member(Pos, RearRowList) of
+                true ->
+                    parse_ai_result(Src, CurAI, BattleData);
+                false ->
+                    parse_ai_settings(Src, Rest, BattleData)
+            end;
+        {front_all_dead, Pos} ->
+            RawList = battle:get_target_list(battle:calc_range(Pos, ?ALLFRIENDLY), BattleData),
+            RearRowList = battle:get_first_row(RawList, ?BATTLE_ROW_SIZE, BattleData),
+            case lists:member(Pos, RearRowList) of
+                true ->
+                    parse_ai_result(Src, CurAI, BattleData);
+                false ->
+                    parse_ai_settings(Src, Rest, BattleData)
+            end;
+        default ->
+            parse_ai_result(Src, CurAI, BattleData)
+    end.
+
+transform_ai([H | T], AccList, Param) ->
+    case H of
+        {Cond, Action} ->
+            NewEntry = {transform_ai_condition(Cond, Param), transform_ai_action(Action, Param)},
+            transform_ai(T, [NewEntry | AccList], Param);
+        {Cond, Action, Target} ->
+            NewEntry = {transform_ai_condition(Cond, Param), transform_ai_action(Action, Param), 
+                        transform_ai_target(Target, Param)},
+            transform_ai(T, [NewEntry | AccList], Param)
+    end;
+transform_ai([], AccList, _) ->
+    lists:reverse(AccList).
+
+transform_ai_param(PName, Param) ->
+    N = try
+        list_to_integer(tl(atom_to_list(PName)))
+    catch error : badarg ->
+        0
+    end,
+    case N of
+        0 -> PName;
+        _ -> element(N, Param)
+    end.
+
+transform_ai_condition(Cond, Param) ->
+    case is_tuple(Cond) of
+        true ->
+            L = tuple_to_list(Cond),
+            NewL = lists:map(
+                fun(E) ->
+                    transform_ai_param(E, Param)
+                end, L),
+            list_to_tuple(NewL);
+        false ->
+            transform_ai_param(Cond, Param)
+    end.
+
+transform_ai_action(Action, Param) ->
+    transform_ai_condition(Action, Param).
+
+transform_ai_target(Target, Param) ->
+    transform_ai_condition(Target, Param).
 

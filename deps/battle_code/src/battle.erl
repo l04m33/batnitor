@@ -19,7 +19,11 @@
 
 -export([set_battle_plot/2]).
 
+-export([get_items_dispatch/3, merge_dispatch_list/3]).
+
 -compile(export_all).
+
+-define(FORMATION_TEAM_OPEN_POS, [1,2,3,4,5,6,7,8,9]).
 
 %% ====================================================================
 %% External functions
@@ -72,7 +76,7 @@ end_plot(BattlePID, ID) ->
             ok
     end.
 
-logout(BattlePid, {logout, ID}) ->
+logout(BattlePid, ID) ->
 	gen_fsm:send_all_state_event(BattlePid, {logout, ID}).
 
 %%判断是否需要加人，如果需要，返回plot list，否则返回undefined
@@ -107,6 +111,7 @@ set_battle_plot(Id,MonsterId)->
 %% --------------------------------------------------------------------
 init(Start) ->
 	?INFO(battle, "Start = ~w", [Start]),
+	process_flag(trap_exit,true),
 	{H, M, S} = now(),
 	put(id, Start#battle_start.att_id),
 	
@@ -116,28 +121,36 @@ init(Start) ->
 	BattleData = get_battle_data(Start),
 	IDList1 = get_ids(att, BattleData),
 	IDList2 = get_ids(def, BattleData),
-	
-	case catch check_battle(Start, IDList1, IDList2) of
-		true ->
-			?INFO(battle, "Battle started."),
-			%% may be check the operation in the future
-			{ok, battle_init, BattleData#battle_data {timeout = {now(), 0}}, 0};
-		False ->
-			clear_battle(IDList1 ++ IDList2, self()),
-			case False of
-			false ->
-				%% print the err msg here.
-				?DEBUG(battle, "Check Battle Fail."),
-				ignore;
-			{false, Reason} ->
-				?DEBUG(battle, "Check Battle Fail: Reason: ~w", [Reason]),
-				ignore;
-			{'EXIT', Reason} ->
-				%% reach here probably because player is not online
-				?DEBUG(battle, "check battle Fail: Reason: ~w", [Reason]),
-				ignore
-			end
-	end.
+
+    case check_cross(get_online_ids(BattleData), BattleData) of
+        true ->
+            case catch check_battle(Start, IDList1, IDList2, BattleData) of
+                true ->
+                    ?INFO(battle, "Battle started."),
+                    %% may be check the operation in the future
+                    {ok, battle_init, BattleData#battle_data {timeout = {now(), 0}}, 0};
+                False ->
+                    clear_battle(IDList1 ++ IDList2, self()),
+                    case False of
+                    false ->
+                        %% print the err msg here.
+                        ?DEBUG(battle, "Check Battle Fail."),
+                        ignore;
+                    {false, Reason} ->
+                        ?DEBUG(battle, "Check Battle Fail: Reason: ~w", [Reason]),
+                        ignore;
+                    {'EXIT', Reason} ->
+                        %% reach here probably because player is not online
+                        ?DEBUG(battle, "check battle Fail: Reason: ~w", [Reason]),
+                        ignore
+                    end
+            end;
+
+        false ->
+            %% print the err msg here.
+            ?DEBUG(battle, "check_cross failed."),
+            ignore
+    end.
 
 clear_battle([], _Pid) -> ok;
 clear_battle([ID | Rest], Pid) ->
@@ -154,9 +167,17 @@ battle_init(_Event, BattleData) ->
 	NBattleData = start_new_round(BattleData),
 	
 	send_start_package(NBattleData),
+    send_global_buff(NBattleData),
 
-	{next_state, battle_wait_for_client, NBattleData#battle_data {
-		timeout = {now(), ?BATTLE_WAIT_CLIENT_INIT}}, ?BATTLE_WAIT_CLIENT_INIT}.
+    case is_all_players_ready(NBattleData) of
+        false ->
+            {next_state, battle_wait_for_client, NBattleData#battle_data {
+                timeout = {now(), ?BATTLE_WAIT_CLIENT_INIT}}, ?BATTLE_WAIT_CLIENT_INIT};
+        true ->
+            ?INFO(battle, "All players ready"),
+            {next_state, battle_run, NBattleData#battle_data {
+                timeout = {now(), ?BATTLE_WAIT_BEGIN}}, ?BATTLE_WAIT_BEGIN}
+    end.
 
 battle_wait_for_client({ready, ID}, BattleData) ->
 	{Now, Timeout} = time_remain(BattleData),
@@ -179,7 +200,16 @@ battle_wait_for_client({ready, ID}, BattleData) ->
             end
     end;
 
+%% 这里也要处理set_cmd消息，不然战斗开始后的第一个命令包可能会漏掉
+battle_wait_for_client({set_cmd, ID, Cmd}, BattleData) ->
+	{Now, Timeout} = time_remain(BattleData),
+    %% 这里故意不检查CD，防止正式进入战斗之后卡掉时序正常的命令包
+    NBattleData = set_battle_cmd(ID, Cmd, BattleData),
+    {next_state, battle_wait_for_client, NBattleData#battle_data {
+        timeout = {Now, Timeout}}, Timeout};
+
 battle_wait_for_client(timeout, BattleData) ->
+    ?ERR(battle, "battle_wait_for_client timed out...."),
     {next_state, battle_run, BattleData#battle_data {
         timeout = {now(), ?BATTLE_WAIT_BEGIN}}, ?BATTLE_WAIT_BEGIN};
 
@@ -206,15 +236,26 @@ battle_run(Event, BattleData) ->
 		case Event of
 			%% if (Cmd == 0) then client ask us to set the command for him/her
 			{set_cmd, ID, Cmd} ->
-                case check_and_set_cd(set_cmd_cd, ID, -1000) of
+                ForceEnd = false,
+                case BattleData#battle_data.round =:= 1 
+                        orelse check_and_set_cd(set_cmd_cd, ID, 1000) of
                     true ->
                         BattleData1 = set_battle_cmd(ID, Cmd, BattleData),
-                        BattleData1;
+                        case BattleData1#battle_data.round =:= 1
+                                andalso is_command_set(BattleData1) of
+                            true ->
+                                BattleData2 = handle_command_ex(BattleData1, true),
+                                BattleData2;
+                            false ->
+                                BattleData1
+                        end;
                     false ->        % 发包太快，忽略
+                        ?ERR(battle, "set_cmd command ignored, ID = ~w", [ID]),
                         BattleData
                 end;
 			{finish_play, ID} ->
-                case check_and_set_cd(finish_play_cd, ID, -1000) of
+                ForceEnd = false,
+                case check_and_set_cd(finish_play_cd, ID, 1000) of
                     true ->
                         %% every time we have sent the result to the client, 
                         %% we have to wait the client send us a signal to indicate the client has played the result
@@ -236,15 +277,27 @@ battle_run(Event, BattleData) ->
                                 end
                         end;
                     false ->        % 发包太快，忽略
+                        ?ERR(battle, "finish_play command ignored, ID = ~w", [ID]),
                         BattleData
                 end;
 			timeout ->
                 ?BATTLE_LOG("--------- 超时！ ---------"),
-				?INFO(battle, "timeout... Timeout = ~w", [Timeout]),
-				%% trigger a new battle action if timeout
-				BattleData1 = handle_command_ex(BattleData, true),
-				BattleData1;
+				?ERR(battle, "timeout... Timeout = ~w", [Timeout]),
+
+                OldTOTimes = incr_timeout_times(),
+                ?INFO(battle, "OldTOTimes = ~w", [OldTOTimes]),
+                case OldTOTimes >= 2 of
+                    true ->
+                        ForceEnd = true,
+                        BattleData;
+                    _ ->        % false
+                        ForceEnd = false,
+                        %% trigger a new battle action if timeout
+                        BattleData1 = handle_command_ex(BattleData, true),
+                        BattleData1
+                end;
 			_ ->
+                ForceEnd = false,
 				BattleData
 		end,
 	
@@ -267,20 +320,57 @@ battle_run(Event, BattleData) ->
                     ?INFO(battle, "sending battle award"),
                     send_battle_award(NBattleData1),
                     ?INFO(battle, "sending battle result"),
-                    send_result_package(NBattleData1),
-                    {next_state, battle_complete, NBattleData1, ?BATTLE_WAIT_QUIT}
+                    %% 如果没发过20001，客户端会一直在等20001，
+                    %% 这时只有收到状态是 ?BATTLE_END_DISRUPTED 的20005，
+                    %% 客户端才能结束战斗
+                    case sent_any_20001() of
+                        true ->
+                            send_result_package(NBattleData1);
+                        false ->
+                            send_result_package(NBattleData1, ?BATTLE_END_DISRUPTED)
+                    end,
+                    case get_online_ids(NBattleData1) of
+                        [] ->
+                            GhostIDList = get_ids(NBattleData1),
+                            [notify_complete_direct(GID, NBattleData1) || GID <- GhostIDList],
+                            {stop, normal, NBattleData1};
+                        _ ->
+                            ?INFO(battle, "battle_complete...."),
+                            {next_state, battle_complete, NBattleData1, ?BATTLE_WAIT_QUIT}
+                    end
             end;
 		
 		false ->
 			if (Event == timeout) ->
-                case check_plot_trigger(NBattleData) of
-                    {true, Plot, NBattleData1} ->
-                        NBattleData2 = trigger_plot(Plot, NBattleData1),
-                        {next_state, battle_plot, NBattleData2#battle_data {
-                            timeout = {Now, ?BATTLE_WAIT_PLOT}}, ?BATTLE_WAIT_PLOT};
+                case ForceEnd of
+                    true ->         % 战斗timeout太多次了，马上结束
+                        EmptyAward = #battle_award{},
+                        NBattleData1 = NBattleData#battle_data{
+                            timeout = {Now, ?BATTLE_WAIT_QUIT},
+                            winner  = ?UNDEFINED, 
+                            award   = EmptyAward
+                        },
+                        ?INFO(battle, "sending battle result"),
+                        send_result_package(NBattleData1, ?BATTLE_END_DISRUPTED),
+                        case get_online_ids(NBattleData1) of
+                            [] ->
+                                GhostIDList = get_ids(NBattleData1),
+                                [notify_complete_direct(GID, NBattleData1) || GID <- GhostIDList],
+                                {stop, normal, NBattleData1};
+                            _ ->
+                                ?INFO(battle, "battle_complete...."),
+                                {next_state, battle_complete, NBattleData1, ?BATTLE_WAIT_QUIT}
+                        end;
                     false ->
-                        {next_state, battle_run, NBattleData#battle_data {
-                            timeout = {Now, ?BATTLE_WAIT_FINISH}}, ?BATTLE_WAIT_FINISH}
+                        case check_plot_trigger(NBattleData) of
+                            {true, Plot, NBattleData1} ->
+                                NBattleData2 = trigger_plot(Plot, NBattleData1),
+                                {next_state, battle_plot, NBattleData2#battle_data {
+                                    timeout = {Now, ?BATTLE_WAIT_PLOT}}, ?BATTLE_WAIT_PLOT};
+                            false ->
+                                {next_state, battle_run, NBattleData#battle_data {
+                                    timeout = {Now, ?BATTLE_WAIT_FINISH}}, ?BATTLE_WAIT_FINISH}
+                        end
                 end;
 			true -> 
 				%% some player has not acted yet(due to the same round), 
@@ -342,16 +432,39 @@ battle_complete({set_cmd, ID, Cmd}, BattleData) ->
                         send_command_package(Info#player_info.lead, ?SKILL_COMMON_ATTACK, BattleData)
                     end;
                 Sid when is_integer(Sid) ->
-                    send_command_confirm_package(ID, Sid)
+                    send_command_confirm_package(Info#player_info.lead, Sid, BattleData)
             end
     end,
 	{next_state, battle_complete, BattleData#battle_data {timeout = {Now, Timeout}}, Timeout};
 
 battle_complete(timeout, BattleData) ->
-	{stop, normal, BattleData};
+    ?INFO(cross, "battle_complete timed out...."),
+    F = fun(PlayerID, BData) ->
+        case get_player_info(PlayerID, BData) of
+            false ->
+                BData;
+            Info ->
+                case Info#player_info.finish_play of
+                    quit ->
+                        BData;
+                    _ ->
+                        ?INFO(battle, "notifying player ~w", [PlayerID]),
+                        NInfo = Info#player_info{finish_play = quit},
+                        NBData = set_player_info(PlayerID, NInfo, BData),
+                        try
+                            notify_complete(PlayerID, NBData)
+                        catch ErrType : ErrReason ->
+                            ?INFO(battle, "notify_complete failed, ~w: ~w", [ErrType, ErrReason])
+                        end,
+                        NBData
+                end
+        end
+    end,
+    NBattleData = lists:foldl(F, BattleData, get_online_ids(BattleData)),
+	{stop, normal, NBattleData};
 
 battle_complete({quit, ID}, BattleData) ->
-	?INFO(battle, "receive command quit"),
+	?INFO(cross, "receive command quit, ID = ~w", [ID]),
 	{Now, Timeout} = time_remain(BattleData),
 	
 	NBattleData = 
@@ -428,9 +541,21 @@ handle_event(Event, StateName, BattleData) ->
 								timeout = {Now, ?BATTLE_WAIT_QUIT}
 							},
 							
-							send_battle_award(NBattleData1),
-							send_result_package(NBattleData1, ?BATTLE_END_DISRUPTED),
-							{next_state, battle_complete, NBattleData1, ?BATTLE_WAIT_QUIT}
+                            if
+                                StateName =:= battle_wait_for_client ->
+                                    ?ERR(battle, "Oops, logout in battle_wait_for_client, ID = ~w", [ID]),
+                                    battle_wait_for_client({ready, ID}, NBattleData1#battle_data{timeout = {Now, Timeout}});
+                                StateName =:= battle_complete ->
+                                    %% 在battle_complete状态说明已经发过结果包了，走battle_complete
+                                    ?INFO(cross, "logout in battle_complete, ID = ~w", [ID]),
+                                    battle_complete({quit, ID}, NBattleData#battle_data{timeout = {Now, Timeout}});
+                                true ->
+                                    send_battle_award(NBattleData1),
+                                    ?INFO(battle, "sending battle result"),
+                                    send_result_package(NBattleData1, ?BATTLE_END_DISRUPTED),
+                                    ?INFO(battle, "battle_complete.... Camp = ~w", [Camp]),
+                                    {next_state, battle_complete, NBattleData1, ?BATTLE_WAIT_QUIT}
+                            end
 					end
 			end;
 		_ -> 
@@ -460,6 +585,10 @@ handle_sync_event(_Event, _From, StateName, BattleData) ->
 handle_info(debug, StateName, BattleData) ->
 	?INFO(battle, "StateName = ~w, BattleData = ~w", [StateName, BattleData]),
 	{next_state, StateName, BattleData};
+
+handle_info({'EXIT', _, Reason}, _, BattleData) ->
+    ?INFO(battle,"exit:~w", [Reason]),
+    {stop, Reason, BattleData};
 
 handle_info(_Info, StateName, BattleData) ->
     {next_state, StateName, BattleData}.
@@ -507,7 +636,7 @@ terminate(Reason, _StateName, BattleData) ->
     ok.
 
 notify_complete(ID, BattleData) ->
-	?INFO(battle, "calling notify complete, ID = ~w", [ID]),
+	?INFO(cross, "calling notify complete, ID = ~w", [ID]),
 	
 	Callback = BattleData#battle_data.callback,
 	Type     = BattleData#battle_data.type,
@@ -530,6 +659,8 @@ notify_complete(ID, BattleData) ->
 	end,
 	
 	WinHPList1 = get_battle_hp_list(Winner, BattleData),
+    FullHPList = get_full_battle_hp_list(BattleData),
+    ?INFO(battle, "FullHPList = ~w", [FullHPList]),
 	F1 = fun({Pos, HP}) ->
 				 {(Pos - 1) rem (?BATTLE_FIELD_SIZE div 2) + 1, HP}
 		 end,
@@ -540,12 +671,14 @@ notify_complete(ID, BattleData) ->
 			is_win    = IsWin, 
 			mon_id    = BattleData#battle_data.monster,
 			type      = Type, 
+            battle_pid = self(),
 			hp_list   = WinHPList,
+            full_hp_list = FullHPList,
 			callback  = Callback, 
 			statistic = Statistic
 		},
 	
-	catch mod_player:battle_complete(ID, Res).
+	mod_player:battle_complete(ID, Res).
 
 %% --------------------------------------------------------------------
 %% Func: code_change/4
@@ -570,23 +703,24 @@ get_battle_data(Start) ->
 	Callback = Start#battle_start.callback, 
 	MakeTeam = Start#battle_start.maketeam,
 	Array    = array:new(?BATTLE_FIELD_SIZE + 1),
+    OfflineList = Start#battle_start.off_line_list,
 	
 	case Mod of
 		pve -> 
 			?INFO(battle, "calling get_mer_info"),
-			{Attacker, Array1} = get_mer_info(att, AttID, AttMer, MakeTeam, Array, Type),
+			{Attacker, Array1} = get_mer_info(att, AttID, AttMer, MakeTeam, Array, Type, OfflineList),
 			?INFO(battle, "calling get_mon_info"),
 			{Defender, Array2} = get_mon_info(def, MonID, Start#battle_start.monster_hp, Array1),
 			?INFO(battle, "done..."),
             PlayerLevel = mod_role:get_main_level(AttID),
             PlotList = [transform_plot(AttID, PlayerLevel, P) || P <- Start#battle_start.plot];
 		pvp ->
-			{Attacker, Array1} = get_mer_info(att, AttID, AttMer, MakeTeam, Array, Type),
+			{Attacker, Array1} = get_mer_info(att, AttID, AttMer, MakeTeam, Array, Type, OfflineList),
             case Type of
                 ?BATTLE_TYPE_BOSS ->
-                    {Defender, Array2} = get_mer_info(boss_def, DefID, DefMer, MakeTeam, Array1, Type);
+                    {Defender, Array2} = get_mer_info(boss_def, DefID, DefMer, MakeTeam, Array1, Type, OfflineList);
                 _ ->
-                    {Defender, Array2} = get_mer_info(def, DefID, DefMer, MakeTeam, Array1, Type)
+                    {Defender, Array2} = get_mer_info(def, DefID, DefMer, MakeTeam, Array1, Type, OfflineList)
             end,
             PlotList = []       % PVP不支持加人和播剧情……
 	end,
@@ -752,7 +886,7 @@ get_mer_list(ID, BattleData) ->
 		PInfo -> PInfo#player_info.mer_list
 	end.
 	
--spec get_mer_info(Camp, ID, MerList, MakeTeam, Array, Type) -> {PlayerInfoList, NArray} when
+-spec get_mer_info(Camp, ID, MerList, MakeTeam, Array, Type, OfflineList) -> {PlayerInfoList, NArray} when
 	Camp           :: battle_camp(),
 	ID             :: integer() | undefined,
 	MerList        :: [any()], %% #mercenary{}
@@ -760,16 +894,18 @@ get_mer_list(ID, BattleData) ->
 	PlayerInfoList :: [#player_info{}],
 	Array          :: array(),
     Type           :: integer(),
+    OfflineList    :: [integer()],
 	NArray         :: array().
 																					 
-get_mer_info(Camp, ID, MerList, MakeTeam, Array, Type) ->
+get_mer_info(Camp, ID, MerList, MakeTeam, Array, Type, OfflineList) ->
     {PlayerLevel, PlayerOnline} = case is_integer(ID) of
         true ->
             %% 竞技场（等）战斗是假的pvp，把防守方的在线状态强制设为不在线，
             %% battle_run状态中就不会等防守方的命令了
             ForceOffline = 
-                (Camp =:= def orelse Camp =:= boss_def)
-                    andalso lists:member(Type, ?BATTLE_OFFLINE_PVP_TYPES),
+                ((Camp =:= def orelse Camp =:= boss_def)
+                    andalso lists:member(Type, ?BATTLE_OFFLINE_PVP_TYPES))
+                 orelse lists:member(ID, OfflineList),
             PlayerOnline0 = case ForceOffline of
                 true  -> false;
                 false -> true
@@ -793,7 +929,7 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array, Type) ->
 		end,
 	
 	ArrayFun = 
-		fun (Role, {CurID, Protectors, Arr}) ->
+		fun (Role, {CurID, CurLevel, Protectors, Arr}) ->
 			if (Camp == att) ->
                     Pos = Role#role.gd_isBattle;
                (Camp == def) ->
@@ -801,7 +937,7 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array, Type) ->
                (Camp == boss_def) ->
                     Pos = ?BOSS_POSITION
 			end,
-            BS = role_2_bs(CurID, PlayerLevel, Role),
+            BS = role_2_bs(CurID, CurLevel, Role),
             {NProtectors, NBS} = case BS#battle_status.is_lead of
                 true ->
                     {Protectors, BS#battle_status{protectors = Protectors}};
@@ -814,69 +950,119 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array, Type) ->
                             {Protectors, BS}
                     end
             end,
-            {CurID, NProtectors, array:set(Pos, NBS, Arr)}
+            {CurID, CurLevel, NProtectors, array:set(Pos, NBS, Arr)}
 		end,
 
 	if (MakeTeam == true) ->
 		?INFO(battle, "check make team..."),
-		{true, Ps} = mod_player:is_online(ID),
+        PlayerPID = case PlayerOnline of
+            true ->
+                {true, Ps} = mod_player:is_online(ID),
+                Ps#player_status.player_pid;
+            false ->
+                ?UNDEFINED
+        end,
 		case catch mod_team:prepare_team_battle(ID) of
 			false ->
 				?INFO(battle, "not make team"),
-				List0 = mod_role:get_on_battle_list(ID),
+                List0ToFilter = case MerList of
+                    [] -> mod_role:get_on_battle_list(ID);
+                    _  -> MerList
+                end,
+                List0 = filter_duplicate_pos(List0ToFilter),       % XXX: 为了防止卡战斗临时加上的
+
 				PInfo = 
 					#player_info {
 						id       = ID, 
-						pid      = Ps#player_status.player_pid, 
+						pid      = PlayerPID,
 						lead     = get_mer_leader(Camp, List0), 
-						mer_list = lists:foldl(RoleFun, [], List0)
+						mer_list = lists:foldl(RoleFun, [], List0),
+                        online   = PlayerOnline,
+                        g_buffs  = init_global_buff(ID, PlayerLevel, List0)
 					},
 
                 % 排序为了保证主角在最后，可以给他设置protectors……
                 List  = lists:keysort(#role.gd_roleRank, List0),
-                {_, _, NArray} = lists:foldl(ArrayFun, {ID, [], Array}, List),
+                {_, _, _, NArray} = lists:foldl(ArrayFun, {ID, PlayerLevel, [], Array}, List),
 				{[PInfo], NArray};
 			
-			[{ID, List0}, {ID2, List20}] ->
+			[{ID, List00}, {ID2, List200}] ->
 				?INFO(battle, "make team"),
-				?INFO(battle, "ID1 = ~w, RoleList1 = ~w", [ID, List0]),
-				?INFO(battle, "ID2 = ~w, RoleList2 = ~w", [ID2, List20]),
-				
-				%{true, Ps2} = mod_player:is_online(ID2),
-                {TeammateOnline, TeammatePID} = case mod_player:is_online(ID2) of
-                    {true, Ps20} -> {true,  Ps20#player_status.player_pid};
-                    false        -> {false, ?UNDEFINED}
+				?INFO(battle, "ID1 = ~w, RoleList1 = ~w", [ID, List00]),
+				?INFO(battle, "ID2 = ~w, RoleList2 = ~w", [ID2, List200]),
+
+                %% 领地战用，如果传了MerList进来，用MerList
+                {List0ToFilter, List20ToFilter} = case MerList of
+                    [] ->
+                        {List00, List200};
+                    _ ->
+                        TeamInfo = mod_team:get_team_info(ID),
+                        {_, NMerList} = mod_formation:prepare_role_list_for_team_battle(TeamInfo, ID, MerList),
+                        ML1 = lists:filter(
+                            fun(M) ->
+                                {OwnerID, _RoleID} = M#role.key,
+                                OwnerID =:= ID
+                            end,
+                            NMerList),
+                        ML2 = lists:filter(
+                            fun(M) ->
+                                {OwnerID, _RoleID} = M#role.key,
+                                OwnerID =:= ID2
+                            end,
+                            NMerList),
+                        {ML1, ML2}
                 end,
+                List0 = filter_duplicate_pos(List0ToFilter),
+                List20 = filter_duplicate_pos(List20ToFilter),
+				
+                {TeammateOnline, TeammatePID} = 
+                    case mod_team:is_team_mate_leave(ID) of
+                        true ->
+                            {false, ?UNDEFINED};
+                        false ->
+                            case lists:member(ID2, OfflineList) of
+                                true  -> {false, ?UNDEFINED};
+                                false ->
+                                    case mod_player:is_online(ID2) of
+                                        {true, Ps20} -> {true,  Ps20#player_status.player_pid};
+                                        false        -> {false, ?UNDEFINED}
+                                    end
+                            end
+                    end,
 
 				PInfo = 
 					#player_info {
 						id       = ID,		  
-						pid      = Ps#player_status.player_pid,
+						pid      = PlayerPID,
 						lead     = get_mer_leader(Camp, List0),
 						mer_list = lists:foldl(RoleFun, [], List0),
-                        online   = PlayerOnline
+                        online   = PlayerOnline,
+                        g_buffs  = init_global_buff(ID, PlayerLevel, List0)
 					},
 				
+                TeammateLevel = mod_role:get_main_level(ID2),
+
 				PInfo2 = 
 					#player_info {
 						id       = ID2,
 						pid      = TeammatePID,
 						lead     = get_mer_leader(Camp, List20),
 						mer_list = lists:foldl(RoleFun, [], List20),
-                        online   = TeammateOnline
+                        online   = TeammateOnline,
+                        g_buffs  = init_global_buff(ID2, TeammateLevel, List20)
 					},
 
                 List  = lists:keysort(#role.gd_roleRank, List0),
                 List2 = lists:keysort(#role.gd_roleRank, List20),
 				
-                {_, _, NArray0} = lists:foldl(ArrayFun, {ID, [], Array}, List),
-                {_, _, NArray} = lists:foldl(ArrayFun, {ID2, [], NArray0}, List2),
+                {_, _, _, NArray0} = lists:foldl(ArrayFun, {ID, PlayerLevel, [], Array}, List),
+                {_, _, _, NArray} = lists:foldl(ArrayFun, {ID2, TeammateLevel, [], NArray0}, List2),
 				{[PInfo, PInfo2], NArray};
 			_Other ->
 				?ERR(battle, "mod_team returns: ~w", [_Other])
 		end;
 	true -> %% maketeam = false;
-		List0 = 
+		List0ToFilter = 
 			if (MerList =/= []) ->
 				MerList;
 			true ->
@@ -884,7 +1070,8 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array, Type) ->
 			   %%(is_integer(ID)) ->
 				mod_role:get_on_battle_list(ID)
 			end,
-			
+        List0 = filter_duplicate_pos(List0ToFilter),
+
 		?INFO(battle, "On Battle List = ~w", [List0]),
 		
 		Leader = case get_mer_leader(Camp, List0) of
@@ -904,11 +1091,12 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array, Type) ->
 				%% pid   = Ps#player_status.player_pid, 
 				lead     = Leader,
 				mer_list = List1,
-                online   = PlayerOnline
+                online   = PlayerOnline,
+                g_buffs  = init_global_buff(ID, PlayerLevel, List0)
 			},
 
         List = lists:keysort(#role.gd_roleRank, List0),
-        {_, _, NArray} = lists:foldl(ArrayFun, {ID, [], Array}, List),
+        {_, _, _, NArray} = lists:foldl(ArrayFun, {ID, PlayerLevel, [], Array}, List),
 		{[PInfo], NArray}
 	end.
 
@@ -934,19 +1122,11 @@ role_2_bs(ID, PlayerLevel, Role) ->
 	?INFO(battle, "Skill From Mer = ~w", [Role#role.gd_skill]),
 	{ActSkills0, PasSkills, NormSkills} = transform_skill(Role#role.gd_skill),
 
+    ?INFO(battle, "ActSkills0 = ~w", [ActSkills0]),
     %% 因为AI要求按面板上的顺序从左到右发动技能，所以主角的技能要事先排一下序……
     ActSkills = case Role#role.gd_roleRank of
         1 ->
-            F = fun(UID1, UID2) ->
-                {SID1, Lv1} = skill:get_skill_id_level(UID1),
-                Info1 = data_skill_table:get(SID1, Lv1),
-
-                {SID2, Lv2} = skill:get_skill_id_level(UID2),
-                Info2 = data_skill_table:get(SID2, Lv2),
-
-                Info1#battle_skill.slot =< Info2#battle_skill.slot
-            end,
-            lists:sort(F, ActSkills0);
+            get_battle_skill_order(ID, ActSkills0);
         _ ->
             ActSkills0
     end,
@@ -955,15 +1135,7 @@ role_2_bs(ID, PlayerLevel, Role) ->
 	?INFO(battle, "StartLevel = ~w", [Role#role.star_lv]),
 	?INFO(battle, "p_att = ~w, hp = ~w, maxhp = ~w",[Role#role.p_att,Role#role.gd_currentHp,Role#role.gd_maxHp]),
 
-    {?LEVEL_ENABLE, MinNewbieMPLevel} = data_enable_system:get(?BATTLE_EXTRA_MP),
-    {?LEVEL_ENABLE, MaxNewbieMPLevel} = data_enable_system:get(?BATTLE_EXTRA_MP_END),
-
-    NewbieMP = case PlayerLevel >= MinNewbieMPLevel andalso 
-            PlayerLevel =< MaxNewbieMPLevel of
-        true -> 80;
-        false -> 0
-    end,
-
+    NewbieMP = get_newbie_mp(PlayerLevel),
     AngryMP = case get_passive_skill_helper(?PSKILL_ANGER, PasSkills) of
         {true, AngerSkillInfo} ->
             {AngryMP0} = AngerSkillInfo#battle_skill.param,
@@ -979,19 +1151,38 @@ role_2_bs(ID, PlayerLevel, Role) ->
     {CurHP, MaxHP} = {Role#role.gd_currentHp, Role#role.gd_maxHp},
 
     %% XXX: 现在只有主角有avatar信息
-    AvatarInfo = case is_integer(ID) andalso Role#role.gd_roleRank =:= 1 of
+    {AvatarInfo, OfficialAttEnhance} = 
+    case is_integer(ID) andalso Role#role.gd_roleRank =:= 1 of
         true ->
-            mod_dressing:getAllDress4Server(ID)
-                ++ mod_items:getMainRoleEquipInfo(ID);
+            {
+                mod_dressing:getAllDress4Server(ID)
+                    ++ mod_items:getMainRoleEquipInfo(ID),
+                mod_official:get_position_battle_rate(ID)
+            };
         _ ->    % false
-            []
+            {[], 0}
     end,
     ?INFO(battle, "AvatarInfo = ~w", [AvatarInfo]),
-	
+
+    %% 跨服战斗要在玩家名字里加上服务器名……
+    RoleName = case is_integer(ID) andalso Role#role.gd_roleRank =:= 1 
+            andalso ID >= ?CROSS_INDEX_BASE of
+        true ->
+            NodeNum = ID div ?CROSS_INDEX_BASE,
+            Role#role.gd_name ++ " (" ++ integer_to_list(NodeNum) ++ "服)";
+        false ->
+            Role#role.gd_name
+    end,
+
+    MinMP = Role#role.gd_angry,
+    MaxMP = Role#role.gd_max_angry,
+    ?INFO(battle, "Role#role.key = ~w, MinMP = ~w, MaxMP = ~w", 
+          [Role#role.key, MinMP, MaxMP]),
+
 	#battle_status {
         id        = element(2, Role#role.key),
         player_id = ID,
-        name      = Role#role.gd_name,      %% gd_name is a string, which means a list.
+        name      = RoleName,
         level     = Role#role.gd_roleLevel,
         star      = Role#role.star_lv,
         job       = Role#role.gd_careerID,
@@ -1000,7 +1191,8 @@ role_2_bs(ID, PlayerLevel, Role) ->
         n_skill   = NormSkills,
         hp        = CurHP,
         hp_max    = MaxHP,
-        mp        = min(100, NewbieMP + AngryMP),
+        mp        = min(MaxMP, MinMP + NewbieMP + AngryMP),
+        mp_max    = MaxMP,
         p_att     = Role#role.p_att,
         p_def     = Role#role.p_def,
         m_att     = Role#role.m_att,
@@ -1016,7 +1208,8 @@ role_2_bs(ID, PlayerLevel, Role) ->
         counter   = Role#role.gd_fanji,
         block     = Role#role.gd_gedang,
         is_lead   = Role#role.gd_roleRank == 1,
-        avatar_info = AvatarInfo
+        avatar_info = AvatarInfo,
+        official_att_enhance = OfficialAttEnhance
 	}.
 
 mon_2_bs(MonAttr, Pos, MonHp) ->
@@ -1061,7 +1254,8 @@ mon_2_bs(MonAttr, Pos, MonHp) ->
         crit    = MonAttr#mon_attr.crit,
         speed   = MonAttr#mon_attr.speed,
         is_lead = false,
-        is_alive = (CurHP > 0)
+        is_alive = (CurHP > 0),
+        ai      = ai:transform_ai(data_ai:get(MonAttr#mon_attr.ai_id), [], MonAttr#mon_attr.ai_param)
     }.
 
 get_mon_info(Camp, MonGroupID, Array) ->
@@ -1126,12 +1320,13 @@ check_battle_pvp(AttID, AttLeaderPID, DefLeaderPID, AttTeamMateID, DefTeamMateID
 %% if the att ID or def ID is specified, check it
 %% otherwise we can ignore it.
 
--spec check_battle(BattleData, IDList1, IDList2) -> true | false when 
+-spec check_battle(BattleStart, IDList1, IDList2, BattleData) -> true | false when 
 	IDList1 :: [player_id()],
 	IDList2 :: [player_id()],
+	BattleStart:: #battle_start{},
 	BattleData :: #battle_data{}.
 
-check_battle(Start, IDList1, IDList2) ->
+check_battle(Start, IDList1, IDList2, BattleData) ->
 	Mod       = Start#battle_start.mod,
 	AttID     = Start#battle_start.att_id,
 	DefID     = Start#battle_start.def_id,
@@ -1143,7 +1338,8 @@ check_battle(Start, IDList1, IDList2) ->
         end
     end,
 
-	case erlang:is_integer(AttID) of
+    AttPlayerInfo = get_player_info(AttID, BattleData),
+	case erlang:is_integer(AttID) andalso (AttPlayerInfo#player_info.online) of
 		true ->
 			case mod_player:is_online(AttID) of
                 {true, Ps} ->
@@ -1153,7 +1349,8 @@ check_battle(Start, IDList1, IDList2) ->
                     if (Mod =/= pvp) ->
                         check_battle_pve(AttID, Pid, TeamMateID);
                     true ->
-                        case erlang:is_integer(DefID) of
+                        DefPlayerInfo = get_player_info(DefID, BattleData),
+                        case erlang:is_integer(DefID) andalso (DefPlayerInfo#player_info.online) of
                             true ->
                                 %% 竞技场战斗的防守方必定不在线（就算在线也不参与战斗），
                                 %% 这时检查进攻方就可以了
@@ -1266,10 +1463,10 @@ set_battle_cmd(ID, Cmd, BattleData) ->
 
 					%% if Sid == 0 then we use AI to set command
 					if (Sid == 0) ->						 
-                        {RealSID, _, _, NewSkillIndex, _} = ai:get_skill(Lead, BattleData),
+                        {RealSID, _, Tar, NewSkillIndex, _} = ai:get_skill(Lead, BattleData),
                         send_command_package(Lead, RealSID, BattleData),
 
-                        Tar = ai:get_skill_target(RealSID, Lead, BattleData),
+                        %Tar = ai:get_skill_target(RealSID, Lead, BattleData),
                         ?INFO(battle, "Tar = ~w", [Tar]),
 						NState = State#battle_status {cmd = {RealSID, Lead, Tar}, skill_index = NewSkillIndex};
 
@@ -1277,9 +1474,11 @@ set_battle_cmd(ID, Cmd, BattleData) ->
                         RealSID = case ai:validate_skill(Sid, Lead, BattleData) of
                             true  -> Sid;
                             false -> ?SKILL_COMMON_ATTACK;
-                            {false, _} -> ?SKILL_COMMON_ATTACK
+                            {false, _InvalidReason} -> 
+                                ?INFO(battle, "InvalidReason = ~w", [_InvalidReason]),
+                                ?SKILL_COMMON_ATTACK
                         end,
-                        send_command_confirm_package(ID, RealSID),
+                        send_command_confirm_package(Info#player_info.lead, RealSID, BattleData),
 
                         Tar = ai:get_skill_target(RealSID, Lead, BattleData),
                         ?INFO(battle, "Tar = ~w", [Tar]),
@@ -1287,6 +1486,9 @@ set_battle_cmd(ID, Cmd, BattleData) ->
 						?INFO(battle, "set battle cmd: Sid = ~w, Lead = ~w, Round = ~w, Timeout = ~w", 
 						  	[RealSID, Lead, Round, Timeout])
 					end,
+
+                    ?INFO(battle, "Final cmd: ~w", [NState#battle_status.cmd]),
+
 					set_battle_status(Lead, NState, BattleData); %% returns a BattleData
 				_ ->
 					BattleData
@@ -1377,10 +1579,14 @@ handle_command_ex(BattleData, Repeat) ->
                                 _     -> ?SKILL_COMMON_ATTACK
                             end,
                             ?INFO(battle, "OTar = ~w", [OTar]),
-                            T = case OTar > 0 andalso OTar =< ?BATTLE_FIELD_SIZE 
+                            T = case is_integer(OTar) andalso OTar > 0 andalso OTar =< ?BATTLE_FIELD_SIZE 
                                     andalso (array:get(OTar, BattleData#battle_data.player))#battle_status.is_alive of
                                 true  -> OTar;
-                                false -> ai:get_skill_target(NewS, Src, BattleData)
+                                false -> 
+                                    case OTar of
+                                        {ai_override, _} -> OTar;      % XXX: 从AI来的目标列表，直接放过去
+                                        _ -> ai:get_skill_target(NewS, Src, BattleData)
+                                    end
                             end,
                             ?INFO(battle, "T = ~w", [T]),
                             case NewS of
@@ -1411,9 +1617,6 @@ handle_command_ex(BattleData, Repeat) ->
 			
 			BattleData1 = skill:handle_skill(Sid, SkillStat, Src, Tar, BattleData),
 
-			%% procedure package
-			send_procedure_package(BattleData1),
-			
 			%% send cd package
 			if (SrcStat#battle_status.is_lead == true) ->
 				send_cd_package(Src, BattleData1); 
@@ -1421,10 +1624,15 @@ handle_command_ex(BattleData, Repeat) ->
 				ok
 			end,
 			
+            ?INFO(battle, "Sending process package for pos ~w", [Src]),
+			%% procedure package
+			send_procedure_package(BattleData1),
+			
 			NSrcStat = get_battle_status(Src, BattleData1),	
             case NSrcStat#battle_status.is_lead of
                 true ->
-                    ?INFO(battle, "Idx = ~w", [Idx]);
+                    ?INFO(battle, "Idx = ~w", [Idx]),
+                    ?INFO(battle, "Cmd = ~w", [SrcStat#battle_status.cmd]);
                 false ->
                     void
             end,
@@ -1436,7 +1644,7 @@ handle_command_ex(BattleData, Repeat) ->
 		case Type == ?BATTLE_TYPE_BOSS andalso Src =< ?BATTLE_FIELD_SIZE div 2 of
 		true -> 
 			BossID     = BattleData#battle_data.monster,
-			[ID | _]   = get_online_ids(BattleData),
+			[ID | _]   = get_ids(BattleData),
 			BossState1 = get_battle_status(?BOSS_POSITION, BattleData),
 			BossState2 = get_battle_status(?BOSS_POSITION, NBattleData),
 			BossDamage = BossState1#battle_status.hp - BossState2#battle_status.hp,
@@ -1512,10 +1720,12 @@ handle_command_ex(BattleData, Repeat) ->
                     end
             end,
 
+            OnlineIDList = get_online_ids(NBattleData2),
 			case (NextSrcStat#battle_status.is_lead == true 
                         andalso NextSrcStat#battle_status.is_alive =:= true
                         andalso NextPlayerOnline =:= true)
-                    orelse length(OrderList) =:= 1 of
+                    orelse (OnlineIDList =/= [] 
+                            andalso length(OrderList) =:= 1) of
                 true ->
                     NBattleData2;
                 _ ->        % false
@@ -1693,7 +1903,7 @@ get_mp_absorb(Src, Tar, AttSpec, BattleData) ->
 	TarStat = get_battle_status(Tar, BattleData), 
 	Buffs = AttSpec#attack_spec.buff_add ++ SrcStat#battle_status.buff,
 
-	{Add, Sub} =  case lists:keysearch(?BUFF_MANA_DRAIN, #buff.name, Buffs) of
+	case lists:keysearch(?BUFF_MANA_DRAIN, #buff.name, Buffs) of
 		{value, #buff{value = {A, S}, by_rate = ByRate}} ->
             {Add0, Sub0} = case ByRate of
                 false -> {A, S};
@@ -1704,15 +1914,29 @@ get_mp_absorb(Src, Tar, AttSpec, BattleData) ->
             ?BATTLE_LOG("        站位 ~w Buff效果: 吸怒气", [Src]),
             ?BATTLE_LOG("            Buff类型: 吸怒气, 攻击者+: ~w, 目标-: ~w", 
                         [Add0, Sub0]),
-            {Add0, Sub0};
+            SubF = min(Sub0, TarStat#battle_status.mp),
+            AddT = min(SubF, Add0),
+            {AddT, SubF};
 		false ->
-			{0, 0}
-	end,
-    SubFrom = min(Sub, TarStat#battle_status.mp),
-    AddTo   = min(SubFrom, Add),
-    {AddTo, SubFrom}.
+            case lists:keysearch(?BUFF_MANA_ADJUST, #buff.name, Buffs) of
+                {value, #buff{value = {A, S}, by_rate = ByRate}} ->
+                    {Add0, Sub0} = case ByRate of
+                        false -> {A, S};
+                        true  -> 
+                            SrcMP = SrcStat#battle_status.mp,
+                            TarMP = TarStat#battle_status.mp,
+                            {round(SrcMP * A), round(TarMP * S)}
+                    end,
+                    ?BATTLE_LOG("        站位 ~w Buff效果: 调整怒气", [Src]),
+                    ?BATTLE_LOG("            Buff类型: 调整怒气, 攻击者+: ~w, 目标-: ~w", 
+                                [Add0, Sub0]),
+                    {Add0, Sub0};
+                false ->
+                    {0, 0}
+            end
+	end.
 
-get_rebound(_Src, Tar, _AttSpec, Dm, BattleData) ->
+get_rebound(Src, Tar, _AttSpec, Dm, BattleData) ->
 	TarStat = get_battle_status(Tar, BattleData),	
 	Buffs = TarStat#battle_status.buff,
 	
@@ -1720,34 +1944,41 @@ get_rebound(_Src, Tar, _AttSpec, Dm, BattleData) ->
 		true ->
 			0;
 		false ->
-			RB = case lists:keysearch(?BUFF_REBOUND, #buff.name, Buffs) of
-				{value, #buff{value = Rebound}} ->
-                    RB0 = round(Dm * Rebound),
-                    ?BATTLE_LOG("        站位 ~w Buff效果: 反弹", [Tar]),
-                    ?BATTLE_LOG("            Buff类型: 反弹, 系数: ~w, 反弹伤害: ~w", [Rebound, RB0]),
-                    RB0;
-				false ->
-                    case get_passive_skill(?PSKILL_REBOUND, Tar, BattleData) of
-                        {true, RBSkillInfo} ->
-                            {RBRate, RBVal} = RBSkillInfo#battle_skill.param,
-                            RBRand = random:uniform(),
-                            ?BATTLE_LOG("        被动技能 ~w, 几率: ~w, 随机数: ~w, 生效: ~w",
-                                        [skill:get_skill_uid(?PSKILL_REBOUND, RBSkillInfo#battle_skill.level), 
-                                         RBRate, RBRand, RBRand =< RBRate]),
-                            case RBRand =< RBRate of
-                                true ->
-                                    RB0 = round(Dm * RBVal),
-                                    ?BATTLE_LOG("            被动技能 ~w 生效, 反弹系数: ~w, 反弹伤害: ~w",
-                                                [skill:get_skill_uid(?PSKILL_REBOUND, RBSkillInfo#battle_skill.level),
-                                                 RBVal, RB0]),
-                                    RB0;
-                                _ ->        % false
-                                    0
-                            end;
+            %% XXX: 坑！！策划要求世界Boss对反震技能免疫
+            RB = case BattleData#battle_data.type =:= ?BATTLE_TYPE_BOSS
+                        andalso Src =:= ?BOSS_POSITION of
+                false ->
+                    case lists:keysearch(?BUFF_REBOUND, #buff.name, Buffs) of
+                        {value, #buff{value = Rebound}} ->
+                            RB0 = round(Dm * Rebound),
+                            ?BATTLE_LOG("        站位 ~w Buff效果: 反弹", [Tar]),
+                            ?BATTLE_LOG("            Buff类型: 反弹, 系数: ~w, 反弹伤害: ~w", [Rebound, RB0]),
+                            RB0;
                         false ->
-                            0
-                    end
-			end,
+                            case get_passive_skill(?PSKILL_REBOUND, Tar, BattleData) of
+                                {true, RBSkillInfo} ->
+                                    {RBRate, RBVal} = RBSkillInfo#battle_skill.param,
+                                    RBRand = random:uniform(),
+                                    ?BATTLE_LOG("        被动技能 ~w, 几率: ~w, 随机数: ~w, 生效: ~w",
+                                                [skill:get_skill_uid(?PSKILL_REBOUND, RBSkillInfo#battle_skill.level), 
+                                                 RBRate, RBRand, RBRand =< RBRate]),
+                                    case RBRand =< RBRate of
+                                        true ->
+                                            RB0 = round(Dm * RBVal),
+                                            ?BATTLE_LOG("            被动技能 ~w 生效, 反弹系数: ~w, 反弹伤害: ~w",
+                                                        [skill:get_skill_uid(?PSKILL_REBOUND, RBSkillInfo#battle_skill.level),
+                                                         RBVal, RB0]),
+                                            RB0;
+                                        _ ->        % false
+                                            0
+                                    end;
+                                false ->
+                                    0
+                            end
+                    end;
+                true ->
+                    0
+            end,
             RB
 	end,
     RRB.
@@ -1800,11 +2031,12 @@ get_counter(Src, Tar, SkillId, _AttSpec, Dm, BattleData) ->
                 addition = 0.4,
                 targets  = [Src]
             },
-            {_, _, CounterDmg} = do_attack(Tar, Src, CounterAttSpec, BattleData),
+            {_, _, {NewDmgShieldBuff, AbsorbedDmg}, CounterDmg} = do_attack(Tar, Src, CounterAttSpec, BattleData),
+            ?INFO(battle, "NewDmgShieldBuff = ~w", [NewDmgShieldBuff]),
             ?BATTLE_LOG("        ......... 反击伤害计算结束, 反击伤害: ~w .........", [CounterDmg]),
-            CounterDmg;
+            {{NewDmgShieldBuff, AbsorbedDmg}, CounterDmg};
         false ->
-            0
+            {{none, 0}, 0}
     end.
 
 %==============================================================================================================
@@ -2065,12 +2297,10 @@ pre_attack(Src, Tar, AttSpec, BattleData) ->
 		case SrcStat#battle_status.is_lead == true orelse
 			 TarStat#battle_status.is_lead == true of
 		true -> 0;
-		false -> 0.03
+		false -> 0      % 策划可能会改这个系数，所以还是和上面那个零分开返回……
 		end,
-		
-	HitRate = Hit * 10 / (Hit * 10 + Dodge) + Param6 * (AStar - DStar),
-	%% ?INFO(battle, "Hit = ~w, Dodge = ~w, Param = ~w, IsHit = ~w", [Hit, Dodge, Param6, IsHit]),
-	
+
+	HitRate = Hit * 10 / (Hit * 9.6 + Dodge) + Param6 * (AStar - DStar),
     NHitRate = min(1.0, max(0.4, HitRate)),
 	
 	Rand = random:uniform(), 
@@ -2133,6 +2363,15 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 			 get_adjust_value(DefTag, Def0, Tar,  BattleData) * BreakAdjust}
 		end,
 
+    CompromisedDef = case get_passive_skill_helper(?PSKILL_DEF_IGNORE, SrcStat#battle_status.p_skill) of
+        {true, DefIgnoreSkillInfo} ->
+            {CompromiseRate} = DefIgnoreSkillInfo#battle_skill.param,
+            ?INFO(battle, "CompromiseRate = ~w", [CompromiseRate]),
+            round(max(1 - CompromiseRate, 0) * Def);
+        false ->
+            Def
+    end,
+
 	{Crit, Luck} = {
 		get_adjust_value(crit, SrcStat#battle_status.crit, Src, BattleData, BuffAdd),
 		get_adjust_value(luck, TarStat#battle_status.luck, Tar, BattleData)},
@@ -2141,7 +2380,24 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 	CritRate = 
 		case lists:keysearch(?BUFF_CRIT, #buff.name, Buff ++ BuffAdd) of
 			false -> 
-                1 - LuckRate;
+                Rate0 = 1 - LuckRate,
+                BuffAddedRate = case lists:keysearch(?BUFF_EXTRA_CRIT_RATE, #buff.name, Buff ++ BuffAdd) of
+                    false ->
+                        0;
+                    {value, #buff{value = CritRateV}} ->
+                        ?BATTLE_LOG("        站位 ~w Buff效果: 额外暴击几率", [Src]),
+                        ?BATTLE_LOG("            Buff类型: 额外暴击几率, 系数: ~w", [CritRateV]),
+                        CritRateV
+                end,
+                PSkillAddedRate = case get_passive_skill_helper(?PSKILL_CRIT_BOOST, SrcStat#battle_status.p_skill) of
+                    {true, CritBoostInfo} ->
+                        {CritBoostRate} = CritBoostInfo#battle_skill.param,
+                        ?INFO(battle, "CritBoostRate = ~w", [CritBoostRate]),
+                        CritBoostRate;
+                    false ->
+                        0
+                end,
+                min(1.0, Rate0 + BuffAddedRate + PSkillAddedRate);
 			{value, #buff{value = _CritV}} ->
                 ?BATTLE_LOG("        站位 ~w Buff效果: 暴击", [Src]),
                 ?BATTLE_LOG("            Buff类型: 必暴击, 系数: ~w", [_CritV]),
@@ -2156,31 +2412,35 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 	
 	Fatality = get_adjust_value(fatal, SrcStat#battle_status.fatal, Src, BattleData, BuffAdd),
 	
-	?INFO(battle, "Src = ~w, Job = ~w, Att = ~w, Def = ~w, ALevel = ~w", [Src, Job, Att, Def, ALevel]),
+	?INFO(battle, "Src = ~w, Job = ~w, Att = ~w, CompromisedDef = ~w, ALevel = ~w", [Src, Job, Att, CompromisedDef, ALevel]),
 	
+    LevelDefCoef = data_system:get(122),
     Param1 = case BattleData#battle_data.mod of
-        pvp -> 260 * ALevel;
-        _   -> 450 * ALevel
+        pvp -> LevelDefCoef * ALevel;
+        _   -> LevelDefCoef * ALevel
     end,
 	Param2 = ParamX * 0.08,
 	Param3 = (0.9 + random:uniform() / 5),
+
+    OfficialAttEnhanceRate = (SrcStat#battle_status.official_att_enhance + 1),
+    ?INFO(battle, "OfficialAttEnhanceRate = ~w", [OfficialAttEnhanceRate]),
 		
-	Damage0 = 
-		Att * (1 - Def / (Def + Param1)) * (1 + Param2 * (AStar - DStar)) * 
-			Param3 * AttSpec#attack_spec.addition,
+    Damage0 = case BattleData#battle_data.type of
+        ?BATTLE_TYPE_BOSS ->
+            OfficialAttEnhanceRate * Att * (1 - CompromisedDef / (CompromisedDef + 45000)) 
+                * Param3 * AttSpec#attack_spec.addition;
+        _ ->
+            OfficialAttEnhanceRate * Att * (1 - CompromisedDef / (CompromisedDef + Param1)) 
+                * (1 + Param2 * (AStar - DStar)) * Param3 * AttSpec#attack_spec.addition
+    end,
+
 	Damage1 = 
 		case IsCrit of
 			true  -> round(Damage0 * (1.5 + Fatality / 1250));
 			false -> round(Damage0)
 		end,
 	
-	Damage2 = 
-		case BattleData#battle_data.mod of
-			boss ->
-				Att * (Def / Def + 45000);
-			_ ->
-				get_damage_value(Damage1, Tar, BattleData)
-		end,
+	Damage2 = get_damage_value(Damage1, Tar, BattleData),
 
     Damage3 = get_adjust_value(cast_damage, Damage2, Src, BattleData, BuffAdd),
 	
@@ -2199,9 +2459,12 @@ do_attack(Src, Tar, AttSpec, BattleData) ->
 		Damage4 = round(Damage3)
 	end,
 
-    ?BATTLE_LOG("        最终伤害值: ~w", [max(Damage4, 1)]),
+    {NewDmgShieldBuff, AbsorbedDmg, Damage5} = handle_dmg_shield(Tar, Damage4, TarStat#battle_status.buff),
+    ?INFO(battle, "Tar = ~w, AbsorbedDmg = ~w, NewDmgShieldBuff = ~w", [Tar, AbsorbedDmg, NewDmgShieldBuff]),
+
+    ?BATTLE_LOG("        最终伤害值: ~w", [Damage5]),
 	
-	{IsCrit, IsBlock, max(Damage4, 1)}.
+	{IsCrit, IsBlock, {NewDmgShieldBuff, AbsorbedDmg}, Damage5}.
 
 %% attack entry
 %% (1) attack function generate a list of *attack_info*, 
@@ -2317,6 +2580,7 @@ attack(SkillId, Src, AttSpec = #attack_spec{addition = [CurAddition | RestAdditi
 		attack(SkillId, Src, AttSpec#attack_spec{addition = RestAddition}, 
                Rest, AttInfoList, BattleData);
 	true ->
+        ?ERR(cross, "position: ~w", [NTar]),
         ?BATTLE_LOG("    目标站位: ~w", [NTar]),
 		case pre_attack(Src, NTar, AttSpec, BattleData) of
 			false ->
@@ -2328,11 +2592,11 @@ attack(SkillId, Src, AttSpec = #attack_spec{addition = [CurAddition | RestAdditi
 
 			true ->
 				%% TODO: may be change the AttSpec here
-				{Cr, Bl, Dm} = do_attack(Src, NTar, AttSpec#attack_spec{addition = CurAddition}, BattleData),
+				{Cr, Bl, {_NewDmgShieldBuff, AbsorbedDmg}, Dm} = do_attack(Src, NTar, AttSpec#attack_spec{addition = CurAddition}, BattleData),
 				HpDrain  = get_hp_absorb(Src, NTar, AttSpec, Dm, BattleData),
 				{Ma, Ms} = get_mp_absorb(Src, NTar, AttSpec, BattleData), %% MpDrain = {MpAdd, MpSub}
 				Rebound  = get_rebound(Src, NTar, AttSpec, Dm, BattleData),
-				Counter  = get_counter(Src, NTar, SkillId, AttSpec, Dm, BattleData),
+				{{_NewSrcDmgShieldBuff, SrcAbsorbedDmg}, Counter}  = get_counter(Src, NTar, SkillId, AttSpec, Dm, BattleData),
 				
 				?INFO(battle, "battle attack: "),
 				
@@ -2352,7 +2616,9 @@ attack(SkillId, Src, AttSpec = #attack_spec{addition = [CurAddition | RestAdditi
                     hp_absorb  = HpDrain,  			%% hp absorb >= 0
                     mp_absorb  = Ma,       			%% mp absorb >= 0
                     hp_counter = -Counter, 			%% counter strike
-                    hp_rebound = -Rebound  			%% rebound damage
+                    hp_rebound = -Rebound, 			%% rebound damage
+                    dmg_absorbed = AbsorbedDmg,
+                    counter_dmg_absorbed = SrcAbsorbedDmg
                 },
                 {NewAttInfoList0, _, _, _} = lists:foldl(fun buff_att_helper/2, 
                                                         {[AttInfo], SkillId, NTar, BattleData},
@@ -2370,7 +2636,8 @@ attack(SkillId, Src, AttSpec = #attack_spec{addition = [CurAddition | RestAdditi
                         NTarStat = get_battle_status(NTar, BattleData),
                         case summarize_att_info(lists:reverse(NewAttInfoList0),
                                                 {NTarStat#battle_status.hp, 
-                                                 NTarStat#battle_status.mp}) of
+                                                 NTarStat#battle_status.mp,
+                                                 NTarStat#battle_status.mp_max}) of
                             {0, _} ->
                                 ?BATTLE_LOG("        站位 ~w 已挂, 取消反击和反弹效果", [NTar]),
                                 DummyInfo = hd(NewAttInfoList0),
@@ -2456,7 +2723,8 @@ handle_attack_info(SkillId, Src, AttInfoList, [AttInfo | Rest], BattleData) ->
                     NAttInfo = 
                         AttInfo#attack_info {
                             hp = max(0, TarStat#battle_status.hp + AttInfo#attack_info.hp_inc),
-                            mp = max(0, min(100, TarStat#battle_status.mp + AttInfo#attack_info.mp_inc))
+                            mp = max(0, min(TarStat#battle_status.mp_max, 
+                                            TarStat#battle_status.mp + AttInfo#attack_info.mp_inc))
                         },
                     %% ?INFO(battle, "NattInfo = ~w", [NAttInfo]),
                     
@@ -2464,20 +2732,21 @@ handle_attack_info(SkillId, Src, AttInfoList, [AttInfo | Rest], BattleData) ->
                     MpAbsorb = AttInfo#attack_info.mp_absorb,  %% +
                     Rebound  = AttInfo#attack_info.hp_rebound, %% -
                     Counter  = AttInfo#attack_info.hp_counter, %% -
+
+                    DmgAbsorbed = AttInfo#attack_info.dmg_absorbed,
+                    CounterDmgAbsorbed = AttInfo#attack_info.counter_dmg_absorbed,
                 
                     AttOldHp = SrcStat#battle_status.hp,
                     AttOldMp = SrcStat#battle_status.mp,
                     ?INFO(battle, "Src = ~w, AttOldMp = ~w, MpAbsorb = ~w", [Src, AttOldMp, MpAbsorb]),
                     AttMaxHp = SrcStat#battle_status.hp_max,
-                    AttMaxMp = SrcStat#battle_status.mp_max, %% 100
+                    AttMaxMp = SrcStat#battle_status.mp_max,
 
                     MpAddBySkill = %% mp add by skill 
                         case Rest =/= [] orelse Src == Tar of
                             %% Rest =/= [] is used to avoid adding mp more than once when attacking
                             true  -> 0;
-                            false -> 
-                                DataSkill = data_skill_table:get(SkillId, 1),   % XXX: 总是用 Lv.1 的配置……
-                                DataSkill#battle_skill.mp_add
+                            false -> get_att_added_mp_by_skill(SkillId, SrcStat, [NAttInfo | AttInfoList])
                         end,
 
                     ?INFO(battle, "Src = ~w, maxMp = ~w, OldMp = ~w, MpAddbyskill = ~w", 
@@ -2504,21 +2773,27 @@ handle_attack_info(SkillId, Src, AttInfoList, [AttInfo | Rest], BattleData) ->
                                 [Tar, TarStat#battle_status.hp, DefNewHp, DefNewHp - TarStat#battle_status.hp,
                                  TarStat#battle_status.mp, DefNewMp, DefNewMp - TarStat#battle_status.mp]),
                         
+                    NSrcBuffList = update_buff_value_rel(?BUFF_DMG_SHIELD, -CounterDmgAbsorbed, 0, 
+                                                         SrcStat#battle_status.buff),
                     NSrcStat = 
                         SrcStat#battle_status {
                             hp = AttNewHp, 
                             mp = AttNewMp, 
                             damage_deal = NSDamDeal,
                             damage_suffer = NSDamSuff,
+                            buff = NSrcBuffList,
                             is_alive = (AttNewHp > 0)
                         },
                     
+                    NTarBuffList = update_buff_value_rel(?BUFF_DMG_SHIELD, -DmgAbsorbed, 0,
+                                                         TarStat#battle_status.buff),
                     NTarStat = 
                         TarStat#battle_status {
                             hp = DefNewHp, 
                             mp = DefNewMp, 
                             damage_deal = NTDamDeal,
                             damage_suffer = NTDamSuff,
+                            buff = NTarBuffList,
                             is_alive = (DefNewHp > 0)
                         },
                     BattleData1 = set_battle_status(Src, NSrcStat, BattleData),
@@ -2548,23 +2823,30 @@ assist(SkillID, Src, [AssSpec | Rest], AttInfoList, BattleData) ->
 	Rate = AssSpec#assist_spec.rate, 
 	Tar  = AssSpec#assist_spec.pos,
 	Eff  = AssSpec#assist_spec.eff,
-	%% AttInfo here does not contain the full information,
-	%% we simply put the hp_inc and | or mp_inc, is_crit, is_miss in it
-	%% and the other field will be adjust through the function handle_attack_info
-	IsMiss = random:uniform() > Rate,
-	AttInfo =
-		#attack_info {
-			pos     = Tar,			  
-			is_crit = false,
-			is_miss = IsMiss
-		},
-	
- 	if (IsMiss == true) ->
- 			assist(SkillID, Src, Rest, [AttInfo | AttInfoList], BattleData);
- 	   true ->
- 		    NAttInfo = assist_1(Src, Tar, Eff, AttInfo, BattleData),
- 			assist(SkillID, Src, Rest, [NAttInfo | AttInfoList], BattleData)
- 	end.
+
+    SrcStat = get_battle_status(Src, BattleData),
+    TarStat = get_battle_status(Tar, BattleData),
+
+    case SrcStat#battle_status.is_alive =:= false 
+            orelse TarStat#battle_status.is_alive =:= false of
+        true ->
+            assist(SkillID, Src, Rest, AttInfoList, BattleData);
+        false ->
+            IsMiss = random:uniform() > Rate,
+            AttInfo =
+                #attack_info {
+                    pos     = Tar,			  
+                    is_crit = false,
+                    is_miss = IsMiss
+                },
+            
+            if (IsMiss == true) ->
+                    assist(SkillID, Src, Rest, [AttInfo | AttInfoList], BattleData);
+               true ->
+                    NAttInfo = assist_1(Src, Tar, Eff, AttInfo, BattleData),
+                    assist(SkillID, Src, Rest, [NAttInfo | AttInfoList], BattleData)
+            end
+    end.
 	
 assist_1(_Src, _Tar, [], AttInfo, _BattleData) ->
 	AttInfo;
@@ -2704,6 +2986,7 @@ settle_buff(Settle, Pos, [Buff | Rest], BuffList, BuffInfoList, State) ->
 			NBuff    = Buff#buff{duration = Duration},	
 			BuffName = Buff#buff.name,
 			ByRate   = Buff#buff.by_rate,
+            InEffect = Buff#buff.in_effect,
 			Value    = if (ByRate == false) ->
 					       round(Buff#buff.value); 
 					   true -> 
@@ -2711,122 +2994,159 @@ settle_buff(Settle, Pos, [Buff | Rest], BuffList, BuffInfoList, State) ->
 					   end,
 			
 			{BuffInfo, NState} = 
-				case BuffName of
-					?BUFF_TOXIC ->
-						%% toxic lose hp per turn
-						?INFO(battle, "handling buff toxic.."),
-						%HpMax  = State#battle_status.hp_max,
-						Hp     = State#battle_status.hp,
-						HpLost = get_hp_lose_value(Hp, Buff),
-                        ?BATTLE_LOG("站位 ~w Buff效果: 中毒", [Pos]),
-                        ?BATTLE_LOG("    Buff类型: 中毒, 系数: ~w, 失血量: ~w", 
-                                    [Buff#buff.value, HpLost]),
-						NewHp  = max(0, Hp - HpLost),
-						BInfo  = 
-							#buff_info {
-								name      = Buff#buff.name,
-								owner     = Pos,			
-								settle    = Settle,
-								hp        = NewHp,
-								mp        = State#battle_status.mp,
-								hp_inc    = NewHp - Hp,
-								mp_inc    = 0,
-								is_new    = false,
-								by_rate   = ByRate,
-								value     = Value,
-								duration  = max(0, Duration),
-								is_remove = (Duration =< 0)
-							},
-						State1 = State#battle_status {hp = NewHp, is_alive = (NewHp > 0)},
-						{BInfo, State1};
-					?BUFF_REFRESH -> 
-						HpMax = State#battle_status.hp_max,
-						Hp    = State#battle_status.hp,
-						HpAdd = get_hp_recover_value(HpMax, Buff),
-                        ?BATTLE_LOG("站位 ~w Buff效果: 回血", [Pos]),
-                        ?BATTLE_LOG("    Buff类型: 回血, 系数: ~w, 回血量: ~w", 
-                                    [Buff#buff.value, HpAdd]),
-						NewHp = min(HpMax, Hp + HpAdd),
-						BInfo = 
-							#buff_info {
-								name      = Buff#buff.name,
-								owner     = Pos,			
-								settle    = Settle,
-								hp        = NewHp,
-								mp        = State#battle_status.mp,
-								hp_inc    = NewHp - Hp,
-								mp_inc    = 0,
-								is_new    = false,
-								by_rate   = ByRate,
-								value     = Value,
-								duration  = max(0, Duration),
-								is_remove = (Duration =< 0)
-							},
-                        State1 = State#battle_status {hp = NewHp, is_alive = true},
-                        {BInfo, State1};
-                    ?BUFF_CURSED ->
-                        ?BATTLE_LOG("站位 ~w Buff效果: 诅咒", [Pos]),
-                        ?BATTLE_LOG("    Buff类型: 被诅咒, 剩余回合数: ~w", [Duration]),
-						Hp    = State#battle_status.hp,
-                        Mp    = State#battle_status.mp,
-                        {BInfo, State1} = case Duration > 0 of
-                            true ->
-                                {
+                case InEffect of
+                    true ->
+                        case BuffName of
+                            ?BUFF_TOXIC ->
+                                %% toxic lose hp per turn
+                                ?INFO(battle, "handling buff toxic.."),
+                                %HpMax  = State#battle_status.hp_max,
+                                Hp     = State#battle_status.hp,
+                                HpLost = get_hp_lose_value(Hp, Buff),
+                                ?BATTLE_LOG("站位 ~w Buff效果: 中毒", [Pos]),
+                                ?BATTLE_LOG("    Buff类型: 中毒, 系数: ~w, 失血量: ~w", 
+                                            [Buff#buff.value, HpLost]),
+                                NewHp  = max(0, Hp - HpLost),
+                                BInfo  = 
                                     #buff_info {
                                         name      = Buff#buff.name,
-                                        owner     = Pos,
+                                        owner     = Pos,			
                                         settle    = Settle,
-                                        hp        = Hp,
-                                        mp        = Mp,
-                                        hp_inc    = 0,
+                                        hp        = NewHp,
+                                        mp        = State#battle_status.mp,
+                                        hp_inc    = NewHp - Hp,
                                         mp_inc    = 0,
                                         is_new    = false,
                                         by_rate   = ByRate,
-                                        value     = max(0, Duration),
+                                        value     = Value,
                                         duration  = max(0, Duration),
                                         is_remove = (Duration =< 0)
                                     },
-                                    State
-                                };
-                            false ->
-                                {
+                                State1 = State#battle_status {hp = NewHp, is_alive = (NewHp > 0)},
+                                {BInfo, State1};
+                            ?BUFF_REFRESH -> 
+                                HpMax = State#battle_status.hp_max,
+                                Hp    = State#battle_status.hp,
+                                HpAdd = get_hp_recover_value(HpMax, Buff),
+                                ?BATTLE_LOG("站位 ~w Buff效果: 回血", [Pos]),
+                                ?BATTLE_LOG("    Buff类型: 回血, 系数: ~w, 回血量: ~w", 
+                                            [Buff#buff.value, HpAdd]),
+                                NewHp = min(HpMax, Hp + HpAdd),
+                                BInfo = 
                                     #buff_info {
                                         name      = Buff#buff.name,
-                                        owner     = Pos,
+                                        owner     = Pos,			
                                         settle    = Settle,
-                                        hp        = 0,
-                                        mp        = Mp,
-                                        hp_inc    = -Hp,
+                                        hp        = NewHp,
+                                        mp        = State#battle_status.mp,
+                                        hp_inc    = NewHp - Hp,
                                         mp_inc    = 0,
                                         is_new    = false,
                                         by_rate   = ByRate,
-                                        value     = max(0, Duration),
+                                        value     = Value,
                                         duration  = max(0, Duration),
                                         is_remove = (Duration =< 0)
                                     },
-                                    State#battle_status {hp = 0, is_alive = false}
-                                }
-                        end,
-                        {BInfo, State1};
-					_ ->
-						BInfo = #buff_info {
-							name      = Buff#buff.name,
-							owner     = Pos,
-							settle    = Settle,
-							hp        = State#battle_status.hp,
-							mp        = State#battle_status.mp,
-							hp_inc    = 0,
-							mp_inc    = 0,
-							is_new    = false,
-							by_rate   = ByRate,
-							value     = Value,
-							duration  = max(0, Duration),		
-							is_remove = (Duration =< 0) 
-						},
-						{BInfo, State}
-				end,
+                                State1 = State#battle_status {hp = NewHp, is_alive = true},
+                                {BInfo, State1};
+                            ?BUFF_CURSED ->
+                                ?BATTLE_LOG("站位 ~w Buff效果: 诅咒", [Pos]),
+                                ?BATTLE_LOG("    Buff类型: 被诅咒, 剩余回合数: ~w", [Duration]),
+                                Hp    = State#battle_status.hp,
+                                Mp    = State#battle_status.mp,
+                                {BInfo, State1} = case Duration > 0 of
+                                    true ->
+                                        {
+                                            #buff_info {
+                                                name      = Buff#buff.name,
+                                                owner     = Pos,
+                                                settle    = Settle,
+                                                hp        = Hp,
+                                                mp        = Mp,
+                                                hp_inc    = 0,
+                                                mp_inc    = 0,
+                                                is_new    = false,
+                                                by_rate   = ByRate,
+                                                value     = max(0, Duration),
+                                                duration  = max(0, Duration),
+                                                is_remove = (Duration =< 0)
+                                            },
+                                            State
+                                        };
+                                    false ->
+                                        {
+                                            #buff_info {
+                                                name      = Buff#buff.name,
+                                                owner     = Pos,
+                                                settle    = Settle,
+                                                hp        = 0,
+                                                mp        = Mp,
+                                                hp_inc    = -Hp,
+                                                mp_inc    = 0,
+                                                is_new    = false,
+                                                by_rate   = ByRate,
+                                                value     = max(0, Duration),
+                                                duration  = max(0, Duration),
+                                                is_remove = (Duration =< 0)
+                                            },
+                                            State#battle_status {hp = 0, is_alive = false}
+                                        }
+                                end,
+                                {BInfo, State1};
+                            ?BUFF_DMG_SHIELD ->
+                                BInfo = #buff_info {
+                                    name      = Buff#buff.name,
+                                    owner     = Pos,
+                                    settle    = Settle,
+                                    hp        = State#battle_status.hp,
+                                    mp        = State#battle_status.mp,
+                                    hp_inc    = 0,
+                                    mp_inc    = 0,
+                                    is_new    = false,
+                                    by_rate   = ByRate,
+                                    value     = Value,
+                                    duration  = max(0, Duration),
+                                    is_remove = (Duration =< 0 orelse Buff#buff.value =< 0) 
+                                },
+                                {BInfo, State};
+                            _ ->
+                                BInfo = #buff_info {
+                                    name      = Buff#buff.name,
+                                    owner     = Pos,
+                                    settle    = Settle,
+                                    hp        = State#battle_status.hp,
+                                    mp        = State#battle_status.mp,
+                                    hp_inc    = 0,
+                                    mp_inc    = 0,
+                                    is_new    = false,
+                                    by_rate   = ByRate,
+                                    value     = Value,
+                                    duration  = max(0, Duration),
+                                    is_remove = (Duration =< 0) 
+                                },
+                                {BInfo, State}
+                        end;
+
+                    false ->        % Buff已经失效了，直接移除
+                        ?INFO(battle, "pending buff to delete: ~w", [Buff#buff.name]),
+                        BInfo = #buff_info {
+                            name      = Buff#buff.name,
+                            owner     = Pos,
+                            settle    = Settle,
+                            hp        = State#battle_status.hp,
+                            mp        = State#battle_status.mp,
+                            hp_inc    = 0,
+                            mp_inc    = 0,
+                            is_new    = false,
+                            by_rate   = ByRate,
+                            value     = Value,
+                            duration  = 0,
+                            is_remove = true
+                        },
+                        {BInfo, State}
+                end,
 			NBuffList = if 
-                (Duration == 0) ->
+                BInfo#buff_info.is_remove =:= true ->
                     ?BATTLE_LOG("站位 ~w 删除Buff:", [Pos]),
                     ?BATTLE_LOG(format_buff(NBuff)),
                     BuffList; 
@@ -2910,35 +3230,46 @@ update_buffs(Pos, [{Buff, Rate, Op} | Rest], BuffInfoList, BattleData) ->
 			
 			case Op of
 				add ->
-                    {NBuff, NBattleData} = add_buff(Buff, Pos, BattleData),
-                    case NBuff of
-                        none ->
-                            update_buffs(Pos, Rest, BuffInfoList, NBattleData);
-                        _ ->
-                            ByRate = NBuff#buff.by_rate,
-                            Value  = if 
-                                ByRate == false -> 
-                                    round(NBuff#buff.value); 
-                                true -> 
-                                    round(NBuff#buff.value * 100) 
-                            end,
-                            BuffInfo = #buff_info {
-                                %% this field is always set to post, to let the client 
-                                %% show the buff after the player using his skill
-                                settle    = post,                   
-                                name      = NBuff#buff.name,
-                                owner     = Pos,
-                                hp        = State#battle_status.hp,
-                                mp        = State#battle_status.mp,	
-                                hp_inc    = 0,
-                                mp_inc    = 0,
-                                is_new    = true,
-                                by_rate   = ByRate,
-                                value     = Value,
-                                duration  = NBuff#buff.duration,
-                                is_remove = false
-                            },
-                            update_buffs(Pos, Rest, [BuffInfo | BuffInfoList], NBattleData)
+                    %% XXX: 坑！！策划要求世界Boss不受特殊buff的影响
+                    IsBossImmune = lists:member(Buff#buff.name, [?BUFF_FAINT, ?BUFF_TOXIC, ?BUFF_CURSED]),
+                    case IsBossImmune 
+                            andalso BattleData#battle_data.type =:= ?BATTLE_TYPE_BOSS
+                            andalso Pos =:= ?BOSS_POSITION of
+                        true ->
+                            ?INFO(battle, "type = ~w", [BattleData#battle_data.type]),
+                            update_buffs(Pos, Rest, BuffInfoList, BattleData);
+
+                        _ ->        % false
+                            {NBuff, NBattleData} = add_buff(Buff, Pos, BattleData),
+                            case NBuff of
+                                none ->
+                                    update_buffs(Pos, Rest, BuffInfoList, NBattleData);
+                                _ ->
+                                    ByRate = NBuff#buff.by_rate,
+                                    Value  = if 
+                                        ByRate == false -> 
+                                            round(NBuff#buff.value); 
+                                        true -> 
+                                            round(NBuff#buff.value * 100) 
+                                    end,
+                                    BuffInfo = #buff_info {
+                                        %% this field is always set to post, to let the client 
+                                        %% show the buff after the player using his skill
+                                        settle    = post,                   
+                                        name      = NBuff#buff.name,
+                                        owner     = Pos,
+                                        hp        = State#battle_status.hp,
+                                        mp        = State#battle_status.mp,	
+                                        hp_inc    = 0,
+                                        mp_inc    = 0,
+                                        is_new    = true,
+                                        by_rate   = ByRate,
+                                        value     = Value,
+                                        duration  = NBuff#buff.duration,
+                                        is_remove = false
+                                    },
+                                    update_buffs(Pos, Rest, [BuffInfo | BuffInfoList], NBattleData)
+                            end
                     end;
 
 				remove ->
@@ -3229,9 +3560,15 @@ send_start_package(BattleData) ->
 	
 	?INFO(battle, "BinIDList = ~w", [BinIDList]),
 	IDList = get_online_ids(BattleData),
-	lists:foreach(fun (ID) -> 
-		catch scene:set_scene_state(ID, ?SCENE_STATE_BATTLE, 0) end, 
-	IDList),
+
+    case BattleData#battle_data.type of
+        ?BATTLE_TYPE_BOSS ->        % 世界boss的场景太小，广播状态会shi的
+            void;
+        _ ->
+            lists:foreach(fun (ID) -> 
+                catch scene:set_scene_state(ID, ?SCENE_STATE_BATTLE, 0) end, 
+            IDList)
+    end,
 
 	send_player_package(BinIDList),
     case {BattleData#battle_data.mod, is_list(BattleData#battle_data.initial_monster_hp)} of
@@ -3246,6 +3583,7 @@ send_start_package(BattleData) ->
 
 %% pt 20001
 send_procedure_package(BattleData) ->
+    mark_20001_sent(),
 	Bin = pt_20:write(20001, BattleData),
 	IDList = get_online_ids(BattleData),
 	send_group_package(Bin, IDList).
@@ -3264,10 +3602,11 @@ send_result_package(BattleData, EndState) ->
 	BinIDList = pt_20:write(20005, {BattleData, EndState}),
 	send_player_package(BinIDList).
 
-send_command_confirm_package(ID, NewSkillID) ->
-    ?INFO(battle, "sending command confirm package, NewSkillID = ~w", [NewSkillID]),
-    Bin = pt_20:write(20013, NewSkillID),
-    lib_send:send(ID, Bin).
+send_command_confirm_package(Pos, NewSkillID, BattleData) ->
+    ?INFO(battle, "sending command confirm package, Pos = ~w, NewSkillID = ~w", [Pos, NewSkillID]),
+    Bin = pt_20:write(20013, {Pos, NewSkillID}),
+	IDList = get_online_ids(BattleData),
+	send_group_package(Bin, IDList).
 
 %% pt 20007 auto set command
 send_command_package(Pos, SkillID, BattleData) ->
@@ -3284,14 +3623,21 @@ send_cd_package(Pos, BattleData) ->
 	send_group_package(Bin, [ID]).
 
 send_player_package(BinIDList) ->
-	F = fun({ID, Bin}) ->
-			case ets:lookup(?ETS_ONLINE, ID) of
-				[] -> ok;
-				[#ets_online {send_pid = SendPid}] ->
-					lib_send:send(SendPid, Bin)
-			end
-		end,
-	lists:foreach(F, BinIDList).
+    F = fun({ID, Bin}) ->
+            case ets:lookup(?ETS_ONLINE, ID) of
+                [] -> 
+                    case g_cross_slave:is_cross(ID) of
+                        false ->
+                            ok;
+                        Record_cross_play ->
+                            ?INFO(cross,"send cross packet to ~w", [ID]),
+                            g_cross_slave:cross_send(Record_cross_play, ID,Bin)
+                     end;
+                [#ets_online {send_pid = SendPid}] ->
+                    lib_send:send(SendPid, Bin)
+            end
+        end,
+    lists:foreach(F, BinIDList).
 
 send_plot_package(Plot, BattleData) ->
     Packet = pt_20:write(20012, Plot),
@@ -3299,14 +3645,20 @@ send_plot_package(Plot, BattleData) ->
 	send_group_package(Packet, IDList).
 
 send_group_package(Bin, IDList) ->
-	F = fun(ID) ->
-			case ets:lookup(?ETS_ONLINE, ID) of
-				[] -> ok;
-				[#ets_online {send_pid = SendPid}] ->
-					lib_send:send(SendPid, Bin)
-			end
-		end,
-	lists:foreach(F, IDList).
+    F = fun(ID) ->
+            case ets:lookup(?ETS_ONLINE, ID) of
+                [] -> 
+                    case g_cross_slave:is_cross(ID) of
+                        false ->
+                            skip;
+                        Record_cross_play ->
+                            g_cross_slave:cross_send(Record_cross_play, ID,Bin)
+                    end;
+                [#ets_online {send_pid = SendPid}] ->
+                    lib_send:send(SendPid, Bin)
+            end
+        end,
+    lists:foreach(F, IDList).
 
 %=========================================================================================================
 % other helper functions
@@ -3326,13 +3678,12 @@ get_battle_award(BattleData) ->
 	true ->
 		MonGroup     = data_mon_group:get(MonID),
 		IDList       = get_ids(att, BattleData, online),     % 只给在线的玩家发奖
-		Exp          = MonGroup#mon_group.exp,
-		Items        = MonGroup#mon_group.items,
-		Silver       = MonGroup#mon_group.silver,
-		DropType     = MonGroup#mon_group.drop_type,
-		DispatchList = get_items_dispatch(IDList, DropType, Items),
-		
-		?INFO(battle, "Items = ~w, Silver = ~w, DispatchList = ~w", [Items, Silver, DispatchList]),
+		Silver 		 = get_silver_battle_award(IDList, MonGroup#mon_group.silver, MonID),
+		Exp 		 = get_exp_battle_award(IDList, MonGroup#mon_group.exp, MonID), 
+		DispatchList = get_items_battle_reward(IDList, MonGroup#mon_group.items, 
+						MonGroup#mon_group.drop_type, MonID),
+		?INFO(battle, "Items = ~w, Silver = ~w, DispatchList = ~w", 
+			  [MonGroup#mon_group.items, Silver, DispatchList]),
 		#battle_award {
 			gold   = 0,
 			silver = Silver,
@@ -3342,10 +3693,107 @@ get_battle_award(BattleData) ->
 		}
 	end.
 
+get_items_battle_reward(IDList, Items, DropType, MonId) ->
+	DispatchList = get_items_dispatch(IDList, DropType, Items),
+	FestDispatchList = get_items_battle_reward(IDList, MonId, []),
+	merge_dispatch_list(DispatchList, FestDispatchList, IDList).
+
+get_items_battle_reward([], _MonId, Res) -> 
+	?INFO(qingming, "get_items_battle_reward ~w", [Res]),
+	Res;
+get_items_battle_reward([Id | Rest], MonId, Res) ->
+	FestivalCheck = [{g_fest, qm_can_add_double_award, [], ?FEST_QINGMING}, 
+					 {g_fest, qm_can_get_taqing_seed, [MonId], ?FEST_QINGMING},
+					 {g_fest, qm_can_get_jinyinku_award, [MonId], ?FEST_QINGMING},
+					 {fest_may, can_get_silver_award, [MonId], ?FEST_MAY}],
+	F = fun({Module, Func, ExtraArgs, FestType}, Acc) ->
+				case Module:Func([Id|ExtraArgs]) of
+					true ->
+                        try
+                            MonFest = data_mon_fest:get_mon_fest(MonId, FestType),
+                            FestDispatchList = get_items_dispatch([Id], unified, MonFest#mon_fest.items),
+                            FestDispatchList ++ Acc
+                        catch error : function_clause ->
+                            ?INFO(fest, "No festival items MonId = ~w, FestType = ~w", [MonId, FestType]),
+                            Acc
+                        end;
+					false ->
+						Acc
+				end
+		end,
+	NewRes = lists:foldl(F, Res, FestivalCheck),
+	get_items_battle_reward(Rest, MonId, NewRes).
+
+get_silver_battle_award(IDList, OriSilver, MonId) ->
+	get_silver_battle_award(IDList, OriSilver, MonId, []).
+
+get_silver_battle_award([], _OriSilver, _MonId, Res) -> 
+	?INFO(qingming, "get_silver_battle_award ~w", [Res]),
+	Res;
+get_silver_battle_award([Id | Rest], OriSilver, MonId, Res) ->
+	FestivalCheck = [{g_fest, qm_can_add_double_award, [], ?FEST_QINGMING}],
+	F = fun({M, F, ExtraArgs, FestType}, Acc) ->
+				case M:F([Id|ExtraArgs]) of
+					true ->
+                        try
+                            MonFest = data_mon_fest:get_mon_fest(MonId, FestType),
+                            MonFest#mon_fest.silver + Acc
+                        catch error : function_clause ->
+                            ?INFO(fest, "No festival items MonId = ~w, FestType = ~w", [MonId, FestType]),
+                            Acc
+                        end;
+					false ->
+						Acc
+				end
+		end,
+	FinalSilver = lists:foldl(F, OriSilver, FestivalCheck),
+	get_silver_battle_award(Rest, OriSilver, MonId, [{Id, FinalSilver}|Res]).
+
+get_exp_battle_award(IDList, OriExp, MonId) ->
+	get_exp_battle_award(IDList, OriExp, MonId, []).
+
+get_exp_battle_award([], _OriExp, _MonId, Res) -> 
+	?INFO(qingming, "get_exp_battle_award ~w", [Res]),
+	Res;
+get_exp_battle_award([Id | Rest], OriExp, MonId, Res) ->
+	FestivalCheck = [{g_fest, qm_can_add_double_award, [], ?FEST_QINGMING}],
+	F = fun({M, F, ExtraArgs, FestType}, Acc) ->
+				case M:F([Id|ExtraArgs]) of
+					true ->
+                        try
+                            MonFest = data_mon_fest:get_mon_fest(MonId, FestType),
+                            MonFest#mon_fest.exp + Acc
+                        catch error : function_clause ->
+                            ?INFO(fest, "No festival items MonId = ~w, FestType = ~w", [MonId, FestType]),
+                            Acc
+                        end;
+					false ->
+						Acc
+				end
+		end,
+	FinalExp = lists:foldl(F, OriExp, FestivalCheck),
+	get_exp_battle_award(Rest, OriExp, MonId, [{Id, FinalExp}|Res]).
+
+get_full_battle_hp_list(BattleData) ->
+    get_full_battle_hp_list(1, BattleData, []).
+
+get_full_battle_hp_list(Idx, _, AccList) when Idx > ?BATTLE_FIELD_SIZE ->
+    AccList;
+get_full_battle_hp_list(Idx, BattleData, AccList) ->
+    case get_battle_status(Idx, BattleData) of
+        ?UNDEFINED ->
+            get_full_battle_hp_list(Idx + 1, BattleData, AccList);
+        BS ->
+            NewEntry = {{BS#battle_status.player_id, BS#battle_status.id}, BS#battle_status.hp},
+            get_full_battle_hp_list(Idx + 1, BattleData, [NewEntry | AccList])
+    end.
+
 get_battle_hp_list(Winner, BattleData) ->
 	case Winner of
 		att -> get_battle_hp_list(1, ?BATTLE_FIELD_SIZE div 2 + 1, [], BattleData);
-		def -> get_battle_hp_list(?BATTLE_FIELD_SIZE div 2 + 1, ?BATTLE_FIELD_SIZE + 1, [], BattleData)
+		def -> get_battle_hp_list(?BATTLE_FIELD_SIZE div 2 + 1, ?BATTLE_FIELD_SIZE + 1, [], BattleData);
+        ?UNDEFINED ->
+            lists:zip(lists:seq(1, 6), lists:duplicate(6, 0))
 	end.
 
 get_battle_hp_list(Limit, Limit, List, _BattleData) -> List;
@@ -3381,6 +3829,24 @@ get_damage_data({D, S}, [H | T], BattleData) ->
 		S1 = Stat#battle_status.damage_suffer,
 		get_damage_data({max(D, D1), S + S1}, T, BattleData)
 	end.
+
+merge_dispatch_list(Alist, Blist, IdList) ->
+	merge_dispatch_list(Alist, Blist, IdList, []).
+
+merge_dispatch_list(_Alist, _Blist, [], Res) -> Res;
+merge_dispatch_list(Alist, Blist, [Id | Rest], Res) ->
+	Item1 = 
+	case lists:keyfind(Id, 1, Alist) of
+		false -> [];
+		{_Id1, AItems} -> AItems
+	end,
+	Item2 = 
+	case lists:keyfind(Id, 1, Blist) of
+		false -> [];
+		{_Id2, BItems} -> BItems
+	end,
+	NewR = [{Id, fold_duplicate_items(Item2++Item1)}|Res],
+	merge_dispatch_list(Alist, Blist, Rest, NewR).
 
 %% get_items_dispatch(Ids, ItemInfo) -> [{player_id(), [{ItemID, Count, BindInfo}]}]
 get_items_dispatch(Ids, DropType, ItemInfo) ->
@@ -3439,9 +3905,11 @@ send_battle_award(BattleData) ->
 %% send battle award to server!
 send_battle_award(ID, BattleData) ->
 	Award  = BattleData#battle_data.award,
-	Exp    = Award#battle_award.exp,
+	ExpList    = Award#battle_award.exp,
+	{_, Exp} = lists:keyfind(ID, 1, ExpList),
 	Items  = Award#battle_award.items,
-	Silver = Award#battle_award.silver,
+	SilverList = Award#battle_award.silver,
+	{_, Silver} = lists:keyfind(ID, 1, SilverList),
 	
 	?INFO(battle, "sending battle award, Award = ~w, Items = ~w", [Award, Items]),
 
@@ -3467,7 +3935,7 @@ send_battle_award(ID, BattleData) ->
 		        false -> mod_team:update_item(ID, IDItems);
 		        true ->skip
 		    end,
-			?INFO(battle,"createItems, PlayerID = ~w, Itemlist = ~w", [ID, IDItems]),
+			?INFO(battle,"createItems, PlayerID = ~w, Itemlist = ~w", [IDItems, ID]),
 			
 		    case BattleData#battle_data.type of
 		        ?BATTLE_TYPE_DEFENCE ->
@@ -3487,6 +3955,11 @@ send_battle_award(ID, BattleData) ->
 						from = ?FROM_STAGE
 					},
 					g_award:send_mix_award(ID, GenAward, Mail, ?SYSTEM_AWARD_STAGE);
+                ?BATTLE_TYPE_DUNGEON ->
+                    catch mod_economy:add_silver(ID, Silver, ?FROM_DUNGEON, true, Desc),
+                    catch mod_items:createItems(ID, IDItems, ?FROM_DUNGEON),
+                    catch mod_dungeon:add_exp(ID, Exp),
+                    catch mod_dungeon:add_silver(ID, Silver);
 		        _ ->
 		            catch mod_economy:add_silver(ID, Silver, ?FROM_BATTLE, true, Desc),
 		            catch mod_items:createItems(ID, IDItems, ?FROM_BATTLE)
@@ -3514,9 +3987,29 @@ test_pve(ID, MonID) ->
 			type    = 0,
 			att_id  = ID,
 			att_mer = [],
-			monster = MonID
+			monster = MonID,
+            off_line_list = [],
+            callback = {battle, test_callback, []}
 		},
 	battle:start(Start).
+
+test_team_pve(ID, MonID) ->
+	Start = 
+		#battle_start {
+			mod     = pve,
+			type    = 0,
+			att_id  = ID,
+			att_mer = [],
+			monster = MonID,
+            maketeam = true,
+            off_line_list = [],
+            callback = {battle, test_callback, []}
+		},
+	battle:start(Start).
+
+test_callback(ID, Result, Args) ->
+    ?INFO(battle, "test_callback called, ID = ~w, Result = ~w, Args = ~w",
+          [ID, Result, Args]).
 
 test_pve_plot(ID, MonID) ->
     RoleList = lists:map(
@@ -3615,7 +4108,11 @@ mutate_attack(BattleData) ->
                 BattleData,
                 lists:seq(1, ?BATTLE_FIELD_SIZE)),
 
-            Packet = pt_20:write(20011, erlang:round(NewRate * 100) - 100),
+            NewGBuff = #buff{
+                name = ?G_BUFF_ATT_ENHANCE,
+                value = erlang:round(NewRate * 100)
+            },
+            Packet = pt_20:write(20011, [NewGBuff]),
             send_group_package(Packet, get_online_ids(NBattleData)),
             NBattleData;
 
@@ -3673,6 +4170,69 @@ get_pos_by([H | T], BattleData, {FieldIdx, TotalFieldIdx}, Op, {CurPos, CurVal})
         _ ->    % false
             get_pos_by(T, BattleData, {FieldIdx, TotalFieldIdx}, Op, {CurPos, CurVal})
     end.
+
+row_filter(Pos, {Front, Middle, Rear}) ->
+    CBoundary = ?BATTLE_FIELD_SIZE div 2,
+    if
+        (Pos > 0 andalso Pos =< ?BATTLE_ROW_SIZE) 
+                orelse (Pos > CBoundary andalso Pos =< (CBoundary + ?BATTLE_ROW_SIZE)) ->
+            {[Pos | Front], Middle, Rear};
+        (Pos > ?BATTLE_ROW_SIZE andalso Pos =< (?BATTLE_ROW_SIZE * 2))
+                orelse (Pos > (CBoundary + ?BATTLE_ROW_SIZE) andalso Pos =< (CBoundary + ?BATTLE_ROW_SIZE * 2)) ->
+            {Front, [Pos | Middle], Rear};
+        (Pos > (?BATTLE_ROW_SIZE * 2) andalso Pos =< (?BATTLE_ROW_SIZE * 3))
+                orelse (Pos > (CBoundary + ?BATTLE_ROW_SIZE * 2) andalso Pos =< (CBoundary + ?BATTLE_ROW_SIZE * 3)) ->
+            {Front, Middle, [Pos | Rear]};
+        true ->
+            ?ERR(battle, "Oops, WTF is this battle field Pos = ~w", [Pos]),
+            {Front, Middle, Rear}
+    end.
+
+get_first_row(PosList, N, _BattleData) ->
+    {Front, Middle, Rear} = lists:foldl(fun row_filter/2, {[], [], []}, PosList),
+    if
+        Front =/= [] ->
+            util:get_rand_list_elems(Front, N);
+        Middle =/= [] ->
+            util:get_rand_list_elems(Middle, N);
+        Rear =/= [] ->
+            util:get_rand_list_elems(Rear, N);
+        true ->
+            []
+    end.
+
+get_last_row(PosList, N, _BattleData) ->
+    {Front, Middle, Rear} = lists:foldl(fun row_filter/2, {[], [], []}, PosList),
+    if
+        Rear =/= [] ->
+            util:get_rand_list_elems(Rear, N);
+        Middle =/= [] ->
+            util:get_rand_list_elems(Middle, N);
+        Front =/= [] ->
+            util:get_rand_list_elems(Front, N);
+        true ->
+            []
+    end.
+
+get_player_pos(PosList, N, BattleData) ->
+    NewPosList = get_player_pos(PosList, N, BattleData, []),
+    util:get_rand_list_elems(NewPosList, N).
+
+get_player_pos([H | T], N, BattleData, AccList) ->
+    S = get_battle_status(H, BattleData),
+    case is_integer(S#battle_status.player_id) of
+        true ->
+            case S#battle_status.is_lead of
+                true ->
+                    get_player_pos(T, N, BattleData, [H | AccList]);
+                false ->
+                    get_player_pos(T, N, BattleData, AccList)
+            end;
+        false ->
+            get_player_pos(T, N, BattleData, AccList)
+    end;
+get_player_pos([], _N, _BattleData, AccList) ->
+    AccList.
 
 get_hit_list(AttackInfoList, BattleData) ->
     get_hit_list(AttackInfoList, [], BattleData).
@@ -3777,6 +4337,10 @@ trigger_plot(Plot, BattleData) ->
 
 get_alive_num(BattleData) ->
     L = get_target_list(calc_range(0, ?ALL), BattleData),
+    length(L).
+
+get_camp_alive_num(Pos, BattleData) ->
+    L = get_target_list(calc_range(Pos, ?ALLFRIENDLY), BattleData),
     length(L).
 
 fold_duplicate_items(Items) ->
@@ -3960,11 +4524,11 @@ get_protector([{Pos, {Rate, _Coef} = Params} | Rest], BattleData) ->
 get_protector([], _BattleData) ->
     none.
 
-summarize_att_info([A | Rest], {CurHP, CurMP}) ->
+summarize_att_info([A | Rest], {CurHP, CurMP, MaxMP}) ->
     NewHP = max(0, CurHP + A#attack_info.hp_inc),
-    NewMP = max(0, min(100, CurMP + A#attack_info.mp_inc)),
-    summarize_att_info(Rest, {NewHP, NewMP});
-summarize_att_info([], {CurHP, CurMP}) ->
+    NewMP = max(0, min(MaxMP, CurMP + A#attack_info.mp_inc)),
+    summarize_att_info(Rest, {NewHP, NewMP, MaxMP});
+summarize_att_info([], {CurHP, CurMP, _MaxMP}) ->
     {CurHP, CurMP}.
 
 check_anti_auto_battle(Id,Battle_data)->
@@ -4001,17 +4565,24 @@ notify_team_complete(Camp, BattleData) ->
         InfoList),
     case AllQuit of
         true ->
+            ?INFO(cross, "AllQuit = true"),
             NotifyF = fun(P) ->
-                ID = P#player_info.id,
-                case (catch notify_complete(ID, BattleData)) of
-                    {'EXIT', Error} ->
-                        ?INFO(battle, "notify_complete failed, Error = ~w", [Error]);
-                    _ ->
+                case P#player_info.online of
+                    true ->
+                        ID = P#player_info.id,
+                        case (catch notify_complete(ID, BattleData)) of
+                            {'EXIT', Error} ->
+                                ?INFO(battle, "notify_complete failed, Error = ~w", [Error]);
+                            _ ->
+                                void
+                        end;
+                    false ->
                         void
                 end
             end,
             lists:foreach(NotifyF, InfoList);
         false ->
+            ?INFO(cross, "AllQuit = false"),
             ok
     end.
 
@@ -4027,6 +4598,377 @@ check_and_set_cd(CDName, PlayerID, CDTime) ->
             true;
         _ ->        % false
             false
+    end.
+
+incr_timeout_times() ->
+    case erlang:get(battle_timeout_times) of
+        undefined ->
+            erlang:put(battle_timeout_times, 1),
+            0;
+        Times ->
+            erlang:put(battle_timeout_times, Times + 1)
+    end.
+
+save_battle_skill_order(ID, OrderList) ->
+    UpdateList = [{#battle_skill_order.order_list, OrderList}],
+    case gen_cache:update_element(?CACHE_BATTLE_SKILL_ORDER_REF, ID, UpdateList) of
+        false ->
+            NewOrderRec = #battle_skill_order{
+                gd_accountID = ID,
+                order_list = OrderList
+            },
+            gen_cache:insert(?CACHE_BATTLE_SKILL_ORDER_REF, NewOrderRec);
+        ok ->
+            skip
+    end,
+    ok.
+
+get_battle_skill_order(ID, RoleSkillList) ->
+    %% XXX: 之前保存的自动战斗顺序设置可能会导致玩家技能顺序乱掉，
+    %%      暂时全用默认顺序
+
+    %case gen_cache:lookup(?CACHE_BATTLE_SKILL_ORDER_REF, ID) of
+    %    [] ->
+            F = fun(UID1, UID2) ->
+                {SID1, Lv1} = skill:get_skill_id_level(UID1),
+                Info1 = data_skill_table:get(SID1, Lv1),
+
+                {SID2, Lv2} = skill:get_skill_id_level(UID2),
+                Info2 = data_skill_table:get(SID2, Lv2),
+
+                Info1#battle_skill.slot =< Info2#battle_skill.slot
+            end,
+            SortedSkillList = lists:sort(F, RoleSkillList),
+
+    %        NewOrderRec = #battle_skill_order{
+    %            gd_accountID = ID,
+    %            order_list = SortedSkillList
+    %        },
+    %        gen_cache:insert(?CACHE_BATTLE_SKILL_ORDER_REF, NewOrderRec),
+            SortedSkillList.%;
+
+    %    [OldOrderRec | _] ->
+    %        OldList0 = OldOrderRec#battle_skill_order.order_list,
+    %        OldList = [S || S <- OldList0, lists:member(S, RoleSkillList)],
+    %        case lists:sort(RoleSkillList) =/= lists:sort(OldList) of
+    %            true ->     % 获得新技能或者有其他变动之后会跑到这里……
+    %                OldLen = length(OldList),
+    %                CurLen = length(RoleSkillList),
+    %                OldList1 = lists:ukeysort(1, lists:zip(OldList, lists:seq(1, OldLen))),
+    %                RoleSkillList1 = lists:ukeysort(1, lists:zip(RoleSkillList, lists:duplicate(CurLen, 9999))),
+    %                MergedList = lists:keysort(2, lists:ukeymerge(1, OldList1, RoleSkillList1)),
+    %                {NewList, _} = lists:unzip(MergedList),
+    %                UpdateList = [{#battle_skill_order.order_list, NewList}],
+    %                gen_cache:update_element(?CACHE_BATTLE_SKILL_ORDER_REF, ID, UpdateList),
+    %                NewList;
+    %            false ->
+    %                OldList
+    %        end
+    %end.
+
+notify_complete_direct(ID, BattleData) ->
+    ?INFO(battle, "Calling notify_complete_direct for player ~w", [ID]),
+
+	Callback = BattleData#battle_data.callback,
+	Type     = BattleData#battle_data.type,
+	Winner   = BattleData#battle_data.winner,
+	
+	{true, Camp} = check_player(ID, BattleData),
+	IsWin = (Winner == Camp),
+	
+	Statistic = get_battle_statistic(ID, BattleData),
+	%% ?INFO(battle, "statistic = ~w", [Statistic]),
+	
+	case is_number(BattleData#battle_data.monster) 
+			andalso (Winner == att) 
+			andalso (Camp == att) 
+			andalso (Type =/= ?BATTLE_TYPE_BOSS) 
+            andalso (Type =/= ?BATTLE_TYPE_CAVE) of
+		true ->
+			send_battle_award(ID, BattleData);
+		false ->
+			ok
+	end,
+	
+	WinHPList1 = get_battle_hp_list(Winner, BattleData),
+    FullHPList = get_full_battle_hp_list(BattleData),
+    ?INFO(battle, "FullHPList = ~w", [FullHPList]),
+	F1 = fun({Pos, HP}) ->
+				 {(Pos - 1) rem (?BATTLE_FIELD_SIZE div 2) + 1, HP}
+		 end,
+	WinHPList = lists:map(F1, WinHPList1),
+	
+	BattleResult = 
+		#battle_result {
+			is_win    = IsWin, 
+			mon_id    = BattleData#battle_data.monster,
+			type      = Type, 
+            battle_pid = self(),
+			hp_list   = WinHPList,
+            full_hp_list = FullHPList,
+			callback  = Callback, 
+			statistic = Statistic
+		},
+
+	case BattleResult#battle_result.callback of
+        {Mod, Fun, Args} ->
+            Mod:Fun(ID, BattleResult, Args);
+        _Other ->
+            ?ERR(battle, "Unsupported battle callback: ~w", [_Other])
+    end.
+
+get_newbie_mp(PlayerLevel) ->
+    {_I,_F,MinNewbieMPLevel,_L} = data_enable_system:get(?BATTLE_EXTRA_MP),
+    {_I,_F,MaxNewbieMPLevel,_L} = data_enable_system:get(?BATTLE_EXTRA_MP_END),
+
+    case PlayerLevel >= MinNewbieMPLevel andalso 
+            PlayerLevel =< MaxNewbieMPLevel of
+        true -> 80;
+        false -> 0
+    end.
+
+init_global_buff(PlayerID, PlayerLevel, MerList) ->
+    RawList = [?G_BUFF_NEWBIE_MP],
+    {_, _, _, GBuffList} = lists:foldl(fun init_one_global_buff/2, 
+                                       {PlayerID, PlayerLevel, MerList, []},
+                                       RawList),
+    GBuffList.
+
+init_one_global_buff(?G_BUFF_NEWBIE_MP, {PlayerID, PlayerLevel, MerList, AccList}) ->
+    case get_newbie_mp(PlayerLevel) of
+        0 ->
+            {PlayerID, PlayerLevel, MerList, AccList};
+        NewbieMP ->
+            NewBuff = #buff{
+                name = ?G_BUFF_NEWBIE_MP,
+                value = NewbieMP
+            },
+            {PlayerID, PlayerLevel, MerList, [NewBuff | AccList]}
+    end.
+
+send_global_buff(BattleData) ->
+    IDPacketList = pt_20:write(20011, BattleData),
+    send_player_package(IDPacketList).
+
+filter_duplicate_pos(List) ->
+    filter_duplicate_pos(List, dict:new(), []).
+
+filter_duplicate_pos([Role | Rest], PosDict, AccList) ->
+    CurPos = Role#role.gd_isBattle,
+    case dict:find(CurPos, PosDict) of
+        error ->
+            filter_duplicate_pos(Rest, dict:store(CurPos, true, PosDict), [Role | AccList]);
+        _ ->
+            ?ERR(battle, "Duplicate position: key = ~w, pos = ~w", 
+                 [Role#role.key, Role#role.gd_isBattle]),
+            filter_duplicate_pos(Rest, PosDict, AccList)
+    end;
+filter_duplicate_pos([], _PosDict, AccList) ->
+    ?INFO(battle, "_PosDict = ~w", [dict:to_list(_PosDict)]),
+    AccList.
+
+%% XXX: 这里可能会有时序问题……
+check_cross(OnlineIDList, _BattleData) ->
+    lists:all(fun(ID) ->
+                not mod_cross:is_in_cross_state(ID)
+        end,
+        OnlineIDList).
+
+handle_dmg_shield(_Tar, OrigDmg, BuffList) ->
+    case lists:keysearch(?BUFF_DMG_SHIELD, #buff.name, BuffList) of
+        false ->
+            {none, 0, OrigDmg};
+        {value, Buff = #buff{value = DmgAbsVal}} ->
+            ?INFO(battle, "Buff = ~w", [Buff]),
+            ?BATTLE_LOG("        站位 ~w Buff效果: 护盾", [_Tar]),
+            ?BATTLE_LOG("            Buff类型: 护盾, 伤害吸收数量: ~w", [DmgAbsVal]),
+            NewAbsVal = max(0, DmgAbsVal - OrigDmg),
+            NewDmg = max(0, OrigDmg - DmgAbsVal),
+            {Buff#buff{value = NewAbsVal}, DmgAbsVal - NewAbsVal, NewDmg}
+    end.
+
+update_buff_value_rel(BuffName, DiffValue, BuffList) ->
+    case lists:keysearch(BuffName, #buff.name, BuffList) of
+        false ->
+            ?INFO(battle, "Buff search missed"),
+            BuffList;
+        {value, Buff = #buff{value = Val}} ->
+            ?INFO(battle, "Old val = ~w", [Val]),
+            NewVal = Val + DiffValue,
+            ?INFO(battle, "NewVal = ~w", [NewVal]),
+            lists:keyreplace(BuffName, #buff.name, BuffList, Buff#buff{value = NewVal})
+    end.
+
+update_buff_value_rel(BuffName, DiffValue, Threshold, BuffList) ->
+    case lists:keysearch(BuffName, #buff.name, BuffList) of
+        false ->
+            ?INFO(battle, "Buff search missed"),
+            BuffList;
+        {value, Buff = #buff{value = Val}} ->
+            ?INFO(battle, "Old val = ~w, DiffValue = ~w", [Val, DiffValue]),
+            NewVal = if
+                DiffValue > 0 ->
+                    min(Val + DiffValue, Threshold);
+                DiffValue < 0 ->
+                    max(Val + DiffValue, Threshold);
+                true ->
+                    Val
+            end,
+            ?INFO(battle, "NewVal = ~w", [NewVal]),
+            lists:keyreplace(BuffName, #buff.name, BuffList, Buff#buff{value = NewVal})
+    end.
+
+del_buff_list(BuffList, TarList, BattleData) ->
+    ?INFO(battle, "Deleting BuffList = ~w", [BuffList]),
+    lists:foldl(
+        fun(BuffName, BD) ->
+            del_buff(BuffName, TarList, BD)
+        end,
+        BattleData,
+        BuffList).
+
+del_buff(BuffName, TarList, BattleData) ->
+    lists:foldl(
+        fun(Tar, BD) ->
+            TarStat = get_battle_status(Tar, BD),
+            NewBuffList = del_buff_1(BuffName, TarStat#battle_status.buff, []),
+            set_battle_status(Tar, TarStat#battle_status{buff = NewBuffList}, BD)
+        end,
+        BattleData,
+        TarList).
+
+del_buff_1(BuffName, [H | T], AccList) ->
+    case H#buff.name of
+        BuffName ->
+            ?INFO(battle, "deleting buff ~w", [BuffName]),
+            NBuff = H#buff{settle = pre, in_effect = false},
+            del_buff_1(BuffName, T, [NBuff | AccList]);
+        _ ->
+            del_buff_1(BuffName, T, [H | AccList])
+    end;
+del_buff_1(_BuffName, [], AccList) ->
+    AccList.
+
+%% AttInfo里最后元素（如果有的话）一定是当前攻击目标，
+%% 可以用来判断暴击、命中等状态
+get_att_added_mp_by_skill(SkillID, SrcStat, AttInfo) ->
+    SkillInfo = data_skill_table:get(SkillID, 1),
+    BaseMP = case SkillInfo#battle_skill.mp_add of
+        {MainRoleMPAdd, MerRoleMPAdd} ->
+            case is_integer(SrcStat#battle_status.player_id)
+                    andalso (SrcStat#battle_status.is_lead) of
+                true  -> MainRoleMPAdd;
+                false -> MerRoleMPAdd
+            end;
+        MPAdd when is_integer(MPAdd) ->
+            MPAdd
+    end,
+
+    ExtraMP = case is_integer(SrcStat#battle_status.player_id) 
+            andalso (SrcStat#battle_status.is_lead) of
+        true ->
+            case SrcStat#battle_status.job of
+                ?CAREER_HUWEI -> 
+                    %% 虎卫：每次行动时恢复10点怒气（无论是对敌行动还是对己行动，没有行动则不增加）
+                    data_system:get(126);
+                ?CAREER_MENGJIANG ->
+                    %% 猛将：每次暴击时恢复5点怒气（命中并暴击就增加，即使伤害被完全吸收）
+                    lists:foldl(
+                        fun(A, Sum) ->
+                            case A#attack_info.is_crit of
+                                true  -> Sum + data_system:get(127);
+                                false -> Sum
+                            end
+                        end,
+                        0, AttInfo);
+                ?CAREER_JUNSHI_ATT ->
+                    %% 军师：每次命中敌方目标时恢复2点怒气（未命中不增加，命中但没造成伤害也加）
+                    lists:foldl(
+                        fun(A, Sum) ->
+                            case A#attack_info.is_miss of
+                                false -> Sum + data_system:get(128);
+                                true  -> Sum
+                            end
+                        end,
+                        0, AttInfo);
+                ?CAREER_JUNSHI_HELP ->
+                    %% 军师：每次命中敌方目标时恢复2点怒气（未命中不增加，命中但没造成伤害也加）
+                    lists:foldl(
+                        fun(A, Sum) ->
+                            case A#attack_info.is_miss of
+                                false -> Sum + data_system:get(128);
+                                true  -> Sum
+                            end
+                        end,
+                        0, AttInfo)
+            end;
+        false ->
+            case is_integer(SrcStat#battle_status.player_id) of
+                true ->     % 这是玩家的武将……
+                    %% 武将每回合自动恢复15点怒气
+                    data_system:get(129);
+                false ->    % 这是怪物……
+                    %% 怪物每回合自动恢复20点怒气
+                    data_system:get(130)
+            end
+    end,
+
+    BaseMP + ExtraMP.
+
+
+get_tar_for_common_attack(Src, Tar, BattleData) ->
+    case Tar of
+        {ai_override, _} ->         % XXX: AI设置的目标优先级最高
+            Tar;
+        _ ->
+            AllTarList = get_target_list(battle:calc_range(Tar, ?ALLFRIENDLY), BattleData),
+            SrcCareer = get_battle_status(Src, #battle_status.job, BattleData),
+            case SrcCareer of
+                ?CAREER_JUNSHI_ATT ->
+                    %% 军师随机选目标
+                    Tar;        % Tar本来就是随机的，直接返回就行了……
+                ?CAREER_JUNSHI_HELP ->
+                    Tar;
+                ?CAREER_HUWEI ->
+                    %% 虎卫先打前排
+                    [NTar | _] = get_first_row(AllTarList, 1, BattleData),
+                    NTar;
+                ?CAREER_MENGJIANG ->
+                    %% 猛将先打前排
+                    [NTar | _] = get_first_row(AllTarList, 1, BattleData),
+                    NTar;
+                _Other ->
+                    ?INFO(battle, "_Other = ~w", [_Other]),     % 世界boss会返回0……
+                    Tar
+            end
+    end.
+
+merge_actions(BattleData) ->
+    AttPro = get_attack_pro(BattleData),
+    NAttackInfo = case AttPro#attack_pro.attack_info of
+        [A1, A2 | Rest] ->
+            [A2 ++ A1 | Rest];
+        Other ->
+            Other
+    end,
+    NAttPro = AttPro#attack_pro{attack_info = NAttackInfo},
+    set_attack_pro(NAttPro, BattleData).
+
+mark_20001_sent() ->
+    erlang:put(is_20001_sent, true).
+
+sent_any_20001() ->
+    case erlang:get(is_20001_sent) of
+        true -> true;
+        _ -> false      % undefined
+    end.
+
+get_rel_hp(Pos, BattleData) ->
+    case get_battle_status(Pos, BattleData) of
+        ?UNDEFINED ->
+            0;
+        BS ->
+            BS#battle_status.hp / BS#battle_status.hp_max
     end.
 
 -ifdef(debug).
@@ -4063,6 +5005,7 @@ buff_type_to_str(Type) ->
         ?BUFF_COUNTER     -> "反击";
         ?BUFF_LIFE_DRAIN  -> "吸血";
         ?BUFF_MANA_DRAIN  -> "吸怒气"; 
+        ?BUFF_MANA_ADJUST -> "调整怒气";
         ?BUFF_REFRESH     -> "回血";
         ?BUFF_SCORN       -> "嘲讽";
         ?BUFF_SCORNED     -> "被嘲讽";
@@ -4096,7 +5039,10 @@ buff_type_to_str(Type) ->
         ?BUFF_COUNTER_DOWN -> "反击-";
 
         ?BUFF_ATT_ENHANCE -> "越战越勇";
-        ?BUFF_ATT_WORSEN  -> "越战越挫"
+        ?BUFF_ATT_WORSEN  -> "越战越挫";
+
+        ?BUFF_EXTRA_CRIT_RATE -> "额外暴击几率";
+        ?BUFF_DMG_SHIELD  -> "护盾"
     end.
 
 tag_to_buff_effect(Tag) ->
@@ -4130,8 +5076,8 @@ dump_single_player(Pos, P) ->
             ?BATTLE_LOG("站位: ~w, ID: ~w, 名字: ~s, 职业: ~w, 等级: ~w, 星级: ~w",
                         [Pos, P#battle_status.id, P#battle_status.name, 
                          P#battle_status.job, P#battle_status.level, P#battle_status.star]),
-            ?BATTLE_LOG("    血: ~w, 怒气: ~w, 物攻: ~w, 魔攻: ~w, 物防: ~w, 魔防: ~w", 
-                        [P#battle_status.hp, P#battle_status.mp, 
+            ?BATTLE_LOG("    血: ~w, 怒气: ~w, 怒气上限: ~w, 物攻: ~w, 魔攻: ~w, 物防: ~w, 魔防: ~w", 
+                        [P#battle_status.hp, P#battle_status.mp, P#battle_status.mp_max,
                          P#battle_status.p_att, P#battle_status.m_att,
                          P#battle_status.p_def, P#battle_status.m_def]),
             ?BATTLE_LOG("    速度: ~w, 命中: ~w, 闪避: ~w, 暴击: ~w, 幸运: ~w, 反击: ~w, 格挡: ~w, 破甲: ~w, 敏捷: ~w", 

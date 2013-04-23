@@ -34,9 +34,8 @@
 					}).
 
 -record(recent_rec, {
-					 id                 = 0,
-                     challenger_name    = "",
-					 challenged_name     = "",
+					 id                = 0,
+					 challenged_id     = 0,
                      win_rec            = 0,  %%2 lose,1  win
 					 challenge_time      = 0,
 					 ranking             = 0    %%0 排名不变， n排名变成第n名
@@ -79,8 +78,12 @@
 		level = 0,							%% 玩家大于该等级可获得奖励
 		win_silver = 0,						%% 挑战胜利获得银币
 		win_jungong = 0,					%% 挑战胜利获得军功
+		win_score   = 0,					%% 挑战胜利获得积分
+		win_shengwang   = 0,					%% 挑战胜利获得声望
 		lose_silver = 0,					%% 挑战失败获得银币
-		lose_jungong = 0					%% 挑战失败获得军功
+		lose_jungong = 0,					%% 挑战失败获得军功
+  		lose_score   = 0,					%% 挑战失败获得积分
+		lose_shengwang   = 0					%% 挑战失败获得声望
 	}).
 
 -define(CACHE_ARENA_AWARD, cache_util:get_register_name(arena_award)).
@@ -93,7 +96,7 @@
 -define(CLEAN_ARENA_BATTLE_CD, 31006).
 -define(CHALLENGE_FIVE_TIMES, 5).  %%挑战5次翻牌
 -define(INIT_WIN_RECORD, {0,0,0,0,0}).				%% 初始化竞技场历史战绩
--define(ARENA_RANK_MIN_JUNGONG_AWARD, 30).			%% 竞技场排名军功奖励最小值
+-define(ARENA_RANK_MIN_JUNGONG_AWARD, 100).			%% 竞技场排名声望奖励最小值
 %%============================================================================================
 %% 竞技排行榜 end
 %%============================================================================================	

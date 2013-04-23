@@ -8,22 +8,24 @@
 -define(SCENE_BOSS, 		6).		%% 世界BOSS竞技场地图
 -define(SCENE_MARSTOWER,    7).	    %% 英雄塔地图
 -define(SCENE_COMP,			8).		%% 比武地图
+-define(SCENE_TERRITORY_WAR,9).		%% 领地战地图
 -define(SCENE_STAGE,		10).	%% 挑战魂将
 -define(SCENE_DEFENCE,		11).	%% 群魔乱舞
 -define(SCENE_GUILD_HUNTING,12).	%% 帮会活动
+-define(SCENE_CAVE,			13).	%% 藏宝洞地图
 
 -define(INIT_MAP,           1100).  %% 起始地图
 -define(SPECIAL_MAP, 		1900). 	%% 原野村要做特殊的处理
 -define(MAX_PLAYER_IN_ROOM, data_system:get(33)). 	%% 在原野村虚拟房间中的最大人数
 -define(SPECIAL_NUM, 		data_system:get(34)). 	%% 原野村虚拟房间的个数
--define(MOVE_CHECK_SCOPE,   8).
+-define(MOVE_CHECK_SCOPE,   15).
 
 -define(ETS_SCENE_ROOM,     ets_scene_room).
 -define(ETS_SCENE_INFO,     ets_scene_info).
 -define(ETS_MASK_INFO,      ets_mask_info).
 
--define(CELL_HEIGHT, 10).
--define(CELL_WIDTH,  15).
+-define(CELL_HEIGHT, 15).
+-define(CELL_WIDTH,  30).
 -define(SCENE_CACHE_REF, cache_util:get_register_name(position)).
 
 -define(CLIENT_BLOCK_SIZE, 30).
@@ -37,7 +39,7 @@
 -define(SCENE_STATE_COMP_TEAM,	16).
 -define(SCENE_STATE_COMP_BALL,	32).
 -define(SCENE_STATE_COMP_SPEED,	64).
--define(SCENE_STATE_HORSE,		128).
+-define(SCENE_STATE_TERRITORY_WAR,	128).
 -define(SCENE_STATE_WING,		256).
 -define(SCENE_STATE_FASHION,	512).
 
@@ -48,6 +50,7 @@
 -define(SCENE_SPEED_FLY,		3).
 -define(SCENE_SPEED_FIRST_RB,	6).
 
+-define(SCENE_MAX_PLAYER_PER_PACKAGE, 20). %% 11001协议每包最多人数，超过此人数分包
 -define(ROOM_NUMBERS, 100).
 -define(MAX_PLAYER,   30).
 
@@ -160,6 +163,7 @@
 		comp_team_data = [],	%% 比武场队伍状态
 		comp_ball_data = [],	%% 比武场绣球状态
 		comp_speed_data= [],	%% 比武场加速状态
+        comp_room_id   = 0,     %% 比武场房间ID
 		
 		ability_data   = 0,
 
@@ -189,7 +193,15 @@
 
 		die_data	   = 0,
 
+		war_title      = 0, %% 领地战称号
+		war_crown      = 0, %% 领地战头上的皇冠
+		wudi_data      = 0,
+		dingshen_data  = 0,
+		speedup_data   = 0,
+		speedcut_data  = 0,
+
 		path           = [],
+		territory_war_camp = [],
 		send_pid       = 0,		%% 玩家的广播进程ID列表
 		move_queue_pid = none 	%% 移动广播进程
   }

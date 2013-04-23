@@ -81,6 +81,10 @@
 			gd_fanji           = 0,			%% 反击
 			gd_pojia           = 0,			%% 破甲
 			
+			gd_angry 		   = 0,			%% 怒气下限
+			gd_max_angry	   = 100,		%% 怒气上限
+			gd_up_angry		   = 0,			%% 怒气提升
+
 			gd_currentHp       = 0,			%% 当前血量
 			gd_maxHp           = 0,			%% 最大血量
 			p_def              = 0,			%% 物理防御
@@ -88,7 +92,7 @@
 			p_att              = 0,			%% 攻击力
 			m_att              = 0,			%% 魔攻
 			star_lv            = 0,			%% 武将星级
-
+			star 			   = 0,
 			gd_name            = ""			%% 佣兵名称
 	}).
 
@@ -135,6 +139,10 @@
 			gd_fanji           = {integer},		
 			gd_pojia           = {integer},		
 			
+			gd_angry		   = {integer},
+			gd_max_angry	   = {integer},
+			gd_up_angry        = {integer},
+
 			gd_currentHp       = {integer},
 			gd_maxHp           = {integer},
 			p_def              = {integer},
@@ -142,6 +150,7 @@
 			p_att              = {integer},
 			m_att              = {integer},
 			star_lv            = {integer},
+			star 			   = {integer},
 			gd_name            = {string}
 	}).
 
@@ -161,6 +170,10 @@
 			gd_fanji      = 0,			%% 反击
 			gd_pojia      = 0,			%% 破甲
 			
+			gd_angry 	  = 0,
+			gd_max_angry  = 0,
+			gd_up_angry   = 0,
+
 			gd_currentHp  = 0,			%% 当前血量
 			gd_maxHp      = 0,			%% 最大血量
 			p_def         = 0,			%% 物理防御
@@ -190,7 +203,8 @@
 	type          = 0,	%% 技能类型
 	effect        = 0,	%% 技能效果（1：战斗中有效，2：固定加成）
 	level_up_exp  = 0,	%% 升级所需经验
-	next_skill_id = 0 	%% 升级后的技能原型id
+	next_skill_id = 0,	%% 升级后的技能原型id
+	point		  = 0 	%% 增加的战斗力
 	}).
 
 

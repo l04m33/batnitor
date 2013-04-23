@@ -17,6 +17,10 @@
 		bind_gold = 0,
 		jungong_status,
 		jungong = 0,
+		reputation_status,
+		reputation = 0,
+		junliang_status,
+		junliang = 0,
 		exp_status,
 		exp = 0,
 		goods_isbind = 0,
@@ -41,5 +45,7 @@
 		gd_mail_bind_gold = 0, 
 		gd_mail_bind_silver = 0, 
 		gd_mail_jungong = 0,
+		gd_mail_reputation = 0,
+		gd_mail_junliang = 0,
 		gd_mail_exp = 0
 	}).

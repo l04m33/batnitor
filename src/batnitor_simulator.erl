@@ -318,7 +318,7 @@ prepare_mon_attr(MonID) when is_integer(MonID) ->
                         hp          = erlang:round(
                                           HPBoost *
                                           RenDaGuai * RoleInfo#role.p_att * 
-                                          (1 - (RoleInfo#role.p_def / (RoleInfo#role.p_def + RoleInfo#role.gd_roleLevel * 450)))),
+                                          (1 - (RoleInfo#role.p_def / (RoleInfo#role.p_def + RoleInfo#role.gd_roleLevel * 250)))),
 
                         p_att       = case LeiXing of
                                           %% physical attacker
@@ -326,7 +326,7 @@ prepare_mon_attr(MonID) when is_integer(MonID) ->
                                                    AttackBoost *
                                                    RoleInfo#role.gd_maxHp / 
                                                    ((1 - RoleInfo#role.p_def / 
-                                                     (RoleInfo#role.p_def + RoleInfo#role.gd_roleLevel * 450)) * GuaiDaRen));
+                                                     (RoleInfo#role.p_def + RoleInfo#role.gd_roleLevel * 250)) * GuaiDaRen));
                                           %% magical attacker
                                           3 -> 0
                                       end,
@@ -336,7 +336,7 @@ prepare_mon_attr(MonID) when is_integer(MonID) ->
                                                    AttackBoost *
                                                    RoleInfo#role.gd_maxHp / 
                                                    ((1 - RoleInfo#role.m_def / 
-                                                     (RoleInfo#role.m_def + RoleInfo#role.gd_roleLevel * 450)) * GuaiDaRen));
+                                                     (RoleInfo#role.m_def + RoleInfo#role.gd_roleLevel * 250)) * GuaiDaRen));
                                           1 -> 0
                                       end,
 

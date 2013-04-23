@@ -1,15 +1,12 @@
 %% 官职、官邸、器魂和神器的头文件
 
 -define(QIHUN_JING,			1).		%% 精
--define(QIHUN_LI,			2).		%% 力
--define(QIHUN_YUAN,			3).		%% 元
--define(QIHUN_DUN,			4).		%% 盾
--define(QIHUN_YU,			5).		%% 御
--define(QIHUN_ZHUN,			6).		%% 准
--define(QIHUN_SHAN,			7).		%% 闪
--define(QIHUN_YUN,			8).		%% 运
--define(QIHUN_SU,			9).		%% 速
--define(QIHUN_BAO,			10).	%% 暴
+-define(QIHUN_DUN,			2).		%% 盾
+-define(QIHUN_YU,			3).		%% 御
+-define(QIHUN_ZHUN,			4).		%% 准
+-define(QIHUN_SHAN,			5).		%% 闪
+-define(QIHUN_YUN,			6).		%% 运
+-define(QIHUN_BAO,			7).	%% 暴
 
 
 -define(MIN_QIHUN_ID,	?QIHUN_JING).	%% 最小的器魂id

@@ -60,7 +60,7 @@
 %% -define(DB_PASS, mod_configure:read(db_pass,"server.config")).
 %% -define(DB_NAME, mod_configure:read(db_name,"server.config")).
 %% -define(DB_ENCODE, mod_configure:read(db_encode,"server.config")).
--define(DB, 		util:get_app_env(db)).
+-define(DB, 		sd_mysql_conn).
 -define(DB_HOST, 	util:get_app_env(db_host)).
 -define(DB_PORT, 	util:get_app_env(db_port)).
 -define(DB_USER, 	util:get_app_env(db_user)).
@@ -71,6 +71,14 @@
 
 -define(USER_LOG_DB, 	sd_mysql_conn_user_log).
 -define(USER_LOG_DB_NAME, 	util:get_app_env(user_log_db_name)).
+
+-define(USER_LOG_DB_HOST, 	util:get_app_env(user_log_db_host)).
+-define(USER_LOG_DB_PORT, 	util:get_app_env(user_log_db_port)).
+-define(USER_LOG_DB_USER, 	util:get_app_env(user_log_db_user)).
+-define(USER_LOG_DB_PASS, 	util:get_app_env(user_log_db_pass)).
+-define(USER_LOG_DB_ENCODE, 	util:get_app_env(user_log_db_encode)).
+
+
 
 -define(SERVER_OFF_SET,util:get_app_env(server_offset)).
 -define(RPC_TIMEOUT,5).

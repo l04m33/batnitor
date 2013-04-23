@@ -8,8 +8,8 @@
 	gd_AchieveLevel  = 0,       %% 通关层数
 	gd_AchieveTime   = 0,		%% 通关时间
 	gd_MonsterList   = [],		%% 怪物列表
-	gd_AutoCallengeTimes  = 0,	%% 自动挑战的次数
-	gd_FinishTime	 = 0		%% 完成时间
+	gd_FinishTime	 = 0,		%% 完成时间
+	gd_RewardInfo	 = [] 		%% 奖励列表
 	}).
 
 -record (marstower_types, {
@@ -21,11 +21,11 @@
 	gd_AchieveLevel  = {integer},
 	gd_AchieveTime	 = {integer},
 	gd_MonsterList   = {term},
-	gd_AutoCallengeTimes  = {integer},
-	gd_FinishTime	 = {integer}
+	gd_FinishTime	 = {integer},
+	gd_RewardInfo    = {term}
 	}).
 
--record (marstower_king, {
+-record (marstower_king, { 	%% 霸主
 	gd_Floor = 0,
 	gd_IsAccount = 0,
 	gd_ID = 0,
@@ -37,6 +37,22 @@
 	gd_IsAccount = {integer},
 	gd_ID = {integer},
 	gd_Lock = {integer}
+	}).
+
+-record(marstower_guaji,{
+	account_id = 0,       %% 账户id
+	current_level = 0,	  %% 当前关卡
+	max_level = 0,		  %% 最高关卡
+	timer_ref = none,	  %% 计时器
+	end_time = 0,		  %% 挂机结束时间
+	reward_list = [] 	  %% 奖励列表[#marstower_guaji_award]
+	}).
+
+-record(marstower_guaji_award,{
+	level = 0,
+	silver = 0,
+	exp = 0,
+	items = []
 	}).
 
 -define(MAX_FREE_RESET_TIMES,1).

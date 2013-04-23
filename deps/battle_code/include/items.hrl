@@ -6,6 +6,8 @@
 -define(CACHE_ITEM_REF, cache_util:get_register_name(item)).
 -define(CACHE_MYSTICAL_SHOP_REF, cache_util:get_register_name(mystical_shop)).
 
+-define(MEDAL_LIST,lists:seq(870,879)).
+
 -define(BAG_TYPE_BAG,				1).
 -define(BAG_TYPE_BANK,				2).
 -define(BAG_TYPE_ROLE,				3).
@@ -53,6 +55,9 @@
 -define(PROP_TYPE_FLY_SHOES,	6).						%% 小飞鞋
 -define(PROP_TYPE_TASK,			10).					%% 任务道具
 -define(PROP_TYPE_CHANGE_CARD,	26).					%% 变身卡
+-define(PROP_TYPE_FLY_CARD,		29).					%% 飞行体验卡
+-define(PROP_TYPE_HORSE_CARD,	30).					%% 坐骑幻化卡
+-define(PROP_TYPE_BOSS_OFFLINE,	33).					%% 世界boss离线卡
 
 %%宝石操作协议
 -define(ONE_STONE_ONCE, 0).
@@ -75,7 +80,7 @@
 			   gd_EndTime = 0,
 			   gd_LuckyStar = 0,
 			   gd_XilianInfo = [],
-			   gd_Quality = 1,
+			   gd_Quality = 0,
 			   gd_IsQiling = 0,
 			   gd_IntenFailRate = 0
 			  }).
@@ -122,7 +127,7 @@
 				   cfg_Name = "",
 				   cfg_FirstType = 0,
 				   cfg_SecondType = 0,  %%装备位置
-				   cfg_GradeLevel = 0,      
+				   cfg_GradeLevel = 0,  %%1~6白绿蓝紫金红
 				   cfg_Career = 0,          
 				   cfg_RoleLevel = 0,
 				   cfg_Wakan,
@@ -146,8 +151,17 @@
 				   cfg_IsQiling = 1,
 				   cfg_IsUpgrate = 1,
 				   cfg_IsUpquality = 1,
-				   cfg_Sort = 1
+				   cfg_Sort = 1,
+				   cfg_From = 0,  %% 装备来源(新加的字段,初衷是用来区分装备中的橙装)
+                   cfg_IsCanForge = 0,
+                   cfg_IsCanTrade = 0,
+                   cfg_TradeMin = 0
 			  }).
+
+-record(item_temp,{
+					key = {0,0},
+					word_id_list = []
+	}).
 
 %% 神秘商店
 -record(mystical_shop, {
@@ -195,6 +209,16 @@
 					 is_can_take = {integer},
 					 info_list = {term}
 					 }).
+
+-record(medal,{
+				key = {0,0},
+				end_time = 0
+			  }).
+
+-record(medal_types,{
+				key = {{integer},{integer}},
+				end_time = {integer}
+			  }).
 
 -define(MYSTICAL_SHOP_OPEN_LEVEL, 30).
 -define(MYSTICAL_SHOP_FRESH_TIME, 21600).

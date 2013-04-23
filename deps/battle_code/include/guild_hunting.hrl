@@ -6,13 +6,16 @@
 -define(GUILD_HUNTING_INIT_MON_NUM, 15).
 
 -define(GUILD_HUNTING_NORMAL_DAMAGE, data_guild_hunting:get_misc_setting(8)).
--define(GUILD_HUNTING_BOOSTED_DAMAGE, data_guild_hunting:get_misc_setting(9) * data_guild_hunting:get_misc_setting(8)).
+-define(GUILD_HUNTING_BOOSTED_DAMAGE, 
+        erlang:trunc(data_guild_hunting:get_misc_setting(9) 
+                        * data_guild_hunting:get_misc_setting(8))).
 
 -define(GUILD_HUNTING_BASE_MON_ID, 1000).
 
 -define(GUILD_HUNTING_TIME,      (10*60*1000)). % 从开始打怪到结束的总时间
 -define(GUILD_HUNTING_KICK_TIME, 15000).        % 结束后等待踢人的时间，单位是1/1000秒
 -define(GUILD_HUNTING_BOSS_TIME, 30000).        % 打boss的时间
+-define(GUILD_HUNTING_RANK_UPDATE_TIME, 5000).  % 更新排行榜的时间
 
 -define(GUILD_HUNTING_BONUS_TIME_1, (3*60*1000)).
 -define(GUILD_HUNTING_BONUS_TIME_2, (2*60*1000)).
@@ -25,7 +28,7 @@
 
 -define(GUILD_HUNTING_GOLD_ARROW_COST, data_guild_hunting:get_misc_setting(7)).
 
--define(GUILD_HUNTING_CD_INTERVAL, 2).      % in seconds
+-define(GUILD_HUNTING_CD_INTERVAL, 1000).      % in 1/1000 seconds
 
 -define(GUILD_HUNTING_NORMAL_REWARD(Lv),  data_guild_hunting:get_reward_by_level(Lv)).
 
@@ -71,5 +74,18 @@
     attack_times,
     total_coins,
     total_merit}).
+
+-record(gh_public_state, {
+    deadline,
+    cur_state_name}).
+
+-record(gh_target_spec, {
+    id,
+    monster_type,
+    weapon_type,
+    hit_type,
+    req_count,
+    reward_item,
+    reward_item_num}).
 
 -endif.

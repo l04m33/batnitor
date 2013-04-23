@@ -1,0 +1,4 @@
+-define(CACHE_MARKET_REF, cache_util:get_register_name(market)).
+-define(CACHE_MARKET_ACCOUNT_REF, cache_util:get_register_name(market_account)).
+-define(MARKET_REFRESH_TIME,	data_system:get(46)).  %% 商场刷新时间,单位小时 ?SECONDS_PER_HOUR*?MARKET_REFRESH_TIME
+-define(MARKET_ITEM_NUM,	3).			%% 抢购物品种类数量

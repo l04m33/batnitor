@@ -15,13 +15,12 @@
 -define(ERR_CARRER_NOT_ALLOWED, 12).		%% 职业不允许
 -define(ERR_TOO_MANY_MER, 13).				%% 佣兵数已满（不能提升了）
 %% -define(ERR_TOO_MANY_MER2, 14).				%% 佣兵数已满（可升级为VIP，增加可招募佣兵数2）
-%% -define(ERR_STORY_NOT_COMPLETED, 15).		%% 剧情未完成
-%% -define(ERR_MER_NOT_ENOUGH, 16).			%% 佣兵不足
+-define(ERR_NOT_ENOUGH_BIND_GOLD, 14).		%% 银元宝不足
+-define(ERR_NOT_ENOUGH_JUNLIANG, 16).			%% 军粮不足
 -define(ERR_SILVER_EXCEED_ENOUGH, 17).		%% 银币超过上限
 %% -define(ERR_TAX_COUNT_USE_UP_ENOUGH, 18).	%% 本天征收次数用完
 -define(ERR_NOT_ENOUGH_VIP_LEVEL, 19).		%% VIP等级不足
 -define(ERR_NOT_ENOUGH_PER_MER_LEVEL, 20).	%% 主佣兵等级不足
-%% -define(ERR_NOT_NEARBY_NPC, 21).			%% 玩家不在指定NPC附近
 %% -define(ERR_NOT_NEARBY_SHOP, 22).			%% 玩家不在商店附近
 %% -define(ERR_PLAYER_CHEAT, 23).				%% 玩家开挂
 %% -define(ERR_ENERGY_NOT_ENOUGH, 24).			%% 玩家精力不足
@@ -44,14 +43,15 @@
 -define(ERR_NOT_ENOUHT_JUNLING,	 40).		%% 军令不足
 -define(ERR_CANT_USE_TOGETHER,	 41).		%% 该物品不能批量使用
 -define(ERR_NO_ONBATTLE_ROLES,	 42).		%% 没有出战佣兵
+-define(ERR_NOT_CHARGE_YET,	     43).		%% 还没有充值过
 
 
 %% 场景
 -define(ERR_SCENE_FORBIT_FLY,			11001).			%% 飞行前请骑上6级坐骑/穿上强化+10翅膀
 -define(ERR_SCENE_FLY_HIDE_HORSE,		11002).			%% 飞行中不能下骑乘
 -define(ERR_SCENE_FLY_UNEQUIP_WING,		11003).			%% 飞行中不能脱下翅膀
-%% -define(ERR_DRESS_FLY_FORBIT_DOWN_HORSE,			11002).			%% 场景 move check 失败
-%% -define(ERR_TEAM_SCENE_NOT_PERMITED,	11003).			%% 未达到进入组队场景要求
+-define(ERR_SCENE_FLY_CARD_TIME_OUT,	11004).			%% 飞行体验卡时间到，飞行能力消失
+-define(ERR_SCENE_FLY_CARD_BEGIN,		11005).			%% 你获得了飞行能力，请注意左上角剩余时间
 
 %% 副本
 -define(ERR_DUNGEON_NO_BUY_TIMES,		11201).			%% 副本可购买次数已用完
@@ -68,13 +68,17 @@
 -define(ERR_DUNGEON_TEAM_IS_IN_GUAJI,	11212).			%% 队友挂机中,不能进入
 -define(ERR_DUNGEON_NOT_PASS,			11213).			%% 自动挂机功能在通关副本后开启
 -define(ERR_DUNGEON_GUAJI_START,		11214).			%% 副本自动挂机开始！
+-define(ERR_DUNGEON_TEAM_LEAVE,			11215).			%% 队员已离队，无法重新进入
+-define(ERR_DUNGEON_NOT_PASS_2,			11216).			%% 副本未通关
 
 %% 物品系统 add by wangyl 2011-10-21
 -define(ERR_ITEM_NOT_EXIST,				12001).			%% 物品不存在
 -define(ERR_ITEM_CHANGE_CARD,			12002).			%% 已使用的变身卡效果还没消失
-%% -define(ERR_ITEM_OVER_MAX,				12003).			%% 物品数量超限
+-define(ERR_ITEM_CHANGE_FLY,			12003).			%% 已使用的飞行体验卡效果还没消失
 -define(ERR_ITEM_BAG_NOT_ENOUGH,		12004).			%% 背包容量不足
-%% -define(ERR_ITEM_BANK_NOT_ENOUGH,		12005).			%% 仓库容量不足
+-define(ERR_ITEM_WING_NOT_UNEQUIP,		12005).			%% 翅膀不能卸下
+-define(ERR_ITEM_LEVEL_TOO_LOW,			12006).			%% 完美合成时等级不够
+-define(ERR_ITEM_FASHION_NOT_UNEQUIP,	12007).			%% 时装不能卸下
 %% -define(ERR_ITEM_POS_NOT_MATCH,			12006).			%% 物品位置不匹配
 %% -define(ERR_ITEM_TYPE_NOT_MATCH,			12007).			%% 物品类型不匹配
 %% -define(ERR_ITEM_BIND_NOT_MATCH,			12008).			%% 物品绑定信息不匹配
@@ -82,8 +86,8 @@
 -define(ERR_ITEM_NOT_IN_BAG,			12010).			%% 物品不在背包中
 %% -define(ERR_ITEM_NOT_PROP,				12011).			%% 物品非道具
 -define(ERR_ITEM_NOT_EQUIPMENT,			12012).			%% 物品非装备
-%% -define(ERR_ITEM_NOT_STONE,				12013).			%% 物品非宝石
-%% -define(ERR_ITEM_NOT_RUNE,				12014).			%% 物品非保护符
+-define(ERR_ITEM_NOT_SAME_TYPE,			12013).			%% 只能在同种装备间传承
+-define(ERR_ITEM_INHERIT_LOW,			12014).			%% 高级装备不能传承给低级装备
 %% -define(ERR_ITEM_GIFT_BAG,				12015).			%% 物品不能为礼包
 %% -define(ERR_ITEM_NOT_GIFT_BAG,			12016).			%% 物品不是礼包
 -define(ERR_ITEM_NOT_ENOUGH,			12017).			%% 物品数量不足
@@ -126,11 +130,18 @@
 -define(ERR_MARKET_BUY_MAX,					12054).		%% 限购次数已满
 -define(ERR_MARKET_ITEM_MAX,				12055).		%% 该商品已被抢购一空
 -define(ERR_XILIAN_CANT_TAKE,				12056).		%% 每次只能选取一个洗练结果
+-define(ERR_ON_BATTLE_ROLE_EXP_MAX,			12057).		%% 出战佣兵的经验已满
+-define(ERR_ITEM_NOT_QILING,			12074).			%% 物品不能被启灵
+-define(ERR_ITEM_NOT_MAIN_ROLE,				12058).		%% 佣兵不能装备该物品
+-define(ERR_ITEM_NOT_WEAPON,				12060).		%% 物品非武器
+-define(ERR_ITEM_ONLY_ONCE,					12061).		%% 开服计划道具只能买一次
+-define(ERR_ITEM_ONLY_ONE,					12062).		%% 开服计划道具只能买一个
+-define(ERR_ITEM_KAIFU_PLAN,				12063).		%% 元宝计划道具提示
 
 -define(ERR_ITEM_SPLIT_NUM,				12069).			%% 物品拆分数量错
 
+-define(ERR_ITEM_UPQUALITY_SAVE,		12070).			%% 保护成功，失败不降级！
 -define(ERR_ITEM_NOT_USE,				12073).			%% 物品不能被使用
--define(ERR_ITEM_NOT_QILING,			12074).			%% 物品不能被启灵
 -define(ERR_ITEM_NOT_UPGRATE,			12075).			%% 物品不能被升级
 -define(ERR_ITEM_UPGRATE_LEVEL_MAX,		12076).			%% 装备已达到最高强化级别升级级别
 -define(ERR_ITEM_UPQUALITY_LEVEL_MAX,	12077).			%% 装备已达到最高品质
@@ -174,15 +185,19 @@
 %% 官职、器魂、品阶、封地
 -define(ERR_OFFICIAL_REACH_MAX,			13001).			%% 器魂等级已到达最大等级了
 -define(ERR_LOCK_FAILED,				13002).			%% 锁定非奴隶玩家失败
--define(ERR_NO_FREE_CAGE,				13003).			%% 已没有空余的笼子了
+-define(ERR_ROBED_TIME_FULL,				13003).			%% 被抢劫次数已满
 -define(ERR_ALREADY_FREEDOM,			13004).			%% 玩家已经自由了
 -define(ERR_NO_SLAVES,					13005).			%% 玩家已经没有奴隶了
 -define(ERR_OFFICIAL_ONE_KEY_NOT_ENOUGH,13006).			%% 一键升级器魂金钱不足
 -define(ERR_OFFICIAL_LEVEL_FULL,        13007).         %% 器魂等级已到达最高级
 -define(ERR_BATTLE_FREE,                13008).         %% 你已经通过战斗获得自用
--define(ERR_SLAVE_BATTLE_FOR_SELF,      13014).         %% 不能抓自己为奴隶
+-define(ERR_SLAVE_BATTLE_FOR_SELF,      13017).         %% 不能抓自己为奴隶
 -define(ERR_SLAVE_ALREADY_SLAVED,      13015).         %% 已经是奴隶了
 -define(ERR_SLAVE_NOT_OPEN,             13016).         %% 该玩家还未开启奴隶系统
+-define(ERR_SLAVE_NOT_PLAYER,             13020).         %% 该玩家不存在
+-define(ERR_FRESH_FAILED,             13021).         %% 该玩家不存在
+-define(ERR_FENGDI_ROB_FULL,             13022).         %% 抢劫次数已满
+-define(ERR_FENGDI_ROB_SELF,             13023).         %% 抢劫自己
 
 %% 答题活动
 -define(ERR_ANSWER_TIME_NOREACH,		13009).			%% 还没到答题时间
@@ -191,6 +206,13 @@
 -define(ERR_ANSWER_EFFECT_HAVE_USE,		13012).			%% 一次只能使用一种锦囊
 -define(ERR_ANSWER_PROP_OVER,			13013).			%% 该种道具已用光
 -define(ERR_ANSWER_PROP_TIME_ERR,		13014).			%% 只能在阅题时间使用锦囊
+
+%% --------------------------------交易行------------------------------------
+-define(ERR_TRADE_NONE,					13200).			%% 该商品已下架
+-define(ERR_TRADE_BUY_SUCCESS,			13201).			%% 购买成功！请点击邮件领取
+-define(ERR_TRADE_SELL_SUCCESS,			13202).			%% 托卖成功
+-define(ERR_ITEM_NOT_TRADE,				13203).			%% 物品不能被交易
+-define(ERR_TRADE_PRICE_LOW,			13204).			%% 售价不能低于物品的最低交易价格
 
 %%邮件系统
 -define(ERR_MAIL_WRONG_TITLE,            14001).        %%邮件标题错误
@@ -218,6 +240,12 @@
 -define(ERR_SKILL_LOCK_ALL,				15009).				%% 请不要锁定所有技能
 -define(ERR_FOSTER_MAX,					15010).				%% 属性已达当前等级的培养上限
 -define(ERR_ROLE_HAS_ONBATTLE,			15011).				%% 请先取消出战状态
+-define(ERR_ROLE_HAS_OWN,				15012).				%% 已拥有该武将
+-define(ERR_SPECIAL_ROLE,				15013).				%% 请先获取该武将的诏令
+-define(ERR_NOT_ON_BATTLE,				15014).				%% 武将还没出战 TODO
+-define(ERR_ROLE_LEVEL_MAX,				15015).				%% 佣兵已达最大等级
+
+
 
 %%guild error info										    %% 公会错误代码
  -define(GUILD_ERROR_NAME_EXIST,			19001).			%% 公会名已存在
@@ -241,7 +269,7 @@
 -define(GUILD_ERROR_DONATE_SILVER_OVERFLOW,19017).		    %% 已经达到当天捐献银币的上限
 -define(GUILD_RECRUIT_APP_NOT_OK,19018).		%%  招募申请没有通过
 %% -define(GUILD_ERROR_MISSION_APPLY,		19019).			%% 申请公会任务
-%% -define(GUILD_ERROR_BEDISMISSED,			19020).			%% 已被踢出公会
+-define(GUILD_ERROR_NOT_EXP_TOP_TEM,			19020).			%% 帮主只能转让给历史功勋前十名的玩家
 %% -define(GUILD_ERROR_APPLY_CANCEL,		19021).			%% 取消公会申请
  -define(GUILD_ERROR_BEENINGUILD,			19022).			%% 用户已经在公会中
   -define(GUILD_ERROR_GOLD_NOTENOUGH,		19023).			%% 金币不足
@@ -265,6 +293,8 @@
 -define(GUILD_HUNTING_ERROR_GOLD_ARROW_NOT_ENOUGH, 19040).  %% 帮派活动里的黄金箭数量不足
 -define(GUILD_HUNTING_ERROR_PENDING,               19041).  %% 还没到活动时间
 -define(GUILD_HUNTING_ERROR_NOT_IN_GUILD,          19042).  %% 还没加入帮派哦～
+-define(GUILD_APPLY_MAX_TODAY,          19043).  %% 还没加入帮派哦～
+-define(GUILD_GOLD_MAX_TODAY,          19044).  %% 今日金元宝捐献到达上限
 
 %% 战斗系统
 -define(ERR_BATTLE_ATTACKER_IS_ON_BATTLE,    20001).   %% 玩家正在战斗
@@ -290,6 +320,8 @@
 -define(VIP_1,								28006).			%% 恭喜你升级成为蓝钻会员！
 -define(VIP_2,								28007).			%% 恭喜你升级成为紫金会员！
 -define(VIP_3,								28008).			%% 恭喜你升级成为至尊会员！
+-define(ERR_NOT_VIP,						28009).			%% 当前还不是VIP！
+-define(ERR_FRIEND_HAVE_BEEN_VIP,			28010).			%% 好友已经是VIP用户
 
 %% 组队
 %% -define(ERR_TEAM_IN_BATTLE,				30001).			%% 战斗中，不能组队
@@ -313,13 +345,17 @@
  -define(ERR_TEAM_IN_CAN_TEAM_SCENE,    30024).         %% 您申请的队伍人数已满
  -define(ERR_TEAM_NOT_IN_ANY_TEAM,    30025).         %% 您不在队伍中
  -define(ERR_TEAM_NOT_ACCEPT_IN_NOW,    30026).         %% 当前场景汇总，您不能接受组队
+ -define(ERR_TEAM_MATE_CANNOT_SET_FORMATION,    30027). %% 队员无法设置阵型
 
+-define(ERR_ZHENTU_PASS_WD_ERR, 58001).
+-define(ERR_TEAM_MATE_NOT_READY, 58002).
 %% 神剑
 -define(ERR_SWORD_NOT_START,32001). 		%% 天灵神剑活动未开始
 -define(ERR_SWORD_LEVEL_UNMATCH, 32002).	%% 天灵神剑活动30级开启
 -define(ERR_SWORD_LEVEL_UNMATCH_1,	32003). %% 需要等级30-49级
 -define(ERR_SWORD_LEVEL_UNMATCH_2,	32004). %% 需要等级50-69级
 -define(ERR_SWORD_LEVEL_UNMATCH_3,	32005). %% 需要达到70级以上
+-define(ERR_SWORD_DIG_TIMES_OVER,	32006). %% 今天共参加神剑抢夺30次，已达上限！
 
 
 -define(ERR_TEAM_INVITE_SELF,			30004).			%% 抱歉，不能邀请自己
@@ -384,14 +420,22 @@
 -define(ERR_JIXING_HIGHEST,				26009). %%当前桃花运势已经是最高等级了！
 -define(ERR_ROBER_LEVEL_TOO_LOWER,		26010). %%您还未到30级，不要做劫镖这么危险的事情啊
 -define(ERR_ROB_TASK_ACCEPT, 26011).			%%对方是菜鸟,请高抬贵手
+-define(ERR_NO_YUNBIAO_TASK_COMMIT,26012).		%%不在运镖,不能提交任务
+-define(ERR_ZHUANYUN_MAX_TIMES,			26013). %%今天转运次数已经用完！
 
 %% 种植
 -define(ERR_FENGDI_WATER,                16001).        %% 浇水次数超过2次     
 -define(ERR_FENGDI_REFRESH_HIGHEST,                16022).        %% 已经刷新到了最高品质
+-define(ERR_FENGDI_NOT_NULL,                16023).        %% 土地不为空
+-define(ERR_FENGDI_WATER_COUNT_BIG_THEN_20,                16024).        %% 超过20次
+-define(ERR_FENGDI_LEVEL_NOT_ENOUGH,                16025).        %% 超过20次
+-define(ERR_FENGDI_NOT_NEED_WATER,                16026).        %% 超过20次
+
 %% 聊天
 -define(ERR_CAN_NOT_CHAT,         16003). %% 您当前处于禁言状态
 -define(ERR_PROHIBIT_WORD,16004).			%%含有敏感词
 -define(ERR_PROHIBIT_WORD_IN_TITLE,16015).           %%含有敏感词
+-define(ERR_LEVEL_NOT_ENOUGH,16016).           %%未到15级不能发言
 %%竞技系统
 -define(ERR_RANK_BEHIND, 31000).     %%您不能挑战后面哦
 -define(ERR_RANK_YOURSELF, 31001).     %%您不能挑战自己哦
@@ -399,6 +443,7 @@
 -define(ERR_REACH_THE_MAX_CHALLENGE_TIME, 31003). %%已达到最大挑战次数
 -define(ERR_ARENA_SYSTEM_NOT_OPEN, 31004).  %%竞技场30级开启
 -define(ERR_ARENA_CHALLENGE_LIST_CHANGE, 31005).  %%可挑战列表已发生变化
+-define(ERR_ARENA_RANK_NOT_ENOUGH, 31006).  %% 竞技场排名不足
 
 %%boss
 -define(ERR_SILVER_INSPIRE_OVER, 62001). %%银币鼓舞达到最大
@@ -406,6 +451,7 @@
 -define(ERR_SILVER_INSPIRE_NO_SUCCES, 62003).%%银币鼓舞没有成功=======
 -define(ERR_BOSS_BATTLE_IS_NOT_OPEN, 62004).  %%世界BOSS战斗还未开启，请耐心等待
 -define(ERR_BOSS_BATTLE_TOO_OFTEN, 62005).  %%战斗太过频繁，请稍候
+-define(ERR_BOSS_BATTLE_ROBOT_IN, 62006).  %%使用了世界boss离线卡,无法进入
 
 -define(ERR_FENGDI_WATER2,                16001).        %% 浇水次数超过2次    
 -define(ERR_FENGDI_WATER50,                16002).        %% 浇水次数超过50次  
@@ -424,6 +470,7 @@
 -define(ERR_TASK_TRACE_HAVE_FINIFSH,  36004).			%% 请先提交完成了的任务
 -define(ERR_TASK_TRACE_NO_TASK,		 36005).			%% 今天的悬赏任务已全部完成
 -define(ERR_TASK_TRACE_NO_TASK_RECEIVE,	 36006).		%% 今天的悬赏任务已经接完
+-define(ERR_LEVY_JUNLIANG_MAX,	 	36007).		%% 今天军粮的征收次数已经用完
 
 
 -define(ERR_COMP_ALREADY_APPLY,			37000).					%% 退出比武后不能重新进入
@@ -438,10 +485,15 @@
 -define(ERR_COMP_NOT_COMP_TIME,			37009).					%% 现在不是比武活动时间，不能报名
 -define(ERR_COMP_UNKNOWN,				37010).					%% 您的比武状态异常，请退出比武场重新报名
 -define(ERR_COMP_MAX_DOUBLE_TIMES,		37011).					%% 双倍丹已使用完
+-define(ERR_COMP_HIGH_TO_MID,			37012).					%% 由于70级以上玩家数量不足开启高级比武场，你被安排在中级比武场比赛
+-define(ERR_COMP_HIGH_TO_LOW,			37013).					%% 由于70级以上玩家数量不足开启高级比武场，你被安排在初级比武场比赛
+-define(ERR_COMP_MID_TO_LOW,			37014).					%% 由于50级以上玩家数量不足开启中级比武场，你被安排在初级比武场比赛
 
 -define(ERR_DEFENCE_MONSTER_OUT_OF_RANGE, 40001).       %% 群魔乱舞怪物不在攻击距离之内
 -define(ERR_DEFENCE_BATTLE_START_UP,      40002).       %% 群魔乱舞无法发起战斗
 -define(ERR_DEFENCE_PENDING,              40003).       %% 群魔乱舞活动还没开始哦
+-define(ERR_DEFENCE_BATTLE_FLY_MON,       40004).       %% 请先起飞再攻击飞行怪
+-define(ERR_DEFENCE_BATTLE_LAND_MON,      40005).       %% 请先降落再攻击地面怪
 
 -define(ERR_HAVE_CHALLENGER, 63001).					%% 通知客户端国王正在被其他人挑战
 -define(COMBAT_POWER_TOO_LOW, 63002).					%% 玩家等级不到40级，无法挑战国王
@@ -453,13 +505,54 @@
 -define(ERR_GOLD_NOT_ENOUGH, 65000).					%% 投壶所需元宝不足
 -define(ERR_BAG_SIZE_NOT_ENOUGH, 65001).				%% 投壶背包所需空间不足
 -define(ERR_BAG_SLOT_NOT_ENOUGH, 65002).				%% 正式背包空间不足
--define(ERR_BAG_SLOT_INDEX_NOT_EXIST, 65003).				%% 所请求的位置没有物品
+-define(ERR_BAG_SLOT_INDEX_NOT_EXIST, 65003).			%% 所请求的位置没有物品
 
-%% =========================== 外形装扮相关 =================================
--define(ERR_DRESS_ALREADY_EVOKE, 		51000).		%% 坐骑已经幻化过
--define(ERR_DRESS_NOT_EVOKE,			51001).		%% 坐骑尚未幻化过
--define(ERR_DRESS_LEVEL_NOT_ENOUGH, 	51002).		%% 坐骑等级不足
--define(ERR_DRESS_ALREADY_MAX_LEVEL, 	51003).		%% 坐骑已达最高等级
+%% =========================== 外形装扮相关 ======================================
+-define(ERR_DRESS_ALREADY_EVOKE, 			51000).		%% 坐骑已经幻化过
+-define(ERR_DRESS_NOT_EVOKE,				51001).		%% 坐骑尚未幻化过
+-define(ERR_DRESS_LEVEL_NOT_ENOUGH, 		51002).		%% 坐骑等级不足
+-define(ERR_DRESS_ALREADY_MAX_LEVEL, 		51003).		%% 坐骑已达最高等级
+-define(ERR_DRESS_OVER_BUY_NUM,				51004).		%% 一种坐骑卡只能购买一个
+-define(ERR_DRESS_PENDANT_ALREADY_EQUIP,	51005).		%% 挂饰已经装备
+-define(ERR_DRESS_NOT_PENDANT_HOLE,			51006).		%% 没有挂饰孔
+-define(ERR_DRESS_RESOLVE_EQUIP_PENDANT,	51007).		%% 挂饰已装备，请卸下后分解
+-define(ERR_DRESS_MAX_ADVANCE_LEVEL, 		51008).		%% 坐骑已达最高阶数
+-define(ERR_FASHION_NOT_EQUIP,				51100).		%% 时装未装备
+-define(ERR_FASHION_NOT_EVOKE,				51101).		%% 时装未获得
+-define(ERR_FASHION_ALREADY_EVOKE,			51102).		%% 您已经有该时装了
+-define(ERR_FASHION_OVER_BUY_NUM,			51103).		%% 一种时装只能购买一个
+-define(ERR_FASHION_ROLE_NOT_MATCH,			51104).		%% 欲购买的时装不能装备
+-define(ERR_FASHION_MAX_ADVANCE_LEVEL,		51105).		%% 时装已达最高阶数
+-define(ERR_WING_NOT_EQUIP,					51200).		%% 翅膀未装备
+-define(ERR_WING_NOT_EVOKE,					51201).		%% 翅膀未获得
+-define(ERR_WING_OVER_BUY_NUM,				51202).		%% 一种翅膀只能购买一个
+-define(ERR_WING_ALREADY_EVOKE,				51203).		%% 您已经有该翅膀了
+
+
+
+
+%%  ===========跨服系统============
+-define(ERR_CROSS_QUICK_JOIN_TIMEOUT, 57001).
+-define(ERR_CROSS_MATCH_TEAM_FAILED, 57002).
+-define(ERR_CROSS_FIRE, 57003).
+-define(ERR_CROSS_TEAM_MATE_LEAVE, 57004).
+-define(ERR_CROSS_NOT_HAVE_FIT_TEAM, 57005).
+-define(ERR_CROSS_LEVEL_NOT_ENOUGH, 57006).
+-define(ERR_CROSS_COMBAT_NOT_ENOUGH, 57007).
+-define(ERR_CROSS_COUNT_FULL, 57008).
+-define(ERR_CROSS_STATE_YUNBIAO, 57009).
+-define(ERR_CROSS_STATE_BATTLE, 57010).
+-define(ERR_CROSS_STATE_NOT_OK_SCENE, 57011).
+-define(ERR_CROSS_STATE_IN_TEAM, 57012).
+-define(ERR_CROSS_STATE_IN_COMP, 57013).
+-define(ERR_CROSS_MATE_CAN_NOT_START, 57014).
+-define(ERR_CROSS_IN_TEAM, 57015).
+-define(ERR_CROSS_MATCH_TEAM_TIME_OUT, 57016).
+-define(ERR_CROSS_MATE_GIVE_UP, 57017).
+-define(ERR_CROSS_MATE_TIME_NOT_OK, 57018).
+-define(ERR_CROSS_MATE_CROSS, 57019).
+-define(ERR_CROSS_NO_AWARD, 57020).
+
 
 -define(ERROR_INTERNAL_NOT_REG_SYSTEM_ID, 65500).   %% 内部错误，有未被识别的系统id
 
@@ -483,6 +576,19 @@
 -define(ERR_STAGE_NOT_EXISTS_RESET_FLOOR,	43008).	%% 没有需要重置的关卡
 -define(ERR_STAGE_HAS_OTHER_MONSTER,	43009).		%% 请先清完小怪再攻击boss吧！
 
+%% ========================== 切磋相关错误码 ==============================
+-define(ERR_LEVEL_TOO_HIGH,				43100).		%% 对方等级过低，不可以欺凌弱小哦！
+-define(ERR_LEVEL_TOO_LOW,				43101).		%% 对方还是新手，请手下留情！
+-define(ERR_NOT_IN_SAME_SCENE,			43102).		%% 对方已经离开了！
+-define(ERR_REJECT_YOUR_REQ,			43103).		%% 对方拒绝了你的切磋请求
+-define(ERR_NO_REPLY,					43104).		%% 对方无回复
+-define(ERR_OFF_LINE,					43105).		%% 玩家不在线
+-define(ERR_IS_IN_BATTLE,				43106).		%% 玩家正在和其他人切磋
+-define(ERR_SOMEONE_IN_TEAM, 			43107).		%% 您或对方正处于组队状态，不能进行切磋
+-define(ERR_HAS_REQUEST, 			    43108).		%% 您的请求已发出，请耐心等待对方回复
+-define(ERR_HAS_TIMEOUT, 			    43109).		%% 您的操作已超时
+-define(ERR_CANNOT_PK_SCENE, 			43110).		%% 当前场景不能进行切磋
+
 %% =========================== 在线奖励相关错误码 ===============================
 -define(ERR_ONLINE_AWARD_TIME,			44000).		%% 在线奖励领取还没到时间领取
 -define(ERR_ONLINE_AWARD_MAX,			44001).		%% 今天在线奖励已经全部领完
@@ -492,6 +598,85 @@
 
 
 %% =========================== 冲榜活动 ====================================
--define(ERR_RUSH_GET_AWARD_ALREADY,      36201).    %%已经领取
--define(ERR_RUSH_GET_NOT_OK,             36202).    %% 未达成 
--define(ERR_RUSH_IS_OVER,             36203).    %% 开服活动已经结束 
+-define(ERR_RUSH_GET_AWARD_ALREADY,		36201).    %%已经领取
+-define(ERR_RUSH_GET_NOT_OK,			36202).    %% 未达成 
+-define(ERR_RUSH_IS_OVER,				36203).    %% 开服活动已经结束
+
+%% ======================== 领地战相关错误码 ===============================
+-define(ERR_TERRITORY_WAR_NOT_OPEN,				45000).		%% 领地战未开启
+-define(ERR_TERRITORY_WAR_GUILD_CAN_NOT_JOIN,	45001).		%% 玩家所在公会无法参加领地战
+-define(ERR_TERRITORY_WAR_ALREADY_IN_SCENE,		45002).		%% 玩家已经在场景中
+-define(ERR_TERRITORY_WAR_NOT_IN_SCENE,			45003).		%% 玩家不在场景中
+-define(ERR_TERRITORY_WAR_HAVE_START,			45004).		%% 领地战已经开始，无法进入
+-define(ERR_TERRITORY_WAR_NO_BATTLE_ROLE,		45005).		%% 玩家没有可出战佣兵
+-define(ERR_TERRITORY_WAR_PLAYER_DATA_NOT_EXIST,45006).		%% 邀请者数据不存在
+-define(ERR_TERRITORY_WAR_HAVE_A_TEAM,			45007).		%% 邀请者已经有队伍
+-define(ERR_TERRITORY_WAR_INVITED_DATA_NOT_EXIST,45008).	%% 被邀请者数据不存在
+-define(ERR_TERRITORY_WAR_INVITED_HAVE_A_TEAM,	45009).		%% 被邀请者已经有队伍
+-define(ERR_TERRITORY_WAR_NOT_IN_ONE_GUILD,		45010).		%% 双方不在同一个公会
+-define(ERR_TERRITORY_WAR_DATA_NOT_EXIST,		45011).		%% 玩家数据不存在
+-define(ERR_TERRITORY_WAR_SOMEONE_NOT_IN_SCENE,	45012).		%% 你或你的队友不在场景中
+-define(ERR_TERRITORY_WAR_HAVE_NO_TEAM,			45013).		%% 队伍不存在
+-define(ERR_TERRITORY_WAR_TOWER_NOT_EXIST,		45014).		%% 塔不存在
+-define(ERR_TERRITORY_WAR_TOWER_HAVE_DAMAGE,	45015).		%% 塔已经被破坏
+-define(ERR_TERRITORY_WAR_TOWER_CAN_NOT_ATT,	45016).		%% 塔是无敌状态，无法被攻击
+-define(ERR_TERRITORY_WAR_IN_ATT_TOWER,			45017).		%% 已经在攻击塔
+-define(ERR_TERRITORY_WAR_CAMP_DENY,			45018).		%% 所在阵营无法进行该操作
+-define(ERR_TERRITORY_WAR_NOT_LEADER,			45019).		%% 不是队长，无法进行该操作
+-define(ERR_TERRITORY_WAR_SAME_CAMP,			45020).		%% 相同阵营，无法攻击
+-define(ERR_TERRITORY_WAR_NOT_ATT_TOWER,		45021).		%% 不处在攻击塔状态
+-define(ERR_TERRITORY_WAR_BAG_NO_NULL_SLOT,		45022).		%% 道具背包已满
+-define(ERR_TERRITORY_WAR_PROP_NOT_EXIST,		45023).		%% 道具已被其它人拾取
+-define(ERR_TERRITORY_WAR_USE_PROP_NOT_EXIST,	45024).		%% 使用道具不存在
+-define(ERR_TERRITORY_WAR_CAN_NOT_CREATE_TEAM_IN_BATTLE,	45025).		%% 战斗中不能组队
+-define(ERR_TERRITORY_WAR_IN_YUNBIAO,			45026).		%% 玩家在运镖中无法进入领地战
+-define(ERR_TERRITORY_WAR_PLAYER_NO_GUILD,		45027).		%% 请先加入公会
+-define(ERR_TERRITORY_WAR_CD_TIME,				45028).		%% CD时间中
+-define(ERR_TERRITORY_WAR_BATTLE_CD,            45029).		%% 
+
+-define(ERR_ZHENFA_LEVEL_FULL,        48000).         %% 阵法等级已到达最高级
+
+%% --------------------------------将魂----------------------------------
+-define(ERR_HERO_SOUL_BAG_FULL,		      50000).		%% 将魂包裹已满，无法进行拾取或卸除操作
+-define(ERR_HERO_SOUL_ITEMS_FULL,		  50001).		%% 位置已满，无法炼魂，请拾取后继续
+-define(ERR_HERO_SOUL_NOT_EXIST,		  50002).		%% 炼魂配置信息不存在
+-define(ERR_HERO_SOUL_GARBAGE,		      50003).		%% 没有废品可以出售
+-define(ERR_HERO_SOUL_NO_CELL,		      50004).		%% 无空位，无法装备
+-define(ERR_HERO_SOUL_CANT_PICK,		  50005).		%% 无可拾取的将魂
+-define(ERR_HERO_SOUL_HAS_PUT_ON,		  50006).		%% 已装备同类型的将魂，请先卸除再进行装备
+-define(ERR_HERO_SOUL_CANT_MERGE,		  50007).		%% 没有可融合的将魂
+-define(ERR_HERO_SOUL_CANT_UPDATE,		  50008).		%% 已经升级到最高级，无法继续融合
+-define(ERR_HERO_SOUL_CANT_LOCK_MERGE,	  50009).		%% 锁定的将魂不允许参与融合
+-define(ERR_HERO_SOUL_NOT_ENOUGH_SCORE,	  50010).		%% 炼魂积分不足
+
+%% --------------------------------藏宝洞----------------------------------
+-define(ERR_CAVE_TIMES_OVER,		  38201).		%% 你今日藏宝洞次数已用完
+-define(ERR_CAVE_LIVES_OVER,		  38202).		%% 复活次数已用完
+-define(ERR_CAVE_INSPIRE_MAX,		  38203).		%% 鼓舞已达到最大值
+-define(ERR_CAVE_MATE_TIMES_OVER,	  38204).		%% 队友今日藏宝洞次数已用完
+-define(ERR_CAVE_IN_GUAJI,			  38205).		%% 藏宝洞自动挂机中
+-define(ERR_CAVE_GUAJI_CLOSE,		  38206).		%% 挂机功能于通关15层之后开启
+-define(ERR_CAVE_GUAJI_FINISH,		  38207).		%% 藏宝洞自动挂机完成！
+-define(ERR_CAVE_NOT_IN_GUAJI,		  38208).		%% 没有藏宝洞的挂机任务
+-define(ERR_CAVE_GUAJI_LEVEL_WRONG,	  38209).		%% 挂机必须从第一层开始
+-define(ERR_CAVE_MATE_IN_GUAJI,		  38210).		%% 队友藏宝洞自动挂机中
+-define(ERR_CAVE_NOT_FIRST,			  38211).		%% 不在第一层，无法组队挑战
+-define(ERR_CAVE_MATE_NOT_FIRST,	  38212).		%% 队友不在第一层，无法组队挑战
+-define(ERR_CAVE_BUY_TIMES_OVER,	  38213).		%% 藏宝洞购买次数已用完
+-define(ERR_DUNGEON_IS_IN_GUAJI_2,	  38214).		%% 正在进行副本挂机，无法同时开启多个挂机功能
+-define(ERR_MARSTOWER_IS_IN_GUAJI_2,  38215).		%% 正在进行战神塔挂机，无法同时开启多个挂机功能
+-define(ERR_CAVE_IS_IN_GUAJI_2,	  	  38216).		%% 正在进行藏宝洞挂机，无法同时开启多个挂机功能
+
+%% --------------------------------节日----------------------------------
+-define(ERR_QINGMING_ADD_BUFF,		  54100).		%% 祈雨成功提示
+-define(ERR_FEST_POINTS_NOT_ENOUGH,   54101).       %% 节日积分不足
+-define(ERR_NOT_USE_IN_THIS_SCENE,	   54102).		%% 此物品只可在精英虎牢关中使用
+-define(ERR_HAS_BEEN_IN_BATTLE,	   		54103).		%% 您正在参与战斗，不能继续使用此物品
+-define(ERR_CAN_ONLY_USE_BY_LEAD,	   	54104).		%% 只有队长方可使用
+
+%% --------------------------------送花----------------------------------
+-define(ERR_CANT_SEND_SELF,		  53000).		%% 您不可送花给自己
+
+%% --------------------------------活动抽奖----------------------------------
+-define(ERR_NOT_ENOUGH_ITEMS,		  54200).		%% 你没有美酒可用来祭奠英雄
+

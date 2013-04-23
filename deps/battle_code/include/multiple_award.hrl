@@ -16,3 +16,4 @@
 -define(SYSTEM_AWARD_YUNBIAO,		3).			%% 运镖
 -define(SYSTEM_AWARD_BIND_PHONE,    4).			%% 绑定手机
 -define(SYSTEM_AWARD_STAGE,			5).			%% 挑战魂将
+-define(SYSTEM_AWARD_TERRITORY_WAR,	6).			%% 领地战

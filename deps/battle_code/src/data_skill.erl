@@ -6,70 +6,70 @@
 
 %% 获取所有同一类技能属性id的普通技能
 all_normal_skill(201) ->
-	[201001, 201010, 201009, 201008, 201007, 201006, 201005, 201004, 201003, 201002];
+	[201001, 201002, 201003, 201004, 201005, 201006, 201007, 201008, 201009, 201010];
 
 all_normal_skill(202) ->
-	[202010, 202009, 202008, 202007, 202006, 202005, 202004, 202003, 202002, 202001];
+	[202001, 202002, 202003, 202004, 202005, 202006, 202007, 202008, 202009, 202010];
 
 all_normal_skill(203) ->
-	[203007, 203008, 203009, 203010, 203006, 203005, 203004, 203003, 203002, 203001];
+	[203001, 203002, 203003, 203004, 203005, 203006, 203007, 203008, 203009, 203010];
 
 all_normal_skill(204) ->
-	[204007, 204008, 204009, 204010, 204006, 204005, 204004, 204003, 204002, 204001];
+	[204001, 204002, 204003, 204004, 204005, 204006, 204007, 204008, 204009, 204010];
 
 all_normal_skill(205) ->
-	[205007, 205008, 205009, 205010, 205006, 205005, 205004, 205003, 205002, 205001];
+	[205001, 205002, 205003, 205004, 205005, 205006, 205007, 205008, 205009, 205010];
 
 all_normal_skill(206) ->
-	[206007, 206008, 206009, 206010, 206006, 206005, 206004, 206003, 206002, 206001];
+	[206001, 206002, 206003, 206004, 206005, 206006, 206007, 206008, 206009, 206010];
 
 all_normal_skill(207) ->
-	[207007, 207008, 207009, 207010, 207006, 207005, 207004, 207003, 207002, 207001];
+	[207001, 207002, 207003, 207004, 207005, 207006, 207007, 207008, 207009, 207010];
 
 all_normal_skill(208) ->
-	[208007, 208008, 208009, 208010, 208006, 208005, 208004, 208003, 208002, 208001];
+	[208001, 208002, 208003, 208004, 208005, 208006, 208007, 208008, 208009, 208010];
 
 all_normal_skill(209) ->
-	[209007, 209008, 209009, 209010, 209006, 209005, 209004, 209003, 209002, 209001];
+	[209001, 209002, 209003, 209004, 209005, 209006, 209007, 209008, 209009, 209010];
 
 all_normal_skill(210) ->
-	[210007, 210008, 210009, 210010, 210006, 210005, 210004, 210003, 210002, 210001];
+	[210001, 210002, 210003, 210004, 210005, 210006, 210007, 210008, 210009, 210010];
 
 all_normal_skill(211) ->
-	[211007, 211008, 211009, 211010, 211006, 211005, 211004, 211003, 211002, 211001];
+	[211001, 211002, 211003, 211004, 211005, 211006, 211007, 211008, 211009, 211010];
 
 all_normal_skill(212) ->
-	[212007, 212008, 212009, 212010, 212006, 212005, 212004, 212003, 212002, 212001];
+	[212001, 212002, 212003, 212004, 212005, 212006, 212007, 212008, 212009, 212010];
 
 all_normal_skill(213) ->
-	[213007, 213008, 213009, 213010, 213006, 213005, 213004, 213003, 213002, 213001];
+	[213001, 213002, 213003, 213004, 213005, 213006, 213007, 213008, 213009, 213010];
 
 all_normal_skill(214) ->
-	[214007, 214008, 214009, 214010, 214006, 214005, 214004, 214003, 214002, 214001];
+	[214001, 214002, 214003, 214004, 214005, 214006, 214007, 214008, 214009, 214010];
 
 all_normal_skill(215) ->
-	[215007, 215008, 215009, 215010, 215006, 215005, 215004, 215003, 215002, 215001];
+	[215001, 215002, 215003, 215004, 215005, 215006, 215007, 215008, 215009, 215010];
 
 all_normal_skill(216) ->
-	[216007, 216008, 216009, 216010, 216006, 216005, 216004, 216003, 216002, 216001];
+	[216001, 216002, 216003, 216004, 216005, 216006, 216007, 216008, 216009, 216010];
 
 all_normal_skill(217) ->
-	[217007, 217008, 217009, 217010, 217006, 217005, 217004, 217003, 217002, 217001];
+	[217001, 217002, 217003, 217004, 217005, 217006, 217007, 217008, 217009, 217010];
 
 all_normal_skill(218) ->
-	[218007, 218008, 218009, 218010, 218006, 218005, 218004, 218003, 218002, 218001];
+	[218001, 218002, 218003, 218004, 218005, 218006, 218007, 218008, 218009, 218010];
 
 all_normal_skill(219) ->
-	[219007, 219008, 219009, 219010, 219006, 219005, 219004, 219003, 219002, 219001];
+	[219001, 219002, 219003, 219004, 219005, 219006, 219007, 219008, 219009, 219010];
 
 all_normal_skill(220) ->
-	[220007, 220008, 220009, 220010, 220006, 220005, 220004, 220003, 220002, 220001];
+	[220001, 220002, 220003, 220004, 220005, 220006, 220007, 220008, 220009, 220010];
 
 all_normal_skill(221) ->
-	[221007, 221008, 221009, 221010, 221006, 221005, 221004, 221003, 221002, 221001];
+	[221001, 221002, 221003, 221004, 221005, 221006, 221007, 221008, 221009, 221010];
 
 all_normal_skill(222) ->
-	[222009, 222008, 222007, 222006, 222005, 222004, 222003, 222002, 222001, 222010].
+	[222001, 222002, 222003, 222004, 222005, 222006, 222007, 222008, 222009, 222010].
 
 
 %%================================================
@@ -2029,7 +2029,31 @@ get_skill_rate(410001) -> 0;
 
 get_skill_rate(411001) -> 0;
 
-get_skill_rate(123001) -> 0.
+get_skill_rate(123001) -> 0;
+
+get_skill_rate(412001) -> 0;
+
+get_skill_rate(413001) -> 0;
+
+get_skill_rate(414001) -> 0;
+
+get_skill_rate(415001) -> 0;
+
+get_skill_rate(416001) -> 0;
+
+get_skill_rate(417001) -> 0;
+
+get_skill_rate(418001) -> 0;
+
+get_skill_rate(419001) -> 0;
+
+get_skill_rate(420001) -> 0;
+
+get_skill_rate(421001) -> 0;
+
+get_skill_rate(422001) -> 0;
+
+get_skill_rate(423001) -> 0.
 
 
 %%================================================
@@ -2042,7 +2066,8 @@ skill_info(100001) ->
 		type          = 0,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 正气诀
@@ -2053,7 +2078,8 @@ skill_info(101001) ->
 		type          = 2,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 突刺诀
@@ -2064,7 +2090,8 @@ skill_info(102001) ->
 		type          = 2,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 凝神决
@@ -2075,7 +2102,8 @@ skill_info(103001) ->
 		type          = 2,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 威震四方
@@ -2085,8 +2113,9 @@ skill_info(104001) ->
 		class_id      = 104,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 640,
-		next_skill_id = 104002
+		level_up_exp  = 960,
+		next_skill_id = 104002,
+		point 		  = 61
 	};
 
 %% 威震四方
@@ -2096,8 +2125,9 @@ skill_info(104002) ->
 		class_id      = 104,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 1600,
-		next_skill_id = 104003
+		level_up_exp  = 4416,
+		next_skill_id = 104003,
+		point 		  = 123
 	};
 
 %% 威震四方
@@ -2107,8 +2137,9 @@ skill_info(104003) ->
 		class_id      = 104,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 7840,
-		next_skill_id = 104004
+		level_up_exp  = 11232,
+		next_skill_id = 104004,
+		point 		  = 205
 	};
 
 %% 威震四方
@@ -2118,8 +2149,9 @@ skill_info(104004) ->
 		class_id      = 104,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 13600,
-		next_skill_id = 104005
+		level_up_exp  = 22272,
+		next_skill_id = 104005,
+		point 		  = 327
 	};
 
 %% 威震四方
@@ -2129,8 +2161,9 @@ skill_info(104005) ->
 		class_id      = 104,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 23200,
-		next_skill_id = 104006
+		level_up_exp  = 46080,
+		next_skill_id = 104006,
+		point 		  = 511
 	};
 
 %% 威震四方
@@ -2140,8 +2173,9 @@ skill_info(104006) ->
 		class_id      = 104,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 30880,
-		next_skill_id = 104007
+		level_up_exp  = 67200,
+		next_skill_id = 104007,
+		point 		  = 716
 	};
 
 %% 威震四方
@@ -2151,8 +2185,9 @@ skill_info(104007) ->
 		class_id      = 104,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 42400,
-		next_skill_id = 104008
+		level_up_exp  = 72960,
+		next_skill_id = 104008,
+		point 		  = 1023
 	};
 
 %% 威震四方
@@ -2162,8 +2197,9 @@ skill_info(104008) ->
 		class_id      = 104,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 53920,
-		next_skill_id = 104009
+		level_up_exp  = 98400,
+		next_skill_id = 104009,
+		point 		  = 1330
 	};
 
 %% 威震四方
@@ -2173,8 +2209,9 @@ skill_info(104009) ->
 		class_id      = 104,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 71200,
-		next_skill_id = 104010
+		level_up_exp  = 105600,
+		next_skill_id = 104010,
+		point 		  = 1636
 	};
 
 %% 威震四方
@@ -2185,7 +2222,8 @@ skill_info(104010) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 2046
 	};
 
 %% 坚若磐石
@@ -2196,7 +2234,8 @@ skill_info(105001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 600,
-		next_skill_id = 105002
+		next_skill_id = 105002,
+		point 		  = 59
 	};
 
 %% 坚若磐石
@@ -2207,7 +2246,8 @@ skill_info(105002) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2840,
-		next_skill_id = 105003
+		next_skill_id = 105003,
+		point 		  = 117
 	};
 
 %% 坚若磐石
@@ -2218,7 +2258,8 @@ skill_info(105003) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 9070,
-		next_skill_id = 105004
+		next_skill_id = 105004,
+		point 		  = 195
 	};
 
 %% 坚若磐石
@@ -2229,7 +2270,8 @@ skill_info(105004) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 19950,
-		next_skill_id = 105005
+		next_skill_id = 105005,
+		point 		  = 312
 	};
 
 %% 坚若磐石
@@ -2240,7 +2282,8 @@ skill_info(105005) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 48300,
-		next_skill_id = 105006
+		next_skill_id = 105006,
+		point 		  = 488
 	};
 
 %% 坚若磐石
@@ -2251,7 +2294,8 @@ skill_info(105006) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 94500,
-		next_skill_id = 105007
+		next_skill_id = 105007,
+		point 		  = 683
 	};
 
 %% 坚若磐石
@@ -2262,7 +2306,8 @@ skill_info(105007) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 191100,
-		next_skill_id = 105008
+		next_skill_id = 105008,
+		point 		  = 976
 	};
 
 %% 坚若磐石
@@ -2273,7 +2318,8 @@ skill_info(105008) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 357000,
-		next_skill_id = 105009
+		next_skill_id = 105009,
+		point 		  = 1269
 	};
 
 %% 坚若磐石
@@ -2284,7 +2330,8 @@ skill_info(105009) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 651000,
-		next_skill_id = 105010
+		next_skill_id = 105010,
+		point 		  = 1562
 	};
 
 %% 坚若磐石
@@ -2295,7 +2342,8 @@ skill_info(105010) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 1953
 	};
 
 %% 背水一战
@@ -2306,7 +2354,8 @@ skill_info(401001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 490,
-		next_skill_id = 401002
+		next_skill_id = 401002,
+		point 		  = 47
 	};
 
 %% 背水一战
@@ -2317,7 +2366,8 @@ skill_info(401002) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2300,
-		next_skill_id = 401003
+		next_skill_id = 401003,
+		point 		  = 95
 	};
 
 %% 背水一战
@@ -2328,7 +2378,8 @@ skill_info(401003) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 7340,
-		next_skill_id = 401004
+		next_skill_id = 401004,
+		point 		  = 158
 	};
 
 %% 背水一战
@@ -2339,7 +2390,8 @@ skill_info(401004) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 16150,
-		next_skill_id = 401005
+		next_skill_id = 401005,
+		point 		  = 253
 	};
 
 %% 背水一战
@@ -2350,7 +2402,8 @@ skill_info(401005) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 39100,
-		next_skill_id = 401006
+		next_skill_id = 401006,
+		point 		  = 395
 	};
 
 %% 背水一战
@@ -2361,7 +2414,8 @@ skill_info(401006) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 76500,
-		next_skill_id = 401007
+		next_skill_id = 401007,
+		point 		  = 553
 	};
 
 %% 背水一战
@@ -2372,7 +2426,8 @@ skill_info(401007) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 154700,
-		next_skill_id = 401008
+		next_skill_id = 401008,
+		point 		  = 790
 	};
 
 %% 背水一战
@@ -2383,7 +2438,8 @@ skill_info(401008) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 289000,
-		next_skill_id = 401009
+		next_skill_id = 401009,
+		point 		  = 1027
 	};
 
 %% 背水一战
@@ -2394,7 +2450,8 @@ skill_info(401009) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 527000,
-		next_skill_id = 401010
+		next_skill_id = 401010,
+		point 		  = 1265
 	};
 
 %% 背水一战
@@ -2405,7 +2462,8 @@ skill_info(401010) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 1581
 	};
 
 %% 浴血狂击
@@ -2416,7 +2474,8 @@ skill_info(107001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 570,
-		next_skill_id = 107002
+		next_skill_id = 107002,
+		point 		  = 56
 	};
 
 %% 浴血狂击
@@ -2427,7 +2486,8 @@ skill_info(107002) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2700,
-		next_skill_id = 107003
+		next_skill_id = 107003,
+		point 		  = 112
 	};
 
 %% 浴血狂击
@@ -2438,7 +2498,8 @@ skill_info(107003) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 8640,
-		next_skill_id = 107004
+		next_skill_id = 107004,
+		point 		  = 186
 	};
 
 %% 浴血狂击
@@ -2449,7 +2510,8 @@ skill_info(107004) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 19000,
-		next_skill_id = 107005
+		next_skill_id = 107005,
+		point 		  = 298
 	};
 
 %% 浴血狂击
@@ -2460,7 +2522,8 @@ skill_info(107005) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 46000,
-		next_skill_id = 107006
+		next_skill_id = 107006,
+		point 		  = 465
 	};
 
 %% 浴血狂击
@@ -2471,7 +2534,8 @@ skill_info(107006) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 90000,
-		next_skill_id = 107007
+		next_skill_id = 107007,
+		point 		  = 651
 	};
 
 %% 浴血狂击
@@ -2482,7 +2546,8 @@ skill_info(107007) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 182000,
-		next_skill_id = 107008
+		next_skill_id = 107008,
+		point 		  = 930
 	};
 
 %% 浴血狂击
@@ -2493,7 +2558,8 @@ skill_info(107008) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 340000,
-		next_skill_id = 107009
+		next_skill_id = 107009,
+		point 		  = 1209
 	};
 
 %% 浴血狂击
@@ -2504,7 +2570,8 @@ skill_info(107009) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 620000,
-		next_skill_id = 107010
+		next_skill_id = 107010,
+		point 		  = 1488
 	};
 
 %% 浴血狂击
@@ -2515,10 +2582,11 @@ skill_info(107010) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 1860
 	};
 
-%% 战意激荡
+%% 备用技能
 skill_info(402001) ->
 	#skill_info{
 		mode_id       = 402001,
@@ -2526,10 +2594,11 @@ skill_info(402001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 550,
-		next_skill_id = 402002
+		next_skill_id = 402002,
+		point 		  = 53
 	};
 
-%% 战意激荡
+%% 备用技能
 skill_info(402002) ->
 	#skill_info{
 		mode_id       = 402002,
@@ -2537,10 +2606,11 @@ skill_info(402002) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2570,
-		next_skill_id = 402003
+		next_skill_id = 402003,
+		point 		  = 106
 	};
 
-%% 战意激荡
+%% 备用技能
 skill_info(402003) ->
 	#skill_info{
 		mode_id       = 402003,
@@ -2548,10 +2618,11 @@ skill_info(402003) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 8210,
-		next_skill_id = 402004
+		next_skill_id = 402004,
+		point 		  = 177
 	};
 
-%% 战意激荡
+%% 备用技能
 skill_info(402004) ->
 	#skill_info{
 		mode_id       = 402004,
@@ -2559,10 +2630,11 @@ skill_info(402004) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 18050,
-		next_skill_id = 402005
+		next_skill_id = 402005,
+		point 		  = 283
 	};
 
-%% 战意激荡
+%% 备用技能
 skill_info(402005) ->
 	#skill_info{
 		mode_id       = 402005,
@@ -2570,10 +2642,11 @@ skill_info(402005) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 43700,
-		next_skill_id = 402006
+		next_skill_id = 402006,
+		point 		  = 442
 	};
 
-%% 战意激荡
+%% 备用技能
 skill_info(402006) ->
 	#skill_info{
 		mode_id       = 402006,
@@ -2581,10 +2654,11 @@ skill_info(402006) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 85500,
-		next_skill_id = 402007
+		next_skill_id = 402007,
+		point 		  = 618
 	};
 
-%% 战意激荡
+%% 备用技能
 skill_info(402007) ->
 	#skill_info{
 		mode_id       = 402007,
@@ -2592,10 +2666,11 @@ skill_info(402007) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 172900,
-		next_skill_id = 402008
+		next_skill_id = 402008,
+		point 		  = 883
 	};
 
-%% 战意激荡
+%% 备用技能
 skill_info(402008) ->
 	#skill_info{
 		mode_id       = 402008,
@@ -2603,10 +2678,11 @@ skill_info(402008) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 323000,
-		next_skill_id = 402009
+		next_skill_id = 402009,
+		point 		  = 1148
 	};
 
-%% 战意激荡
+%% 备用技能
 skill_info(402009) ->
 	#skill_info{
 		mode_id       = 402009,
@@ -2614,10 +2690,11 @@ skill_info(402009) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 589000,
-		next_skill_id = 402010
+		next_skill_id = 402010,
+		point 		  = 1413
 	};
 
-%% 战意激荡
+%% 备用技能
 skill_info(402010) ->
 	#skill_info{
 		mode_id       = 402010,
@@ -2625,7 +2702,8 @@ skill_info(402010) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 1767
 	};
 
 %% 霸刃连斩
@@ -2635,8 +2713,9 @@ skill_info(109001) ->
 		class_id      = 109,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 640,
-		next_skill_id = 109002
+		level_up_exp  = 960,
+		next_skill_id = 109002,
+		point 		  = 61
 	};
 
 %% 霸刃连斩
@@ -2646,8 +2725,9 @@ skill_info(109002) ->
 		class_id      = 109,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 1600,
-		next_skill_id = 109003
+		level_up_exp  = 4416,
+		next_skill_id = 109003,
+		point 		  = 123
 	};
 
 %% 霸刃连斩
@@ -2657,8 +2737,9 @@ skill_info(109003) ->
 		class_id      = 109,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 7840,
-		next_skill_id = 109004
+		level_up_exp  = 11232,
+		next_skill_id = 109004,
+		point 		  = 205
 	};
 
 %% 霸刃连斩
@@ -2668,8 +2749,9 @@ skill_info(109004) ->
 		class_id      = 109,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 13600,
-		next_skill_id = 109005
+		level_up_exp  = 22272,
+		next_skill_id = 109005,
+		point 		  = 327
 	};
 
 %% 霸刃连斩
@@ -2679,8 +2761,9 @@ skill_info(109005) ->
 		class_id      = 109,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 23200,
-		next_skill_id = 109006
+		level_up_exp  = 46080,
+		next_skill_id = 109006,
+		point 		  = 511
 	};
 
 %% 霸刃连斩
@@ -2690,8 +2773,9 @@ skill_info(109006) ->
 		class_id      = 109,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 30880,
-		next_skill_id = 109007
+		level_up_exp  = 67200,
+		next_skill_id = 109007,
+		point 		  = 716
 	};
 
 %% 霸刃连斩
@@ -2701,8 +2785,9 @@ skill_info(109007) ->
 		class_id      = 109,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 42400,
-		next_skill_id = 109008
+		level_up_exp  = 72960,
+		next_skill_id = 109008,
+		point 		  = 1023
 	};
 
 %% 霸刃连斩
@@ -2712,8 +2797,9 @@ skill_info(109008) ->
 		class_id      = 109,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 53920,
-		next_skill_id = 109009
+		level_up_exp  = 98400,
+		next_skill_id = 109009,
+		point 		  = 1330
 	};
 
 %% 霸刃连斩
@@ -2723,8 +2809,9 @@ skill_info(109009) ->
 		class_id      = 109,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 71200,
-		next_skill_id = 109010
+		level_up_exp  = 105600,
+		next_skill_id = 109010,
+		point 		  = 1636
 	};
 
 %% 霸刃连斩
@@ -2735,7 +2822,8 @@ skill_info(109010) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 2046
 	};
 
 %% 横扫千军
@@ -2746,7 +2834,8 @@ skill_info(110001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 600,
-		next_skill_id = 110002
+		next_skill_id = 110002,
+		point 		  = 59
 	};
 
 %% 横扫千军
@@ -2757,7 +2846,8 @@ skill_info(110002) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2840,
-		next_skill_id = 110003
+		next_skill_id = 110003,
+		point 		  = 117
 	};
 
 %% 横扫千军
@@ -2768,7 +2858,8 @@ skill_info(110003) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 9070,
-		next_skill_id = 110004
+		next_skill_id = 110004,
+		point 		  = 195
 	};
 
 %% 横扫千军
@@ -2779,7 +2870,8 @@ skill_info(110004) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 19950,
-		next_skill_id = 110005
+		next_skill_id = 110005,
+		point 		  = 312
 	};
 
 %% 横扫千军
@@ -2790,7 +2882,8 @@ skill_info(110005) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 48300,
-		next_skill_id = 110006
+		next_skill_id = 110006,
+		point 		  = 488
 	};
 
 %% 横扫千军
@@ -2801,7 +2894,8 @@ skill_info(110006) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 94500,
-		next_skill_id = 110007
+		next_skill_id = 110007,
+		point 		  = 683
 	};
 
 %% 横扫千军
@@ -2812,7 +2906,8 @@ skill_info(110007) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 191100,
-		next_skill_id = 110008
+		next_skill_id = 110008,
+		point 		  = 976
 	};
 
 %% 横扫千军
@@ -2823,7 +2918,8 @@ skill_info(110008) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 357000,
-		next_skill_id = 110009
+		next_skill_id = 110009,
+		point 		  = 1269
 	};
 
 %% 横扫千军
@@ -2834,7 +2930,8 @@ skill_info(110009) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 651000,
-		next_skill_id = 110010
+		next_skill_id = 110010,
+		point 		  = 1562
 	};
 
 %% 横扫千军
@@ -2845,7 +2942,8 @@ skill_info(110010) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 1953
 	};
 
 %% 龙牙突刺
@@ -2856,7 +2954,8 @@ skill_info(403001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 490,
-		next_skill_id = 403002
+		next_skill_id = 403002,
+		point 		  = 47
 	};
 
 %% 龙牙突刺
@@ -2867,7 +2966,8 @@ skill_info(403002) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2300,
-		next_skill_id = 403003
+		next_skill_id = 403003,
+		point 		  = 95
 	};
 
 %% 龙牙突刺
@@ -2878,7 +2978,8 @@ skill_info(403003) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 7340,
-		next_skill_id = 403004
+		next_skill_id = 403004,
+		point 		  = 158
 	};
 
 %% 龙牙突刺
@@ -2889,7 +2990,8 @@ skill_info(403004) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 16150,
-		next_skill_id = 403005
+		next_skill_id = 403005,
+		point 		  = 253
 	};
 
 %% 龙牙突刺
@@ -2900,7 +3002,8 @@ skill_info(403005) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 39100,
-		next_skill_id = 403006
+		next_skill_id = 403006,
+		point 		  = 395
 	};
 
 %% 龙牙突刺
@@ -2911,7 +3014,8 @@ skill_info(403006) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 76500,
-		next_skill_id = 403007
+		next_skill_id = 403007,
+		point 		  = 553
 	};
 
 %% 龙牙突刺
@@ -2922,7 +3026,8 @@ skill_info(403007) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 154700,
-		next_skill_id = 403008
+		next_skill_id = 403008,
+		point 		  = 790
 	};
 
 %% 龙牙突刺
@@ -2933,7 +3038,8 @@ skill_info(403008) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 289000,
-		next_skill_id = 403009
+		next_skill_id = 403009,
+		point 		  = 1027
 	};
 
 %% 龙牙突刺
@@ -2944,7 +3050,8 @@ skill_info(403009) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 527000,
-		next_skill_id = 403010
+		next_skill_id = 403010,
+		point 		  = 1265
 	};
 
 %% 龙牙突刺
@@ -2955,7 +3062,8 @@ skill_info(403010) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 1581
 	};
 
 %% 乘胜追击
@@ -2966,7 +3074,8 @@ skill_info(112001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 550,
-		next_skill_id = 112002
+		next_skill_id = 112002,
+		point 		  = 47
 	};
 
 %% 乘胜追击
@@ -2977,7 +3086,8 @@ skill_info(112002) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2570,
-		next_skill_id = 112003
+		next_skill_id = 112003,
+		point 		  = 95
 	};
 
 %% 乘胜追击
@@ -2988,7 +3098,8 @@ skill_info(112003) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 8210,
-		next_skill_id = 112004
+		next_skill_id = 112004,
+		point 		  = 158
 	};
 
 %% 乘胜追击
@@ -2999,7 +3110,8 @@ skill_info(112004) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 18050,
-		next_skill_id = 112005
+		next_skill_id = 112005,
+		point 		  = 253
 	};
 
 %% 乘胜追击
@@ -3010,7 +3122,8 @@ skill_info(112005) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 43700,
-		next_skill_id = 112006
+		next_skill_id = 112006,
+		point 		  = 395
 	};
 
 %% 乘胜追击
@@ -3021,7 +3134,8 @@ skill_info(112006) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 85500,
-		next_skill_id = 112007
+		next_skill_id = 112007,
+		point 		  = 553
 	};
 
 %% 乘胜追击
@@ -3032,7 +3146,8 @@ skill_info(112007) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 172900,
-		next_skill_id = 112008
+		next_skill_id = 112008,
+		point 		  = 790
 	};
 
 %% 乘胜追击
@@ -3043,7 +3158,8 @@ skill_info(112008) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 323000,
-		next_skill_id = 112009
+		next_skill_id = 112009,
+		point 		  = 1027
 	};
 
 %% 乘胜追击
@@ -3054,7 +3170,8 @@ skill_info(112009) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 589000,
-		next_skill_id = 112010
+		next_skill_id = 112010,
+		point 		  = 1265
 	};
 
 %% 乘胜追击
@@ -3065,7 +3182,8 @@ skill_info(112010) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 1581
 	};
 
 %% 破军之势
@@ -3076,7 +3194,8 @@ skill_info(113001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 570,
-		next_skill_id = 113002
+		next_skill_id = 113002,
+		point 		  = 59
 	};
 
 %% 破军之势
@@ -3087,7 +3206,8 @@ skill_info(113002) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2700,
-		next_skill_id = 113003
+		next_skill_id = 113003,
+		point 		  = 117
 	};
 
 %% 破军之势
@@ -3098,7 +3218,8 @@ skill_info(113003) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 8640,
-		next_skill_id = 113004
+		next_skill_id = 113004,
+		point 		  = 195
 	};
 
 %% 破军之势
@@ -3109,7 +3230,8 @@ skill_info(113004) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 19000,
-		next_skill_id = 113005
+		next_skill_id = 113005,
+		point 		  = 312
 	};
 
 %% 破军之势
@@ -3120,7 +3242,8 @@ skill_info(113005) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 46000,
-		next_skill_id = 113006
+		next_skill_id = 113006,
+		point 		  = 488
 	};
 
 %% 破军之势
@@ -3131,7 +3254,8 @@ skill_info(113006) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 90000,
-		next_skill_id = 113007
+		next_skill_id = 113007,
+		point 		  = 683
 	};
 
 %% 破军之势
@@ -3142,7 +3266,8 @@ skill_info(113007) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 182000,
-		next_skill_id = 113008
+		next_skill_id = 113008,
+		point 		  = 976
 	};
 
 %% 破军之势
@@ -3153,7 +3278,8 @@ skill_info(113008) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 340000,
-		next_skill_id = 113009
+		next_skill_id = 113009,
+		point 		  = 1269
 	};
 
 %% 破军之势
@@ -3164,7 +3290,8 @@ skill_info(113009) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 620000,
-		next_skill_id = 113010
+		next_skill_id = 113010,
+		point 		  = 1562
 	};
 
 %% 破军之势
@@ -3175,7 +3302,8 @@ skill_info(113010) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 1953
 	};
 
 %% 龙战八方
@@ -3185,8 +3313,9 @@ skill_info(114001) ->
 		class_id      = 114,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 640,
-		next_skill_id = 114002
+		level_up_exp  = 960,
+		next_skill_id = 114002,
+		point 		  = 61
 	};
 
 %% 龙战八方
@@ -3196,8 +3325,9 @@ skill_info(114002) ->
 		class_id      = 114,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 1600,
-		next_skill_id = 114003
+		level_up_exp  = 4416,
+		next_skill_id = 114003,
+		point 		  = 123
 	};
 
 %% 龙战八方
@@ -3207,8 +3337,9 @@ skill_info(114003) ->
 		class_id      = 114,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 7840,
-		next_skill_id = 114004
+		level_up_exp  = 11232,
+		next_skill_id = 114004,
+		point 		  = 205
 	};
 
 %% 龙战八方
@@ -3218,8 +3349,9 @@ skill_info(114004) ->
 		class_id      = 114,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 13600,
-		next_skill_id = 114005
+		level_up_exp  = 22272,
+		next_skill_id = 114005,
+		point 		  = 327
 	};
 
 %% 龙战八方
@@ -3229,8 +3361,9 @@ skill_info(114005) ->
 		class_id      = 114,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 23200,
-		next_skill_id = 114006
+		level_up_exp  = 46080,
+		next_skill_id = 114006,
+		point 		  = 511
 	};
 
 %% 龙战八方
@@ -3240,8 +3373,9 @@ skill_info(114006) ->
 		class_id      = 114,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 30880,
-		next_skill_id = 114007
+		level_up_exp  = 67200,
+		next_skill_id = 114007,
+		point 		  = 716
 	};
 
 %% 龙战八方
@@ -3251,8 +3385,9 @@ skill_info(114007) ->
 		class_id      = 114,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 42400,
-		next_skill_id = 114008
+		level_up_exp  = 72960,
+		next_skill_id = 114008,
+		point 		  = 1023
 	};
 
 %% 龙战八方
@@ -3262,8 +3397,9 @@ skill_info(114008) ->
 		class_id      = 114,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 53920,
-		next_skill_id = 114009
+		level_up_exp  = 98400,
+		next_skill_id = 114009,
+		point 		  = 1330
 	};
 
 %% 龙战八方
@@ -3273,8 +3409,9 @@ skill_info(114009) ->
 		class_id      = 114,
 		type          = 1,
 		effect        = 1,
-		level_up_exp  = 71200,
-		next_skill_id = 114010
+		level_up_exp  = 105600,
+		next_skill_id = 114010,
+		point 		  = 1636
 	};
 
 %% 龙战八方
@@ -3285,7 +3422,8 @@ skill_info(114010) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 2046
 	};
 
 %% 奇门遁甲
@@ -3296,7 +3434,8 @@ skill_info(115001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 600,
-		next_skill_id = 115002
+		next_skill_id = 115002,
+		point 		  = 59
 	};
 
 %% 奇门遁甲
@@ -3307,7 +3446,8 @@ skill_info(115002) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2840,
-		next_skill_id = 115003
+		next_skill_id = 115003,
+		point 		  = 117
 	};
 
 %% 奇门遁甲
@@ -3318,7 +3458,8 @@ skill_info(115003) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 9070,
-		next_skill_id = 115004
+		next_skill_id = 115004,
+		point 		  = 195
 	};
 
 %% 奇门遁甲
@@ -3329,7 +3470,8 @@ skill_info(115004) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 19950,
-		next_skill_id = 115005
+		next_skill_id = 115005,
+		point 		  = 312
 	};
 
 %% 奇门遁甲
@@ -3340,7 +3482,8 @@ skill_info(115005) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 48300,
-		next_skill_id = 115006
+		next_skill_id = 115006,
+		point 		  = 488
 	};
 
 %% 奇门遁甲
@@ -3351,7 +3494,8 @@ skill_info(115006) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 94500,
-		next_skill_id = 115007
+		next_skill_id = 115007,
+		point 		  = 683
 	};
 
 %% 奇门遁甲
@@ -3362,7 +3506,8 @@ skill_info(115007) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 191100,
-		next_skill_id = 115008
+		next_skill_id = 115008,
+		point 		  = 976
 	};
 
 %% 奇门遁甲
@@ -3373,7 +3518,8 @@ skill_info(115008) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 357000,
-		next_skill_id = 115009
+		next_skill_id = 115009,
+		point 		  = 1269
 	};
 
 %% 奇门遁甲
@@ -3384,7 +3530,8 @@ skill_info(115009) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 651000,
-		next_skill_id = 115010
+		next_skill_id = 115010,
+		point 		  = 1562
 	};
 
 %% 奇门遁甲
@@ -3395,7 +3542,8 @@ skill_info(115010) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 1953
 	};
 
 %% 龙落雷
@@ -3406,7 +3554,8 @@ skill_info(116001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 490,
-		next_skill_id = 116002
+		next_skill_id = 116002,
+		point 		  = 47
 	};
 
 %% 龙落雷
@@ -3417,7 +3566,8 @@ skill_info(116002) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2300,
-		next_skill_id = 116003
+		next_skill_id = 116003,
+		point 		  = 95
 	};
 
 %% 龙落雷
@@ -3428,7 +3578,8 @@ skill_info(116003) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 7340,
-		next_skill_id = 116004
+		next_skill_id = 116004,
+		point 		  = 158
 	};
 
 %% 龙落雷
@@ -3439,7 +3590,8 @@ skill_info(116004) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 16150,
-		next_skill_id = 116005
+		next_skill_id = 116005,
+		point 		  = 253
 	};
 
 %% 龙落雷
@@ -3450,7 +3602,8 @@ skill_info(116005) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 39100,
-		next_skill_id = 116006
+		next_skill_id = 116006,
+		point 		  = 395
 	};
 
 %% 龙落雷
@@ -3461,7 +3614,8 @@ skill_info(116006) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 76500,
-		next_skill_id = 116007
+		next_skill_id = 116007,
+		point 		  = 553
 	};
 
 %% 龙落雷
@@ -3472,7 +3626,8 @@ skill_info(116007) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 154700,
-		next_skill_id = 116008
+		next_skill_id = 116008,
+		point 		  = 790
 	};
 
 %% 龙落雷
@@ -3483,7 +3638,8 @@ skill_info(116008) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 289000,
-		next_skill_id = 116009
+		next_skill_id = 116009,
+		point 		  = 1027
 	};
 
 %% 龙落雷
@@ -3494,7 +3650,8 @@ skill_info(116009) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 527000,
-		next_skill_id = 116010
+		next_skill_id = 116010,
+		point 		  = 1265
 	};
 
 %% 龙落雷
@@ -3505,10 +3662,11 @@ skill_info(116010) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 1581
 	};
 
-%% 虚空炽炎
+%% 备用技能
 skill_info(404001) ->
 	#skill_info{
 		mode_id       = 404001,
@@ -3516,10 +3674,11 @@ skill_info(404001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 550,
-		next_skill_id = 404002
+		next_skill_id = 404002,
+		point 		  = 53
 	};
 
-%% 虚空炽炎
+%% 备用技能
 skill_info(404002) ->
 	#skill_info{
 		mode_id       = 404002,
@@ -3527,10 +3686,11 @@ skill_info(404002) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2570,
-		next_skill_id = 404003
+		next_skill_id = 404003,
+		point 		  = 106
 	};
 
-%% 虚空炽炎
+%% 备用技能
 skill_info(404003) ->
 	#skill_info{
 		mode_id       = 404003,
@@ -3538,10 +3698,11 @@ skill_info(404003) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 8210,
-		next_skill_id = 404004
+		next_skill_id = 404004,
+		point 		  = 177
 	};
 
-%% 虚空炽炎
+%% 备用技能
 skill_info(404004) ->
 	#skill_info{
 		mode_id       = 404004,
@@ -3549,10 +3710,11 @@ skill_info(404004) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 18050,
-		next_skill_id = 404005
+		next_skill_id = 404005,
+		point 		  = 283
 	};
 
-%% 虚空炽炎
+%% 备用技能
 skill_info(404005) ->
 	#skill_info{
 		mode_id       = 404005,
@@ -3560,10 +3722,11 @@ skill_info(404005) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 43700,
-		next_skill_id = 404006
+		next_skill_id = 404006,
+		point 		  = 442
 	};
 
-%% 虚空炽炎
+%% 备用技能
 skill_info(404006) ->
 	#skill_info{
 		mode_id       = 404006,
@@ -3571,10 +3734,11 @@ skill_info(404006) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 85500,
-		next_skill_id = 404007
+		next_skill_id = 404007,
+		point 		  = 618
 	};
 
-%% 虚空炽炎
+%% 备用技能
 skill_info(404007) ->
 	#skill_info{
 		mode_id       = 404007,
@@ -3582,10 +3746,11 @@ skill_info(404007) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 172900,
-		next_skill_id = 404008
+		next_skill_id = 404008,
+		point 		  = 883
 	};
 
-%% 虚空炽炎
+%% 备用技能
 skill_info(404008) ->
 	#skill_info{
 		mode_id       = 404008,
@@ -3593,10 +3758,11 @@ skill_info(404008) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 323000,
-		next_skill_id = 404009
+		next_skill_id = 404009,
+		point 		  = 1148
 	};
 
-%% 虚空炽炎
+%% 备用技能
 skill_info(404009) ->
 	#skill_info{
 		mode_id       = 404009,
@@ -3604,10 +3770,11 @@ skill_info(404009) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 589000,
-		next_skill_id = 404010
+		next_skill_id = 404010,
+		point 		  = 1413
 	};
 
-%% 虚空炽炎
+%% 备用技能
 skill_info(404010) ->
 	#skill_info{
 		mode_id       = 404010,
@@ -3615,7 +3782,8 @@ skill_info(404010) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 1767
 	};
 
 %% 繁星流火
@@ -3626,7 +3794,8 @@ skill_info(118001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 570,
-		next_skill_id = 118002
+		next_skill_id = 118002,
+		point 		  = 56
 	};
 
 %% 繁星流火
@@ -3637,7 +3806,8 @@ skill_info(118002) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2700,
-		next_skill_id = 118003
+		next_skill_id = 118003,
+		point 		  = 112
 	};
 
 %% 繁星流火
@@ -3648,7 +3818,8 @@ skill_info(118003) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 8640,
-		next_skill_id = 118004
+		next_skill_id = 118004,
+		point 		  = 186
 	};
 
 %% 繁星流火
@@ -3659,7 +3830,8 @@ skill_info(118004) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 19000,
-		next_skill_id = 118005
+		next_skill_id = 118005,
+		point 		  = 298
 	};
 
 %% 繁星流火
@@ -3670,7 +3842,8 @@ skill_info(118005) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 46000,
-		next_skill_id = 118006
+		next_skill_id = 118006,
+		point 		  = 465
 	};
 
 %% 繁星流火
@@ -3681,7 +3854,8 @@ skill_info(118006) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 90000,
-		next_skill_id = 118007
+		next_skill_id = 118007,
+		point 		  = 651
 	};
 
 %% 繁星流火
@@ -3692,7 +3866,8 @@ skill_info(118007) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 182000,
-		next_skill_id = 118008
+		next_skill_id = 118008,
+		point 		  = 930
 	};
 
 %% 繁星流火
@@ -3703,7 +3878,8 @@ skill_info(118008) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 340000,
-		next_skill_id = 118009
+		next_skill_id = 118009,
+		point 		  = 1209
 	};
 
 %% 繁星流火
@@ -3714,7 +3890,8 @@ skill_info(118009) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 620000,
-		next_skill_id = 118010
+		next_skill_id = 118010,
+		point 		  = 1488
 	};
 
 %% 繁星流火
@@ -3725,7 +3902,8 @@ skill_info(118010) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 1860
 	};
 
 %% 战意激荡
@@ -3736,7 +3914,8 @@ skill_info(119001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 550,
-		next_skill_id = 119002
+		next_skill_id = 119002,
+		point 		  = 53
 	};
 
 %% 战意激荡
@@ -3747,7 +3926,8 @@ skill_info(119002) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2570,
-		next_skill_id = 119003
+		next_skill_id = 119003,
+		point 		  = 106
 	};
 
 %% 战意激荡
@@ -3758,7 +3938,8 @@ skill_info(119003) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 8210,
-		next_skill_id = 119004
+		next_skill_id = 119004,
+		point 		  = 177
 	};
 
 %% 战意激荡
@@ -3769,7 +3950,8 @@ skill_info(119004) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 18050,
-		next_skill_id = 119005
+		next_skill_id = 119005,
+		point 		  = 283
 	};
 
 %% 战意激荡
@@ -3780,7 +3962,8 @@ skill_info(119005) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 43700,
-		next_skill_id = 119006
+		next_skill_id = 119006,
+		point 		  = 442
 	};
 
 %% 战意激荡
@@ -3791,7 +3974,8 @@ skill_info(119006) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 85500,
-		next_skill_id = 119007
+		next_skill_id = 119007,
+		point 		  = 618
 	};
 
 %% 战意激荡
@@ -3802,7 +3986,8 @@ skill_info(119007) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 172900,
-		next_skill_id = 119008
+		next_skill_id = 119008,
+		point 		  = 883
 	};
 
 %% 战意激荡
@@ -3813,7 +3998,8 @@ skill_info(119008) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 323000,
-		next_skill_id = 119009
+		next_skill_id = 119009,
+		point 		  = 1148
 	};
 
 %% 战意激荡
@@ -3824,7 +4010,8 @@ skill_info(119009) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 589000,
-		next_skill_id = 119010
+		next_skill_id = 119010,
+		point 		  = 1413
 	};
 
 %% 战意激荡
@@ -3835,7 +4022,8 @@ skill_info(119010) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 1767
 	};
 
 %% 守护
@@ -3846,7 +4034,8 @@ skill_info(201001) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 600,
-		next_skill_id = 201002
+		next_skill_id = 201002,
+		point 		  = 19
 	};
 
 %% 守护
@@ -3857,7 +4046,8 @@ skill_info(201002) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 900,
-		next_skill_id = 201003
+		next_skill_id = 201003,
+		point 		  = 38
 	};
 
 %% 守护
@@ -3868,7 +4058,8 @@ skill_info(201003) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 2000,
-		next_skill_id = 201004
+		next_skill_id = 201004,
+		point 		  = 55
 	};
 
 %% 守护
@@ -3879,7 +4070,8 @@ skill_info(201004) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 6000,
-		next_skill_id = 201005
+		next_skill_id = 201005,
+		point 		  = 85
 	};
 
 %% 守护
@@ -3890,7 +4082,8 @@ skill_info(201005) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 13000,
-		next_skill_id = 201006
+		next_skill_id = 201006,
+		point 		  = 135
 	};
 
 %% 守护
@@ -3901,7 +4094,8 @@ skill_info(201006) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 16000,
-		next_skill_id = 201007
+		next_skill_id = 201007,
+		point 		  = 186
 	};
 
 %% 守护
@@ -3912,7 +4106,8 @@ skill_info(201007) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 20000,
-		next_skill_id = 201008
+		next_skill_id = 201008,
+		point 		  = 241
 	};
 
 %% 守护
@@ -3923,7 +4118,8 @@ skill_info(201008) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 24000,
-		next_skill_id = 201009
+		next_skill_id = 201009,
+		point 		  = 302
 	};
 
 %% 守护
@@ -3934,7 +4130,8 @@ skill_info(201009) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 30000,
-		next_skill_id = 201010
+		next_skill_id = 201010,
+		point 		  = 372
 	};
 
 %% 守护
@@ -3945,7 +4142,8 @@ skill_info(201010) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 465
 	};
 
 %% 毒
@@ -3956,7 +4154,8 @@ skill_info(202001) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 600,
-		next_skill_id = 202002
+		next_skill_id = 202002,
+		point 		  = 19
 	};
 
 %% 毒
@@ -3967,7 +4166,8 @@ skill_info(202002) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 900,
-		next_skill_id = 202003
+		next_skill_id = 202003,
+		point 		  = 38
 	};
 
 %% 毒
@@ -3978,7 +4178,8 @@ skill_info(202003) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 2000,
-		next_skill_id = 202004
+		next_skill_id = 202004,
+		point 		  = 55
 	};
 
 %% 毒
@@ -3989,7 +4190,8 @@ skill_info(202004) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 6000,
-		next_skill_id = 202005
+		next_skill_id = 202005,
+		point 		  = 85
 	};
 
 %% 毒
@@ -4000,7 +4202,8 @@ skill_info(202005) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 13000,
-		next_skill_id = 202006
+		next_skill_id = 202006,
+		point 		  = 135
 	};
 
 %% 毒
@@ -4011,7 +4214,8 @@ skill_info(202006) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 16000,
-		next_skill_id = 202007
+		next_skill_id = 202007,
+		point 		  = 186
 	};
 
 %% 毒
@@ -4022,7 +4226,8 @@ skill_info(202007) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 20000,
-		next_skill_id = 202008
+		next_skill_id = 202008,
+		point 		  = 241
 	};
 
 %% 毒
@@ -4033,7 +4238,8 @@ skill_info(202008) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 24000,
-		next_skill_id = 202009
+		next_skill_id = 202009,
+		point 		  = 302
 	};
 
 %% 毒
@@ -4044,7 +4250,8 @@ skill_info(202009) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 30000,
-		next_skill_id = 202010
+		next_skill_id = 202010,
+		point 		  = 372
 	};
 
 %% 毒
@@ -4055,7 +4262,8 @@ skill_info(202010) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 465
 	};
 
 %% 连击
@@ -4066,7 +4274,8 @@ skill_info(203001) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 600,
-		next_skill_id = 203002
+		next_skill_id = 203002,
+		point 		  = 19
 	};
 
 %% 连击
@@ -4077,7 +4286,8 @@ skill_info(203002) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 900,
-		next_skill_id = 203003
+		next_skill_id = 203003,
+		point 		  = 38
 	};
 
 %% 连击
@@ -4088,7 +4298,8 @@ skill_info(203003) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 2000,
-		next_skill_id = 203004
+		next_skill_id = 203004,
+		point 		  = 55
 	};
 
 %% 连击
@@ -4099,7 +4310,8 @@ skill_info(203004) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 6000,
-		next_skill_id = 203005
+		next_skill_id = 203005,
+		point 		  = 85
 	};
 
 %% 连击
@@ -4110,7 +4322,8 @@ skill_info(203005) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 13000,
-		next_skill_id = 203006
+		next_skill_id = 203006,
+		point 		  = 135
 	};
 
 %% 连击
@@ -4121,7 +4334,8 @@ skill_info(203006) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 16000,
-		next_skill_id = 203007
+		next_skill_id = 203007,
+		point 		  = 186
 	};
 
 %% 连击
@@ -4132,7 +4346,8 @@ skill_info(203007) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 20000,
-		next_skill_id = 203008
+		next_skill_id = 203008,
+		point 		  = 241
 	};
 
 %% 连击
@@ -4143,7 +4358,8 @@ skill_info(203008) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 24000,
-		next_skill_id = 203009
+		next_skill_id = 203009,
+		point 		  = 302
 	};
 
 %% 连击
@@ -4154,7 +4370,8 @@ skill_info(203009) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 30000,
-		next_skill_id = 203010
+		next_skill_id = 203010,
+		point 		  = 372
 	};
 
 %% 连击
@@ -4165,7 +4382,8 @@ skill_info(203010) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 465
 	};
 
 %% 暴击
@@ -4176,7 +4394,8 @@ skill_info(204001) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 600,
-		next_skill_id = 204002
+		next_skill_id = 204002,
+		point 		  = 0
 	};
 
 %% 暴击
@@ -4187,7 +4406,8 @@ skill_info(204002) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 900,
-		next_skill_id = 204003
+		next_skill_id = 204003,
+		point 		  = 0
 	};
 
 %% 暴击
@@ -4198,7 +4418,8 @@ skill_info(204003) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 2000,
-		next_skill_id = 204004
+		next_skill_id = 204004,
+		point 		  = 0
 	};
 
 %% 暴击
@@ -4209,7 +4430,8 @@ skill_info(204004) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 6000,
-		next_skill_id = 204005
+		next_skill_id = 204005,
+		point 		  = 0
 	};
 
 %% 暴击
@@ -4220,7 +4442,8 @@ skill_info(204005) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 13000,
-		next_skill_id = 204006
+		next_skill_id = 204006,
+		point 		  = 0
 	};
 
 %% 暴击
@@ -4231,7 +4454,8 @@ skill_info(204006) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 16000,
-		next_skill_id = 204007
+		next_skill_id = 204007,
+		point 		  = 0
 	};
 
 %% 暴击
@@ -4242,7 +4466,8 @@ skill_info(204007) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 20000,
-		next_skill_id = 204008
+		next_skill_id = 204008,
+		point 		  = 0
 	};
 
 %% 暴击
@@ -4253,7 +4478,8 @@ skill_info(204008) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 24000,
-		next_skill_id = 204009
+		next_skill_id = 204009,
+		point 		  = 0
 	};
 
 %% 暴击
@@ -4264,7 +4490,8 @@ skill_info(204009) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 30000,
-		next_skill_id = 204010
+		next_skill_id = 204010,
+		point 		  = 0
 	};
 
 %% 暴击
@@ -4275,7 +4502,8 @@ skill_info(204010) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 神佑复生
@@ -4286,7 +4514,8 @@ skill_info(205001) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 600,
-		next_skill_id = 205002
+		next_skill_id = 205002,
+		point 		  = 19
 	};
 
 %% 神佑复生
@@ -4297,7 +4526,8 @@ skill_info(205002) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 900,
-		next_skill_id = 205003
+		next_skill_id = 205003,
+		point 		  = 38
 	};
 
 %% 神佑复生
@@ -4308,7 +4538,8 @@ skill_info(205003) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 2000,
-		next_skill_id = 205004
+		next_skill_id = 205004,
+		point 		  = 55
 	};
 
 %% 神佑复生
@@ -4319,7 +4550,8 @@ skill_info(205004) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 6000,
-		next_skill_id = 205005
+		next_skill_id = 205005,
+		point 		  = 85
 	};
 
 %% 神佑复生
@@ -4330,7 +4562,8 @@ skill_info(205005) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 13000,
-		next_skill_id = 205006
+		next_skill_id = 205006,
+		point 		  = 135
 	};
 
 %% 神佑复生
@@ -4341,7 +4574,8 @@ skill_info(205006) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 16000,
-		next_skill_id = 205007
+		next_skill_id = 205007,
+		point 		  = 186
 	};
 
 %% 神佑复生
@@ -4352,7 +4586,8 @@ skill_info(205007) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 20000,
-		next_skill_id = 205008
+		next_skill_id = 205008,
+		point 		  = 241
 	};
 
 %% 神佑复生
@@ -4363,7 +4598,8 @@ skill_info(205008) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 24000,
-		next_skill_id = 205009
+		next_skill_id = 205009,
+		point 		  = 302
 	};
 
 %% 神佑复生
@@ -4374,7 +4610,8 @@ skill_info(205009) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 30000,
-		next_skill_id = 205010
+		next_skill_id = 205010,
+		point 		  = 372
 	};
 
 %% 神佑复生
@@ -4385,7 +4622,8 @@ skill_info(205010) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 465
 	};
 
 %% 吸血
@@ -4396,7 +4634,8 @@ skill_info(206001) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 600,
-		next_skill_id = 206002
+		next_skill_id = 206002,
+		point 		  = 19
 	};
 
 %% 吸血
@@ -4407,7 +4646,8 @@ skill_info(206002) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 900,
-		next_skill_id = 206003
+		next_skill_id = 206003,
+		point 		  = 38
 	};
 
 %% 吸血
@@ -4418,7 +4658,8 @@ skill_info(206003) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 2000,
-		next_skill_id = 206004
+		next_skill_id = 206004,
+		point 		  = 55
 	};
 
 %% 吸血
@@ -4429,7 +4670,8 @@ skill_info(206004) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 6000,
-		next_skill_id = 206005
+		next_skill_id = 206005,
+		point 		  = 85
 	};
 
 %% 吸血
@@ -4440,7 +4682,8 @@ skill_info(206005) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 13000,
-		next_skill_id = 206006
+		next_skill_id = 206006,
+		point 		  = 135
 	};
 
 %% 吸血
@@ -4451,7 +4694,8 @@ skill_info(206006) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 16000,
-		next_skill_id = 206007
+		next_skill_id = 206007,
+		point 		  = 186
 	};
 
 %% 吸血
@@ -4462,7 +4706,8 @@ skill_info(206007) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 20000,
-		next_skill_id = 206008
+		next_skill_id = 206008,
+		point 		  = 241
 	};
 
 %% 吸血
@@ -4473,7 +4718,8 @@ skill_info(206008) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 24000,
-		next_skill_id = 206009
+		next_skill_id = 206009,
+		point 		  = 302
 	};
 
 %% 吸血
@@ -4484,7 +4730,8 @@ skill_info(206009) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 30000,
-		next_skill_id = 206010
+		next_skill_id = 206010,
+		point 		  = 372
 	};
 
 %% 吸血
@@ -4495,7 +4742,8 @@ skill_info(206010) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 465
 	};
 
 %% 破怒
@@ -4506,7 +4754,8 @@ skill_info(207001) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 600,
-		next_skill_id = 207002
+		next_skill_id = 207002,
+		point 		  = 19
 	};
 
 %% 破怒
@@ -4517,7 +4766,8 @@ skill_info(207002) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 900,
-		next_skill_id = 207003
+		next_skill_id = 207003,
+		point 		  = 38
 	};
 
 %% 破怒
@@ -4528,7 +4778,8 @@ skill_info(207003) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 2000,
-		next_skill_id = 207004
+		next_skill_id = 207004,
+		point 		  = 55
 	};
 
 %% 破怒
@@ -4539,7 +4790,8 @@ skill_info(207004) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 6000,
-		next_skill_id = 207005
+		next_skill_id = 207005,
+		point 		  = 85
 	};
 
 %% 破怒
@@ -4550,7 +4802,8 @@ skill_info(207005) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 13000,
-		next_skill_id = 207006
+		next_skill_id = 207006,
+		point 		  = 135
 	};
 
 %% 破怒
@@ -4561,7 +4814,8 @@ skill_info(207006) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 16000,
-		next_skill_id = 207007
+		next_skill_id = 207007,
+		point 		  = 186
 	};
 
 %% 破怒
@@ -4572,7 +4826,8 @@ skill_info(207007) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 20000,
-		next_skill_id = 207008
+		next_skill_id = 207008,
+		point 		  = 241
 	};
 
 %% 破怒
@@ -4583,7 +4838,8 @@ skill_info(207008) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 24000,
-		next_skill_id = 207009
+		next_skill_id = 207009,
+		point 		  = 302
 	};
 
 %% 破怒
@@ -4594,7 +4850,8 @@ skill_info(207009) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 30000,
-		next_skill_id = 207010
+		next_skill_id = 207010,
+		point 		  = 372
 	};
 
 %% 破怒
@@ -4605,7 +4862,8 @@ skill_info(207010) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 465
 	};
 
 %% 坚盾
@@ -4616,7 +4874,8 @@ skill_info(208001) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 600,
-		next_skill_id = 208002
+		next_skill_id = 208002,
+		point 		  = 0
 	};
 
 %% 坚盾
@@ -4627,7 +4886,8 @@ skill_info(208002) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 900,
-		next_skill_id = 208003
+		next_skill_id = 208003,
+		point 		  = 0
 	};
 
 %% 坚盾
@@ -4638,7 +4898,8 @@ skill_info(208003) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 2000,
-		next_skill_id = 208004
+		next_skill_id = 208004,
+		point 		  = 0
 	};
 
 %% 坚盾
@@ -4649,7 +4910,8 @@ skill_info(208004) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 6000,
-		next_skill_id = 208005
+		next_skill_id = 208005,
+		point 		  = 0
 	};
 
 %% 坚盾
@@ -4660,7 +4922,8 @@ skill_info(208005) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 13000,
-		next_skill_id = 208006
+		next_skill_id = 208006,
+		point 		  = 0
 	};
 
 %% 坚盾
@@ -4671,7 +4934,8 @@ skill_info(208006) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 16000,
-		next_skill_id = 208007
+		next_skill_id = 208007,
+		point 		  = 0
 	};
 
 %% 坚盾
@@ -4682,7 +4946,8 @@ skill_info(208007) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 20000,
-		next_skill_id = 208008
+		next_skill_id = 208008,
+		point 		  = 0
 	};
 
 %% 坚盾
@@ -4693,7 +4958,8 @@ skill_info(208008) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 24000,
-		next_skill_id = 208009
+		next_skill_id = 208009,
+		point 		  = 0
 	};
 
 %% 坚盾
@@ -4704,7 +4970,8 @@ skill_info(208009) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 30000,
-		next_skill_id = 208010
+		next_skill_id = 208010,
+		point 		  = 0
 	};
 
 %% 坚盾
@@ -4715,7 +4982,8 @@ skill_info(208010) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 法盾
@@ -4726,7 +4994,8 @@ skill_info(209001) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 600,
-		next_skill_id = 209002
+		next_skill_id = 209002,
+		point 		  = 0
 	};
 
 %% 法盾
@@ -4737,7 +5006,8 @@ skill_info(209002) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 900,
-		next_skill_id = 209003
+		next_skill_id = 209003,
+		point 		  = 0
 	};
 
 %% 法盾
@@ -4748,7 +5018,8 @@ skill_info(209003) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 2000,
-		next_skill_id = 209004
+		next_skill_id = 209004,
+		point 		  = 0
 	};
 
 %% 法盾
@@ -4759,7 +5030,8 @@ skill_info(209004) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 6000,
-		next_skill_id = 209005
+		next_skill_id = 209005,
+		point 		  = 0
 	};
 
 %% 法盾
@@ -4770,7 +5042,8 @@ skill_info(209005) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 13000,
-		next_skill_id = 209006
+		next_skill_id = 209006,
+		point 		  = 0
 	};
 
 %% 法盾
@@ -4781,7 +5054,8 @@ skill_info(209006) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 16000,
-		next_skill_id = 209007
+		next_skill_id = 209007,
+		point 		  = 0
 	};
 
 %% 法盾
@@ -4792,7 +5066,8 @@ skill_info(209007) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 20000,
-		next_skill_id = 209008
+		next_skill_id = 209008,
+		point 		  = 0
 	};
 
 %% 法盾
@@ -4803,7 +5078,8 @@ skill_info(209008) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 24000,
-		next_skill_id = 209009
+		next_skill_id = 209009,
+		point 		  = 0
 	};
 
 %% 法盾
@@ -4814,7 +5090,8 @@ skill_info(209009) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 30000,
-		next_skill_id = 209010
+		next_skill_id = 209010,
+		point 		  = 0
 	};
 
 %% 法盾
@@ -4825,7 +5102,8 @@ skill_info(209010) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 敏捷
@@ -4836,7 +5114,8 @@ skill_info(210001) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 600,
-		next_skill_id = 210002
+		next_skill_id = 210002,
+		point 		  = 0
 	};
 
 %% 敏捷
@@ -4847,7 +5126,8 @@ skill_info(210002) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 900,
-		next_skill_id = 210003
+		next_skill_id = 210003,
+		point 		  = 0
 	};
 
 %% 敏捷
@@ -4858,7 +5138,8 @@ skill_info(210003) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 2000,
-		next_skill_id = 210004
+		next_skill_id = 210004,
+		point 		  = 0
 	};
 
 %% 敏捷
@@ -4869,7 +5150,8 @@ skill_info(210004) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 6000,
-		next_skill_id = 210005
+		next_skill_id = 210005,
+		point 		  = 0
 	};
 
 %% 敏捷
@@ -4880,7 +5162,8 @@ skill_info(210005) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 13000,
-		next_skill_id = 210006
+		next_skill_id = 210006,
+		point 		  = 0
 	};
 
 %% 敏捷
@@ -4891,7 +5174,8 @@ skill_info(210006) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 16000,
-		next_skill_id = 210007
+		next_skill_id = 210007,
+		point 		  = 0
 	};
 
 %% 敏捷
@@ -4902,7 +5186,8 @@ skill_info(210007) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 20000,
-		next_skill_id = 210008
+		next_skill_id = 210008,
+		point 		  = 0
 	};
 
 %% 敏捷
@@ -4913,7 +5198,8 @@ skill_info(210008) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 24000,
-		next_skill_id = 210009
+		next_skill_id = 210009,
+		point 		  = 0
 	};
 
 %% 敏捷
@@ -4924,7 +5210,8 @@ skill_info(210009) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 30000,
-		next_skill_id = 210010
+		next_skill_id = 210010,
+		point 		  = 0
 	};
 
 %% 敏捷
@@ -4935,7 +5222,8 @@ skill_info(210010) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 强力
@@ -4946,7 +5234,8 @@ skill_info(211001) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 600,
-		next_skill_id = 211002
+		next_skill_id = 211002,
+		point 		  = 0
 	};
 
 %% 强力
@@ -4957,7 +5246,8 @@ skill_info(211002) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 900,
-		next_skill_id = 211003
+		next_skill_id = 211003,
+		point 		  = 0
 	};
 
 %% 强力
@@ -4968,7 +5258,8 @@ skill_info(211003) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 2000,
-		next_skill_id = 211004
+		next_skill_id = 211004,
+		point 		  = 0
 	};
 
 %% 强力
@@ -4979,7 +5270,8 @@ skill_info(211004) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 6000,
-		next_skill_id = 211005
+		next_skill_id = 211005,
+		point 		  = 0
 	};
 
 %% 强力
@@ -4990,7 +5282,8 @@ skill_info(211005) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 13000,
-		next_skill_id = 211006
+		next_skill_id = 211006,
+		point 		  = 0
 	};
 
 %% 强力
@@ -5001,7 +5294,8 @@ skill_info(211006) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 16000,
-		next_skill_id = 211007
+		next_skill_id = 211007,
+		point 		  = 0
 	};
 
 %% 强力
@@ -5012,7 +5306,8 @@ skill_info(211007) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 20000,
-		next_skill_id = 211008
+		next_skill_id = 211008,
+		point 		  = 0
 	};
 
 %% 强力
@@ -5023,7 +5318,8 @@ skill_info(211008) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 24000,
-		next_skill_id = 211009
+		next_skill_id = 211009,
+		point 		  = 0
 	};
 
 %% 强力
@@ -5034,7 +5330,8 @@ skill_info(211009) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 30000,
-		next_skill_id = 211010
+		next_skill_id = 211010,
+		point 		  = 0
 	};
 
 %% 强力
@@ -5045,7 +5342,8 @@ skill_info(211010) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 强法
@@ -5056,7 +5354,8 @@ skill_info(212001) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 600,
-		next_skill_id = 212002
+		next_skill_id = 212002,
+		point 		  = 0
 	};
 
 %% 强法
@@ -5067,7 +5366,8 @@ skill_info(212002) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 900,
-		next_skill_id = 212003
+		next_skill_id = 212003,
+		point 		  = 0
 	};
 
 %% 强法
@@ -5078,7 +5378,8 @@ skill_info(212003) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 2000,
-		next_skill_id = 212004
+		next_skill_id = 212004,
+		point 		  = 0
 	};
 
 %% 强法
@@ -5089,7 +5390,8 @@ skill_info(212004) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 6000,
-		next_skill_id = 212005
+		next_skill_id = 212005,
+		point 		  = 0
 	};
 
 %% 强法
@@ -5100,7 +5402,8 @@ skill_info(212005) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 13000,
-		next_skill_id = 212006
+		next_skill_id = 212006,
+		point 		  = 0
 	};
 
 %% 强法
@@ -5111,7 +5414,8 @@ skill_info(212006) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 16000,
-		next_skill_id = 212007
+		next_skill_id = 212007,
+		point 		  = 0
 	};
 
 %% 强法
@@ -5122,7 +5426,8 @@ skill_info(212007) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 20000,
-		next_skill_id = 212008
+		next_skill_id = 212008,
+		point 		  = 0
 	};
 
 %% 强法
@@ -5133,7 +5438,8 @@ skill_info(212008) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 24000,
-		next_skill_id = 212009
+		next_skill_id = 212009,
+		point 		  = 0
 	};
 
 %% 强法
@@ -5144,7 +5450,8 @@ skill_info(212009) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 30000,
-		next_skill_id = 212010
+		next_skill_id = 212010,
+		point 		  = 0
 	};
 
 %% 强法
@@ -5155,7 +5462,8 @@ skill_info(212010) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 强身
@@ -5166,7 +5474,8 @@ skill_info(213001) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 600,
-		next_skill_id = 213002
+		next_skill_id = 213002,
+		point 		  = 0
 	};
 
 %% 强身
@@ -5177,7 +5486,8 @@ skill_info(213002) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 900,
-		next_skill_id = 213003
+		next_skill_id = 213003,
+		point 		  = 0
 	};
 
 %% 强身
@@ -5188,7 +5498,8 @@ skill_info(213003) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 2000,
-		next_skill_id = 213004
+		next_skill_id = 213004,
+		point 		  = 0
 	};
 
 %% 强身
@@ -5199,7 +5510,8 @@ skill_info(213004) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 6000,
-		next_skill_id = 213005
+		next_skill_id = 213005,
+		point 		  = 0
 	};
 
 %% 强身
@@ -5210,7 +5522,8 @@ skill_info(213005) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 13000,
-		next_skill_id = 213006
+		next_skill_id = 213006,
+		point 		  = 0
 	};
 
 %% 强身
@@ -5221,7 +5534,8 @@ skill_info(213006) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 16000,
-		next_skill_id = 213007
+		next_skill_id = 213007,
+		point 		  = 0
 	};
 
 %% 强身
@@ -5232,7 +5546,8 @@ skill_info(213007) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 20000,
-		next_skill_id = 213008
+		next_skill_id = 213008,
+		point 		  = 0
 	};
 
 %% 强身
@@ -5243,7 +5558,8 @@ skill_info(213008) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 24000,
-		next_skill_id = 213009
+		next_skill_id = 213009,
+		point 		  = 0
 	};
 
 %% 强身
@@ -5254,7 +5570,8 @@ skill_info(213009) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 30000,
-		next_skill_id = 213010
+		next_skill_id = 213010,
+		point 		  = 0
 	};
 
 %% 强身
@@ -5265,7 +5582,8 @@ skill_info(213010) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 愤怒
@@ -5276,7 +5594,8 @@ skill_info(214001) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 600,
-		next_skill_id = 214002
+		next_skill_id = 214002,
+		point 		  = 19
 	};
 
 %% 愤怒
@@ -5287,7 +5606,8 @@ skill_info(214002) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 900,
-		next_skill_id = 214003
+		next_skill_id = 214003,
+		point 		  = 38
 	};
 
 %% 愤怒
@@ -5298,7 +5618,8 @@ skill_info(214003) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 2000,
-		next_skill_id = 214004
+		next_skill_id = 214004,
+		point 		  = 55
 	};
 
 %% 愤怒
@@ -5309,7 +5630,8 @@ skill_info(214004) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 6000,
-		next_skill_id = 214005
+		next_skill_id = 214005,
+		point 		  = 85
 	};
 
 %% 愤怒
@@ -5320,7 +5642,8 @@ skill_info(214005) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 13000,
-		next_skill_id = 214006
+		next_skill_id = 214006,
+		point 		  = 135
 	};
 
 %% 愤怒
@@ -5331,7 +5654,8 @@ skill_info(214006) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 16000,
-		next_skill_id = 214007
+		next_skill_id = 214007,
+		point 		  = 186
 	};
 
 %% 愤怒
@@ -5342,7 +5666,8 @@ skill_info(214007) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 20000,
-		next_skill_id = 214008
+		next_skill_id = 214008,
+		point 		  = 241
 	};
 
 %% 愤怒
@@ -5353,7 +5678,8 @@ skill_info(214008) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 24000,
-		next_skill_id = 214009
+		next_skill_id = 214009,
+		point 		  = 302
 	};
 
 %% 愤怒
@@ -5364,7 +5690,8 @@ skill_info(214009) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 30000,
-		next_skill_id = 214010
+		next_skill_id = 214010,
+		point 		  = 372
 	};
 
 %% 愤怒
@@ -5375,7 +5702,8 @@ skill_info(214010) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 465
 	};
 
 %% 格挡
@@ -5386,7 +5714,8 @@ skill_info(215001) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 600,
-		next_skill_id = 215002
+		next_skill_id = 215002,
+		point 		  = 0
 	};
 
 %% 格挡
@@ -5397,7 +5726,8 @@ skill_info(215002) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 900,
-		next_skill_id = 215003
+		next_skill_id = 215003,
+		point 		  = 0
 	};
 
 %% 格挡
@@ -5408,7 +5738,8 @@ skill_info(215003) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 2000,
-		next_skill_id = 215004
+		next_skill_id = 215004,
+		point 		  = 0
 	};
 
 %% 格挡
@@ -5419,7 +5750,8 @@ skill_info(215004) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 6000,
-		next_skill_id = 215005
+		next_skill_id = 215005,
+		point 		  = 0
 	};
 
 %% 格挡
@@ -5430,7 +5762,8 @@ skill_info(215005) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 13000,
-		next_skill_id = 215006
+		next_skill_id = 215006,
+		point 		  = 0
 	};
 
 %% 格挡
@@ -5441,7 +5774,8 @@ skill_info(215006) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 16000,
-		next_skill_id = 215007
+		next_skill_id = 215007,
+		point 		  = 0
 	};
 
 %% 格挡
@@ -5452,7 +5786,8 @@ skill_info(215007) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 20000,
-		next_skill_id = 215008
+		next_skill_id = 215008,
+		point 		  = 0
 	};
 
 %% 格挡
@@ -5463,7 +5798,8 @@ skill_info(215008) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 24000,
-		next_skill_id = 215009
+		next_skill_id = 215009,
+		point 		  = 0
 	};
 
 %% 格挡
@@ -5474,7 +5810,8 @@ skill_info(215009) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 30000,
-		next_skill_id = 215010
+		next_skill_id = 215010,
+		point 		  = 0
 	};
 
 %% 格挡
@@ -5485,7 +5822,8 @@ skill_info(215010) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 闪避
@@ -5496,7 +5834,8 @@ skill_info(216001) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 600,
-		next_skill_id = 216002
+		next_skill_id = 216002,
+		point 		  = 0
 	};
 
 %% 闪避
@@ -5507,7 +5846,8 @@ skill_info(216002) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 900,
-		next_skill_id = 216003
+		next_skill_id = 216003,
+		point 		  = 0
 	};
 
 %% 闪避
@@ -5518,7 +5858,8 @@ skill_info(216003) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 2000,
-		next_skill_id = 216004
+		next_skill_id = 216004,
+		point 		  = 0
 	};
 
 %% 闪避
@@ -5529,7 +5870,8 @@ skill_info(216004) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 6000,
-		next_skill_id = 216005
+		next_skill_id = 216005,
+		point 		  = 0
 	};
 
 %% 闪避
@@ -5540,7 +5882,8 @@ skill_info(216005) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 13000,
-		next_skill_id = 216006
+		next_skill_id = 216006,
+		point 		  = 0
 	};
 
 %% 闪避
@@ -5551,7 +5894,8 @@ skill_info(216006) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 16000,
-		next_skill_id = 216007
+		next_skill_id = 216007,
+		point 		  = 0
 	};
 
 %% 闪避
@@ -5562,7 +5906,8 @@ skill_info(216007) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 20000,
-		next_skill_id = 216008
+		next_skill_id = 216008,
+		point 		  = 0
 	};
 
 %% 闪避
@@ -5573,7 +5918,8 @@ skill_info(216008) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 24000,
-		next_skill_id = 216009
+		next_skill_id = 216009,
+		point 		  = 0
 	};
 
 %% 闪避
@@ -5584,7 +5930,8 @@ skill_info(216009) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 30000,
-		next_skill_id = 216010
+		next_skill_id = 216010,
+		point 		  = 0
 	};
 
 %% 闪避
@@ -5595,7 +5942,8 @@ skill_info(216010) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 命中
@@ -5606,7 +5954,8 @@ skill_info(217001) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 600,
-		next_skill_id = 217002
+		next_skill_id = 217002,
+		point 		  = 0
 	};
 
 %% 命中
@@ -5617,7 +5966,8 @@ skill_info(217002) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 900,
-		next_skill_id = 217003
+		next_skill_id = 217003,
+		point 		  = 0
 	};
 
 %% 命中
@@ -5628,7 +5978,8 @@ skill_info(217003) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 2000,
-		next_skill_id = 217004
+		next_skill_id = 217004,
+		point 		  = 0
 	};
 
 %% 命中
@@ -5639,7 +5990,8 @@ skill_info(217004) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 6000,
-		next_skill_id = 217005
+		next_skill_id = 217005,
+		point 		  = 0
 	};
 
 %% 命中
@@ -5650,7 +6002,8 @@ skill_info(217005) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 13000,
-		next_skill_id = 217006
+		next_skill_id = 217006,
+		point 		  = 0
 	};
 
 %% 命中
@@ -5661,7 +6014,8 @@ skill_info(217006) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 16000,
-		next_skill_id = 217007
+		next_skill_id = 217007,
+		point 		  = 0
 	};
 
 %% 命中
@@ -5672,7 +6026,8 @@ skill_info(217007) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 20000,
-		next_skill_id = 217008
+		next_skill_id = 217008,
+		point 		  = 0
 	};
 
 %% 命中
@@ -5683,7 +6038,8 @@ skill_info(217008) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 24000,
-		next_skill_id = 217009
+		next_skill_id = 217009,
+		point 		  = 0
 	};
 
 %% 命中
@@ -5694,7 +6050,8 @@ skill_info(217009) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 30000,
-		next_skill_id = 217010
+		next_skill_id = 217010,
+		point 		  = 0
 	};
 
 %% 命中
@@ -5705,7 +6062,8 @@ skill_info(217010) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 幸运
@@ -5716,7 +6074,8 @@ skill_info(218001) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 600,
-		next_skill_id = 218002
+		next_skill_id = 218002,
+		point 		  = 0
 	};
 
 %% 幸运
@@ -5727,7 +6086,8 @@ skill_info(218002) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 900,
-		next_skill_id = 218003
+		next_skill_id = 218003,
+		point 		  = 0
 	};
 
 %% 幸运
@@ -5738,7 +6098,8 @@ skill_info(218003) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 2000,
-		next_skill_id = 218004
+		next_skill_id = 218004,
+		point 		  = 0
 	};
 
 %% 幸运
@@ -5749,7 +6110,8 @@ skill_info(218004) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 6000,
-		next_skill_id = 218005
+		next_skill_id = 218005,
+		point 		  = 0
 	};
 
 %% 幸运
@@ -5760,7 +6122,8 @@ skill_info(218005) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 13000,
-		next_skill_id = 218006
+		next_skill_id = 218006,
+		point 		  = 0
 	};
 
 %% 幸运
@@ -5771,7 +6134,8 @@ skill_info(218006) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 16000,
-		next_skill_id = 218007
+		next_skill_id = 218007,
+		point 		  = 0
 	};
 
 %% 幸运
@@ -5782,7 +6146,8 @@ skill_info(218007) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 20000,
-		next_skill_id = 218008
+		next_skill_id = 218008,
+		point 		  = 0
 	};
 
 %% 幸运
@@ -5793,7 +6158,8 @@ skill_info(218008) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 24000,
-		next_skill_id = 218009
+		next_skill_id = 218009,
+		point 		  = 0
 	};
 
 %% 幸运
@@ -5804,7 +6170,8 @@ skill_info(218009) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 30000,
-		next_skill_id = 218010
+		next_skill_id = 218010,
+		point 		  = 0
 	};
 
 %% 幸运
@@ -5815,7 +6182,8 @@ skill_info(218010) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 反震
@@ -5826,7 +6194,8 @@ skill_info(219001) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 600,
-		next_skill_id = 219002
+		next_skill_id = 219002,
+		point 		  = 19
 	};
 
 %% 反震
@@ -5837,7 +6206,8 @@ skill_info(219002) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 900,
-		next_skill_id = 219003
+		next_skill_id = 219003,
+		point 		  = 38
 	};
 
 %% 反震
@@ -5848,7 +6218,8 @@ skill_info(219003) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 2000,
-		next_skill_id = 219004
+		next_skill_id = 219004,
+		point 		  = 55
 	};
 
 %% 反震
@@ -5859,7 +6230,8 @@ skill_info(219004) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 6000,
-		next_skill_id = 219005
+		next_skill_id = 219005,
+		point 		  = 85
 	};
 
 %% 反震
@@ -5870,7 +6242,8 @@ skill_info(219005) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 13000,
-		next_skill_id = 219006
+		next_skill_id = 219006,
+		point 		  = 135
 	};
 
 %% 反震
@@ -5881,7 +6254,8 @@ skill_info(219006) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 16000,
-		next_skill_id = 219007
+		next_skill_id = 219007,
+		point 		  = 186
 	};
 
 %% 反震
@@ -5892,7 +6266,8 @@ skill_info(219007) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 20000,
-		next_skill_id = 219008
+		next_skill_id = 219008,
+		point 		  = 241
 	};
 
 %% 反震
@@ -5903,7 +6278,8 @@ skill_info(219008) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 24000,
-		next_skill_id = 219009
+		next_skill_id = 219009,
+		point 		  = 302
 	};
 
 %% 反震
@@ -5914,7 +6290,8 @@ skill_info(219009) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 30000,
-		next_skill_id = 219010
+		next_skill_id = 219010,
+		point 		  = 372
 	};
 
 %% 反震
@@ -5925,7 +6302,8 @@ skill_info(219010) ->
 		type          = 3,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 465
 	};
 
 %% 破甲
@@ -5936,7 +6314,8 @@ skill_info(220001) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 600,
-		next_skill_id = 220002
+		next_skill_id = 220002,
+		point 		  = 0
 	};
 
 %% 破甲
@@ -5947,7 +6326,8 @@ skill_info(220002) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 900,
-		next_skill_id = 220003
+		next_skill_id = 220003,
+		point 		  = 0
 	};
 
 %% 破甲
@@ -5958,7 +6338,8 @@ skill_info(220003) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 2000,
-		next_skill_id = 220004
+		next_skill_id = 220004,
+		point 		  = 0
 	};
 
 %% 破甲
@@ -5969,7 +6350,8 @@ skill_info(220004) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 6000,
-		next_skill_id = 220005
+		next_skill_id = 220005,
+		point 		  = 0
 	};
 
 %% 破甲
@@ -5980,7 +6362,8 @@ skill_info(220005) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 13000,
-		next_skill_id = 220006
+		next_skill_id = 220006,
+		point 		  = 0
 	};
 
 %% 破甲
@@ -5991,7 +6374,8 @@ skill_info(220006) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 16000,
-		next_skill_id = 220007
+		next_skill_id = 220007,
+		point 		  = 0
 	};
 
 %% 破甲
@@ -6002,7 +6386,8 @@ skill_info(220007) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 20000,
-		next_skill_id = 220008
+		next_skill_id = 220008,
+		point 		  = 0
 	};
 
 %% 破甲
@@ -6013,7 +6398,8 @@ skill_info(220008) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 24000,
-		next_skill_id = 220009
+		next_skill_id = 220009,
+		point 		  = 0
 	};
 
 %% 破甲
@@ -6024,7 +6410,8 @@ skill_info(220009) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 30000,
-		next_skill_id = 220010
+		next_skill_id = 220010,
+		point 		  = 0
 	};
 
 %% 破甲
@@ -6035,7 +6422,8 @@ skill_info(220010) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 反击
@@ -6046,7 +6434,8 @@ skill_info(221001) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 600,
-		next_skill_id = 221002
+		next_skill_id = 221002,
+		point 		  = 0
 	};
 
 %% 反击
@@ -6057,7 +6446,8 @@ skill_info(221002) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 900,
-		next_skill_id = 221003
+		next_skill_id = 221003,
+		point 		  = 0
 	};
 
 %% 反击
@@ -6068,7 +6458,8 @@ skill_info(221003) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 2000,
-		next_skill_id = 221004
+		next_skill_id = 221004,
+		point 		  = 0
 	};
 
 %% 反击
@@ -6079,7 +6470,8 @@ skill_info(221004) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 6000,
-		next_skill_id = 221005
+		next_skill_id = 221005,
+		point 		  = 0
 	};
 
 %% 反击
@@ -6090,7 +6482,8 @@ skill_info(221005) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 13000,
-		next_skill_id = 221006
+		next_skill_id = 221006,
+		point 		  = 0
 	};
 
 %% 反击
@@ -6101,7 +6494,8 @@ skill_info(221006) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 16000,
-		next_skill_id = 221007
+		next_skill_id = 221007,
+		point 		  = 0
 	};
 
 %% 反击
@@ -6112,7 +6506,8 @@ skill_info(221007) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 20000,
-		next_skill_id = 221008
+		next_skill_id = 221008,
+		point 		  = 0
 	};
 
 %% 反击
@@ -6123,7 +6518,8 @@ skill_info(221008) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 24000,
-		next_skill_id = 221009
+		next_skill_id = 221009,
+		point 		  = 0
 	};
 
 %% 反击
@@ -6134,7 +6530,8 @@ skill_info(221009) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 30000,
-		next_skill_id = 221010
+		next_skill_id = 221010,
+		point 		  = 0
 	};
 
 %% 反击
@@ -6145,7 +6542,8 @@ skill_info(221010) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 致命
@@ -6156,7 +6554,8 @@ skill_info(222001) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 600,
-		next_skill_id = 222002
+		next_skill_id = 222002,
+		point 		  = 0
 	};
 
 %% 致命
@@ -6167,7 +6566,8 @@ skill_info(222002) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 900,
-		next_skill_id = 222003
+		next_skill_id = 222003,
+		point 		  = 0
 	};
 
 %% 致命
@@ -6178,7 +6578,8 @@ skill_info(222003) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 2000,
-		next_skill_id = 222004
+		next_skill_id = 222004,
+		point 		  = 0
 	};
 
 %% 致命
@@ -6189,7 +6590,8 @@ skill_info(222004) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 6000,
-		next_skill_id = 222005
+		next_skill_id = 222005,
+		point 		  = 0
 	};
 
 %% 致命
@@ -6200,7 +6602,8 @@ skill_info(222005) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 13000,
-		next_skill_id = 222006
+		next_skill_id = 222006,
+		point 		  = 0
 	};
 
 %% 致命
@@ -6211,7 +6614,8 @@ skill_info(222006) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 16000,
-		next_skill_id = 222007
+		next_skill_id = 222007,
+		point 		  = 0
 	};
 
 %% 致命
@@ -6222,7 +6626,8 @@ skill_info(222007) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 20000,
-		next_skill_id = 222008
+		next_skill_id = 222008,
+		point 		  = 0
 	};
 
 %% 致命
@@ -6233,7 +6638,8 @@ skill_info(222008) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 24000,
-		next_skill_id = 222009
+		next_skill_id = 222009,
+		point 		  = 0
 	};
 
 %% 致命
@@ -6244,7 +6650,8 @@ skill_info(222009) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 30000,
-		next_skill_id = 222010
+		next_skill_id = 222010,
+		point 		  = 0
 	};
 
 %% 致命
@@ -6255,7 +6662,8 @@ skill_info(222010) ->
 		type          = 3,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 扰乱军心
@@ -6266,7 +6674,8 @@ skill_info(223001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 天护之阵
@@ -6277,7 +6686,8 @@ skill_info(224001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 天护之阵
@@ -6288,7 +6698,8 @@ skill_info(225001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 镇守
@@ -6299,7 +6710,8 @@ skill_info(226001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 怒袭
@@ -6310,7 +6722,8 @@ skill_info(227001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 复仇
@@ -6321,7 +6734,8 @@ skill_info(228001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 吸血
@@ -6332,7 +6746,8 @@ skill_info(229001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 绝杀
@@ -6343,7 +6758,8 @@ skill_info(230001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 追魂之刃
@@ -6354,7 +6770,8 @@ skill_info(231001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 虚空一击
@@ -6365,7 +6782,8 @@ skill_info(232001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 流云刺
@@ -6376,7 +6794,8 @@ skill_info(233001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 虎啸破
@@ -6387,7 +6806,8 @@ skill_info(234001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 连环杀阵
@@ -6398,7 +6818,8 @@ skill_info(235001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 冰凌笺
@@ -6409,7 +6830,8 @@ skill_info(236001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 祭风术
@@ -6420,7 +6842,8 @@ skill_info(237001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 分光诀
@@ -6431,7 +6854,8 @@ skill_info(238001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 凝劲术
@@ -6442,7 +6866,8 @@ skill_info(239001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 激狂诀
@@ -6453,7 +6878,8 @@ skill_info(240001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 狂风划影
@@ -6464,7 +6890,8 @@ skill_info(241001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 三魂回春
@@ -6475,7 +6902,8 @@ skill_info(242001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 元灵之光
@@ -6486,7 +6914,8 @@ skill_info(243001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 净衣术
@@ -6497,7 +6926,8 @@ skill_info(244001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 药王经
@@ -6508,7 +6938,8 @@ skill_info(245001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 仙风万里
@@ -6519,7 +6950,8 @@ skill_info(246001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 清心咒
@@ -6530,7 +6962,8 @@ skill_info(247001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 坚若磐石
@@ -6541,7 +6974,8 @@ skill_info(248001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 背水一战
@@ -6552,7 +6986,8 @@ skill_info(249001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 战意激荡
@@ -6563,7 +6998,8 @@ skill_info(250001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 霸刃连斩
@@ -6574,7 +7010,8 @@ skill_info(251001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 横扫千军
@@ -6585,7 +7022,8 @@ skill_info(252001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 暴怒冲锋
@@ -6596,7 +7034,8 @@ skill_info(253001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 乘胜追击
@@ -6607,7 +7046,8 @@ skill_info(254001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 破军之势
@@ -6618,7 +7058,8 @@ skill_info(255001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 龙战八方
@@ -6629,7 +7070,8 @@ skill_info(256001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 雷光咒
@@ -6640,7 +7082,8 @@ skill_info(257001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 强兵咒
@@ -6651,7 +7094,8 @@ skill_info(258001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 破军咒
@@ -6662,7 +7106,8 @@ skill_info(259001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 削弱
@@ -6673,7 +7118,8 @@ skill_info(260001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 睡眠
@@ -6684,7 +7130,8 @@ skill_info(261001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 摧枯拉朽
@@ -6695,7 +7142,8 @@ skill_info(262001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 大地震击
@@ -6706,7 +7154,8 @@ skill_info(263001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 狂风骤雨
@@ -6717,7 +7166,8 @@ skill_info(264001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 撕裂怒吼
@@ -6728,7 +7178,8 @@ skill_info(265001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 剑刃乱舞
@@ -6739,7 +7190,8 @@ skill_info(266001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 破胆怒吼
@@ -6750,7 +7202,8 @@ skill_info(267001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 春日花语
@@ -6761,7 +7214,8 @@ skill_info(268001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 压制打击
@@ -6772,7 +7226,8 @@ skill_info(269001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 血性饥渴
@@ -6783,7 +7238,8 @@ skill_info(270001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 华光普照
@@ -6794,7 +7250,8 @@ skill_info(271001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 疯狂追击
@@ -6805,7 +7262,8 @@ skill_info(272001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 诅咒之印
@@ -6816,7 +7274,8 @@ skill_info(273001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 伤害吸收
@@ -6827,7 +7286,8 @@ skill_info(274001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 钉刺护盾
@@ -6838,7 +7298,8 @@ skill_info(275001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 背水一击
@@ -6849,7 +7310,8 @@ skill_info(276001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 汲取
@@ -6860,7 +7322,8 @@ skill_info(277001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 削弱
@@ -6871,7 +7334,8 @@ skill_info(278001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 睡眠
@@ -6882,7 +7346,8 @@ skill_info(279001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 重击
@@ -6893,7 +7358,8 @@ skill_info(280001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 强攻
@@ -6904,7 +7370,8 @@ skill_info(281001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 梦魇阴影
@@ -6915,7 +7382,8 @@ skill_info(282001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 毒雾
@@ -6926,7 +7394,8 @@ skill_info(283001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 幽冥剧毒
@@ -6937,7 +7406,8 @@ skill_info(284001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 伤害反弹
@@ -6948,7 +7418,8 @@ skill_info(285001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 削弱
@@ -6959,7 +7430,8 @@ skill_info(286001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 睡眠
@@ -6970,7 +7442,8 @@ skill_info(287001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 重击
@@ -6981,7 +7454,8 @@ skill_info(288001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 强攻
@@ -6992,7 +7466,8 @@ skill_info(289001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7003,7 +7478,8 @@ skill_info(301001) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301002
+		next_skill_id = 301002,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7014,7 +7490,8 @@ skill_info(301002) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301003
+		next_skill_id = 301003,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7025,7 +7502,8 @@ skill_info(301003) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301004
+		next_skill_id = 301004,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7036,7 +7514,8 @@ skill_info(301004) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301005
+		next_skill_id = 301005,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7047,7 +7526,8 @@ skill_info(301005) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301006
+		next_skill_id = 301006,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7058,7 +7538,8 @@ skill_info(301006) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301007
+		next_skill_id = 301007,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7069,7 +7550,8 @@ skill_info(301007) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301008
+		next_skill_id = 301008,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7080,7 +7562,8 @@ skill_info(301008) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301009
+		next_skill_id = 301009,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7091,7 +7574,8 @@ skill_info(301009) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301010
+		next_skill_id = 301010,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7102,7 +7586,8 @@ skill_info(301010) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301011
+		next_skill_id = 301011,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7113,7 +7598,8 @@ skill_info(301011) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301012
+		next_skill_id = 301012,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7124,7 +7610,8 @@ skill_info(301012) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301013
+		next_skill_id = 301013,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7135,7 +7622,8 @@ skill_info(301013) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301014
+		next_skill_id = 301014,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7146,7 +7634,8 @@ skill_info(301014) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301015
+		next_skill_id = 301015,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7157,7 +7646,8 @@ skill_info(301015) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301016
+		next_skill_id = 301016,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7168,7 +7658,8 @@ skill_info(301016) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301017
+		next_skill_id = 301017,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7179,7 +7670,8 @@ skill_info(301017) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301018
+		next_skill_id = 301018,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7190,7 +7682,8 @@ skill_info(301018) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301019
+		next_skill_id = 301019,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7201,7 +7694,8 @@ skill_info(301019) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301020
+		next_skill_id = 301020,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7212,7 +7706,8 @@ skill_info(301020) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301021
+		next_skill_id = 301021,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7223,7 +7718,8 @@ skill_info(301021) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301022
+		next_skill_id = 301022,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7234,7 +7730,8 @@ skill_info(301022) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301023
+		next_skill_id = 301023,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7245,7 +7742,8 @@ skill_info(301023) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301024
+		next_skill_id = 301024,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7256,7 +7754,8 @@ skill_info(301024) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301025
+		next_skill_id = 301025,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7267,7 +7766,8 @@ skill_info(301025) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301026
+		next_skill_id = 301026,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7278,7 +7778,8 @@ skill_info(301026) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301027
+		next_skill_id = 301027,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7289,7 +7790,8 @@ skill_info(301027) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301028
+		next_skill_id = 301028,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7300,7 +7802,8 @@ skill_info(301028) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301029
+		next_skill_id = 301029,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7311,7 +7814,8 @@ skill_info(301029) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 301030
+		next_skill_id = 301030,
+		point 		  = 0
 	};
 
 %% 物攻强化
@@ -7322,7 +7826,8 @@ skill_info(301030) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7333,7 +7838,8 @@ skill_info(302001) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302002
+		next_skill_id = 302002,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7344,7 +7850,8 @@ skill_info(302002) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302003
+		next_skill_id = 302003,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7355,7 +7862,8 @@ skill_info(302003) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302004
+		next_skill_id = 302004,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7366,7 +7874,8 @@ skill_info(302004) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302005
+		next_skill_id = 302005,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7377,7 +7886,8 @@ skill_info(302005) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302006
+		next_skill_id = 302006,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7388,7 +7898,8 @@ skill_info(302006) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302007
+		next_skill_id = 302007,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7399,7 +7910,8 @@ skill_info(302007) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302008
+		next_skill_id = 302008,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7410,7 +7922,8 @@ skill_info(302008) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302009
+		next_skill_id = 302009,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7421,7 +7934,8 @@ skill_info(302009) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302010
+		next_skill_id = 302010,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7432,7 +7946,8 @@ skill_info(302010) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302011
+		next_skill_id = 302011,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7443,7 +7958,8 @@ skill_info(302011) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302012
+		next_skill_id = 302012,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7454,7 +7970,8 @@ skill_info(302012) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302013
+		next_skill_id = 302013,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7465,7 +7982,8 @@ skill_info(302013) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302014
+		next_skill_id = 302014,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7476,7 +7994,8 @@ skill_info(302014) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302015
+		next_skill_id = 302015,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7487,7 +8006,8 @@ skill_info(302015) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302016
+		next_skill_id = 302016,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7498,7 +8018,8 @@ skill_info(302016) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302017
+		next_skill_id = 302017,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7509,7 +8030,8 @@ skill_info(302017) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302018
+		next_skill_id = 302018,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7520,7 +8042,8 @@ skill_info(302018) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302019
+		next_skill_id = 302019,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7531,7 +8054,8 @@ skill_info(302019) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302020
+		next_skill_id = 302020,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7542,7 +8066,8 @@ skill_info(302020) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302021
+		next_skill_id = 302021,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7553,7 +8078,8 @@ skill_info(302021) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302022
+		next_skill_id = 302022,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7564,7 +8090,8 @@ skill_info(302022) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302023
+		next_skill_id = 302023,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7575,7 +8102,8 @@ skill_info(302023) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302024
+		next_skill_id = 302024,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7586,7 +8114,8 @@ skill_info(302024) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302025
+		next_skill_id = 302025,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7597,7 +8126,8 @@ skill_info(302025) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302026
+		next_skill_id = 302026,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7608,7 +8138,8 @@ skill_info(302026) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302027
+		next_skill_id = 302027,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7619,7 +8150,8 @@ skill_info(302027) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302028
+		next_skill_id = 302028,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7630,7 +8162,8 @@ skill_info(302028) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302029
+		next_skill_id = 302029,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7641,7 +8174,8 @@ skill_info(302029) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 302030
+		next_skill_id = 302030,
+		point 		  = 0
 	};
 
 %% 法攻强化
@@ -7652,7 +8186,8 @@ skill_info(302030) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7663,7 +8198,8 @@ skill_info(303001) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303002
+		next_skill_id = 303002,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7674,7 +8210,8 @@ skill_info(303002) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303003
+		next_skill_id = 303003,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7685,7 +8222,8 @@ skill_info(303003) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303004
+		next_skill_id = 303004,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7696,7 +8234,8 @@ skill_info(303004) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303005
+		next_skill_id = 303005,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7707,7 +8246,8 @@ skill_info(303005) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303006
+		next_skill_id = 303006,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7718,7 +8258,8 @@ skill_info(303006) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303007
+		next_skill_id = 303007,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7729,7 +8270,8 @@ skill_info(303007) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303008
+		next_skill_id = 303008,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7740,7 +8282,8 @@ skill_info(303008) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303009
+		next_skill_id = 303009,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7751,7 +8294,8 @@ skill_info(303009) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303010
+		next_skill_id = 303010,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7762,7 +8306,8 @@ skill_info(303010) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303011
+		next_skill_id = 303011,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7773,7 +8318,8 @@ skill_info(303011) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303012
+		next_skill_id = 303012,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7784,7 +8330,8 @@ skill_info(303012) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303013
+		next_skill_id = 303013,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7795,7 +8342,8 @@ skill_info(303013) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303014
+		next_skill_id = 303014,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7806,7 +8354,8 @@ skill_info(303014) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303015
+		next_skill_id = 303015,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7817,7 +8366,8 @@ skill_info(303015) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303016
+		next_skill_id = 303016,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7828,7 +8378,8 @@ skill_info(303016) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303017
+		next_skill_id = 303017,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7839,7 +8390,8 @@ skill_info(303017) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303018
+		next_skill_id = 303018,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7850,7 +8402,8 @@ skill_info(303018) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303019
+		next_skill_id = 303019,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7861,7 +8414,8 @@ skill_info(303019) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303020
+		next_skill_id = 303020,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7872,7 +8426,8 @@ skill_info(303020) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303021
+		next_skill_id = 303021,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7883,7 +8438,8 @@ skill_info(303021) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303022
+		next_skill_id = 303022,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7894,7 +8450,8 @@ skill_info(303022) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303023
+		next_skill_id = 303023,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7905,7 +8462,8 @@ skill_info(303023) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303024
+		next_skill_id = 303024,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7916,7 +8474,8 @@ skill_info(303024) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303025
+		next_skill_id = 303025,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7927,7 +8486,8 @@ skill_info(303025) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303026
+		next_skill_id = 303026,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7938,7 +8498,8 @@ skill_info(303026) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303027
+		next_skill_id = 303027,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7949,7 +8510,8 @@ skill_info(303027) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303028
+		next_skill_id = 303028,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7960,7 +8522,8 @@ skill_info(303028) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303029
+		next_skill_id = 303029,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7971,7 +8534,8 @@ skill_info(303029) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 303030
+		next_skill_id = 303030,
+		point 		  = 0
 	};
 
 %% 物防强化
@@ -7982,7 +8546,8 @@ skill_info(303030) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -7993,7 +8558,8 @@ skill_info(304001) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304002
+		next_skill_id = 304002,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8004,7 +8570,8 @@ skill_info(304002) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304003
+		next_skill_id = 304003,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8015,7 +8582,8 @@ skill_info(304003) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304004
+		next_skill_id = 304004,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8026,7 +8594,8 @@ skill_info(304004) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304005
+		next_skill_id = 304005,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8037,7 +8606,8 @@ skill_info(304005) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304006
+		next_skill_id = 304006,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8048,7 +8618,8 @@ skill_info(304006) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304007
+		next_skill_id = 304007,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8059,7 +8630,8 @@ skill_info(304007) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304008
+		next_skill_id = 304008,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8070,7 +8642,8 @@ skill_info(304008) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304009
+		next_skill_id = 304009,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8081,7 +8654,8 @@ skill_info(304009) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304010
+		next_skill_id = 304010,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8092,7 +8666,8 @@ skill_info(304010) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304011
+		next_skill_id = 304011,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8103,7 +8678,8 @@ skill_info(304011) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304012
+		next_skill_id = 304012,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8114,7 +8690,8 @@ skill_info(304012) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304013
+		next_skill_id = 304013,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8125,7 +8702,8 @@ skill_info(304013) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304014
+		next_skill_id = 304014,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8136,7 +8714,8 @@ skill_info(304014) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304015
+		next_skill_id = 304015,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8147,7 +8726,8 @@ skill_info(304015) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304016
+		next_skill_id = 304016,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8158,7 +8738,8 @@ skill_info(304016) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304017
+		next_skill_id = 304017,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8169,7 +8750,8 @@ skill_info(304017) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304018
+		next_skill_id = 304018,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8180,7 +8762,8 @@ skill_info(304018) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304019
+		next_skill_id = 304019,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8191,7 +8774,8 @@ skill_info(304019) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304020
+		next_skill_id = 304020,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8202,7 +8786,8 @@ skill_info(304020) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304021
+		next_skill_id = 304021,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8213,7 +8798,8 @@ skill_info(304021) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304022
+		next_skill_id = 304022,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8224,7 +8810,8 @@ skill_info(304022) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304023
+		next_skill_id = 304023,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8235,7 +8822,8 @@ skill_info(304023) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304024
+		next_skill_id = 304024,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8246,7 +8834,8 @@ skill_info(304024) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304025
+		next_skill_id = 304025,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8257,7 +8846,8 @@ skill_info(304025) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304026
+		next_skill_id = 304026,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8268,7 +8858,8 @@ skill_info(304026) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304027
+		next_skill_id = 304027,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8279,7 +8870,8 @@ skill_info(304027) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304028
+		next_skill_id = 304028,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8290,7 +8882,8 @@ skill_info(304028) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304029
+		next_skill_id = 304029,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8301,7 +8894,8 @@ skill_info(304029) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 304030
+		next_skill_id = 304030,
+		point 		  = 0
 	};
 
 %% 法防强化
@@ -8312,7 +8906,8 @@ skill_info(304030) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8323,7 +8918,8 @@ skill_info(305001) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305002
+		next_skill_id = 305002,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8334,7 +8930,8 @@ skill_info(305002) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305003
+		next_skill_id = 305003,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8345,7 +8942,8 @@ skill_info(305003) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305004
+		next_skill_id = 305004,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8356,7 +8954,8 @@ skill_info(305004) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305005
+		next_skill_id = 305005,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8367,7 +8966,8 @@ skill_info(305005) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305006
+		next_skill_id = 305006,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8378,7 +8978,8 @@ skill_info(305006) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305007
+		next_skill_id = 305007,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8389,7 +8990,8 @@ skill_info(305007) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305008
+		next_skill_id = 305008,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8400,7 +9002,8 @@ skill_info(305008) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305009
+		next_skill_id = 305009,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8411,7 +9014,8 @@ skill_info(305009) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305010
+		next_skill_id = 305010,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8422,7 +9026,8 @@ skill_info(305010) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305011
+		next_skill_id = 305011,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8433,7 +9038,8 @@ skill_info(305011) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305012
+		next_skill_id = 305012,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8444,7 +9050,8 @@ skill_info(305012) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305013
+		next_skill_id = 305013,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8455,7 +9062,8 @@ skill_info(305013) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305014
+		next_skill_id = 305014,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8466,7 +9074,8 @@ skill_info(305014) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305015
+		next_skill_id = 305015,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8477,7 +9086,8 @@ skill_info(305015) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305016
+		next_skill_id = 305016,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8488,7 +9098,8 @@ skill_info(305016) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305017
+		next_skill_id = 305017,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8499,7 +9110,8 @@ skill_info(305017) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305018
+		next_skill_id = 305018,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8510,7 +9122,8 @@ skill_info(305018) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305019
+		next_skill_id = 305019,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8521,7 +9134,8 @@ skill_info(305019) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305020
+		next_skill_id = 305020,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8532,7 +9146,8 @@ skill_info(305020) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305021
+		next_skill_id = 305021,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8543,7 +9158,8 @@ skill_info(305021) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305022
+		next_skill_id = 305022,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8554,7 +9170,8 @@ skill_info(305022) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305023
+		next_skill_id = 305023,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8565,7 +9182,8 @@ skill_info(305023) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305024
+		next_skill_id = 305024,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8576,7 +9194,8 @@ skill_info(305024) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305025
+		next_skill_id = 305025,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8587,7 +9206,8 @@ skill_info(305025) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305026
+		next_skill_id = 305026,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8598,7 +9218,8 @@ skill_info(305026) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305027
+		next_skill_id = 305027,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8609,7 +9230,8 @@ skill_info(305027) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305028
+		next_skill_id = 305028,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8620,7 +9242,8 @@ skill_info(305028) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305029
+		next_skill_id = 305029,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8631,7 +9254,8 @@ skill_info(305029) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 305030
+		next_skill_id = 305030,
+		point 		  = 0
 	};
 
 %% 速度强化
@@ -8642,7 +9266,8 @@ skill_info(305030) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8653,7 +9278,8 @@ skill_info(306001) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306002
+		next_skill_id = 306002,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8664,7 +9290,8 @@ skill_info(306002) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306003
+		next_skill_id = 306003,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8675,7 +9302,8 @@ skill_info(306003) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306004
+		next_skill_id = 306004,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8686,7 +9314,8 @@ skill_info(306004) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306005
+		next_skill_id = 306005,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8697,7 +9326,8 @@ skill_info(306005) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306006
+		next_skill_id = 306006,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8708,7 +9338,8 @@ skill_info(306006) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306007
+		next_skill_id = 306007,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8719,7 +9350,8 @@ skill_info(306007) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306008
+		next_skill_id = 306008,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8730,7 +9362,8 @@ skill_info(306008) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306009
+		next_skill_id = 306009,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8741,7 +9374,8 @@ skill_info(306009) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306010
+		next_skill_id = 306010,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8752,7 +9386,8 @@ skill_info(306010) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306011
+		next_skill_id = 306011,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8763,7 +9398,8 @@ skill_info(306011) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306012
+		next_skill_id = 306012,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8774,7 +9410,8 @@ skill_info(306012) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306013
+		next_skill_id = 306013,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8785,7 +9422,8 @@ skill_info(306013) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306014
+		next_skill_id = 306014,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8796,7 +9434,8 @@ skill_info(306014) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306015
+		next_skill_id = 306015,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8807,7 +9446,8 @@ skill_info(306015) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306016
+		next_skill_id = 306016,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8818,7 +9458,8 @@ skill_info(306016) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306017
+		next_skill_id = 306017,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8829,7 +9470,8 @@ skill_info(306017) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306018
+		next_skill_id = 306018,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8840,7 +9482,8 @@ skill_info(306018) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306019
+		next_skill_id = 306019,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8851,7 +9494,8 @@ skill_info(306019) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306020
+		next_skill_id = 306020,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8862,7 +9506,8 @@ skill_info(306020) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306021
+		next_skill_id = 306021,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8873,7 +9518,8 @@ skill_info(306021) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306022
+		next_skill_id = 306022,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8884,7 +9530,8 @@ skill_info(306022) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306023
+		next_skill_id = 306023,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8895,7 +9542,8 @@ skill_info(306023) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306024
+		next_skill_id = 306024,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8906,7 +9554,8 @@ skill_info(306024) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306025
+		next_skill_id = 306025,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8917,7 +9566,8 @@ skill_info(306025) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306026
+		next_skill_id = 306026,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8928,7 +9578,8 @@ skill_info(306026) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306027
+		next_skill_id = 306027,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8939,7 +9590,8 @@ skill_info(306027) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306028
+		next_skill_id = 306028,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8950,7 +9602,8 @@ skill_info(306028) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306029
+		next_skill_id = 306029,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8961,7 +9614,8 @@ skill_info(306029) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 306030
+		next_skill_id = 306030,
+		point 		  = 0
 	};
 
 %% 气血强化
@@ -8972,7 +9626,8 @@ skill_info(306030) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -8983,7 +9638,8 @@ skill_info(307001) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307002
+		next_skill_id = 307002,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -8994,7 +9650,8 @@ skill_info(307002) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307003
+		next_skill_id = 307003,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9005,7 +9662,8 @@ skill_info(307003) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307004
+		next_skill_id = 307004,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9016,7 +9674,8 @@ skill_info(307004) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307005
+		next_skill_id = 307005,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9027,7 +9686,8 @@ skill_info(307005) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307006
+		next_skill_id = 307006,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9038,7 +9698,8 @@ skill_info(307006) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307007
+		next_skill_id = 307007,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9049,7 +9710,8 @@ skill_info(307007) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307008
+		next_skill_id = 307008,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9060,7 +9722,8 @@ skill_info(307008) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307009
+		next_skill_id = 307009,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9071,7 +9734,8 @@ skill_info(307009) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307010
+		next_skill_id = 307010,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9082,7 +9746,8 @@ skill_info(307010) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307011
+		next_skill_id = 307011,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9093,7 +9758,8 @@ skill_info(307011) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307012
+		next_skill_id = 307012,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9104,7 +9770,8 @@ skill_info(307012) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307013
+		next_skill_id = 307013,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9115,7 +9782,8 @@ skill_info(307013) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307014
+		next_skill_id = 307014,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9126,7 +9794,8 @@ skill_info(307014) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307015
+		next_skill_id = 307015,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9137,7 +9806,8 @@ skill_info(307015) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307016
+		next_skill_id = 307016,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9148,7 +9818,8 @@ skill_info(307016) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307017
+		next_skill_id = 307017,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9159,7 +9830,8 @@ skill_info(307017) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307018
+		next_skill_id = 307018,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9170,7 +9842,8 @@ skill_info(307018) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307019
+		next_skill_id = 307019,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9181,7 +9854,8 @@ skill_info(307019) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307020
+		next_skill_id = 307020,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9192,7 +9866,8 @@ skill_info(307020) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307021
+		next_skill_id = 307021,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9203,7 +9878,8 @@ skill_info(307021) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307022
+		next_skill_id = 307022,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9214,7 +9890,8 @@ skill_info(307022) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307023
+		next_skill_id = 307023,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9225,7 +9902,8 @@ skill_info(307023) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307024
+		next_skill_id = 307024,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9236,7 +9914,8 @@ skill_info(307024) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307025
+		next_skill_id = 307025,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9247,7 +9926,8 @@ skill_info(307025) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307026
+		next_skill_id = 307026,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9258,7 +9938,8 @@ skill_info(307026) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307027
+		next_skill_id = 307027,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9269,7 +9950,8 @@ skill_info(307027) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307028
+		next_skill_id = 307028,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9280,7 +9962,8 @@ skill_info(307028) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307029
+		next_skill_id = 307029,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9291,7 +9974,8 @@ skill_info(307029) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 307030
+		next_skill_id = 307030,
+		point 		  = 0
 	};
 
 %% 暴击强化
@@ -9302,7 +9986,8 @@ skill_info(307030) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9313,7 +9998,8 @@ skill_info(308001) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308002
+		next_skill_id = 308002,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9324,7 +10010,8 @@ skill_info(308002) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308003
+		next_skill_id = 308003,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9335,7 +10022,8 @@ skill_info(308003) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308004
+		next_skill_id = 308004,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9346,7 +10034,8 @@ skill_info(308004) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308005
+		next_skill_id = 308005,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9357,7 +10046,8 @@ skill_info(308005) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308006
+		next_skill_id = 308006,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9368,7 +10058,8 @@ skill_info(308006) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308007
+		next_skill_id = 308007,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9379,7 +10070,8 @@ skill_info(308007) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308008
+		next_skill_id = 308008,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9390,7 +10082,8 @@ skill_info(308008) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308009
+		next_skill_id = 308009,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9401,7 +10094,8 @@ skill_info(308009) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308010
+		next_skill_id = 308010,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9412,7 +10106,8 @@ skill_info(308010) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308011
+		next_skill_id = 308011,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9423,7 +10118,8 @@ skill_info(308011) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308012
+		next_skill_id = 308012,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9434,7 +10130,8 @@ skill_info(308012) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308013
+		next_skill_id = 308013,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9445,7 +10142,8 @@ skill_info(308013) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308014
+		next_skill_id = 308014,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9456,7 +10154,8 @@ skill_info(308014) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308015
+		next_skill_id = 308015,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9467,7 +10166,8 @@ skill_info(308015) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308016
+		next_skill_id = 308016,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9478,7 +10178,8 @@ skill_info(308016) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308017
+		next_skill_id = 308017,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9489,7 +10190,8 @@ skill_info(308017) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308018
+		next_skill_id = 308018,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9500,7 +10202,8 @@ skill_info(308018) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308019
+		next_skill_id = 308019,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9511,7 +10214,8 @@ skill_info(308019) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308020
+		next_skill_id = 308020,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9522,7 +10226,8 @@ skill_info(308020) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308021
+		next_skill_id = 308021,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9533,7 +10238,8 @@ skill_info(308021) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308022
+		next_skill_id = 308022,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9544,7 +10250,8 @@ skill_info(308022) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308023
+		next_skill_id = 308023,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9555,7 +10262,8 @@ skill_info(308023) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308024
+		next_skill_id = 308024,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9566,7 +10274,8 @@ skill_info(308024) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308025
+		next_skill_id = 308025,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9577,7 +10286,8 @@ skill_info(308025) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308026
+		next_skill_id = 308026,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9588,7 +10298,8 @@ skill_info(308026) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308027
+		next_skill_id = 308027,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9599,7 +10310,8 @@ skill_info(308027) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308028
+		next_skill_id = 308028,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9610,7 +10322,8 @@ skill_info(308028) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308029
+		next_skill_id = 308029,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9621,7 +10334,8 @@ skill_info(308029) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 308030
+		next_skill_id = 308030,
+		point 		  = 0
 	};
 
 %% 格挡强化
@@ -9632,7 +10346,8 @@ skill_info(308030) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9643,7 +10358,8 @@ skill_info(309001) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309002
+		next_skill_id = 309002,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9654,7 +10370,8 @@ skill_info(309002) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309003
+		next_skill_id = 309003,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9665,7 +10382,8 @@ skill_info(309003) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309004
+		next_skill_id = 309004,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9676,7 +10394,8 @@ skill_info(309004) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309005
+		next_skill_id = 309005,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9687,7 +10406,8 @@ skill_info(309005) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309006
+		next_skill_id = 309006,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9698,7 +10418,8 @@ skill_info(309006) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309007
+		next_skill_id = 309007,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9709,7 +10430,8 @@ skill_info(309007) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309008
+		next_skill_id = 309008,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9720,7 +10442,8 @@ skill_info(309008) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309009
+		next_skill_id = 309009,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9731,7 +10454,8 @@ skill_info(309009) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309010
+		next_skill_id = 309010,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9742,7 +10466,8 @@ skill_info(309010) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309011
+		next_skill_id = 309011,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9753,7 +10478,8 @@ skill_info(309011) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309012
+		next_skill_id = 309012,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9764,7 +10490,8 @@ skill_info(309012) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309013
+		next_skill_id = 309013,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9775,7 +10502,8 @@ skill_info(309013) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309014
+		next_skill_id = 309014,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9786,7 +10514,8 @@ skill_info(309014) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309015
+		next_skill_id = 309015,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9797,7 +10526,8 @@ skill_info(309015) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309016
+		next_skill_id = 309016,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9808,7 +10538,8 @@ skill_info(309016) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309017
+		next_skill_id = 309017,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9819,7 +10550,8 @@ skill_info(309017) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309018
+		next_skill_id = 309018,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9830,7 +10562,8 @@ skill_info(309018) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309019
+		next_skill_id = 309019,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9841,7 +10574,8 @@ skill_info(309019) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309020
+		next_skill_id = 309020,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9852,7 +10586,8 @@ skill_info(309020) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309021
+		next_skill_id = 309021,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9863,7 +10598,8 @@ skill_info(309021) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309022
+		next_skill_id = 309022,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9874,7 +10610,8 @@ skill_info(309022) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309023
+		next_skill_id = 309023,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9885,7 +10622,8 @@ skill_info(309023) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309024
+		next_skill_id = 309024,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9896,7 +10634,8 @@ skill_info(309024) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309025
+		next_skill_id = 309025,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9907,7 +10646,8 @@ skill_info(309025) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309026
+		next_skill_id = 309026,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9918,7 +10658,8 @@ skill_info(309026) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309027
+		next_skill_id = 309027,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9929,7 +10670,8 @@ skill_info(309027) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309028
+		next_skill_id = 309028,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9940,7 +10682,8 @@ skill_info(309028) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309029
+		next_skill_id = 309029,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9951,7 +10694,8 @@ skill_info(309029) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 309030
+		next_skill_id = 309030,
+		point 		  = 0
 	};
 
 %% 闪避强化
@@ -9962,7 +10706,8 @@ skill_info(309030) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -9973,7 +10718,8 @@ skill_info(310001) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310002
+		next_skill_id = 310002,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -9984,7 +10730,8 @@ skill_info(310002) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310003
+		next_skill_id = 310003,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -9995,7 +10742,8 @@ skill_info(310003) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310004
+		next_skill_id = 310004,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10006,7 +10754,8 @@ skill_info(310004) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310005
+		next_skill_id = 310005,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10017,7 +10766,8 @@ skill_info(310005) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310006
+		next_skill_id = 310006,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10028,7 +10778,8 @@ skill_info(310006) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310007
+		next_skill_id = 310007,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10039,7 +10790,8 @@ skill_info(310007) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310008
+		next_skill_id = 310008,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10050,7 +10802,8 @@ skill_info(310008) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310009
+		next_skill_id = 310009,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10061,7 +10814,8 @@ skill_info(310009) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310010
+		next_skill_id = 310010,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10072,7 +10826,8 @@ skill_info(310010) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310011
+		next_skill_id = 310011,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10083,7 +10838,8 @@ skill_info(310011) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310012
+		next_skill_id = 310012,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10094,7 +10850,8 @@ skill_info(310012) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310013
+		next_skill_id = 310013,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10105,7 +10862,8 @@ skill_info(310013) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310014
+		next_skill_id = 310014,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10116,7 +10874,8 @@ skill_info(310014) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310015
+		next_skill_id = 310015,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10127,7 +10886,8 @@ skill_info(310015) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310016
+		next_skill_id = 310016,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10138,7 +10898,8 @@ skill_info(310016) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310017
+		next_skill_id = 310017,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10149,7 +10910,8 @@ skill_info(310017) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310018
+		next_skill_id = 310018,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10160,7 +10922,8 @@ skill_info(310018) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310019
+		next_skill_id = 310019,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10171,7 +10934,8 @@ skill_info(310019) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310020
+		next_skill_id = 310020,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10182,7 +10946,8 @@ skill_info(310020) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310021
+		next_skill_id = 310021,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10193,7 +10958,8 @@ skill_info(310021) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310022
+		next_skill_id = 310022,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10204,7 +10970,8 @@ skill_info(310022) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310023
+		next_skill_id = 310023,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10215,7 +10982,8 @@ skill_info(310023) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310024
+		next_skill_id = 310024,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10226,7 +10994,8 @@ skill_info(310024) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310025
+		next_skill_id = 310025,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10237,7 +11006,8 @@ skill_info(310025) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310026
+		next_skill_id = 310026,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10248,7 +11018,8 @@ skill_info(310026) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310027
+		next_skill_id = 310027,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10259,7 +11030,8 @@ skill_info(310027) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310028
+		next_skill_id = 310028,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10270,7 +11042,8 @@ skill_info(310028) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310029
+		next_skill_id = 310029,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10281,7 +11054,8 @@ skill_info(310029) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 310030
+		next_skill_id = 310030,
+		point 		  = 0
 	};
 
 %% 命中强化
@@ -10292,7 +11066,8 @@ skill_info(310030) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10303,7 +11078,8 @@ skill_info(311001) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311002
+		next_skill_id = 311002,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10314,7 +11090,8 @@ skill_info(311002) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311003
+		next_skill_id = 311003,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10325,7 +11102,8 @@ skill_info(311003) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311004
+		next_skill_id = 311004,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10336,7 +11114,8 @@ skill_info(311004) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311005
+		next_skill_id = 311005,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10347,7 +11126,8 @@ skill_info(311005) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311006
+		next_skill_id = 311006,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10358,7 +11138,8 @@ skill_info(311006) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311007
+		next_skill_id = 311007,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10369,7 +11150,8 @@ skill_info(311007) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311008
+		next_skill_id = 311008,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10380,7 +11162,8 @@ skill_info(311008) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311009
+		next_skill_id = 311009,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10391,7 +11174,8 @@ skill_info(311009) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311010
+		next_skill_id = 311010,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10402,7 +11186,8 @@ skill_info(311010) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311011
+		next_skill_id = 311011,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10413,7 +11198,8 @@ skill_info(311011) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311012
+		next_skill_id = 311012,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10424,7 +11210,8 @@ skill_info(311012) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311013
+		next_skill_id = 311013,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10435,7 +11222,8 @@ skill_info(311013) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311014
+		next_skill_id = 311014,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10446,7 +11234,8 @@ skill_info(311014) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311015
+		next_skill_id = 311015,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10457,7 +11246,8 @@ skill_info(311015) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311016
+		next_skill_id = 311016,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10468,7 +11258,8 @@ skill_info(311016) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311017
+		next_skill_id = 311017,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10479,7 +11270,8 @@ skill_info(311017) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311018
+		next_skill_id = 311018,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10490,7 +11282,8 @@ skill_info(311018) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311019
+		next_skill_id = 311019,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10501,7 +11294,8 @@ skill_info(311019) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311020
+		next_skill_id = 311020,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10512,7 +11306,8 @@ skill_info(311020) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311021
+		next_skill_id = 311021,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10523,7 +11318,8 @@ skill_info(311021) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311022
+		next_skill_id = 311022,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10534,7 +11330,8 @@ skill_info(311022) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311023
+		next_skill_id = 311023,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10545,7 +11342,8 @@ skill_info(311023) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311024
+		next_skill_id = 311024,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10556,7 +11354,8 @@ skill_info(311024) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311025
+		next_skill_id = 311025,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10567,7 +11366,8 @@ skill_info(311025) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311026
+		next_skill_id = 311026,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10578,7 +11378,8 @@ skill_info(311026) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311027
+		next_skill_id = 311027,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10589,7 +11390,8 @@ skill_info(311027) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311028
+		next_skill_id = 311028,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10600,7 +11402,8 @@ skill_info(311028) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311029
+		next_skill_id = 311029,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10611,7 +11414,8 @@ skill_info(311029) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 311030
+		next_skill_id = 311030,
+		point 		  = 0
 	};
 
 %% 幸运强化
@@ -10622,7 +11426,8 @@ skill_info(311030) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10633,7 +11438,8 @@ skill_info(312001) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312002
+		next_skill_id = 312002,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10644,7 +11450,8 @@ skill_info(312002) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312003
+		next_skill_id = 312003,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10655,7 +11462,8 @@ skill_info(312003) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312004
+		next_skill_id = 312004,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10666,7 +11474,8 @@ skill_info(312004) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312005
+		next_skill_id = 312005,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10677,7 +11486,8 @@ skill_info(312005) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312006
+		next_skill_id = 312006,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10688,7 +11498,8 @@ skill_info(312006) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312007
+		next_skill_id = 312007,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10699,7 +11510,8 @@ skill_info(312007) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312008
+		next_skill_id = 312008,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10710,7 +11522,8 @@ skill_info(312008) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312009
+		next_skill_id = 312009,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10721,7 +11534,8 @@ skill_info(312009) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312010
+		next_skill_id = 312010,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10732,7 +11546,8 @@ skill_info(312010) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312011
+		next_skill_id = 312011,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10743,7 +11558,8 @@ skill_info(312011) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312012
+		next_skill_id = 312012,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10754,7 +11570,8 @@ skill_info(312012) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312013
+		next_skill_id = 312013,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10765,7 +11582,8 @@ skill_info(312013) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312014
+		next_skill_id = 312014,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10776,7 +11594,8 @@ skill_info(312014) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312015
+		next_skill_id = 312015,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10787,7 +11606,8 @@ skill_info(312015) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312016
+		next_skill_id = 312016,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10798,7 +11618,8 @@ skill_info(312016) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312017
+		next_skill_id = 312017,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10809,7 +11630,8 @@ skill_info(312017) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312018
+		next_skill_id = 312018,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10820,7 +11642,8 @@ skill_info(312018) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312019
+		next_skill_id = 312019,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10831,7 +11654,8 @@ skill_info(312019) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312020
+		next_skill_id = 312020,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10842,7 +11666,8 @@ skill_info(312020) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312021
+		next_skill_id = 312021,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10853,7 +11678,8 @@ skill_info(312021) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312022
+		next_skill_id = 312022,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10864,7 +11690,8 @@ skill_info(312022) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312023
+		next_skill_id = 312023,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10875,7 +11702,8 @@ skill_info(312023) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312024
+		next_skill_id = 312024,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10886,7 +11714,8 @@ skill_info(312024) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312025
+		next_skill_id = 312025,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10897,7 +11726,8 @@ skill_info(312025) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312026
+		next_skill_id = 312026,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10908,7 +11738,8 @@ skill_info(312026) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312027
+		next_skill_id = 312027,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10919,7 +11750,8 @@ skill_info(312027) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312028
+		next_skill_id = 312028,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10930,7 +11762,8 @@ skill_info(312028) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312029
+		next_skill_id = 312029,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10941,7 +11774,8 @@ skill_info(312029) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 312030
+		next_skill_id = 312030,
+		point 		  = 0
 	};
 
 %% 破甲强化
@@ -10952,7 +11786,8 @@ skill_info(312030) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -10963,7 +11798,8 @@ skill_info(313001) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313002
+		next_skill_id = 313002,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -10974,7 +11810,8 @@ skill_info(313002) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313003
+		next_skill_id = 313003,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -10985,7 +11822,8 @@ skill_info(313003) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313004
+		next_skill_id = 313004,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -10996,7 +11834,8 @@ skill_info(313004) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313005
+		next_skill_id = 313005,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11007,7 +11846,8 @@ skill_info(313005) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313006
+		next_skill_id = 313006,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11018,7 +11858,8 @@ skill_info(313006) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313007
+		next_skill_id = 313007,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11029,7 +11870,8 @@ skill_info(313007) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313008
+		next_skill_id = 313008,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11040,7 +11882,8 @@ skill_info(313008) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313009
+		next_skill_id = 313009,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11051,7 +11894,8 @@ skill_info(313009) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313010
+		next_skill_id = 313010,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11062,7 +11906,8 @@ skill_info(313010) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313011
+		next_skill_id = 313011,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11073,7 +11918,8 @@ skill_info(313011) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313012
+		next_skill_id = 313012,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11084,7 +11930,8 @@ skill_info(313012) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313013
+		next_skill_id = 313013,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11095,7 +11942,8 @@ skill_info(313013) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313014
+		next_skill_id = 313014,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11106,7 +11954,8 @@ skill_info(313014) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313015
+		next_skill_id = 313015,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11117,7 +11966,8 @@ skill_info(313015) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313016
+		next_skill_id = 313016,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11128,7 +11978,8 @@ skill_info(313016) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313017
+		next_skill_id = 313017,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11139,7 +11990,8 @@ skill_info(313017) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313018
+		next_skill_id = 313018,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11150,7 +12002,8 @@ skill_info(313018) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313019
+		next_skill_id = 313019,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11161,7 +12014,8 @@ skill_info(313019) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313020
+		next_skill_id = 313020,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11172,7 +12026,8 @@ skill_info(313020) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313021
+		next_skill_id = 313021,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11183,7 +12038,8 @@ skill_info(313021) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313022
+		next_skill_id = 313022,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11194,7 +12050,8 @@ skill_info(313022) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313023
+		next_skill_id = 313023,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11205,7 +12062,8 @@ skill_info(313023) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313024
+		next_skill_id = 313024,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11216,7 +12074,8 @@ skill_info(313024) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313025
+		next_skill_id = 313025,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11227,7 +12086,8 @@ skill_info(313025) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313026
+		next_skill_id = 313026,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11238,7 +12098,8 @@ skill_info(313026) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313027
+		next_skill_id = 313027,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11249,7 +12110,8 @@ skill_info(313027) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313028
+		next_skill_id = 313028,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11260,7 +12122,8 @@ skill_info(313028) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313029
+		next_skill_id = 313029,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11271,7 +12134,8 @@ skill_info(313029) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 313030
+		next_skill_id = 313030,
+		point 		  = 0
 	};
 
 %% 反击强化
@@ -11282,7 +12146,8 @@ skill_info(313030) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11293,7 +12158,8 @@ skill_info(314001) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314002
+		next_skill_id = 314002,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11304,7 +12170,8 @@ skill_info(314002) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314003
+		next_skill_id = 314003,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11315,7 +12182,8 @@ skill_info(314003) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314004
+		next_skill_id = 314004,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11326,7 +12194,8 @@ skill_info(314004) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314005
+		next_skill_id = 314005,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11337,7 +12206,8 @@ skill_info(314005) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314006
+		next_skill_id = 314006,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11348,7 +12218,8 @@ skill_info(314006) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314007
+		next_skill_id = 314007,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11359,7 +12230,8 @@ skill_info(314007) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314008
+		next_skill_id = 314008,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11370,7 +12242,8 @@ skill_info(314008) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314009
+		next_skill_id = 314009,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11381,7 +12254,8 @@ skill_info(314009) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314010
+		next_skill_id = 314010,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11392,7 +12266,8 @@ skill_info(314010) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314011
+		next_skill_id = 314011,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11403,7 +12278,8 @@ skill_info(314011) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314012
+		next_skill_id = 314012,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11414,7 +12290,8 @@ skill_info(314012) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314013
+		next_skill_id = 314013,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11425,7 +12302,8 @@ skill_info(314013) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314014
+		next_skill_id = 314014,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11436,7 +12314,8 @@ skill_info(314014) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314015
+		next_skill_id = 314015,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11447,7 +12326,8 @@ skill_info(314015) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314016
+		next_skill_id = 314016,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11458,7 +12338,8 @@ skill_info(314016) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314017
+		next_skill_id = 314017,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11469,7 +12350,8 @@ skill_info(314017) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314018
+		next_skill_id = 314018,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11480,7 +12362,8 @@ skill_info(314018) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314019
+		next_skill_id = 314019,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11491,7 +12374,8 @@ skill_info(314019) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314020
+		next_skill_id = 314020,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11502,7 +12386,8 @@ skill_info(314020) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314021
+		next_skill_id = 314021,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11513,7 +12398,8 @@ skill_info(314021) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314022
+		next_skill_id = 314022,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11524,7 +12410,8 @@ skill_info(314022) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314023
+		next_skill_id = 314023,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11535,7 +12422,8 @@ skill_info(314023) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314024
+		next_skill_id = 314024,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11546,7 +12434,8 @@ skill_info(314024) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314025
+		next_skill_id = 314025,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11557,7 +12446,8 @@ skill_info(314025) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314026
+		next_skill_id = 314026,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11568,7 +12458,8 @@ skill_info(314026) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314027
+		next_skill_id = 314027,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11579,7 +12470,8 @@ skill_info(314027) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314028
+		next_skill_id = 314028,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11590,7 +12482,8 @@ skill_info(314028) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314029
+		next_skill_id = 314029,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11601,7 +12494,8 @@ skill_info(314029) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 314030
+		next_skill_id = 314030,
+		point 		  = 0
 	};
 
 %% 致命强化
@@ -11612,7 +12506,8 @@ skill_info(314030) ->
 		type          = 5,
 		effect        = 2,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 背水一战
@@ -11623,7 +12518,8 @@ skill_info(106001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 490,
-		next_skill_id = 106002
+		next_skill_id = 106002,
+		point 		  = 0
 	};
 
 %% 背水一战
@@ -11634,7 +12530,8 @@ skill_info(106002) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2300,
-		next_skill_id = 106003
+		next_skill_id = 106003,
+		point 		  = 0
 	};
 
 %% 背水一战
@@ -11645,7 +12542,8 @@ skill_info(106003) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 7340,
-		next_skill_id = 106004
+		next_skill_id = 106004,
+		point 		  = 0
 	};
 
 %% 背水一战
@@ -11656,7 +12554,8 @@ skill_info(106004) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 16150,
-		next_skill_id = 106005
+		next_skill_id = 106005,
+		point 		  = 0
 	};
 
 %% 背水一战
@@ -11667,7 +12566,8 @@ skill_info(106005) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 39100,
-		next_skill_id = 106006
+		next_skill_id = 106006,
+		point 		  = 0
 	};
 
 %% 背水一战
@@ -11678,7 +12578,8 @@ skill_info(106006) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 76500,
-		next_skill_id = 106007
+		next_skill_id = 106007,
+		point 		  = 0
 	};
 
 %% 背水一战
@@ -11689,7 +12590,8 @@ skill_info(106007) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 154700,
-		next_skill_id = 106008
+		next_skill_id = 106008,
+		point 		  = 0
 	};
 
 %% 背水一战
@@ -11700,7 +12602,8 @@ skill_info(106008) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 289000,
-		next_skill_id = 106009
+		next_skill_id = 106009,
+		point 		  = 0
 	};
 
 %% 背水一战
@@ -11711,7 +12614,8 @@ skill_info(106009) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 527000,
-		next_skill_id = 106010
+		next_skill_id = 106010,
+		point 		  = 0
 	};
 
 %% 背水一战
@@ -11722,7 +12626,8 @@ skill_info(106010) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 战意激荡
@@ -11733,7 +12638,8 @@ skill_info(108001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 550,
-		next_skill_id = 108002
+		next_skill_id = 108002,
+		point 		  = 53
 	};
 
 %% 战意激荡
@@ -11744,7 +12650,8 @@ skill_info(108002) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2570,
-		next_skill_id = 108003
+		next_skill_id = 108003,
+		point 		  = 106
 	};
 
 %% 战意激荡
@@ -11755,7 +12662,8 @@ skill_info(108003) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 8210,
-		next_skill_id = 108004
+		next_skill_id = 108004,
+		point 		  = 177
 	};
 
 %% 战意激荡
@@ -11766,7 +12674,8 @@ skill_info(108004) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 18050,
-		next_skill_id = 108005
+		next_skill_id = 108005,
+		point 		  = 283
 	};
 
 %% 战意激荡
@@ -11777,7 +12686,8 @@ skill_info(108005) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 43700,
-		next_skill_id = 108006
+		next_skill_id = 108006,
+		point 		  = 442
 	};
 
 %% 战意激荡
@@ -11788,7 +12698,8 @@ skill_info(108006) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 85500,
-		next_skill_id = 108007
+		next_skill_id = 108007,
+		point 		  = 618
 	};
 
 %% 战意激荡
@@ -11799,7 +12710,8 @@ skill_info(108007) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 172900,
-		next_skill_id = 108008
+		next_skill_id = 108008,
+		point 		  = 883
 	};
 
 %% 战意激荡
@@ -11810,7 +12722,8 @@ skill_info(108008) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 323000,
-		next_skill_id = 108009
+		next_skill_id = 108009,
+		point 		  = 1148
 	};
 
 %% 战意激荡
@@ -11821,7 +12734,8 @@ skill_info(108009) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 589000,
-		next_skill_id = 108010
+		next_skill_id = 108010,
+		point 		  = 1413
 	};
 
 %% 战意激荡
@@ -11832,7 +12746,8 @@ skill_info(108010) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 1767
 	};
 
 %% 龙牙突刺
@@ -11843,7 +12758,8 @@ skill_info(111001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 490,
-		next_skill_id = 111002
+		next_skill_id = 111002,
+		point 		  = 0
 	};
 
 %% 龙牙突刺
@@ -11854,7 +12770,8 @@ skill_info(111002) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2300,
-		next_skill_id = 111003
+		next_skill_id = 111003,
+		point 		  = 0
 	};
 
 %% 龙牙突刺
@@ -11865,7 +12782,8 @@ skill_info(111003) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 7340,
-		next_skill_id = 111004
+		next_skill_id = 111004,
+		point 		  = 0
 	};
 
 %% 龙牙突刺
@@ -11876,7 +12794,8 @@ skill_info(111004) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 16150,
-		next_skill_id = 111005
+		next_skill_id = 111005,
+		point 		  = 0
 	};
 
 %% 龙牙突刺
@@ -11887,7 +12806,8 @@ skill_info(111005) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 39100,
-		next_skill_id = 111006
+		next_skill_id = 111006,
+		point 		  = 0
 	};
 
 %% 龙牙突刺
@@ -11898,7 +12818,8 @@ skill_info(111006) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 76500,
-		next_skill_id = 111007
+		next_skill_id = 111007,
+		point 		  = 0
 	};
 
 %% 龙牙突刺
@@ -11909,7 +12830,8 @@ skill_info(111007) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 154700,
-		next_skill_id = 111008
+		next_skill_id = 111008,
+		point 		  = 0
 	};
 
 %% 龙牙突刺
@@ -11920,7 +12842,8 @@ skill_info(111008) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 289000,
-		next_skill_id = 111009
+		next_skill_id = 111009,
+		point 		  = 0
 	};
 
 %% 龙牙突刺
@@ -11931,7 +12854,8 @@ skill_info(111009) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 527000,
-		next_skill_id = 111010
+		next_skill_id = 111010,
+		point 		  = 0
 	};
 
 %% 龙牙突刺
@@ -11942,7 +12866,8 @@ skill_info(111010) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 虚空炽炎
@@ -11953,7 +12878,8 @@ skill_info(117001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 550,
-		next_skill_id = 117002
+		next_skill_id = 117002,
+		point 		  = 53
 	};
 
 %% 虚空炽炎
@@ -11964,7 +12890,8 @@ skill_info(117002) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 2570,
-		next_skill_id = 117003
+		next_skill_id = 117003,
+		point 		  = 106
 	};
 
 %% 虚空炽炎
@@ -11975,7 +12902,8 @@ skill_info(117003) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 8210,
-		next_skill_id = 117004
+		next_skill_id = 117004,
+		point 		  = 177
 	};
 
 %% 虚空炽炎
@@ -11986,7 +12914,8 @@ skill_info(117004) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 18050,
-		next_skill_id = 117005
+		next_skill_id = 117005,
+		point 		  = 283
 	};
 
 %% 虚空炽炎
@@ -11997,7 +12926,8 @@ skill_info(117005) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 43700,
-		next_skill_id = 117006
+		next_skill_id = 117006,
+		point 		  = 442
 	};
 
 %% 虚空炽炎
@@ -12008,7 +12938,8 @@ skill_info(117006) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 85500,
-		next_skill_id = 117007
+		next_skill_id = 117007,
+		point 		  = 618
 	};
 
 %% 虚空炽炎
@@ -12019,7 +12950,8 @@ skill_info(117007) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 172900,
-		next_skill_id = 117008
+		next_skill_id = 117008,
+		point 		  = 883
 	};
 
 %% 虚空炽炎
@@ -12030,7 +12962,8 @@ skill_info(117008) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 323000,
-		next_skill_id = 117009
+		next_skill_id = 117009,
+		point 		  = 1148
 	};
 
 %% 虚空炽炎
@@ -12041,7 +12974,8 @@ skill_info(117009) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 589000,
-		next_skill_id = 117010
+		next_skill_id = 117010,
+		point 		  = 1413
 	};
 
 %% 虚空炽炎
@@ -12052,7 +12986,8 @@ skill_info(117010) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 1767
 	};
 
 %% 雄军云集
@@ -12063,7 +12998,8 @@ skill_info(405001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 万夫莫开
@@ -12074,7 +13010,8 @@ skill_info(406001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 金刚护甲
@@ -12085,7 +13022,8 @@ skill_info(407001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 破阵攻心
@@ -12096,7 +13034,8 @@ skill_info(408001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 流云刺
@@ -12107,7 +13046,8 @@ skill_info(409001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 虎啸破
@@ -12118,7 +13058,8 @@ skill_info(410001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% 凝劲术
@@ -12129,7 +13070,8 @@ skill_info(411001) ->
 		type          = 1,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
 	};
 
 %% boss技能
@@ -12140,7 +13082,152 @@ skill_info(123001) ->
 		type          = 4,
 		effect        = 1,
 		level_up_exp  = 0,
-		next_skill_id = 0
+		next_skill_id = 0,
+		point 		  = 0
+	};
+
+%% 无双一击
+skill_info(412001) ->
+	#skill_info{
+		mode_id       = 412001,
+		class_id      = 412,
+		type          = 1,
+		effect        = 1,
+		level_up_exp  = 0,
+		next_skill_id = 0,
+		point 		  = 0
+	};
+
+%% 漫天花雨
+skill_info(413001) ->
+	#skill_info{
+		mode_id       = 413001,
+		class_id      = 413,
+		type          = 1,
+		effect        = 1,
+		level_up_exp  = 0,
+		next_skill_id = 0,
+		point 		  = 0
+	};
+
+%% 破阵攻心
+skill_info(414001) ->
+	#skill_info{
+		mode_id       = 414001,
+		class_id      = 414,
+		type          = 1,
+		effect        = 1,
+		level_up_exp  = 0,
+		next_skill_id = 0,
+		point 		  = 0
+	};
+
+%% 无双乱舞
+skill_info(415001) ->
+	#skill_info{
+		mode_id       = 415001,
+		class_id      = 415,
+		type          = 1,
+		effect        = 1,
+		level_up_exp  = 0,
+		next_skill_id = 0,
+		point 		  = 0
+	};
+
+%% 神速指挥
+skill_info(416001) ->
+	#skill_info{
+		mode_id       = 416001,
+		class_id      = 416,
+		type          = 1,
+		effect        = 1,
+		level_up_exp  = 0,
+		next_skill_id = 0,
+		point 		  = 0
+	};
+
+%% 铁骑
+skill_info(417001) ->
+	#skill_info{
+		mode_id       = 417001,
+		class_id      = 417,
+		type          = 1,
+		effect        = 1,
+		level_up_exp  = 0,
+		next_skill_id = 0,
+		point 		  = 0
+	};
+
+%% 蓄力攻击
+skill_info(418001) ->
+	#skill_info{
+		mode_id       = 418001,
+		class_id      = 418,
+		type          = 1,
+		effect        = 1,
+		level_up_exp  = 0,
+		next_skill_id = 0,
+		point 		  = 0
+	};
+
+%% 奸雄
+skill_info(419001) ->
+	#skill_info{
+		mode_id       = 419001,
+		class_id      = 419,
+		type          = 1,
+		effect        = 1,
+		level_up_exp  = 0,
+		next_skill_id = 0,
+		point 		  = 0
+	};
+
+%% 三叉骤雨
+skill_info(420001) ->
+	#skill_info{
+		mode_id       = 420001,
+		class_id      = 420,
+		type          = 1,
+		effect        = 1,
+		level_up_exp  = 0,
+		next_skill_id = 0,
+		point 		  = 0
+	};
+
+%% 咆哮
+skill_info(421001) ->
+	#skill_info{
+		mode_id       = 421001,
+		class_id      = 421,
+		type          = 1,
+		effect        = 1,
+		level_up_exp  = 0,
+		next_skill_id = 0,
+		point 		  = 0
+	};
+
+%% 倾城
+skill_info(422001) ->
+	#skill_info{
+		mode_id       = 422001,
+		class_id      = 422,
+		type          = 1,
+		effect        = 1,
+		level_up_exp  = 0,
+		next_skill_id = 0,
+		point 		  = 0
+	};
+
+%% 破势
+skill_info(423001) ->
+	#skill_info{
+		mode_id       = 423001,
+		class_id      = 423,
+		type          = 1,
+		effect        = 1,
+		level_up_exp  = 0,
+		next_skill_id = 0,
+		point 		  = 0
 	}.
 
 
@@ -13073,53 +14160,53 @@ get_guild_skill_cost(301005) -> {3,800, 4800};
 
 get_guild_skill_cost(301006) -> {3,1600, 6800};
 
-get_guild_skill_cost(301007) -> {3,2000, 9700};
+get_guild_skill_cost(301007) -> {3,2000, 8800};
 
-get_guild_skill_cost(301008) -> {3,2500, 13900};
+get_guild_skill_cost(301008) -> {3,2500, 10800};
 
-get_guild_skill_cost(301009) -> {3,3200, 19900};
+get_guild_skill_cost(301009) -> {3,3200, 13800};
 
-get_guild_skill_cost(301010) -> {3,3900, 28400};
+get_guild_skill_cost(301010) -> {3,3800, 16800};
 
-get_guild_skill_cost(301011) -> {3,4900, 40500};
+get_guild_skill_cost(301011) -> {3,4400, 19800};
 
-get_guild_skill_cost(301012) -> {3,5500, 45000};
+get_guild_skill_cost(301012) -> {3,5000, 23800};
 
-get_guild_skill_cost(301013) -> {3,6100, 50000};
+get_guild_skill_cost(301013) -> {3,5600, 27800};
 
-get_guild_skill_cost(301014) -> {3,6800, 55600};
+get_guild_skill_cost(301014) -> {3,6200, 31800};
 
-get_guild_skill_cost(301015) -> {3,7500, 61800};
+get_guild_skill_cost(301015) -> {3,6800, 35800};
 
-get_guild_skill_cost(301016) -> {4,8400, 68600};
+get_guild_skill_cost(301016) -> {4,7400, 39800};
 
-get_guild_skill_cost(301017) -> {4,9500, 76300};
+get_guild_skill_cost(301017) -> {4,8000, 43800};
 
-get_guild_skill_cost(301018) -> {4,10800, 84700};
+get_guild_skill_cost(301018) -> {4,8600, 47800};
 
-get_guild_skill_cost(301019) -> {4,12300, 94100};
+get_guild_skill_cost(301019) -> {4,9200, 51800};
 
-get_guild_skill_cost(301020) -> {4,13900, 104600};
+get_guild_skill_cost(301020) -> {4,9800, 55800};
 
-get_guild_skill_cost(301021) -> {5,15800, 116200};
+get_guild_skill_cost(301021) -> {5,10400, 59800};
 
-get_guild_skill_cost(301022) -> {5,18000, 129100};
+get_guild_skill_cost(301022) -> {5,11000, 63800};
 
-get_guild_skill_cost(301023) -> {5,20400, 143500};
+get_guild_skill_cost(301023) -> {5,11600, 67800};
 
-get_guild_skill_cost(301024) -> {5,23200, 159400};
+get_guild_skill_cost(301024) -> {5,12200, 71800};
 
-get_guild_skill_cost(301025) -> {5,26400, 177100};
+get_guild_skill_cost(301025) -> {5,12800, 75800};
 
-get_guild_skill_cost(301026) -> {6,30000, 196800};
+get_guild_skill_cost(301026) -> {6,13400, 79800};
 
-get_guild_skill_cost(301027) -> {6,34100, 218700};
+get_guild_skill_cost(301027) -> {6,14000, 83800};
 
-get_guild_skill_cost(301028) -> {6,38700, 243000};
+get_guild_skill_cost(301028) -> {6,14600, 87800};
 
-get_guild_skill_cost(301029) -> {6,44000, 270000};
+get_guild_skill_cost(301029) -> {6,15200, 91800};
 
-get_guild_skill_cost(301030) -> {6,50000, 300000};
+get_guild_skill_cost(301030) -> {6,15000, 95800};
 
 get_guild_skill_cost(302001) -> {3,100, 1100};
 
@@ -13133,53 +14220,53 @@ get_guild_skill_cost(302005) -> {3,800, 4800};
 
 get_guild_skill_cost(302006) -> {3,1600, 6800};
 
-get_guild_skill_cost(302007) -> {3,2000, 9700};
+get_guild_skill_cost(302007) -> {3,2000, 8800};
 
-get_guild_skill_cost(302008) -> {3,2500, 13900};
+get_guild_skill_cost(302008) -> {3,2500, 10800};
 
-get_guild_skill_cost(302009) -> {3,3200, 19900};
+get_guild_skill_cost(302009) -> {3,3200, 13800};
 
-get_guild_skill_cost(302010) -> {3,3900, 28400};
+get_guild_skill_cost(302010) -> {3,3800, 16800};
 
-get_guild_skill_cost(302011) -> {3,4900, 40500};
+get_guild_skill_cost(302011) -> {3,4400, 19800};
 
-get_guild_skill_cost(302012) -> {3,5500, 45000};
+get_guild_skill_cost(302012) -> {3,5000, 23800};
 
-get_guild_skill_cost(302013) -> {3,6100, 50000};
+get_guild_skill_cost(302013) -> {3,5600, 27800};
 
-get_guild_skill_cost(302014) -> {3,6800, 55600};
+get_guild_skill_cost(302014) -> {3,6200, 31800};
 
-get_guild_skill_cost(302015) -> {3,7500, 61800};
+get_guild_skill_cost(302015) -> {3,6800, 35800};
 
-get_guild_skill_cost(302016) -> {4,8400, 68600};
+get_guild_skill_cost(302016) -> {4,7400, 39800};
 
-get_guild_skill_cost(302017) -> {4,9500, 76300};
+get_guild_skill_cost(302017) -> {4,8000, 43800};
 
-get_guild_skill_cost(302018) -> {4,10800, 84700};
+get_guild_skill_cost(302018) -> {4,8600, 47800};
 
-get_guild_skill_cost(302019) -> {4,12300, 94100};
+get_guild_skill_cost(302019) -> {4,9200, 51800};
 
-get_guild_skill_cost(302020) -> {4,13900, 104600};
+get_guild_skill_cost(302020) -> {4,9800, 55800};
 
-get_guild_skill_cost(302021) -> {5,15800, 116200};
+get_guild_skill_cost(302021) -> {5,10400, 59800};
 
-get_guild_skill_cost(302022) -> {5,18000, 129100};
+get_guild_skill_cost(302022) -> {5,11000, 63800};
 
-get_guild_skill_cost(302023) -> {5,20400, 143500};
+get_guild_skill_cost(302023) -> {5,11600, 67800};
 
-get_guild_skill_cost(302024) -> {5,23200, 159400};
+get_guild_skill_cost(302024) -> {5,12200, 71800};
 
-get_guild_skill_cost(302025) -> {5,26400, 177100};
+get_guild_skill_cost(302025) -> {5,12800, 75800};
 
-get_guild_skill_cost(302026) -> {6,30000, 196800};
+get_guild_skill_cost(302026) -> {6,13400, 79800};
 
-get_guild_skill_cost(302027) -> {6,34100, 218700};
+get_guild_skill_cost(302027) -> {6,14000, 83800};
 
-get_guild_skill_cost(302028) -> {6,38700, 243000};
+get_guild_skill_cost(302028) -> {6,14600, 87800};
 
-get_guild_skill_cost(302029) -> {6,44000, 270000};
+get_guild_skill_cost(302029) -> {6,15200, 91800};
 
-get_guild_skill_cost(302030) -> {6,50000, 300000};
+get_guild_skill_cost(302030) -> {6,15000, 95800};
 
 get_guild_skill_cost(303001) -> {1,100, 1100};
 
@@ -13193,53 +14280,53 @@ get_guild_skill_cost(303005) -> {1,800, 4800};
 
 get_guild_skill_cost(303006) -> {2,1600, 6800};
 
-get_guild_skill_cost(303007) -> {2,2000, 9700};
+get_guild_skill_cost(303007) -> {2,2000, 8800};
 
-get_guild_skill_cost(303008) -> {2,2500, 13900};
+get_guild_skill_cost(303008) -> {2,2500, 10800};
 
-get_guild_skill_cost(303009) -> {2,3200, 19900};
+get_guild_skill_cost(303009) -> {2,3200, 13800};
 
-get_guild_skill_cost(303010) -> {2,3900, 28400};
+get_guild_skill_cost(303010) -> {2,3800, 16800};
 
-get_guild_skill_cost(303011) -> {3,4900, 40500};
+get_guild_skill_cost(303011) -> {3,4400, 19800};
 
-get_guild_skill_cost(303012) -> {3,5500, 45000};
+get_guild_skill_cost(303012) -> {3,5000, 23800};
 
-get_guild_skill_cost(303013) -> {3,6100, 50000};
+get_guild_skill_cost(303013) -> {3,5600, 27800};
 
-get_guild_skill_cost(303014) -> {3,6800, 55600};
+get_guild_skill_cost(303014) -> {3,6200, 31800};
 
-get_guild_skill_cost(303015) -> {3,7500, 61800};
+get_guild_skill_cost(303015) -> {3,6800, 35800};
 
-get_guild_skill_cost(303016) -> {4,8400, 68600};
+get_guild_skill_cost(303016) -> {4,7400, 39800};
 
-get_guild_skill_cost(303017) -> {4,9500, 76300};
+get_guild_skill_cost(303017) -> {4,8000, 43800};
 
-get_guild_skill_cost(303018) -> {4,10800, 84700};
+get_guild_skill_cost(303018) -> {4,8600, 47800};
 
-get_guild_skill_cost(303019) -> {4,12300, 94100};
+get_guild_skill_cost(303019) -> {4,9200, 51800};
 
-get_guild_skill_cost(303020) -> {4,13900, 104600};
+get_guild_skill_cost(303020) -> {4,9800, 55800};
 
-get_guild_skill_cost(303021) -> {5,15800, 116200};
+get_guild_skill_cost(303021) -> {5,10400, 59800};
 
-get_guild_skill_cost(303022) -> {5,18000, 129100};
+get_guild_skill_cost(303022) -> {5,11000, 63800};
 
-get_guild_skill_cost(303023) -> {5,20400, 143500};
+get_guild_skill_cost(303023) -> {5,11600, 67800};
 
-get_guild_skill_cost(303024) -> {5,23200, 159400};
+get_guild_skill_cost(303024) -> {5,12200, 71800};
 
-get_guild_skill_cost(303025) -> {5,26400, 177100};
+get_guild_skill_cost(303025) -> {5,12800, 75800};
 
-get_guild_skill_cost(303026) -> {6,30000, 196800};
+get_guild_skill_cost(303026) -> {6,13400, 79800};
 
-get_guild_skill_cost(303027) -> {6,34100, 218700};
+get_guild_skill_cost(303027) -> {6,14000, 83800};
 
-get_guild_skill_cost(303028) -> {6,38700, 243000};
+get_guild_skill_cost(303028) -> {6,14600, 87800};
 
-get_guild_skill_cost(303029) -> {6,44000, 270000};
+get_guild_skill_cost(303029) -> {6,15200, 91800};
 
-get_guild_skill_cost(303030) -> {6,50000, 300000};
+get_guild_skill_cost(303030) -> {6,15000, 95800};
 
 get_guild_skill_cost(304001) -> {1,100, 1100};
 
@@ -13253,53 +14340,53 @@ get_guild_skill_cost(304005) -> {1,800, 4800};
 
 get_guild_skill_cost(304006) -> {2,1600, 6800};
 
-get_guild_skill_cost(304007) -> {2,2000, 9700};
+get_guild_skill_cost(304007) -> {2,2000, 8800};
 
-get_guild_skill_cost(304008) -> {2,2500, 13900};
+get_guild_skill_cost(304008) -> {2,2500, 10800};
 
-get_guild_skill_cost(304009) -> {2,3200, 19900};
+get_guild_skill_cost(304009) -> {2,3200, 13800};
 
-get_guild_skill_cost(304010) -> {2,3900, 28400};
+get_guild_skill_cost(304010) -> {2,3800, 16800};
 
-get_guild_skill_cost(304011) -> {3,4900, 40500};
+get_guild_skill_cost(304011) -> {3,4400, 19800};
 
-get_guild_skill_cost(304012) -> {3,5500, 45000};
+get_guild_skill_cost(304012) -> {3,5000, 23800};
 
-get_guild_skill_cost(304013) -> {3,6100, 50000};
+get_guild_skill_cost(304013) -> {3,5600, 27800};
 
-get_guild_skill_cost(304014) -> {3,6800, 55600};
+get_guild_skill_cost(304014) -> {3,6200, 31800};
 
-get_guild_skill_cost(304015) -> {3,7500, 61800};
+get_guild_skill_cost(304015) -> {3,6800, 35800};
 
-get_guild_skill_cost(304016) -> {4,8400, 68600};
+get_guild_skill_cost(304016) -> {4,7400, 39800};
 
-get_guild_skill_cost(304017) -> {4,9500, 76300};
+get_guild_skill_cost(304017) -> {4,8000, 43800};
 
-get_guild_skill_cost(304018) -> {4,10800, 84700};
+get_guild_skill_cost(304018) -> {4,8600, 47800};
 
-get_guild_skill_cost(304019) -> {4,12300, 94100};
+get_guild_skill_cost(304019) -> {4,9200, 51800};
 
-get_guild_skill_cost(304020) -> {4,13900, 104600};
+get_guild_skill_cost(304020) -> {4,9800, 55800};
 
-get_guild_skill_cost(304021) -> {5,15800, 116200};
+get_guild_skill_cost(304021) -> {5,10400, 59800};
 
-get_guild_skill_cost(304022) -> {5,18000, 129100};
+get_guild_skill_cost(304022) -> {5,11000, 63800};
 
-get_guild_skill_cost(304023) -> {5,20400, 143500};
+get_guild_skill_cost(304023) -> {5,11600, 67800};
 
-get_guild_skill_cost(304024) -> {5,23200, 159400};
+get_guild_skill_cost(304024) -> {5,12200, 71800};
 
-get_guild_skill_cost(304025) -> {5,26400, 177100};
+get_guild_skill_cost(304025) -> {5,12800, 75800};
 
-get_guild_skill_cost(304026) -> {6,30000, 196800};
+get_guild_skill_cost(304026) -> {6,13400, 79800};
 
-get_guild_skill_cost(304027) -> {6,34100, 218700};
+get_guild_skill_cost(304027) -> {6,14000, 83800};
 
-get_guild_skill_cost(304028) -> {6,38700, 243000};
+get_guild_skill_cost(304028) -> {6,14600, 87800};
 
-get_guild_skill_cost(304029) -> {6,44000, 270000};
+get_guild_skill_cost(304029) -> {6,15200, 91800};
 
-get_guild_skill_cost(304030) -> {6,50000, 300000};
+get_guild_skill_cost(304030) -> {6,15000, 95800};
 
 get_guild_skill_cost(305001) -> {4,100, 1100};
 
@@ -13313,53 +14400,53 @@ get_guild_skill_cost(305005) -> {4,800, 4800};
 
 get_guild_skill_cost(305006) -> {4,1600, 6800};
 
-get_guild_skill_cost(305007) -> {4,2000, 9700};
+get_guild_skill_cost(305007) -> {4,2000, 8800};
 
-get_guild_skill_cost(305008) -> {4,2500, 13900};
+get_guild_skill_cost(305008) -> {4,2500, 10800};
 
-get_guild_skill_cost(305009) -> {4,3200, 19900};
+get_guild_skill_cost(305009) -> {4,3200, 13800};
 
-get_guild_skill_cost(305010) -> {4,3900, 28400};
+get_guild_skill_cost(305010) -> {4,3800, 16800};
 
-get_guild_skill_cost(305011) -> {4,4900, 40500};
+get_guild_skill_cost(305011) -> {4,4400, 19800};
 
-get_guild_skill_cost(305012) -> {4,5500, 45000};
+get_guild_skill_cost(305012) -> {4,5000, 23800};
 
-get_guild_skill_cost(305013) -> {4,6100, 50000};
+get_guild_skill_cost(305013) -> {4,5600, 27800};
 
-get_guild_skill_cost(305014) -> {4,6800, 55600};
+get_guild_skill_cost(305014) -> {4,6200, 31800};
 
-get_guild_skill_cost(305015) -> {4,7500, 61800};
+get_guild_skill_cost(305015) -> {4,6800, 35800};
 
-get_guild_skill_cost(305016) -> {4,8400, 68600};
+get_guild_skill_cost(305016) -> {4,7400, 39800};
 
-get_guild_skill_cost(305017) -> {4,9500, 76300};
+get_guild_skill_cost(305017) -> {4,8000, 43800};
 
-get_guild_skill_cost(305018) -> {4,10800, 84700};
+get_guild_skill_cost(305018) -> {4,8600, 47800};
 
-get_guild_skill_cost(305019) -> {4,12300, 94100};
+get_guild_skill_cost(305019) -> {4,9200, 51800};
 
-get_guild_skill_cost(305020) -> {4,13900, 104600};
+get_guild_skill_cost(305020) -> {4,9800, 55800};
 
-get_guild_skill_cost(305021) -> {5,15800, 116200};
+get_guild_skill_cost(305021) -> {5,10400, 59800};
 
-get_guild_skill_cost(305022) -> {5,18000, 129100};
+get_guild_skill_cost(305022) -> {5,11000, 63800};
 
-get_guild_skill_cost(305023) -> {5,20400, 143500};
+get_guild_skill_cost(305023) -> {5,11600, 67800};
 
-get_guild_skill_cost(305024) -> {5,23200, 159400};
+get_guild_skill_cost(305024) -> {5,12200, 71800};
 
-get_guild_skill_cost(305025) -> {5,26400, 177100};
+get_guild_skill_cost(305025) -> {5,12800, 75800};
 
-get_guild_skill_cost(305026) -> {6,30000, 196800};
+get_guild_skill_cost(305026) -> {6,13400, 79800};
 
-get_guild_skill_cost(305027) -> {6,34100, 218700};
+get_guild_skill_cost(305027) -> {6,14000, 83800};
 
-get_guild_skill_cost(305028) -> {6,38700, 243000};
+get_guild_skill_cost(305028) -> {6,14600, 87800};
 
-get_guild_skill_cost(305029) -> {6,44000, 270000};
+get_guild_skill_cost(305029) -> {6,15200, 91800};
 
-get_guild_skill_cost(305030) -> {6,50000, 300000};
+get_guild_skill_cost(305030) -> {6,15000, 95800};
 
 get_guild_skill_cost(306001) -> {2,100, 1100};
 
@@ -13373,53 +14460,53 @@ get_guild_skill_cost(306005) -> {2,800, 4800};
 
 get_guild_skill_cost(306006) -> {2,1600, 6800};
 
-get_guild_skill_cost(306007) -> {2,2000, 9700};
+get_guild_skill_cost(306007) -> {2,2000, 8800};
 
-get_guild_skill_cost(306008) -> {2,2500, 13900};
+get_guild_skill_cost(306008) -> {2,2500, 10800};
 
-get_guild_skill_cost(306009) -> {2,3200, 19900};
+get_guild_skill_cost(306009) -> {2,3200, 13800};
 
-get_guild_skill_cost(306010) -> {2,3900, 28400};
+get_guild_skill_cost(306010) -> {2,3800, 16800};
 
-get_guild_skill_cost(306011) -> {3,4900, 40500};
+get_guild_skill_cost(306011) -> {3,4400, 19800};
 
-get_guild_skill_cost(306012) -> {3,5500, 45000};
+get_guild_skill_cost(306012) -> {3,5000, 23800};
 
-get_guild_skill_cost(306013) -> {3,6100, 50000};
+get_guild_skill_cost(306013) -> {3,5600, 27800};
 
-get_guild_skill_cost(306014) -> {3,6800, 55600};
+get_guild_skill_cost(306014) -> {3,6200, 31800};
 
-get_guild_skill_cost(306015) -> {3,7500, 61800};
+get_guild_skill_cost(306015) -> {3,6800, 35800};
 
-get_guild_skill_cost(306016) -> {4,8400, 68600};
+get_guild_skill_cost(306016) -> {4,7400, 39800};
 
-get_guild_skill_cost(306017) -> {4,9500, 76300};
+get_guild_skill_cost(306017) -> {4,8000, 43800};
 
-get_guild_skill_cost(306018) -> {4,10800, 84700};
+get_guild_skill_cost(306018) -> {4,8600, 47800};
 
-get_guild_skill_cost(306019) -> {4,12300, 94100};
+get_guild_skill_cost(306019) -> {4,9200, 51800};
 
-get_guild_skill_cost(306020) -> {4,13900, 104600};
+get_guild_skill_cost(306020) -> {4,9800, 55800};
 
-get_guild_skill_cost(306021) -> {5,15800, 116200};
+get_guild_skill_cost(306021) -> {5,10400, 59800};
 
-get_guild_skill_cost(306022) -> {5,18000, 129100};
+get_guild_skill_cost(306022) -> {5,11000, 63800};
 
-get_guild_skill_cost(306023) -> {5,20400, 143500};
+get_guild_skill_cost(306023) -> {5,11600, 67800};
 
-get_guild_skill_cost(306024) -> {5,23200, 159400};
+get_guild_skill_cost(306024) -> {5,12200, 71800};
 
-get_guild_skill_cost(306025) -> {5,26400, 177100};
+get_guild_skill_cost(306025) -> {5,12800, 75800};
 
-get_guild_skill_cost(306026) -> {6,30000, 196800};
+get_guild_skill_cost(306026) -> {6,13400, 79800};
 
-get_guild_skill_cost(306027) -> {6,34100, 218700};
+get_guild_skill_cost(306027) -> {6,14000, 83800};
 
-get_guild_skill_cost(306028) -> {6,38700, 243000};
+get_guild_skill_cost(306028) -> {6,14600, 87800};
 
-get_guild_skill_cost(306029) -> {6,44000, 270000};
+get_guild_skill_cost(306029) -> {6,15200, 91800};
 
-get_guild_skill_cost(306030) -> {6,50000, 300000};
+get_guild_skill_cost(306030) -> {6,15000, 95800};
 
 get_guild_skill_cost(307001) -> {2,100, 1100};
 
@@ -13433,53 +14520,53 @@ get_guild_skill_cost(307005) -> {2,800, 4800};
 
 get_guild_skill_cost(307006) -> {2,1600, 6800};
 
-get_guild_skill_cost(307007) -> {2,2000, 9700};
+get_guild_skill_cost(307007) -> {2,2000, 8800};
 
-get_guild_skill_cost(307008) -> {2,2500, 13900};
+get_guild_skill_cost(307008) -> {2,2500, 10800};
 
-get_guild_skill_cost(307009) -> {2,3200, 19900};
+get_guild_skill_cost(307009) -> {2,3200, 13800};
 
-get_guild_skill_cost(307010) -> {2,3900, 28400};
+get_guild_skill_cost(307010) -> {2,3800, 16800};
 
-get_guild_skill_cost(307011) -> {3,4900, 40500};
+get_guild_skill_cost(307011) -> {3,4400, 19800};
 
-get_guild_skill_cost(307012) -> {3,5500, 45000};
+get_guild_skill_cost(307012) -> {3,5000, 23800};
 
-get_guild_skill_cost(307013) -> {3,6100, 50000};
+get_guild_skill_cost(307013) -> {3,5600, 27800};
 
-get_guild_skill_cost(307014) -> {3,6800, 55600};
+get_guild_skill_cost(307014) -> {3,6200, 31800};
 
-get_guild_skill_cost(307015) -> {3,7500, 61800};
+get_guild_skill_cost(307015) -> {3,6800, 35800};
 
-get_guild_skill_cost(307016) -> {4,8400, 68600};
+get_guild_skill_cost(307016) -> {4,7400, 39800};
 
-get_guild_skill_cost(307017) -> {4,9500, 76300};
+get_guild_skill_cost(307017) -> {4,8000, 43800};
 
-get_guild_skill_cost(307018) -> {4,10800, 84700};
+get_guild_skill_cost(307018) -> {4,8600, 47800};
 
-get_guild_skill_cost(307019) -> {4,12300, 94100};
+get_guild_skill_cost(307019) -> {4,9200, 51800};
 
-get_guild_skill_cost(307020) -> {4,13900, 104600};
+get_guild_skill_cost(307020) -> {4,9800, 55800};
 
-get_guild_skill_cost(307021) -> {5,15800, 116200};
+get_guild_skill_cost(307021) -> {5,10400, 59800};
 
-get_guild_skill_cost(307022) -> {5,18000, 129100};
+get_guild_skill_cost(307022) -> {5,11000, 63800};
 
-get_guild_skill_cost(307023) -> {5,20400, 143500};
+get_guild_skill_cost(307023) -> {5,11600, 67800};
 
-get_guild_skill_cost(307024) -> {5,23200, 159400};
+get_guild_skill_cost(307024) -> {5,12200, 71800};
 
-get_guild_skill_cost(307025) -> {5,26400, 177100};
+get_guild_skill_cost(307025) -> {5,12800, 75800};
 
-get_guild_skill_cost(307026) -> {6,30000, 196800};
+get_guild_skill_cost(307026) -> {6,13400, 79800};
 
-get_guild_skill_cost(307027) -> {6,34100, 218700};
+get_guild_skill_cost(307027) -> {6,14000, 83800};
 
-get_guild_skill_cost(307028) -> {6,38700, 243000};
+get_guild_skill_cost(307028) -> {6,14600, 87800};
 
-get_guild_skill_cost(307029) -> {6,44000, 270000};
+get_guild_skill_cost(307029) -> {6,15200, 91800};
 
-get_guild_skill_cost(307030) -> {6,50000, 300000};
+get_guild_skill_cost(307030) -> {6,15000, 95800};
 
 get_guild_skill_cost(308001) -> {2,100, 1100};
 
@@ -13493,53 +14580,53 @@ get_guild_skill_cost(308005) -> {2,800, 4800};
 
 get_guild_skill_cost(308006) -> {2,1600, 6800};
 
-get_guild_skill_cost(308007) -> {2,2000, 9700};
+get_guild_skill_cost(308007) -> {2,2000, 8800};
 
-get_guild_skill_cost(308008) -> {2,2500, 13900};
+get_guild_skill_cost(308008) -> {2,2500, 10800};
 
-get_guild_skill_cost(308009) -> {2,3200, 19900};
+get_guild_skill_cost(308009) -> {2,3200, 13800};
 
-get_guild_skill_cost(308010) -> {2,3900, 28400};
+get_guild_skill_cost(308010) -> {2,3800, 16800};
 
-get_guild_skill_cost(308011) -> {3,4900, 40500};
+get_guild_skill_cost(308011) -> {3,4400, 19800};
 
-get_guild_skill_cost(308012) -> {3,5500, 45000};
+get_guild_skill_cost(308012) -> {3,5000, 23800};
 
-get_guild_skill_cost(308013) -> {3,6100, 50000};
+get_guild_skill_cost(308013) -> {3,5600, 27800};
 
-get_guild_skill_cost(308014) -> {3,6800, 55600};
+get_guild_skill_cost(308014) -> {3,6200, 31800};
 
-get_guild_skill_cost(308015) -> {3,7500, 61800};
+get_guild_skill_cost(308015) -> {3,6800, 35800};
 
-get_guild_skill_cost(308016) -> {4,8400, 68600};
+get_guild_skill_cost(308016) -> {4,7400, 39800};
 
-get_guild_skill_cost(308017) -> {4,9500, 76300};
+get_guild_skill_cost(308017) -> {4,8000, 43800};
 
-get_guild_skill_cost(308018) -> {4,10800, 84700};
+get_guild_skill_cost(308018) -> {4,8600, 47800};
 
-get_guild_skill_cost(308019) -> {4,12300, 94100};
+get_guild_skill_cost(308019) -> {4,9200, 51800};
 
-get_guild_skill_cost(308020) -> {4,13900, 104600};
+get_guild_skill_cost(308020) -> {4,9800, 55800};
 
-get_guild_skill_cost(308021) -> {5,15800, 116200};
+get_guild_skill_cost(308021) -> {5,10400, 59800};
 
-get_guild_skill_cost(308022) -> {5,18000, 129100};
+get_guild_skill_cost(308022) -> {5,11000, 63800};
 
-get_guild_skill_cost(308023) -> {5,20400, 143500};
+get_guild_skill_cost(308023) -> {5,11600, 67800};
 
-get_guild_skill_cost(308024) -> {5,23200, 159400};
+get_guild_skill_cost(308024) -> {5,12200, 71800};
 
-get_guild_skill_cost(308025) -> {5,26400, 177100};
+get_guild_skill_cost(308025) -> {5,12800, 75800};
 
-get_guild_skill_cost(308026) -> {6,30000, 196800};
+get_guild_skill_cost(308026) -> {6,13400, 79800};
 
-get_guild_skill_cost(308027) -> {6,34100, 218700};
+get_guild_skill_cost(308027) -> {6,14000, 83800};
 
-get_guild_skill_cost(308028) -> {6,38700, 243000};
+get_guild_skill_cost(308028) -> {6,14600, 87800};
 
-get_guild_skill_cost(308029) -> {6,44000, 270000};
+get_guild_skill_cost(308029) -> {6,15200, 91800};
 
-get_guild_skill_cost(308030) -> {6,50000, 300000};
+get_guild_skill_cost(308030) -> {6,15000, 95800};
 
 get_guild_skill_cost(309001) -> {3,100, 1100};
 
@@ -13553,53 +14640,53 @@ get_guild_skill_cost(309005) -> {3,800, 4800};
 
 get_guild_skill_cost(309006) -> {3,1600, 6800};
 
-get_guild_skill_cost(309007) -> {3,2000, 9700};
+get_guild_skill_cost(309007) -> {3,2000, 8800};
 
-get_guild_skill_cost(309008) -> {3,2500, 13900};
+get_guild_skill_cost(309008) -> {3,2500, 10800};
 
-get_guild_skill_cost(309009) -> {3,3200, 19900};
+get_guild_skill_cost(309009) -> {3,3200, 13800};
 
-get_guild_skill_cost(309010) -> {3,3900, 28400};
+get_guild_skill_cost(309010) -> {3,3800, 16800};
 
-get_guild_skill_cost(309011) -> {3,4900, 40500};
+get_guild_skill_cost(309011) -> {3,4400, 19800};
 
-get_guild_skill_cost(309012) -> {3,5500, 45000};
+get_guild_skill_cost(309012) -> {3,5000, 23800};
 
-get_guild_skill_cost(309013) -> {3,6100, 50000};
+get_guild_skill_cost(309013) -> {3,5600, 27800};
 
-get_guild_skill_cost(309014) -> {3,6800, 55600};
+get_guild_skill_cost(309014) -> {3,6200, 31800};
 
-get_guild_skill_cost(309015) -> {3,7500, 61800};
+get_guild_skill_cost(309015) -> {3,6800, 35800};
 
-get_guild_skill_cost(309016) -> {4,8400, 68600};
+get_guild_skill_cost(309016) -> {4,7400, 39800};
 
-get_guild_skill_cost(309017) -> {4,9500, 76300};
+get_guild_skill_cost(309017) -> {4,8000, 43800};
 
-get_guild_skill_cost(309018) -> {4,10800, 84700};
+get_guild_skill_cost(309018) -> {4,8600, 47800};
 
-get_guild_skill_cost(309019) -> {4,12300, 94100};
+get_guild_skill_cost(309019) -> {4,9200, 51800};
 
-get_guild_skill_cost(309020) -> {4,13900, 104600};
+get_guild_skill_cost(309020) -> {4,9800, 55800};
 
-get_guild_skill_cost(309021) -> {5,15800, 116200};
+get_guild_skill_cost(309021) -> {5,10400, 59800};
 
-get_guild_skill_cost(309022) -> {5,18000, 129100};
+get_guild_skill_cost(309022) -> {5,11000, 63800};
 
-get_guild_skill_cost(309023) -> {5,20400, 143500};
+get_guild_skill_cost(309023) -> {5,11600, 67800};
 
-get_guild_skill_cost(309024) -> {5,23200, 159400};
+get_guild_skill_cost(309024) -> {5,12200, 71800};
 
-get_guild_skill_cost(309025) -> {5,26400, 177100};
+get_guild_skill_cost(309025) -> {5,12800, 75800};
 
-get_guild_skill_cost(309026) -> {6,30000, 196800};
+get_guild_skill_cost(309026) -> {6,13400, 79800};
 
-get_guild_skill_cost(309027) -> {6,34100, 218700};
+get_guild_skill_cost(309027) -> {6,14000, 83800};
 
-get_guild_skill_cost(309028) -> {6,38700, 243000};
+get_guild_skill_cost(309028) -> {6,14600, 87800};
 
-get_guild_skill_cost(309029) -> {6,44000, 270000};
+get_guild_skill_cost(309029) -> {6,15200, 91800};
 
-get_guild_skill_cost(309030) -> {6,50000, 300000};
+get_guild_skill_cost(309030) -> {6,15000, 95800};
 
 get_guild_skill_cost(310001) -> {1,100, 1100};
 
@@ -13613,53 +14700,53 @@ get_guild_skill_cost(310005) -> {1,800, 4800};
 
 get_guild_skill_cost(310006) -> {2,1600, 6800};
 
-get_guild_skill_cost(310007) -> {2,2000, 9700};
+get_guild_skill_cost(310007) -> {2,2000, 8800};
 
-get_guild_skill_cost(310008) -> {2,2500, 13900};
+get_guild_skill_cost(310008) -> {2,2500, 10800};
 
-get_guild_skill_cost(310009) -> {2,3200, 19900};
+get_guild_skill_cost(310009) -> {2,3200, 13800};
 
-get_guild_skill_cost(310010) -> {2,3900, 28400};
+get_guild_skill_cost(310010) -> {2,3800, 16800};
 
-get_guild_skill_cost(310011) -> {3,4900, 40500};
+get_guild_skill_cost(310011) -> {3,4400, 19800};
 
-get_guild_skill_cost(310012) -> {3,5500, 45000};
+get_guild_skill_cost(310012) -> {3,5000, 23800};
 
-get_guild_skill_cost(310013) -> {3,6100, 50000};
+get_guild_skill_cost(310013) -> {3,5600, 27800};
 
-get_guild_skill_cost(310014) -> {3,6800, 55600};
+get_guild_skill_cost(310014) -> {3,6200, 31800};
 
-get_guild_skill_cost(310015) -> {3,7500, 61800};
+get_guild_skill_cost(310015) -> {3,6800, 35800};
 
-get_guild_skill_cost(310016) -> {4,8400, 68600};
+get_guild_skill_cost(310016) -> {4,7400, 39800};
 
-get_guild_skill_cost(310017) -> {4,9500, 76300};
+get_guild_skill_cost(310017) -> {4,8000, 43800};
 
-get_guild_skill_cost(310018) -> {4,10800, 84700};
+get_guild_skill_cost(310018) -> {4,8600, 47800};
 
-get_guild_skill_cost(310019) -> {4,12300, 94100};
+get_guild_skill_cost(310019) -> {4,9200, 51800};
 
-get_guild_skill_cost(310020) -> {4,13900, 104600};
+get_guild_skill_cost(310020) -> {4,9800, 55800};
 
-get_guild_skill_cost(310021) -> {5,15800, 116200};
+get_guild_skill_cost(310021) -> {5,10400, 59800};
 
-get_guild_skill_cost(310022) -> {5,18000, 129100};
+get_guild_skill_cost(310022) -> {5,11000, 63800};
 
-get_guild_skill_cost(310023) -> {5,20400, 143500};
+get_guild_skill_cost(310023) -> {5,11600, 67800};
 
-get_guild_skill_cost(310024) -> {5,23200, 159400};
+get_guild_skill_cost(310024) -> {5,12200, 71800};
 
-get_guild_skill_cost(310025) -> {5,26400, 177100};
+get_guild_skill_cost(310025) -> {5,12800, 75800};
 
-get_guild_skill_cost(310026) -> {6,30000, 196800};
+get_guild_skill_cost(310026) -> {6,13400, 79800};
 
-get_guild_skill_cost(310027) -> {6,34100, 218700};
+get_guild_skill_cost(310027) -> {6,14000, 83800};
 
-get_guild_skill_cost(310028) -> {6,38700, 243000};
+get_guild_skill_cost(310028) -> {6,14600, 87800};
 
-get_guild_skill_cost(310029) -> {6,44000, 270000};
+get_guild_skill_cost(310029) -> {6,15200, 91800};
 
-get_guild_skill_cost(310030) -> {6,50000, 300000};
+get_guild_skill_cost(310030) -> {6,15000, 95800};
 
 get_guild_skill_cost(311001) -> {1,100, 1100};
 
@@ -13673,53 +14760,53 @@ get_guild_skill_cost(311005) -> {1,800, 4800};
 
 get_guild_skill_cost(311006) -> {2,1600, 6800};
 
-get_guild_skill_cost(311007) -> {2,2000, 9700};
+get_guild_skill_cost(311007) -> {2,2000, 8800};
 
-get_guild_skill_cost(311008) -> {2,2500, 13900};
+get_guild_skill_cost(311008) -> {2,2500, 10800};
 
-get_guild_skill_cost(311009) -> {2,3200, 19900};
+get_guild_skill_cost(311009) -> {2,3200, 13800};
 
-get_guild_skill_cost(311010) -> {2,3900, 28400};
+get_guild_skill_cost(311010) -> {2,3800, 16800};
 
-get_guild_skill_cost(311011) -> {3,4900, 40500};
+get_guild_skill_cost(311011) -> {3,4400, 19800};
 
-get_guild_skill_cost(311012) -> {3,5500, 45000};
+get_guild_skill_cost(311012) -> {3,5000, 23800};
 
-get_guild_skill_cost(311013) -> {3,6100, 50000};
+get_guild_skill_cost(311013) -> {3,5600, 27800};
 
-get_guild_skill_cost(311014) -> {3,6800, 55600};
+get_guild_skill_cost(311014) -> {3,6200, 31800};
 
-get_guild_skill_cost(311015) -> {3,7500, 61800};
+get_guild_skill_cost(311015) -> {3,6800, 35800};
 
-get_guild_skill_cost(311016) -> {4,8400, 68600};
+get_guild_skill_cost(311016) -> {4,7400, 39800};
 
-get_guild_skill_cost(311017) -> {4,9500, 76300};
+get_guild_skill_cost(311017) -> {4,8000, 43800};
 
-get_guild_skill_cost(311018) -> {4,10800, 84700};
+get_guild_skill_cost(311018) -> {4,8600, 47800};
 
-get_guild_skill_cost(311019) -> {4,12300, 94100};
+get_guild_skill_cost(311019) -> {4,9200, 51800};
 
-get_guild_skill_cost(311020) -> {4,13900, 104600};
+get_guild_skill_cost(311020) -> {4,9800, 55800};
 
-get_guild_skill_cost(311021) -> {5,15800, 116200};
+get_guild_skill_cost(311021) -> {5,10400, 59800};
 
-get_guild_skill_cost(311022) -> {5,18000, 129100};
+get_guild_skill_cost(311022) -> {5,11000, 63800};
 
-get_guild_skill_cost(311023) -> {5,20400, 143500};
+get_guild_skill_cost(311023) -> {5,11600, 67800};
 
-get_guild_skill_cost(311024) -> {5,23200, 159400};
+get_guild_skill_cost(311024) -> {5,12200, 71800};
 
-get_guild_skill_cost(311025) -> {5,26400, 177100};
+get_guild_skill_cost(311025) -> {5,12800, 75800};
 
-get_guild_skill_cost(311026) -> {6,30000, 196800};
+get_guild_skill_cost(311026) -> {6,13400, 79800};
 
-get_guild_skill_cost(311027) -> {6,34100, 218700};
+get_guild_skill_cost(311027) -> {6,14000, 83800};
 
-get_guild_skill_cost(311028) -> {6,38700, 243000};
+get_guild_skill_cost(311028) -> {6,14600, 87800};
 
-get_guild_skill_cost(311029) -> {6,44000, 270000};
+get_guild_skill_cost(311029) -> {6,15200, 91800};
 
-get_guild_skill_cost(311030) -> {6,50000, 300000};
+get_guild_skill_cost(311030) -> {6,15000, 95800};
 
 get_guild_skill_cost(312001) -> {3,100, 1100};
 
@@ -13733,53 +14820,53 @@ get_guild_skill_cost(312005) -> {3,800, 4800};
 
 get_guild_skill_cost(312006) -> {3,1600, 6800};
 
-get_guild_skill_cost(312007) -> {3,2000, 9700};
+get_guild_skill_cost(312007) -> {3,2000, 8800};
 
-get_guild_skill_cost(312008) -> {3,2500, 13900};
+get_guild_skill_cost(312008) -> {3,2500, 10800};
 
-get_guild_skill_cost(312009) -> {3,3200, 19900};
+get_guild_skill_cost(312009) -> {3,3200, 13800};
 
-get_guild_skill_cost(312010) -> {3,3900, 28400};
+get_guild_skill_cost(312010) -> {3,3800, 16800};
 
-get_guild_skill_cost(312011) -> {3,4900, 40500};
+get_guild_skill_cost(312011) -> {3,4400, 19800};
 
-get_guild_skill_cost(312012) -> {3,5500, 45000};
+get_guild_skill_cost(312012) -> {3,5000, 23800};
 
-get_guild_skill_cost(312013) -> {3,6100, 50000};
+get_guild_skill_cost(312013) -> {3,5600, 27800};
 
-get_guild_skill_cost(312014) -> {3,6800, 55600};
+get_guild_skill_cost(312014) -> {3,6200, 31800};
 
-get_guild_skill_cost(312015) -> {3,7500, 61800};
+get_guild_skill_cost(312015) -> {3,6800, 35800};
 
-get_guild_skill_cost(312016) -> {4,8400, 68600};
+get_guild_skill_cost(312016) -> {4,7400, 39800};
 
-get_guild_skill_cost(312017) -> {4,9500, 76300};
+get_guild_skill_cost(312017) -> {4,8000, 43800};
 
-get_guild_skill_cost(312018) -> {4,10800, 84700};
+get_guild_skill_cost(312018) -> {4,8600, 47800};
 
-get_guild_skill_cost(312019) -> {4,12300, 94100};
+get_guild_skill_cost(312019) -> {4,9200, 51800};
 
-get_guild_skill_cost(312020) -> {4,13900, 104600};
+get_guild_skill_cost(312020) -> {4,9800, 55800};
 
-get_guild_skill_cost(312021) -> {5,15800, 116200};
+get_guild_skill_cost(312021) -> {5,10400, 59800};
 
-get_guild_skill_cost(312022) -> {5,18000, 129100};
+get_guild_skill_cost(312022) -> {5,11000, 63800};
 
-get_guild_skill_cost(312023) -> {5,20400, 143500};
+get_guild_skill_cost(312023) -> {5,11600, 67800};
 
-get_guild_skill_cost(312024) -> {5,23200, 159400};
+get_guild_skill_cost(312024) -> {5,12200, 71800};
 
-get_guild_skill_cost(312025) -> {5,26400, 177100};
+get_guild_skill_cost(312025) -> {5,12800, 75800};
 
-get_guild_skill_cost(312026) -> {6,30000, 196800};
+get_guild_skill_cost(312026) -> {6,13400, 79800};
 
-get_guild_skill_cost(312027) -> {6,34100, 218700};
+get_guild_skill_cost(312027) -> {6,14000, 83800};
 
-get_guild_skill_cost(312028) -> {6,38700, 243000};
+get_guild_skill_cost(312028) -> {6,14600, 87800};
 
-get_guild_skill_cost(312029) -> {6,44000, 270000};
+get_guild_skill_cost(312029) -> {6,15200, 91800};
 
-get_guild_skill_cost(312030) -> {6,50000, 300000};
+get_guild_skill_cost(312030) -> {6,15000, 95800};
 
 get_guild_skill_cost(313001) -> {5,100, 1100};
 
@@ -13793,53 +14880,53 @@ get_guild_skill_cost(313005) -> {5,800, 4800};
 
 get_guild_skill_cost(313006) -> {5,1600, 6800};
 
-get_guild_skill_cost(313007) -> {5,2000, 9700};
+get_guild_skill_cost(313007) -> {5,2000, 8800};
 
-get_guild_skill_cost(313008) -> {5,2500, 13900};
+get_guild_skill_cost(313008) -> {5,2500, 10800};
 
-get_guild_skill_cost(313009) -> {5,3200, 19900};
+get_guild_skill_cost(313009) -> {5,3200, 13800};
 
-get_guild_skill_cost(313010) -> {5,3900, 28400};
+get_guild_skill_cost(313010) -> {5,3800, 16800};
 
-get_guild_skill_cost(313011) -> {5,4900, 40500};
+get_guild_skill_cost(313011) -> {5,4400, 19800};
 
-get_guild_skill_cost(313012) -> {5,5500, 45000};
+get_guild_skill_cost(313012) -> {5,5000, 23800};
 
-get_guild_skill_cost(313013) -> {5,6100, 50000};
+get_guild_skill_cost(313013) -> {5,5600, 27800};
 
-get_guild_skill_cost(313014) -> {5,6800, 55600};
+get_guild_skill_cost(313014) -> {5,6200, 31800};
 
-get_guild_skill_cost(313015) -> {5,7500, 61800};
+get_guild_skill_cost(313015) -> {5,6800, 35800};
 
-get_guild_skill_cost(313016) -> {5,8400, 68600};
+get_guild_skill_cost(313016) -> {5,7400, 39800};
 
-get_guild_skill_cost(313017) -> {5,9500, 76300};
+get_guild_skill_cost(313017) -> {5,8000, 43800};
 
-get_guild_skill_cost(313018) -> {5,10800, 84700};
+get_guild_skill_cost(313018) -> {5,8600, 47800};
 
-get_guild_skill_cost(313019) -> {5,12300, 94100};
+get_guild_skill_cost(313019) -> {5,9200, 51800};
 
-get_guild_skill_cost(313020) -> {5,13900, 104600};
+get_guild_skill_cost(313020) -> {5,9800, 55800};
 
-get_guild_skill_cost(313021) -> {5,15800, 116200};
+get_guild_skill_cost(313021) -> {5,10400, 59800};
 
-get_guild_skill_cost(313022) -> {5,18000, 129100};
+get_guild_skill_cost(313022) -> {5,11000, 63800};
 
-get_guild_skill_cost(313023) -> {5,20400, 143500};
+get_guild_skill_cost(313023) -> {5,11600, 67800};
 
-get_guild_skill_cost(313024) -> {5,23200, 159400};
+get_guild_skill_cost(313024) -> {5,12200, 71800};
 
-get_guild_skill_cost(313025) -> {6,26400, 177100};
+get_guild_skill_cost(313025) -> {6,12800, 75800};
 
-get_guild_skill_cost(313026) -> {6,30000, 196800};
+get_guild_skill_cost(313026) -> {6,13400, 79800};
 
-get_guild_skill_cost(313027) -> {6,34100, 218700};
+get_guild_skill_cost(313027) -> {6,14000, 83800};
 
-get_guild_skill_cost(313028) -> {6,38700, 243000};
+get_guild_skill_cost(313028) -> {6,14600, 87800};
 
-get_guild_skill_cost(313029) -> {6,44000, 270000};
+get_guild_skill_cost(313029) -> {6,15200, 91800};
 
-get_guild_skill_cost(313030) -> {6,50000, 300000};
+get_guild_skill_cost(313030) -> {6,15000, 95800};
 
 get_guild_skill_cost(314001) -> {4,100, 1100};
 
@@ -13853,53 +14940,896 @@ get_guild_skill_cost(314005) -> {4,800, 4800};
 
 get_guild_skill_cost(314006) -> {4,1600, 6800};
 
-get_guild_skill_cost(314007) -> {4,2000, 9700};
+get_guild_skill_cost(314007) -> {4,2000, 8800};
 
-get_guild_skill_cost(314008) -> {4,2500, 13900};
+get_guild_skill_cost(314008) -> {4,2500, 10800};
 
-get_guild_skill_cost(314009) -> {4,3200, 19900};
+get_guild_skill_cost(314009) -> {4,3200, 13800};
 
-get_guild_skill_cost(314010) -> {4,3900, 28400};
+get_guild_skill_cost(314010) -> {4,3800, 16800};
 
-get_guild_skill_cost(314011) -> {4,4900, 40500};
+get_guild_skill_cost(314011) -> {4,4400, 19800};
 
-get_guild_skill_cost(314012) -> {4,5500, 45000};
+get_guild_skill_cost(314012) -> {4,5000, 23800};
 
-get_guild_skill_cost(314013) -> {4,6100, 50000};
+get_guild_skill_cost(314013) -> {4,5600, 27800};
 
-get_guild_skill_cost(314014) -> {4,6800, 55600};
+get_guild_skill_cost(314014) -> {4,6200, 31800};
 
-get_guild_skill_cost(314015) -> {4,7500, 61800};
+get_guild_skill_cost(314015) -> {4,6800, 35800};
 
-get_guild_skill_cost(314016) -> {4,8400, 68600};
+get_guild_skill_cost(314016) -> {4,7400, 39800};
 
-get_guild_skill_cost(314017) -> {4,9500, 76300};
+get_guild_skill_cost(314017) -> {4,8000, 43800};
 
-get_guild_skill_cost(314018) -> {4,10800, 84700};
+get_guild_skill_cost(314018) -> {4,8600, 47800};
 
-get_guild_skill_cost(314019) -> {4,12300, 94100};
+get_guild_skill_cost(314019) -> {4,9200, 51800};
 
-get_guild_skill_cost(314020) -> {4,13900, 104600};
+get_guild_skill_cost(314020) -> {4,9800, 55800};
 
-get_guild_skill_cost(314021) -> {5,15800, 116200};
+get_guild_skill_cost(314021) -> {5,10400, 59800};
 
-get_guild_skill_cost(314022) -> {5,18000, 129100};
+get_guild_skill_cost(314022) -> {5,11000, 63800};
 
-get_guild_skill_cost(314023) -> {5,20400, 143500};
+get_guild_skill_cost(314023) -> {5,11600, 67800};
 
-get_guild_skill_cost(314024) -> {5,23200, 159400};
+get_guild_skill_cost(314024) -> {5,12200, 71800};
 
-get_guild_skill_cost(314025) -> {5,26400, 177100};
+get_guild_skill_cost(314025) -> {5,12800, 75800};
 
-get_guild_skill_cost(314026) -> {6,30000, 196800};
+get_guild_skill_cost(314026) -> {6,13400, 79800};
 
-get_guild_skill_cost(314027) -> {6,34100, 218700};
+get_guild_skill_cost(314027) -> {6,14000, 83800};
 
-get_guild_skill_cost(314028) -> {6,38700, 243000};
+get_guild_skill_cost(314028) -> {6,14600, 87800};
 
-get_guild_skill_cost(314029) -> {6,44000, 270000};
+get_guild_skill_cost(314029) -> {6,15200, 91800};
 
-get_guild_skill_cost(314030) -> {6,50000, 300000}.
+get_guild_skill_cost(314030) -> {6,15000, 95800}.
+
+
+%%================================================
+%% 根绝技能id得到该学习技能所需的人物等级 
+get_need_role_level(301001) -> 32;
+
+get_need_role_level(301002) -> 34;
+
+get_need_role_level(301003) -> 36;
+
+get_need_role_level(301004) -> 38;
+
+get_need_role_level(301005) -> 40;
+
+get_need_role_level(301006) -> 42;
+
+get_need_role_level(301007) -> 44;
+
+get_need_role_level(301008) -> 46;
+
+get_need_role_level(301009) -> 48;
+
+get_need_role_level(301010) -> 50;
+
+get_need_role_level(301011) -> 52;
+
+get_need_role_level(301012) -> 54;
+
+get_need_role_level(301013) -> 56;
+
+get_need_role_level(301014) -> 58;
+
+get_need_role_level(301015) -> 60;
+
+get_need_role_level(301016) -> 62;
+
+get_need_role_level(301017) -> 64;
+
+get_need_role_level(301018) -> 66;
+
+get_need_role_level(301019) -> 68;
+
+get_need_role_level(301020) -> 70;
+
+get_need_role_level(301021) -> 72;
+
+get_need_role_level(301022) -> 74;
+
+get_need_role_level(301023) -> 76;
+
+get_need_role_level(301024) -> 78;
+
+get_need_role_level(301025) -> 80;
+
+get_need_role_level(301026) -> 82;
+
+get_need_role_level(301027) -> 84;
+
+get_need_role_level(301028) -> 86;
+
+get_need_role_level(301029) -> 88;
+
+get_need_role_level(301030) -> 90;
+
+get_need_role_level(302001) -> 32;
+
+get_need_role_level(302002) -> 34;
+
+get_need_role_level(302003) -> 36;
+
+get_need_role_level(302004) -> 38;
+
+get_need_role_level(302005) -> 40;
+
+get_need_role_level(302006) -> 42;
+
+get_need_role_level(302007) -> 44;
+
+get_need_role_level(302008) -> 46;
+
+get_need_role_level(302009) -> 48;
+
+get_need_role_level(302010) -> 50;
+
+get_need_role_level(302011) -> 52;
+
+get_need_role_level(302012) -> 54;
+
+get_need_role_level(302013) -> 56;
+
+get_need_role_level(302014) -> 58;
+
+get_need_role_level(302015) -> 60;
+
+get_need_role_level(302016) -> 62;
+
+get_need_role_level(302017) -> 64;
+
+get_need_role_level(302018) -> 66;
+
+get_need_role_level(302019) -> 68;
+
+get_need_role_level(302020) -> 70;
+
+get_need_role_level(302021) -> 72;
+
+get_need_role_level(302022) -> 74;
+
+get_need_role_level(302023) -> 76;
+
+get_need_role_level(302024) -> 78;
+
+get_need_role_level(302025) -> 80;
+
+get_need_role_level(302026) -> 82;
+
+get_need_role_level(302027) -> 84;
+
+get_need_role_level(302028) -> 86;
+
+get_need_role_level(302029) -> 88;
+
+get_need_role_level(302030) -> 90;
+
+get_need_role_level(303001) -> 32;
+
+get_need_role_level(303002) -> 34;
+
+get_need_role_level(303003) -> 36;
+
+get_need_role_level(303004) -> 38;
+
+get_need_role_level(303005) -> 40;
+
+get_need_role_level(303006) -> 42;
+
+get_need_role_level(303007) -> 44;
+
+get_need_role_level(303008) -> 46;
+
+get_need_role_level(303009) -> 48;
+
+get_need_role_level(303010) -> 50;
+
+get_need_role_level(303011) -> 52;
+
+get_need_role_level(303012) -> 54;
+
+get_need_role_level(303013) -> 56;
+
+get_need_role_level(303014) -> 58;
+
+get_need_role_level(303015) -> 60;
+
+get_need_role_level(303016) -> 62;
+
+get_need_role_level(303017) -> 64;
+
+get_need_role_level(303018) -> 66;
+
+get_need_role_level(303019) -> 68;
+
+get_need_role_level(303020) -> 70;
+
+get_need_role_level(303021) -> 72;
+
+get_need_role_level(303022) -> 74;
+
+get_need_role_level(303023) -> 76;
+
+get_need_role_level(303024) -> 78;
+
+get_need_role_level(303025) -> 80;
+
+get_need_role_level(303026) -> 82;
+
+get_need_role_level(303027) -> 84;
+
+get_need_role_level(303028) -> 86;
+
+get_need_role_level(303029) -> 88;
+
+get_need_role_level(303030) -> 90;
+
+get_need_role_level(304001) -> 32;
+
+get_need_role_level(304002) -> 34;
+
+get_need_role_level(304003) -> 36;
+
+get_need_role_level(304004) -> 38;
+
+get_need_role_level(304005) -> 40;
+
+get_need_role_level(304006) -> 42;
+
+get_need_role_level(304007) -> 44;
+
+get_need_role_level(304008) -> 46;
+
+get_need_role_level(304009) -> 48;
+
+get_need_role_level(304010) -> 50;
+
+get_need_role_level(304011) -> 52;
+
+get_need_role_level(304012) -> 54;
+
+get_need_role_level(304013) -> 56;
+
+get_need_role_level(304014) -> 58;
+
+get_need_role_level(304015) -> 60;
+
+get_need_role_level(304016) -> 62;
+
+get_need_role_level(304017) -> 64;
+
+get_need_role_level(304018) -> 66;
+
+get_need_role_level(304019) -> 68;
+
+get_need_role_level(304020) -> 70;
+
+get_need_role_level(304021) -> 72;
+
+get_need_role_level(304022) -> 74;
+
+get_need_role_level(304023) -> 76;
+
+get_need_role_level(304024) -> 78;
+
+get_need_role_level(304025) -> 80;
+
+get_need_role_level(304026) -> 82;
+
+get_need_role_level(304027) -> 84;
+
+get_need_role_level(304028) -> 86;
+
+get_need_role_level(304029) -> 88;
+
+get_need_role_level(304030) -> 90;
+
+get_need_role_level(305001) -> 32;
+
+get_need_role_level(305002) -> 34;
+
+get_need_role_level(305003) -> 36;
+
+get_need_role_level(305004) -> 38;
+
+get_need_role_level(305005) -> 40;
+
+get_need_role_level(305006) -> 42;
+
+get_need_role_level(305007) -> 44;
+
+get_need_role_level(305008) -> 46;
+
+get_need_role_level(305009) -> 48;
+
+get_need_role_level(305010) -> 50;
+
+get_need_role_level(305011) -> 52;
+
+get_need_role_level(305012) -> 54;
+
+get_need_role_level(305013) -> 56;
+
+get_need_role_level(305014) -> 58;
+
+get_need_role_level(305015) -> 60;
+
+get_need_role_level(305016) -> 62;
+
+get_need_role_level(305017) -> 64;
+
+get_need_role_level(305018) -> 66;
+
+get_need_role_level(305019) -> 68;
+
+get_need_role_level(305020) -> 70;
+
+get_need_role_level(305021) -> 72;
+
+get_need_role_level(305022) -> 74;
+
+get_need_role_level(305023) -> 76;
+
+get_need_role_level(305024) -> 78;
+
+get_need_role_level(305025) -> 80;
+
+get_need_role_level(305026) -> 82;
+
+get_need_role_level(305027) -> 84;
+
+get_need_role_level(305028) -> 86;
+
+get_need_role_level(305029) -> 88;
+
+get_need_role_level(305030) -> 90;
+
+get_need_role_level(306001) -> 32;
+
+get_need_role_level(306002) -> 34;
+
+get_need_role_level(306003) -> 36;
+
+get_need_role_level(306004) -> 38;
+
+get_need_role_level(306005) -> 40;
+
+get_need_role_level(306006) -> 42;
+
+get_need_role_level(306007) -> 44;
+
+get_need_role_level(306008) -> 46;
+
+get_need_role_level(306009) -> 48;
+
+get_need_role_level(306010) -> 50;
+
+get_need_role_level(306011) -> 52;
+
+get_need_role_level(306012) -> 54;
+
+get_need_role_level(306013) -> 56;
+
+get_need_role_level(306014) -> 58;
+
+get_need_role_level(306015) -> 60;
+
+get_need_role_level(306016) -> 62;
+
+get_need_role_level(306017) -> 64;
+
+get_need_role_level(306018) -> 66;
+
+get_need_role_level(306019) -> 68;
+
+get_need_role_level(306020) -> 70;
+
+get_need_role_level(306021) -> 72;
+
+get_need_role_level(306022) -> 74;
+
+get_need_role_level(306023) -> 76;
+
+get_need_role_level(306024) -> 78;
+
+get_need_role_level(306025) -> 80;
+
+get_need_role_level(306026) -> 82;
+
+get_need_role_level(306027) -> 84;
+
+get_need_role_level(306028) -> 86;
+
+get_need_role_level(306029) -> 88;
+
+get_need_role_level(306030) -> 90;
+
+get_need_role_level(307001) -> 32;
+
+get_need_role_level(307002) -> 34;
+
+get_need_role_level(307003) -> 36;
+
+get_need_role_level(307004) -> 38;
+
+get_need_role_level(307005) -> 40;
+
+get_need_role_level(307006) -> 42;
+
+get_need_role_level(307007) -> 44;
+
+get_need_role_level(307008) -> 46;
+
+get_need_role_level(307009) -> 48;
+
+get_need_role_level(307010) -> 50;
+
+get_need_role_level(307011) -> 52;
+
+get_need_role_level(307012) -> 54;
+
+get_need_role_level(307013) -> 56;
+
+get_need_role_level(307014) -> 58;
+
+get_need_role_level(307015) -> 60;
+
+get_need_role_level(307016) -> 62;
+
+get_need_role_level(307017) -> 64;
+
+get_need_role_level(307018) -> 66;
+
+get_need_role_level(307019) -> 68;
+
+get_need_role_level(307020) -> 70;
+
+get_need_role_level(307021) -> 72;
+
+get_need_role_level(307022) -> 74;
+
+get_need_role_level(307023) -> 76;
+
+get_need_role_level(307024) -> 78;
+
+get_need_role_level(307025) -> 80;
+
+get_need_role_level(307026) -> 82;
+
+get_need_role_level(307027) -> 84;
+
+get_need_role_level(307028) -> 86;
+
+get_need_role_level(307029) -> 88;
+
+get_need_role_level(307030) -> 90;
+
+get_need_role_level(308001) -> 32;
+
+get_need_role_level(308002) -> 34;
+
+get_need_role_level(308003) -> 36;
+
+get_need_role_level(308004) -> 38;
+
+get_need_role_level(308005) -> 40;
+
+get_need_role_level(308006) -> 42;
+
+get_need_role_level(308007) -> 44;
+
+get_need_role_level(308008) -> 46;
+
+get_need_role_level(308009) -> 48;
+
+get_need_role_level(308010) -> 50;
+
+get_need_role_level(308011) -> 52;
+
+get_need_role_level(308012) -> 54;
+
+get_need_role_level(308013) -> 56;
+
+get_need_role_level(308014) -> 58;
+
+get_need_role_level(308015) -> 60;
+
+get_need_role_level(308016) -> 62;
+
+get_need_role_level(308017) -> 64;
+
+get_need_role_level(308018) -> 66;
+
+get_need_role_level(308019) -> 68;
+
+get_need_role_level(308020) -> 70;
+
+get_need_role_level(308021) -> 72;
+
+get_need_role_level(308022) -> 74;
+
+get_need_role_level(308023) -> 76;
+
+get_need_role_level(308024) -> 78;
+
+get_need_role_level(308025) -> 80;
+
+get_need_role_level(308026) -> 82;
+
+get_need_role_level(308027) -> 84;
+
+get_need_role_level(308028) -> 86;
+
+get_need_role_level(308029) -> 88;
+
+get_need_role_level(308030) -> 90;
+
+get_need_role_level(309001) -> 32;
+
+get_need_role_level(309002) -> 34;
+
+get_need_role_level(309003) -> 36;
+
+get_need_role_level(309004) -> 38;
+
+get_need_role_level(309005) -> 40;
+
+get_need_role_level(309006) -> 42;
+
+get_need_role_level(309007) -> 44;
+
+get_need_role_level(309008) -> 46;
+
+get_need_role_level(309009) -> 48;
+
+get_need_role_level(309010) -> 50;
+
+get_need_role_level(309011) -> 52;
+
+get_need_role_level(309012) -> 54;
+
+get_need_role_level(309013) -> 56;
+
+get_need_role_level(309014) -> 58;
+
+get_need_role_level(309015) -> 60;
+
+get_need_role_level(309016) -> 62;
+
+get_need_role_level(309017) -> 64;
+
+get_need_role_level(309018) -> 66;
+
+get_need_role_level(309019) -> 68;
+
+get_need_role_level(309020) -> 70;
+
+get_need_role_level(309021) -> 72;
+
+get_need_role_level(309022) -> 74;
+
+get_need_role_level(309023) -> 76;
+
+get_need_role_level(309024) -> 78;
+
+get_need_role_level(309025) -> 80;
+
+get_need_role_level(309026) -> 82;
+
+get_need_role_level(309027) -> 84;
+
+get_need_role_level(309028) -> 86;
+
+get_need_role_level(309029) -> 88;
+
+get_need_role_level(309030) -> 90;
+
+get_need_role_level(310001) -> 32;
+
+get_need_role_level(310002) -> 34;
+
+get_need_role_level(310003) -> 36;
+
+get_need_role_level(310004) -> 38;
+
+get_need_role_level(310005) -> 40;
+
+get_need_role_level(310006) -> 42;
+
+get_need_role_level(310007) -> 44;
+
+get_need_role_level(310008) -> 46;
+
+get_need_role_level(310009) -> 48;
+
+get_need_role_level(310010) -> 50;
+
+get_need_role_level(310011) -> 52;
+
+get_need_role_level(310012) -> 54;
+
+get_need_role_level(310013) -> 56;
+
+get_need_role_level(310014) -> 58;
+
+get_need_role_level(310015) -> 60;
+
+get_need_role_level(310016) -> 62;
+
+get_need_role_level(310017) -> 64;
+
+get_need_role_level(310018) -> 66;
+
+get_need_role_level(310019) -> 68;
+
+get_need_role_level(310020) -> 70;
+
+get_need_role_level(310021) -> 72;
+
+get_need_role_level(310022) -> 74;
+
+get_need_role_level(310023) -> 76;
+
+get_need_role_level(310024) -> 78;
+
+get_need_role_level(310025) -> 80;
+
+get_need_role_level(310026) -> 82;
+
+get_need_role_level(310027) -> 84;
+
+get_need_role_level(310028) -> 86;
+
+get_need_role_level(310029) -> 88;
+
+get_need_role_level(310030) -> 90;
+
+get_need_role_level(311001) -> 32;
+
+get_need_role_level(311002) -> 34;
+
+get_need_role_level(311003) -> 36;
+
+get_need_role_level(311004) -> 38;
+
+get_need_role_level(311005) -> 40;
+
+get_need_role_level(311006) -> 42;
+
+get_need_role_level(311007) -> 44;
+
+get_need_role_level(311008) -> 46;
+
+get_need_role_level(311009) -> 48;
+
+get_need_role_level(311010) -> 50;
+
+get_need_role_level(311011) -> 52;
+
+get_need_role_level(311012) -> 54;
+
+get_need_role_level(311013) -> 56;
+
+get_need_role_level(311014) -> 58;
+
+get_need_role_level(311015) -> 60;
+
+get_need_role_level(311016) -> 62;
+
+get_need_role_level(311017) -> 64;
+
+get_need_role_level(311018) -> 66;
+
+get_need_role_level(311019) -> 68;
+
+get_need_role_level(311020) -> 70;
+
+get_need_role_level(311021) -> 72;
+
+get_need_role_level(311022) -> 74;
+
+get_need_role_level(311023) -> 76;
+
+get_need_role_level(311024) -> 78;
+
+get_need_role_level(311025) -> 80;
+
+get_need_role_level(311026) -> 82;
+
+get_need_role_level(311027) -> 84;
+
+get_need_role_level(311028) -> 86;
+
+get_need_role_level(311029) -> 88;
+
+get_need_role_level(311030) -> 90;
+
+get_need_role_level(312001) -> 32;
+
+get_need_role_level(312002) -> 34;
+
+get_need_role_level(312003) -> 36;
+
+get_need_role_level(312004) -> 38;
+
+get_need_role_level(312005) -> 40;
+
+get_need_role_level(312006) -> 42;
+
+get_need_role_level(312007) -> 44;
+
+get_need_role_level(312008) -> 46;
+
+get_need_role_level(312009) -> 48;
+
+get_need_role_level(312010) -> 50;
+
+get_need_role_level(312011) -> 52;
+
+get_need_role_level(312012) -> 54;
+
+get_need_role_level(312013) -> 56;
+
+get_need_role_level(312014) -> 58;
+
+get_need_role_level(312015) -> 60;
+
+get_need_role_level(312016) -> 62;
+
+get_need_role_level(312017) -> 64;
+
+get_need_role_level(312018) -> 66;
+
+get_need_role_level(312019) -> 68;
+
+get_need_role_level(312020) -> 70;
+
+get_need_role_level(312021) -> 72;
+
+get_need_role_level(312022) -> 74;
+
+get_need_role_level(312023) -> 76;
+
+get_need_role_level(312024) -> 78;
+
+get_need_role_level(312025) -> 80;
+
+get_need_role_level(312026) -> 82;
+
+get_need_role_level(312027) -> 84;
+
+get_need_role_level(312028) -> 86;
+
+get_need_role_level(312029) -> 88;
+
+get_need_role_level(312030) -> 90;
+
+get_need_role_level(313001) -> 32;
+
+get_need_role_level(313002) -> 34;
+
+get_need_role_level(313003) -> 36;
+
+get_need_role_level(313004) -> 38;
+
+get_need_role_level(313005) -> 40;
+
+get_need_role_level(313006) -> 42;
+
+get_need_role_level(313007) -> 44;
+
+get_need_role_level(313008) -> 46;
+
+get_need_role_level(313009) -> 48;
+
+get_need_role_level(313010) -> 50;
+
+get_need_role_level(313011) -> 52;
+
+get_need_role_level(313012) -> 54;
+
+get_need_role_level(313013) -> 56;
+
+get_need_role_level(313014) -> 58;
+
+get_need_role_level(313015) -> 60;
+
+get_need_role_level(313016) -> 62;
+
+get_need_role_level(313017) -> 64;
+
+get_need_role_level(313018) -> 66;
+
+get_need_role_level(313019) -> 68;
+
+get_need_role_level(313020) -> 70;
+
+get_need_role_level(313021) -> 72;
+
+get_need_role_level(313022) -> 74;
+
+get_need_role_level(313023) -> 76;
+
+get_need_role_level(313024) -> 78;
+
+get_need_role_level(313025) -> 80;
+
+get_need_role_level(313026) -> 82;
+
+get_need_role_level(313027) -> 84;
+
+get_need_role_level(313028) -> 86;
+
+get_need_role_level(313029) -> 88;
+
+get_need_role_level(313030) -> 90;
+
+get_need_role_level(314001) -> 32;
+
+get_need_role_level(314002) -> 34;
+
+get_need_role_level(314003) -> 36;
+
+get_need_role_level(314004) -> 38;
+
+get_need_role_level(314005) -> 40;
+
+get_need_role_level(314006) -> 42;
+
+get_need_role_level(314007) -> 44;
+
+get_need_role_level(314008) -> 46;
+
+get_need_role_level(314009) -> 48;
+
+get_need_role_level(314010) -> 50;
+
+get_need_role_level(314011) -> 52;
+
+get_need_role_level(314012) -> 54;
+
+get_need_role_level(314013) -> 56;
+
+get_need_role_level(314014) -> 58;
+
+get_need_role_level(314015) -> 60;
+
+get_need_role_level(314016) -> 62;
+
+get_need_role_level(314017) -> 64;
+
+get_need_role_level(314018) -> 66;
+
+get_need_role_level(314019) -> 68;
+
+get_need_role_level(314020) -> 70;
+
+get_need_role_level(314021) -> 72;
+
+get_need_role_level(314022) -> 74;
+
+get_need_role_level(314023) -> 76;
+
+get_need_role_level(314024) -> 78;
+
+get_need_role_level(314025) -> 80;
+
+get_need_role_level(314026) -> 82;
+
+get_need_role_level(314027) -> 84;
+
+get_need_role_level(314028) -> 86;
+
+get_need_role_level(314029) -> 88;
+
+get_need_role_level(314030) -> 90.
 
 
 %%================================================
@@ -14757,7 +16687,7 @@ get_initial_skill(1,30) -> [];
 
 get_initial_skill(1,35) -> [];
 
-get_initial_skill(2,1) -> [111001,102001];
+get_initial_skill(2,1) -> [111001,103001];
 
 get_initial_skill(2,12) -> [];
 
@@ -14767,7 +16697,7 @@ get_initial_skill(2,30) -> [];
 
 get_initial_skill(2,35) -> [];
 
-get_initial_skill(3,1) -> [116001,103001];
+get_initial_skill(3,1) -> [116001,102001];
 
 get_initial_skill(3,12) -> [];
 
@@ -14785,6 +16715,11 @@ get_can_add_skill_level(1) -> [1, 12, 25, 30, 35];
 get_can_add_skill_level(2) -> [1, 12, 25, 30, 35];
 
 get_can_add_skill_level(3) -> [1, 12, 25, 30, 35].
+
+
+%%================================================
+%%  -> 帮派技能列表 
+get_guild_skill_list() -> [301001, 301002, 301003, 301004, 301005, 301006, 301007, 301008, 301009, 301010, 301011, 301012, 301013, 301014, 301015, 301016, 301017, 301018, 301019, 301020, 301021, 301022, 301023, 301024, 301025, 301026, 301027, 301028, 301029, 301030, 302001, 302002, 302003, 302004, 302005, 302006, 302007, 302008, 302009, 302010, 302011, 302012, 302013, 302014, 302015, 302016, 302017, 302018, 302019, 302020, 302021, 302022, 302023, 302024, 302025, 302026, 302027, 302028, 302029, 302030, 303001, 303002, 303003, 303004, 303005, 303006, 303007, 303008, 303009, 303010, 303011, 303012, 303013, 303014, 303015, 303016, 303017, 303018, 303019, 303020, 303021, 303022, 303023, 303024, 303025, 303026, 303027, 303028, 303029, 303030, 304001, 304002, 304003, 304004, 304005, 304006, 304007, 304008, 304009, 304010, 304011, 304012, 304013, 304014, 304015, 304016, 304017, 304018, 304019, 304020, 304021, 304022, 304023, 304024, 304025, 304026, 304027, 304028, 304029, 304030, 305001, 305002, 305003, 305004, 305005, 305006, 305007, 305008, 305009, 305010, 305011, 305012, 305013, 305014, 305015, 305016, 305017, 305018, 305019, 305020, 305021, 305022, 305023, 305024, 305025, 305026, 305027, 305028, 305029, 305030, 306001, 306002, 306003, 306004, 306005, 306006, 306007, 306008, 306009, 306010, 306011, 306012, 306013, 306014, 306015, 306016, 306017, 306018, 306019, 306020, 306021, 306022, 306023, 306024, 306025, 306026, 306027, 306028, 306029, 306030, 307001, 307002, 307003, 307004, 307005, 307006, 307007, 307008, 307009, 307010, 307011, 307012, 307013, 307014, 307015, 307016, 307017, 307018, 307019, 307020, 307021, 307022, 307023, 307024, 307025, 307026, 307027, 307028, 307029, 307030, 308001, 308002, 308003, 308004, 308005, 308006, 308007, 308008, 308009, 308010, 308011, 308012, 308013, 308014, 308015, 308016, 308017, 308018, 308019, 308020, 308021, 308022, 308023, 308024, 308025, 308026, 308027, 308028, 308029, 308030, 309001, 309002, 309003, 309004, 309005, 309006, 309007, 309008, 309009, 309010, 309011, 309012, 309013, 309014, 309015, 309016, 309017, 309018, 309019, 309020, 309021, 309022, 309023, 309024, 309025, 309026, 309027, 309028, 309029, 309030, 310001, 310002, 310003, 310004, 310005, 310006, 310007, 310008, 310009, 310010, 310011, 310012, 310013, 310014, 310015, 310016, 310017, 310018, 310019, 310020, 310021, 310022, 310023, 310024, 310025, 310026, 310027, 310028, 310029, 310030, 311001, 311002, 311003, 311004, 311005, 311006, 311007, 311008, 311009, 311010, 311011, 311012, 311013, 311014, 311015, 311016, 311017, 311018, 311019, 311020, 311021, 311022, 311023, 311024, 311025, 311026, 311027, 311028, 311029, 311030, 312001, 312002, 312003, 312004, 312005, 312006, 312007, 312008, 312009, 312010, 312011, 312012, 312013, 312014, 312015, 312016, 312017, 312018, 312019, 312020, 312021, 312022, 312023, 312024, 312025, 312026, 312027, 312028, 312029, 312030, 313001, 313002, 313003, 313004, 313005, 313006, 313007, 313008, 313009, 313010, 313011, 313012, 313013, 313014, 313015, 313016, 313017, 313018, 313019, 313020, 313021, 313022, 313023, 313024, 313025, 313026, 313027, 313028, 313029, 313030, 314001, 314002, 314003, 314004, 314005, 314006, 314007, 314008, 314009, 314010, 314011, 314012, 314013, 314014, 314015, 314016, 314017, 314018, 314019, 314020, 314021, 314022, 314023, 314024, 314025, 314026, 314027, 314028, 314029, 314030].
 
 
 %%================================================

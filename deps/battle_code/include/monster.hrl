@@ -1,8 +1,10 @@
 %% outdoor monster header file
 
--define(MON_IDLE,      0).
--define(MON_IN_BATTLE, 1).
--define(MON_DEAD,      2).
+-define(MON_IDLE,          0).
+-define(MON_IN_BATTLE,     1).
+-define(MON_DEAD,          2).
+-define(MON_IDLE_FLY,      3).
+-define(MON_IN_BATTLE_FLY, 4).
 
 -define(ETS_MONSTER, ets_monster).
 

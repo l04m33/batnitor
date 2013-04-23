@@ -10,7 +10,7 @@
 
 -define(LOG_PATH,"sg.log").
 
--ifdef(debug).
+%%-ifdef(debug).
 	-define(DEBUG(Tag,Format, Args),
     	dragon_logger:debug_msg(Tag,?MODULE, ?LINE,erlang:get(id),Format, Args)).
 
@@ -29,14 +29,14 @@
 	-define(WARNING(Tag,Format),
     	dragon_logger:warning_msg(Tag,?MODULE,?LINE,erlang:get(id),Format, [])).
 
--else.
-	-define(DEBUG(Tag,Format, Args), ok).
-	-define(DEBUG(Tag,Format), ok   ).
-	-define(INFO(Tag,Format, Args), ok).
-	-define(INFO(Tag,Format), ok).
-	-define(WARNING(Tag,Format, Args), ok).
-	-define(WARNING(Tag,Format), ok).
--endif.
+%%-else.
+%%	-define(DEBUG(Tag,Format, Args), ok).
+%%	-define(DEBUG(Tag,Format), ok   ).
+%%	-define(INFO(Tag,Format, Args), ok).
+%%	-define(INFO(Tag,Format), ok).
+%%	-define(WARNING(Tag,Format, Args), ok).
+%%	-define(WARNING(Tag,Format), ok).
+%%-endif.
 			      
 -define(ERR(Tag,Format, Args),
     dragon_logger:error_msg(Tag,?MODULE,?LINE,erlang:get(id),Format, Args)).

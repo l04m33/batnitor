@@ -31,6 +31,7 @@ get_seed() ->
 %% --- 服务器内部实现 ---------------------------------
 
 init([]) ->
+	erlang:process_flag(trap_exit, true),
     State = #state{},
     {ok, State}.
 
@@ -48,6 +49,10 @@ handle_call(_Request, _From, State) ->
 
 handle_cast(_Msg, State) ->
     {noreply, State}.
+
+handle_info({'EXIT', _, Reason}, State) ->
+    ?INFO(rand, "exit:~w", [Reason]),
+    {stop, Reason, State};
 
 handle_info(_Info, State) ->
     {noreply, State}.

@@ -1,4 +1,5 @@
-	
+-include("common.hrl").
+
 -record(guaji,{
 	gd_AccountID = 0,
 	gd_Times = 0,
@@ -23,3 +24,12 @@
 
 -define(DailyGuajiTimes,200).  %% 日常挂机免费次数区别于VIP模块中的免费次数,这字段除了每天重置还作记录购买次数用
 -define(AutoBuyTimes, 20).
+
+%% 这些地图中不扣除挂机次数
+-define(GUAJI_EXCEPTION_SCENE_TYPES, 
+        [?SCENE_DUNGEON, 
+         ?SCENE_BOSS, 
+         ?SCENE_MARSTOWER, 
+         ?SCENE_STAGE, 
+         ?SCENE_CAVE]).
+

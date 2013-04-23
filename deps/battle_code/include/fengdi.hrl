@@ -2,12 +2,15 @@
 %% ========================== 有关种植系统的 =============================
 %% 种植状态
 -define(PLANTING_NO,		1).		%% 未种植
--define(PLANTING_MATURE,	2).		%% 种子已成熟
+-define(PLANTING_GROWN,     2).     %% 生长期
+-define(PLANTING_MATURE,	4).		%% 种子已成熟
+-define(PLANTING_GANHE,     3).     %% 干涸期
 
 %% 种子类型
 -define(SEED_EXP,			1).		%% 经验种子
 -define(SEED_SILVER,		2).		%% 银币种子
-
+-define(SEED_JUNGONG,       3).     %% 军功种子
+-define(SEED_DAOJU,         4).     %% 道具种植
 %% 种子品质
 -define(SEED_QUALITY_1,		1).		%% 普通种子
 -define(SEED_QUALITY_2,		2).		%% 优秀种子
@@ -29,13 +32,26 @@
 -define(LOG_OP_SUCCESS,			1).	%% 操作成功
 -define(LOG_OP_FAIL,			0).	%% 操作失败
 
+-define(MATURE_SEED_GANHE_TIME, 60*60). %% 成熟植物枯萎周期
+
 %% 浇水多少次土地可以变成肥沃
 -define(FERTILITY_TIMES,	5).
 
+%% 土地每次种植的cd
+-define(LAND_CD_TIME, 4*60*60).
+
 %% 好友封底信息列表每页显示页数
--define(FRIEDN_WATER_INFO_ENTRIES_PER_PAGE, 9).
+-define(FRIEDN_WATER_INFO_ENTRIES_PER_PAGE, 10).
 %% 每天最多浇水次数
 -define(MAX_WATER_PERDAY,   20).
+
+%% 每天给一个玩家最多浇水次数
+-define(MAX_WATER_PLAYER_TIMES,   2).
+
+%% 每次对封地操作获得的经验
+-define(FENGDI_ADD_EXP_PER_OPRETA,   1).
+
+-define(ITME_SEED_GOLD,   617).
 
 %% 土地的最大数量
 -define(MAX_LAND,			6).
@@ -48,13 +64,19 @@
 -record(fengdi_data, {
 	gd_accountId     = 0,
 	exp_seed_quality = ?SEED_QUALITY_1,			%% 当前刷新出来的经验种子品质
-	sil_seed_quality = ?SEED_QUALITY_1			%% 当前刷新出来的银币种子品质
+	sil_seed_quality = ?SEED_QUALITY_1,			%% 当前刷新出来的银币种子品质
+    jun_seed_quality = ?SEED_QUALITY_1,         %% 当前刷新出来的军功种子品质
+    dao_seed_quality = ?SEED_QUALITY_1,         %% 当前刷新出来的道具种子品质
+    fengdi_exp = 0
 	}).
 
 -record(fengdi_data_types, {
 	gd_accountId     = {integer},
 	exp_seed_quality = {integer},
-	sil_seed_quality = {integer}
+	sil_seed_quality = {integer},
+    dao_seed_quality = {integer},
+    jun_seed_quality = {integer},
+    fengdi_exp = {integer}
 	}).
 
 %% 为了约束玩家一天最大浇水次数（目前是50次）
@@ -71,7 +93,7 @@
 (
     waterCounterTypes,  
     {
-        playerd = {integer},
+        playeId = {integer},
         waterCount = {integer},
         lastWaterTime = {integer}
     }
@@ -105,7 +127,6 @@
 		seed_type      = 0,					%% 种子类型
 		seed_quality   = 0,					%% 种子品质
 		seed_data      = 0,					%% 种子相关的数据（目前只有种子为经验种子时，这个数据为武将id）
-		watering_times = 0,					%% 浇水次数
 		update_time    = 0					%% 浇水更新时间
 	}).
 
@@ -116,7 +137,6 @@
 		seed_type      = {integer},
 		seed_quality   = {integer},
 		seed_data      = {integer},
-		watering_times = {integer},
 		update_time    = {integer}
 	}).
 %% =======================================================================

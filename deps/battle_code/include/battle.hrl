@@ -1,4 +1,4 @@
--define(BATTLE_FIELD_SIZE,        12).
+-define(BATTLE_FIELD_SIZE,        18).
 -define(BATTLE_ROW_SIZE,           3).
 -define(BATTLE_WAIT_CLIENT_INIT,    data_battle:get_wait_client_init_time()).
 -define(BATTLE_WAIT_BEGIN,     data_battle:get_wait_begin_time()).
@@ -8,7 +8,7 @@
 -define(BATTLE_WAIT_QUIT,      data_battle:get_wait_quit_time()).
 -define(UNDEFINED, undefined).
 
--define(BOSS_POSITION, 8).
+-define(BOSS_POSITION, 11).
 
 %==========================================================================================
 % battle type
@@ -23,6 +23,12 @@
 -define(BATTLE_TYPE_SLAVE,              7).
 -define(BATTLE_TYPE_MARS_TOWER,			8).
 -define(BATTLE_TYPE_STAGE,				9).
+-define(BATTLE_TYPE_TERRITORY_WAR,		10).
+-define(BATTLE_TYPE_CAVE,				11).
+-define(BATTLE_TYPE_PK,				    12).
+-define(BATTLE_CROSS_PK,                 13).
+-define(BATTLE_TYPE_CALL_HERO,			14).
+-define(BATTLE_TYPE_DUNGEON,			15).
 
 -define(BATTLE_TYPE_PLOTTED,    127).   % 特殊类型：剧情战斗
 
@@ -36,8 +42,7 @@
 -define(BATTLE_SKILL_STAT_IN_CD,            4).
 
 -define(BATTLE_OFFLINE_PVP_TYPES, 
-        [?BATTLE_TYPE_ARENA,
-         ?BATTLE_TYPE_BOSS,
+        [?BATTLE_TYPE_ARENA, ?BATTLE_TYPE_BOSS,
          ?BATTLE_TYPE_CHALLENGE_KING,
          ?BATTLE_TYPE_MARS_TOWER_KING,
          ?BATTLE_TYPE_SLAVE]).
@@ -115,8 +120,23 @@
 -define(BUFF_ATT_ENHANCE, 46).   %% 越战越勇
 -define(BUFF_ATT_WORSEN,  47).   %% 越战越挫
 
+-define(BUFF_MANA_ADJUST, 48).   %% 调整怒气
+
+-define(BUFF_EXTRA_CRIT_RATE, 49).  %% 额外暴击概率
+
+-define(BUFF_DMG_SHIELD, 50).    %% 护盾
+
 
 -define(BUFF_TEST,       12).
+
+
+
+
+-define(G_BUFF_ATT_ENHANCE, 1).
+-define(G_BUFF_NEWBIE_MP,   2).
+
+-define(G_BUFF_SHOW,   1).
+-define(G_BUFF_HIDE,   0).
 
 
 %=============================================================================================
@@ -149,6 +169,8 @@
 
 -define(BATTLE_PLOT_TRIGGER_ROUNDS, 1).
 -define(BATTLE_PLOT_TRIGGER_DEATH,  2).
+
+-define(CACHE_BATTLE_SKILL_ORDER_REF, cache_util:get_register_name(battle_skill_order)).
 
 %=============================================================================================
 % battle log
@@ -247,6 +269,7 @@
 	 	monster,                %% MonsterID
         monster_hp      = ?HP_MAX,  %% Monster HP, can be a list or an integer
         plot            = [],   %% [#battle_plot{}]
+        off_line_list   = [],
 		maketeam        = false,%% true | false
 		checklist       = [],   %% [check_spec()]
 		caller,                 %% caller module's name or pid
@@ -323,7 +346,9 @@
 		is_lead       = false,
 		is_alive      = true,
         protectors    = [],
-        avatar_info   = []
+        avatar_info   = [],
+        official_att_enhance = 0,
+        ai            = []
 	}
 ).
 
@@ -338,6 +363,18 @@
 		exp,	  %% Experience 经验,
 		silver,
 		drop_type = unified
+	}			
+).
+
+%%节日掉落
+-record(mon_fest,
+	{
+	 	id,       		%% monster group ID
+		fest_subtype,	%% 节日子类型
+		fest_type,		%% 节日类型
+		items,   		%% [{ItemID, ItemCount, DropRate}]
+		exp,	  		%% 节日获得的额外经验
+		silver    		%% 节日获得的额外铜币
 	}			
 ).
 
@@ -369,8 +406,10 @@
       	godhood, 
       	att_count,
  		skills,
- 		star = 0
-	}			
+ 		star = 0,
+        ai_id = 0,
+        ai_param = {}
+	}
 ).
 
 
@@ -382,8 +421,9 @@
 		online      = true,  %% true | false
 		lead,
 	 	mer_list,
-        ready = false
-	}		
+        ready = false,
+        g_buffs = []
+	}
 ).
 
 -record(buff,
@@ -396,8 +436,9 @@
 		duration,            %% integer()
 		settle = pre,        %% buff_settle()
 		by_rate = ?UNDEFINED,%% boolean()
-        add_method = override %% override | overlay | noop
-	}		
+        add_method = override, %% override | overlay | noop
+        in_effect = true
+	}
 ).
 
 -record(attack_spec,
@@ -464,8 +505,10 @@
 		hp_absorb  = 0,     %% drained by attacker
 		mp_absorb  = 0,     %% drained by attacker
 		hp_rebound = 0,
-		hp_counter = 0      %% counter strike
-	}			
+		hp_counter = 0,     %% counter strike
+        dmg_absorbed = 0,
+        counter_dmg_absorbed = 0
+	}
 ).
 
 -record(buff_info,
@@ -501,7 +544,9 @@
 		is_win,			%% boolean()
 		mon_id,         %% integer() | undefined
 		type,           %% battle_type
+        battle_pid,
 		hp_list = [],        %% winner's hp list :: [{Pos, Hp}]
+        full_hp_list = [],
 		statistic,		%% #battle_statistic{}
 	    callback
 	}		
@@ -534,4 +579,12 @@
         slot = 0
 	}
 ).
+
+-record(battle_skill_order, {
+    gd_accountID = 0,
+    order_list = []}).
+
+-record(battle_skill_order_types, {
+    gd_accountID = {integer},
+    order_list = {term}}).
 

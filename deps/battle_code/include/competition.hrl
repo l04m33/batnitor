@@ -18,7 +18,8 @@
 					  gd_IsCloaking  = false,			%% 是否隐身
 					  gd_IsDouble    = false,			%% 是否使用双倍积分丹
 					  gd_DoubleTimes = 0,				%% 双倍丹使用次数
-					  gd_IsFreeze    = false			%% 是否使用定身丹
+					  gd_IsFreeze    = false,			%% 是否使用定身丹
+					  gd_LastTime    = 0				%% 上次战斗时间
 					 }).
 
 %% 比武场全局状态
@@ -123,3 +124,8 @@
 -define(COMP_BALL_N,			0).	%% 非绣球
 -define(COMP_TEAM_RED,			1).	%% 红队
 -define(COMP_TEAM_BLUE,			2).	%% 蓝队
+
+-define(COMP_MAX_ROOM_SIZE, 80).
+-define(COMP_MAX_ROOM_NUM, 100).
+-define(COMP_SMALL_ROOM_THRESHOLD, 20).
+

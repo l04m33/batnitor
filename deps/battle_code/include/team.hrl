@@ -22,7 +22,8 @@
 
 			   scene_id = 0,
 			   item_list = [],		%% list of item_pick_info.
-			   npc_id = 0
+			   npc_id = 0,
+               formation_info = []
 			   }).
 
 -record(team_index,{id = 0,

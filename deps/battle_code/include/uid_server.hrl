@@ -4,6 +4,7 @@
 
 -define(UID_SKILL, 1).					%% 用于技能id分配
 -define(UID_ITEMS, 2).					%% 用于物品ID分配
+-define(UID_TRADE, 3).					%% 用于交易行ID分配
 
 
 -record (uid, {

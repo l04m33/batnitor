@@ -7,6 +7,9 @@
 -define(TASK_TYPE_BRANCH,   2).
 -define(TASK_TYPE_CYCLIC_MIN,   11).
 -define(TASK_TYPE_CYCLIC_MAX,   19).
+-define(TASK_JUNGONG_OPEN_LEVEL,    lists:nth(3,tuple_to_list(data_enable_system:get(26)))).
+-define(TASK_TRACE_OPEN_LEVEL,      lists:nth(3,tuple_to_list(data_enable_system:get(44)))).
+-define(TASK_JUNLIANG_OPEN_LEVEL,      lists:nth(3,tuple_to_list(data_enable_system:get(58)))).
 
 -define(TASK_TYPE_CYCLIC_SCHOOL, 11).
 -define(TASK_TYPE_CYCLIC_GANK,   12).
@@ -21,6 +24,7 @@
 -define(TASK_REWARD_GANG_POINT, 9).         %% 'GANG' = 帮派
 -define(TASK_REWARD_DAILY_POINT,    10).    %% 日常积分
 -define(TASK_REWARD_MONEY,  11).            %% 金钱
+-define(TASK_REWARD_JUNLIANG,12).           %% 军粮
 
 -record(task_reward,
     {
@@ -28,7 +32,7 @@
                     ?TASK_REWARD_EXP | ?TASK_REWARD_ITEM | 
                     ?TASK_REWARD_RECRUIT | ?TASK_REWARD_MAP |
                     ?TASK_REWARD_MERIT | ?TASK_REWARD_SCHOOL_POINT |
-                    ?TASK_REWARD_GANG_POINT | ?TASK_REWARD_DAILY_POINT,
+                    ?TASK_REWARD_GANG_POINT | ?TASK_REWARD_DAILY_POINT |?TASK_REWARD_JUNLIANG,
         value   :: any()    %% depends on the 'type' field
     }).
 
@@ -86,23 +90,27 @@
 -record(task_jungong,
     {
         gd_accountID = 0,
-        gd_taskID = 0,
-        gd_taskStar = 0,
+        gd_taskID    = 0,
+        gd_taskStar  = 0,
         gd_taskState = 0,   %% 0未领取，1领取，2完成
         gd_finishNum = 0,
-        gd_taskNum = 0,     %% 每天任务数
-        gd_lastTime = 0
+        gd_taskNum   = 0,     %% 每天任务数
+        gd_lastTime  = 0,
+        gd_totStar   = 0,     %% 星星进度
+        gd_boxTake   = 0      %% 已领的箱子数
     }).
 
 -record(task_jungong_types,
     {
         gd_accountID = {integer},
-        gd_taskID = {integer},
-        gd_taskStar = {integer},
-        gd_taskState = {integer},   %% 0未领取，1领取，2完成
+        gd_taskID    = {integer},
+        gd_taskStar  = {integer},
+        gd_taskState = {integer},     %% 0未领取，1领取，2完成
         gd_finishNum = {integer},
-        gd_taskNum = {integer},     %% 每天任务数
-        gd_lastTime = {integer}
+        gd_taskNum   = {integer},     %% 每天任务数
+        gd_lastTime  = {integer},
+        gd_totStar   = {integer},     %% 星星进度
+        gd_boxTake   = {integer}      %% 已领的箱子数
     }).
 
 -record(task_trace,{

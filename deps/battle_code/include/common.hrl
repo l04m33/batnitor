@@ -4,6 +4,8 @@
 -include("chief_disciple.hrl").
 -include("rank.hrl").
 
+%% -include("zhentu.hrl").
+-include("cross.hrl").
 -include("soul_ball.hrl").
 -include("cool_down.hrl").
 -include("temp_bag.hrl").
@@ -30,7 +32,7 @@
 -include("counter.hrl"). 
 -include("per_counter.hrl").
 -include("sword.hrl").
-
+-include("cave.hrl").
 -include("answer.hrl").
 
 -include("rush_rank.hrl").
@@ -78,6 +80,17 @@
 -include("online_effect.hrl").
 -include("title.hrl").
 -include("guild_hunting.hrl").
+-include("flower.hrl").
+-include("week_counter.hrl").
+-include("exp_retrieve.hrl").
+-include("territory_war.hrl").
+-include("stronger.hrl").
+-include("zhenfa.hrl").
+-include("hero_soul.hrl").
+-include("market.hrl").
+-include("fest.hrl").
+-include("trade.hrl").
+-include_lib("stdlib/include/ms_transform.hrl").
 
 %%安全校验
 -define(TICKET, "SDFSDESF123DFSDF").
@@ -94,7 +107,7 @@
 %%tcp_server监听参数
 -define(TCP_OPTIONS, [binary, {packet, 0}, {active, false}, 
 					  {reuseaddr, true}, {nodelay, false}, 
-					  {delay_send, true}, {send_timeout, 50000}, 
+					  {delay_send, true}, {send_timeout, 10000}, 
 					  {keepalive, true}, {exit_on_close, true}]).
 
 %%这张表用来维护server唯一的常量
@@ -110,7 +123,13 @@
 -define(G_SERVER_MARKET_END_TIME, 5). %% 商城抢购结束时间
 -define(G_SERVER_STAGE, 6). %% 挑战魂将(闯关)
 -define(G_SERVER_DEFENCE_PLAYER_NUM, 7).    %% 上次参加群魔乱舞的人数
- 
+-define(G_SERVER_DEFENCE_HISTORY_KING_INFO, 8).    %% 群魔乱舞历届国王的信息，最多保存4个（在mod_defence里做）
+-define(G_SERVER_FIRST_GUILD, 9).    %% 上次领地战胜利公会
+-define(G_SERVER_WORLD_BOSS_OFFLINE, 10).    %% 世界boss离线卡使用情况
+-define(G_SERVER_DUKANG_LUCKY, 11). %% 使用杜康酒抽奖历史记录
+-define(G_SERVER_YINGXIONG_LUCKY, 12). %% 使用英雄酒抽奖历史记录
+-define(G_SERVER_CROSS_WEEK_AWARD, 13). %% 周奖记录
+
 -record (account_id_map, {account = "", id = 0}).
 -record (rolename_account_map, {rolename = "", account = ""}).
 -record (old_player_account_map, {gd_account = ""}).

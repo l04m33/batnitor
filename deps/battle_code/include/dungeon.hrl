@@ -1,5 +1,5 @@
 -define(TIMES_TO_BUG, 			5).	%% 副本可以购买的进入次数
--define(MAX_AWARD_ID, 			8).	%% 转盘上最大的物品个数
+-define(MAX_AWARD_ID, 			5).	%% 转盘上最大的物品个数
 
 -define(DUNGEON_NORMAL,			1). %% 普通副本
 -define(DUNGEON_DIFFICULT,		2). %% 精英副本
@@ -40,7 +40,8 @@
 	key  = {0,0},   %% {playerid,dungeonid}
 	times      = 0,
 	end_time   = 0,
-	timer_ref  = none
+	timer_ref  = none,
+	award_info = []
 	}).
 
 -record (dungeon_state, {
@@ -55,8 +56,10 @@
 	total_damage_recv = 0,		%% 副本打完时的个人承受的总伤害(每次累积)
 	seckill			  = 0,		%% 秒杀数据
 	extra_process	  = [],		%% 特殊怪
-	award_id          = -1
-	%% 转盘奖励id，-1：副本没完成，0：副本完成但没产生奖励，> 0：奖励产生了
+	award_id          = -1,		%% 转盘奖励id，-1：副本没完成，0：副本完成但没产生奖励，> 0：奖励产生了
+	silver			  = 0,
+	exp 			  = 0,
+	items 			  = []
 	}).	
 
 -record(dungeon_state_types, {
@@ -71,7 +74,10 @@
 	total_damage_recv = {integer},
 	seckill			  = {integer},	
 	extra_process	  = {term},	
-	award_id          = {integer}
+	award_id          = {integer},
+	silver			  = {integer},
+	exp 			  = {integer},
+	items 			  = {term}
 	}).
 
 -record (dungeon_process, {
@@ -80,4 +86,24 @@
 	y                = 0,
 	scope            = 0,
 	monster_group_id = 0
+	}).
+
+-record(dungeon_base,{
+	gd_accountId   = 0,
+	gd_last_time   = 0,
+	gd_enter_times = 0,
+	gd_buy_times   = 0,
+	gd_enter_times_2 = 0,
+	gd_buy_times_2   = 0,
+	gd_award_info 	= []
+	}).
+
+-record(dungeon_base_types,{
+	gd_accountId   = {integer},
+	gd_last_time   = {integer},
+	gd_enter_times = {integer},
+	gd_buy_times   = {integer},
+	gd_enter_times_2 = {integer},
+	gd_buy_times_2   = {integer},
+	gd_award_info	= {term}
 	}).

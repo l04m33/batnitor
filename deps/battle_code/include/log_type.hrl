@@ -298,6 +298,9 @@
 -define(EQUIP_LOG_TYPE_INLAY,			7).			%% 镶嵌宝石
 -define(EQUIP_LOG_TYPE_BACKOUT,			8).			%% 拆卸宝石
 -define(EQUIP_LOG_TYPE_DEL,				9).			%% 装备消失
+-define(EQUIP_LOG_TYPE_FASHION,			10).		%% 更换时装（变成另一个装备）
+-define(EQUIP_LOG_TYPE_BEINHERIT,		11).		%% 被传承（传承中的低级装备）
+-define(EQUIP_LOG_TYPE_INHERIT,			12).		%% 传承（传承中的高级装备）
 
 %%=================================来源=========================================
 -define(FROM_MAIL,	0).
@@ -342,6 +345,17 @@
 -define(FROM_GUILD_HUNTING,     10036).		%% 帮派活动获得
 -define(FROM_STAGE,				10037).		%% 在挑战魂将中获得
 -define(FROM_RUSH_RANK,         10038).     %% 在冲榜活动获得
+-define(FROM_ANSWER,			10039).		%% 答题活动获得
+-define(FROM_EXP_RETRIEVE,      10040).		%% 经验找回
+-define(FROM_CAVE,				10041).		%% 藏宝洞获得
+-define(FROM_CROSS,             10042).     %% 跨服
+-define(FROM_GUILD_HUNTING_TARGET, 10043).  %% 公会打猎目标获得 
+-define(FROM_RESOLVE_PENDANT,	10044).		%% 分解坐骑挂饰
+-define(FROM_LUCKY,				10045).		%% 抽奖获得
+-define(FROM_FEST,              10046).     %% 节日活动获得
+-define(FROM_FEST_EXCHANGE,     10047).     %% 节日活动兑换
+-define(FROM_TRADE,				10048).		%% 交易行获得
+-define(FROM_DUNGEON_CHANGE,	10049).		%% 副本兑换获得
 
 %% 常用操作
 -define(FROM_CHARGE,			11001).		%% 充值获得
@@ -363,6 +377,25 @@
 -define(FROM_EMPLOY,			11017).		%% 招募获得
 -define(FROM_BUY_BACK,			11018).		%% 回购获得
 -define(FROM_ZHUAN_YUN,			11019).		%% 转运获得
+-define(FROM_FLOWER,			11020).		%% 好友送花获得
+-define(FROM_CHANGE_SCHOOL,		11021).		%% 师门积分兑换获得
+-define(FROM_CHANGE_HONOUR,		11022).		%% 比武积分兑换获得
+-define(FROM_CHANGE_KING_POINT,	11023).		%% 群魔乱舞积分兑换获得
+-define(FROM_CHANGE_SWORD,		11024).		%% 神剑积分兑换获得
+-define(FROM_CHANGE_MANOR,		11025).		%% 领地战积分兑换获得
+-define(FROM_CHANGE_HUNT,		11027).		%% 狩猎积分兑换获得
+-define(FROM_CHANGE_CROSS,		11028).		%% 天梯跨服积分兑换获得
+-define(FROM_CHANGE_CAVE,		11029).		%% 藏宝洞积分兑换获得
+-define(FROM_WEAPON,            11030).     %% 装备卷轴兑换获得
+-define(FROM_CHANGE_TOWER,		11031).		%% 爬塔积分兑换获得
+-define(FROM_CHANGE_ARENA,		11032).		%% 竞技场积分兑换获得
+-define(FROM_PRAY_RAIN,			11033).		%% 祈雨活动奖励礼包 
+-define(FROM_QINGMING_SEED,		11034).		%% 清明种子兑换
+-define(FROM_LEVY_JUNLIANG,		11035).		%% 征收军粮
+-define(FROM_JUNLIANG,			11036).		%% 军粮升级中获得
+-define(FROM_MAY,				11037).		%% 五一活动获得
+
+
 
 %%物品类操作
 -define(FROM_STONE_BACKOUT,		12001).		%% 宝石摘除获得
@@ -376,6 +409,10 @@
 -define(FROM_COMPOSE,			12009).		%% 宝石合成获得
 -define(FROM_CONVERT,			12010).		%% 宝石转化获得
 -define(FROM_CARVE,				12011).		%% 宝石雕刻获得
+-define(FROM_CHANGE_WEAPON,		12012).		%% 武器转化获得
+-define(FROM_INHERIT,			12013).		%% 装备传承获得
+-define(FROM_DECOMPOSE,			12014).		%% 装备分解获得
+-define(FROM_KAIFU,				12015).		%% 元宝计划获得
 
 -define(ITEM_ADD_STACK,			13012).		%% 堆叠获得
 
@@ -383,12 +420,19 @@
 -define(FROM_FRIEND,			14001).		%% 好友获得
 -define(FROM_GUILD,				14002).		%% 公会获得
 -define(FROM_SYSTEM,			14003).		%% 系统获得
+-define(FROM_TERRITORY_WAR,		14004).		%% 领地战获得
+-define(FROM_WORLD_BOSS,		14005).		%% 世界boss获得
 
 %%=================================去向=========================================
 %% 系统
 -define(USE_XUNXIAN,			20001).		%% 用于寻仙
 -define(USE_WEALTH,				20002).		%% 用于招财
 -define(USE_LOTTERY,			20003).		%% 用于投壶
+-define(USE_VIP,				20004).		%% 用于VIP
+-define(USE_CAVE,				20005).		%% 用于藏宝洞
+-define(USE_JIANGHUN,			20006).		%% 用于将魂
+-define(USE_TRADE,				20007).		%% 用于交易行
+-define(USE_UP_LEVEL,			20008).		%% 用于升级佣兵
 
 %% 日常
 -define(USE_FINISH_TASK,		21001).		%% 用于自动完成任务
@@ -402,12 +446,6 @@
 -define(USE_BUY_HORSE_EQUIP,	21009).		%% 用于购买时装
 -define(USE_QIHUN_CD,			21010).		%% 用于器魂的清cd
 -define(USE_UP_PINJIE,			21011).		%% 用于提升器魂品阶
--define(USE_DUNGEON_TIMES,		21006).		%% 用于购买副本次数
--define(USE_OPEN_LAND,			21007).		%% 用于开垦土地
--define(USE_REFRESH_SEED,		21008).		%% 用于刷新种子
--define(USE_PLANTING_CD,		21009).		%% 用于清除种植cd
--define(USE_WORK_CD,			21010).		%% 用于清除劳作cd
--define(USE_BUY_GUAJI,			21011).		%% 用于挂机
 -define(USE_REFRESH_BIAOCHE,	21012).		%% 用于刷新镖车
 -define(USE_ZHUANYUN,			21013).		%% 用于押镖转运
 -define(USE_RESET_TOWER,		21014).		%% 用于重置爬塔
@@ -419,8 +457,8 @@
 -define(USE_COMP_CD,			21020).		%% 用于清除比武cd
 -define(USE_COMP_REVIE,			21021).		%% 用于使用比武复活丹
 -define(USE_TOWER_AUTO_FINISH,	21022).		%% 用于爬塔挂机的加速
--define(USE_EVOKE_DRESS,		21023).		%% 用于幻化外形装扮（包括坐骑、翅膀等）
--define(USE_ADD_DRESS_EXP,		21024).		%% 用于升级外形装扮（包括坐骑、翅膀等）
+-define(USE_EVOKE_DRESS,		21023).		%% 用于幻化坐骑
+-define(USE_ADD_DRESS_EXP,		21024).		%% 用于坐骑升级
 -define(USE_UP_VIP,				21025).		%% 用于升级VIP
 -define(USE_CHUANGONG,			21026).		%% 用于传功
 -define(USE_SPEED_DUNGEON,		21027).		%% 用于加速副本挂机
@@ -437,10 +475,27 @@
 -define(USE_MARKET,				21038).		%% 用于商城购买
 -define(USE_TRACETASK,			21039).		%% 用于悬赏任务
 -define(USE_RESET_STAGE,		21040).		%% 用于重置挑战魂将
--define(USE_GUILD_RECRUIT,        21041).     %% 用于帮派招募
+-define(USE_GUILD_RECRUIT,      21041).     %% 用于帮派招募
 -define(USE_SOUL_BALL,          21042).     %% 用于猎魂
--define(USE_GUILD_DONATE,          21043).     %% 用于工会捐款
+-define(USE_GUILD_DONATE,       21043).     %% 用于工会捐款
 -define(USE_GUILD_HUNTING,      21044).     %% 用于帮派活动（买箭、用箭）
+-define(USE_BUY_FLOWER,         21045).     %% 用于购买鲜花
+-define(USE_RETRIEVE_EXP,       21046).     %% 用于找回经验
+-define(USE_ROLE_FOSTER,        21047).     %% 用于培养属性
+-define(USE_ROLE_TALENT,        21048).     %% 用于培养天赋
+-define(USE_ZHENFA,             21049).     %% 用于研习阵法
+-define(USE_DUNGEON_TIMES,		21050).		%% 用于购买副本次数
+-define(USE_OPEN_LAND,			21051).		%% 用于开垦土地
+-define(USE_REFRESH_SEED,		21052).		%% 用于刷新种子
+-define(USE_PLANTING_CD,		21053).		%% 用于清除种植cd
+-define(USE_WORK_CD,			21054).		%% 用于清除劳作cd
+-define(USE_BUY_GUAJI,			21055).		%% 用于挂机
+-define(USE_ADD_DRESS_ADVANCE_EXP,21056).	%% 用于坐骑升阶
+-define(USE_IDENTIFY_PEADANT,	21057).		%% 用于鉴定坐骑挂饰
+-define(USE_JUNLIANG,			21058).		%% 用于征收军粮
+-define(USE_ADVANCE_FASHION,	21059).		%% 用于时装进阶
+%% -define(CLEAN_ARENA_BATTLE_CD,	21059).		%% 用于清除竞技场CD（原31006）
+%% -define(BUY_ARENA_CHALLENGE_TIMES, 21060).	%% 用于购买竞技场次数(原31007)
 
 %% 装备
 -define(USE_INTEN,				22001).		%% 用于装备强化
@@ -455,6 +510,10 @@
 -define(USE_COMPOSE,			22010).		%% 用于宝石合成
 -define(USE_CONVERT,			22011).		%% 用于宝石转化
 -define(USE_CARVE,				22012).		%% 用于宝石雕刻
+-define(USE_CHANGE_WEAPON,		22013).		%% 用于武器转换
+-define(USE_INHERIT,			22014).		%% 用于装备传承
+-define(USE_DECOMPOSE,			22015).		%% 用于装备分解
+
 
 -define(ITEM_DEC_STACK,				23001).		%% 堆叠后减少
 -define(ITEM_DEC_USE,				23002).		%% 使用后减少
@@ -462,6 +521,7 @@
 -define(ITEM_DEC_SPLIT,				23007).		%% 拆分后减少
 -define(ITEM_DEC_STUFF_USE,			23008).		%% 扣除材料
 
+-define(ITEM_DEL_TIME_OUT,			24001).		%% 限时物品到时间删除
 -define(ITEM_DEL_USE,				24002).		%% 使用删除
 -define(ITEM_DEL_FRAGMANT_COMPOS,	24005).		%% 碎片合成删除
 -define(ITEM_DEL_STACK,				24008).		%% 堆叠删除

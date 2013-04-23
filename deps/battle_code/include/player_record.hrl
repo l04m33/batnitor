@@ -1,6 +1,10 @@
 -ifndef(__PLAYER_RECORD_HRL__).
 -define(__PLAYER_RECORD_HRL__, 1).
 
+-define(COMMON_PROPERTY_CROSS_FREND_INVITE, 1).
+
+-define(COMMON_PROPERTY_CROSS_ALL_INVITE, 2).
+
 % %% 玩家的相关数据记录
 % -record(player, {
 % 	gd_accountID      = 0,
@@ -20,14 +24,13 @@
 	gd_AccessMap 	  = {term}
 	}).
 
-
-
-
 %%socket进程维护的信息,包含各模块调用所需pid
 -record(player_status,{
 			id                = 0,
 			
 			%% 与进程相关的
+            cross_pid         = none,       %% 跨服pvp
+			cave_pid		  = none, 		%% 藏宝洞
             rush_rank_pid     = none,       %% 冲榜活动
 			soul_ball_pid     = none,       %% 魂珠系统
 			notice_pid        = none,       %% 事件提醒
@@ -38,6 +41,7 @@
 			reader_pid        = none,
 			guild_pid         = none,
 			scene_pid         = none,		%% 场景进程
+			economy_pid		  = none,		%% 经济进程
 			mer_pid           = none,     	%% 佣兵进程
 			send_pid          = 0,	    	%% 玩家的广播进程ID列表
 			move_queue_pid    = none, 		%% 移动包的发送队列进程
@@ -65,6 +69,7 @@
 			arena_pid         = none,		%% 竞技场模块
 			guaji_pid		  = none,		%% 挂机模块
 			sword_pid		  = none,		%% 神剑模块
+			trade_pid		  = none,		%% 交易行模块
 			answer_pid		  = none,		%% 问答活动模块
 			junwei_role_pid   = none,		%% 军威将领模块
 			yunbiao_pid       = none,        %% 运镖模块
@@ -80,7 +85,19 @@
 			stage_pid		  = none,		%% 挑战魂将(闯关)
 			online_effect_pid = none,		%% 在线效果持续时间
 			online_award_pid  = none,		%% 在线奖励
-			title_pid         = none		%% 称号模块
+			title_pid         = none,		%% 称号模块
+			territory_war_pid = none,		%% 领地战
+			flower_pid        = none,		%% 送花模块
+			exp_retrieve_pid  = none,       %% 经验找回
+			stronger_pid      = none,		%% 我要变强
+			kaifu_pid         = none,		%% 开服活动
+			pk_pid            = none,		%% 切磋系统
+			zhenfa_pid        = none,		%% 阵法系统
+			hero_soul_pid     = none,		%% 将魂系统
+			lucky_pid		  = none,  		%% 抽奖模块
+			junliang_pid	  = none,  		%% 征收军粮
+            guild_hunting_targets_pid = none,   %% 帮派活动目标
+            formation_pid     = none        %% 战斗阵型
 	}).
 
 %%用户登录数据表
@@ -163,7 +180,8 @@
 		holy_pid  = none,	%% 圣痕进程 于2011-12-16被废弃
 		send_pid  = 0,		%% 玩家的广播进程ID列表
 		pid       = none,			%% 玩家进程id
-		state = ?STATE_PENDING
+		state = ?STATE_PENDING,
+        is_shield_broadcast = 0   %% 0是不屏蔽广播， 1屏蔽
     }).
 
 -define(VISITOR_ACCOUNT_EXISTS,5).

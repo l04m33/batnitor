@@ -14,6 +14,12 @@
 -type guild_rank()  :: integer().
 -type guild_exp()   :: integer().
 
+%% 申请
+-define(GUILD_APP_ADD, 1).
+%% 撤销申请
+-define(GUILD_APP_REMOVE, 2).
+%% 取反申请，如果之前申请过了就撤销申请，否则就申请
+-define(GUILD_APP_NEGATION, 3).
 
 %% 工会职位级别
 -define(GUILD_PRESIDENT,      1).
@@ -55,7 +61,7 @@
 
 %% 杂项
 %% 分页大小
--define(GUILD_PAGE_SIZE, 10).
+-define(GUILD_PAGE_SIZE, 9).
 
 
 %% gen_cache

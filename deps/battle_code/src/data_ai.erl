@@ -4,5 +4,9 @@
 -export([get/1]).
 
 
-get(_) ->
-	?UNDEFINED.	
+get(0) ->
+    [];
+
+get(1) ->
+    [{default, {action, p1, p2}, {target, rival, front}}].
+

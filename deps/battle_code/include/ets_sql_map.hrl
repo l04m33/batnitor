@@ -4,6 +4,7 @@
 %% 3.支持定时同步数据到数据库中，并且可以定制缓存执行的间隔时间
 %% 3.支持最多3个关键字的数据库表转化到ets表
 
+-define(CACHE_HASH_INDEX,16).
 
 %% ======================== 使用说明：==================================
 %% 1.前提之一是数据库表中的字段名要与对应的ets表的record记录的字段完全一致
@@ -53,6 +54,7 @@
 						  update_interval = 5*60000, %% 缓存数据更新到数据库的间隔(ms)
 						  call_back,				%% gen_cache增删查改4个方法对应的call_back函数
   						  update_timer = undefined,
+						  cache_index = 0,
 						  lookup_counter = 0,		%%查找次数
 						  insert_counter = 0,        %%插入次数
 						  update_counter = 0,		%%更新次数
