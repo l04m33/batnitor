@@ -6,6 +6,9 @@ BATNITOR_LIB_DIR=$(shell echo $(LIB_DIR)/batnitor-*)
 all: deps
 	./rebar compile generate
 
+all_release: deps
+	./rebar -C rebar.config.release compile generate
+
 deps:
 	./rebar get-deps
 

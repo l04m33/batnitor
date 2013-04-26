@@ -242,7 +242,7 @@ battle_run(Event, BattleData) ->
 			{set_cmd, ID, Cmd} ->
                 ForceEnd = false,
                 case BattleData#battle_data.round =:= 1 
-                        orelse check_and_set_cd(set_cmd_cd, ID, 1000) of
+                        orelse check_and_set_cd(set_cmd_cd, ID, 0) of
                     true ->
                         BattleData1 = set_battle_cmd(ID, Cmd, BattleData),
                         case BattleData1#battle_data.round =:= 1
@@ -259,7 +259,7 @@ battle_run(Event, BattleData) ->
                 end;
 			{finish_play, ID} ->
                 ForceEnd = false,
-                case check_and_set_cd(finish_play_cd, ID, 1000) of
+                case check_and_set_cd(finish_play_cd, ID, 0) of
                     true ->
                         %% every time we have sent the result to the client, 
                         %% we have to wait the client send us a signal to indicate the client has played the result

@@ -511,11 +511,11 @@ string_to_term(String) ->
     end.
 
 row_to_role([ID, DengJi, GongJi, FangYu, Xue, SuDu, MingZhong, ShanBi, BaoJi, 
-                  XingYun, GeDang, FanJi, PoJia, ZhiMing, GuaiDaRen, RenDaGuai, NanDu,
-                  GuaiWuLeiXing, GuaiWuZhiYe, Skill1, Skill2, Skill3, Skill4, Skill5, Skill6 | _]) ->
-    SkillsList = lists:zip(lists:seq(1, 6), 
+             XingYun, GeDang, FanJi, PoJia, ZhiMing, GuaiDaRen, RenDaGuai, NanDu,
+             GuaiWuLeiXing, GuaiWuZhiYe, Skill1, Skill2, Skill3, Skill4, Skill5, Skill6, Skill7, Skill8, Skill9 | _]) ->
+    SkillsList = lists:zip(lists:seq(1, ?BATTLE_FIELD_SIZE div 2), 
                            lists:map(fun string_to_term/1, 
-                                     [Skill1, Skill2, Skill3, Skill4, Skill5, Skill6])),
+                                     [Skill1, Skill2, Skill3, Skill4, Skill5, Skill6, Skill7, Skill8, Skill9])),
     %?I("SkillsList = ~p", [SkillsList]),
     ValidSkillsList = lists:filter(fun({_, S}) -> is_list(S) andalso length(S) > 0 end, SkillsList),
     {#role {

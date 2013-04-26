@@ -165,24 +165,42 @@ write(20009, Battle_data) ->
 		monster ->
 			case mod_counter:get_counter(get(id),?COUNTER_ANTI_TOO_MANY_BATTLE) < data_system:get(36) of
 				true->
-					Exp     = Award#battle_award.exp;
+					No_benifit = false;
 				false->
-					Exp = 0
+					No_benifit = true
 			end;
 		_->
-			Exp     = Award#battle_award.exp
+			No_benifit = false
 	end,
 
-	Silver  = Award#battle_award.silver,
-	Pts     = 0,
-	Donate  = Award#battle_award.donate,
-	Items   = Award#battle_award.items,
+	if 
+		No_benifit == false->
+			ExpList     = Award#battle_award.exp,
+			SilverList  = Award#battle_award.silver,
+			Pts     = 0,
+			Donate  = Award#battle_award.donate,
+			Items   = Award#battle_award.items;
+		true->
+			ExpList = [],
+			SilverList = [],
+			Pts = 0,
+			Donate = 0,
+			Items = []
+	end,
 
     ?INFO(battle, "Items = ~w", [Items]),
 	
 	F = fun({ID, Item}, Acc) ->
 			Len = length(Item),
 			ItemBin = get_item_bin(Item),
+			Exp = case lists:keyfind(ID, 1, ExpList) of
+						   false -> 0;
+						   {_, ExpRes} -> ExpRes
+					   end,
+			Silver = case lists:keyfind(ID, 1, SilverList) of
+						 false -> 0;
+						 {_, SilverRes} -> SilverRes
+					 end,
 			[{ID, pt:pack(20009, <<Exp:32, Silver:32, Pts:32, Donate:32, Len:16, ItemBin/binary>>)} | Acc]
 		end,
 	lists:foldl(F, [], Items);

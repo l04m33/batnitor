@@ -16,6 +16,10 @@ cp -v $SG_SERVER_PATH/src/data/data_ai.erl          ./deps/battle_code/src/
 cp -v $SG_SERVER_PATH/src/data/data_skill.erl       ./deps/battle_code/src/
 cp -v $SG_SERVER_PATH/src/data/data_skill_table.erl ./deps/battle_code/src/
 cp -v $SG_SERVER_PATH/src/data/data_enable_system.erl ./deps/battle_code/src/
+cp -v $SG_SERVER_PATH/src/data/data_system.erl      ./deps/battle_code/src/
+
+cp -v $SG_SERVER_PATH/src/system/battle/skill_macro.ex ./deps/battle_code/ex/
+cp -v $SG_SERVER_PATH/src/system/battle/skills.ex   ./deps/battle_code/ex/
 
 cp -v $SG_SERVER_PATH/include/*       ./deps/battle_code/include/
 
