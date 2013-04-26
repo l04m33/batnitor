@@ -865,16 +865,17 @@ write_player_config(FHandle, [RoleID | Rest]) ->
     [RoleInfo] = ets:lookup(ets_role_rec, {0, RoleID}),
     [RoleMiscInfo] = ets:lookup(ets_role_misc_rec, {0, RoleID}),
     DL0 = lists:ukeysort(1, RoleMiscInfo#misc_info.skills_list),
-    FullSkills = case length(DL0) < 6 of
+    FieldSize = ?BATTLE_FIELD_SIZE div 2,
+    FullSkills = case length(DL0) < FieldSize of
         true ->
-            {_, DL} = lists:unzip(lists:ukeymerge(1, DL0, lists:zip(lists:seq(1, 6), lists:duplicate(6, [])))),
-            DL ++ lists:duplicate(6 - length(DL0), []);
+            {_, DL} = lists:unzip(lists:ukeymerge(1, DL0, lists:zip(lists:seq(1, FieldSize), lists:duplicate(FieldSize, [])))),
+            DL ++ lists:duplicate(FieldSize - length(DL0), []);
         _ ->
             {_, DL} = lists:unzip(DL0),
             DL
     end,
     io:format(FHandle, "~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,"
-                       "~w,~w,~w,~w,~w,~w,\"~w\",\"~w\",\"~w\",\"~w\",\"~w\",\"~w\"~n",
+                       "~w,~w,~w,~w,~w,~w,\"~w\",\"~w\",\"~w\",\"~w\",\"~w\",\"~w\",\"~w\",\"~w\",\"~w\"~n",
               [RoleID,
                RoleInfo#role.gd_roleLevel,
                RoleInfo#role.p_att,
@@ -899,6 +900,9 @@ write_player_config(FHandle, [RoleID | Rest]) ->
                lists:nth(3, FullSkills),
                lists:nth(4, FullSkills),
                lists:nth(5, FullSkills),
-               lists:nth(6, FullSkills)]),
+               lists:nth(6, FullSkills),
+               lists:nth(7, FullSkills),
+               lists:nth(8, FullSkills),
+               lists:nth(9, FullSkills)]),
     write_player_config(FHandle, Rest).
 
