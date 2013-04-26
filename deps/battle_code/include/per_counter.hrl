@@ -26,12 +26,13 @@
 -define(PER_COUNTER_SPECIAL_DUNGEON_1203, 25). %% 1203.。。。。。
 -define(PER_COUNTER_LIANHUN,	26).%% 累计炼魂
 
-%% TODO: 新节日开始的时候下面两个counter要清空……
+%% TODO: 新节日开始的时候下面两个counter要清空……(每次玩家上线都会检查是否需要自动清空，放在mod_lucky的check_if_clear_the_counter里面)
 -define(PER_COUNTER_FEST_CHARGE,    27).        %% 节日累计充值
 -define(PER_COUNTER_USED_FEST_POINT,28).        %% 节日金元宝消耗积分
 
 -define(PER_COUNTER_MAY_USE_GOLD, 	  29).   %% 五一活动使用元宝数量
 -define(PER_COUNTER_MAY_USE_GOLD_GIFT_BASE, 30). 
+-define(PER_COUNTER_ZADAN_POINT, 	  41).   %% 五一砸蛋获得积分
 %%***************************注意:31-39已经被用于五一 消费积分******
 -define(PER_COUNTER_FRESH_TIME, 40). 
 

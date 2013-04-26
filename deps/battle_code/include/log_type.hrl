@@ -356,6 +356,8 @@
 -define(FROM_FEST_EXCHANGE,     10047).     %% 节日活动兑换
 -define(FROM_TRADE,				10048).		%% 交易行获得
 -define(FROM_DUNGEON_CHANGE,	10049).		%% 副本兑换获得
+-define(FROM_FEST_BUY,			10050).		%% 活动购买获得
+-define(FROM_TRADE_2,			20010).		%% 交易行取回获得
 
 %% 常用操作
 -define(FROM_CHARGE,			11001).		%% 充值获得
@@ -433,6 +435,8 @@
 -define(USE_JIANGHUN,			20006).		%% 用于将魂
 -define(USE_TRADE,				20007).		%% 用于交易行
 -define(USE_UP_LEVEL,			20008).		%% 用于升级佣兵
+-define(USE_BUY_FEST_ITEM,		20009).		%% 用于购买活动物品
+
 
 %% 日常
 -define(USE_FINISH_TASK,		21001).		%% 用于自动完成任务

@@ -114,6 +114,7 @@ init(Start) ->
 	process_flag(trap_exit,true),
 	{H, M, S} = now(),
 	put(id, Start#battle_start.att_id),
+    get_battle_id(),
 	
 	random:seed(H, M, S),
 	
@@ -121,6 +122,9 @@ init(Start) ->
 	BattleData = get_battle_data(Start),
 	IDList1 = get_ids(att, BattleData),
 	IDList2 = get_ids(def, BattleData),
+
+    ?INFO(battle_init, "Player IDs involved: Attacker IDs = ~w, Defender IDs = ~w",
+          [IDList1, IDList2]),
 
     case check_cross(get_online_ids(BattleData), BattleData) of
         true ->
@@ -134,21 +138,21 @@ init(Start) ->
                     case False of
                     false ->
                         %% print the err msg here.
-                        ?DEBUG(battle, "Check Battle Fail."),
+                        ?DEBUG(battle_init, "Check Battle Fail."),
                         ignore;
                     {false, Reason} ->
-                        ?DEBUG(battle, "Check Battle Fail: Reason: ~w", [Reason]),
+                        ?DEBUG(battle_init, "Check Battle Fail: Reason: ~w", [Reason]),
                         ignore;
                     {'EXIT', Reason} ->
                         %% reach here probably because player is not online
-                        ?DEBUG(battle, "check battle Fail: Reason: ~w", [Reason]),
+                        ?DEBUG(battle_init, "check battle Fail: Reason: ~w", [Reason]),
                         ignore
                     end
             end;
 
         false ->
             %% print the err msg here.
-            ?DEBUG(battle, "check_cross failed."),
+            ?DEBUG(battle_init, "check_cross failed."),
             ignore
     end.
 
@@ -282,7 +286,7 @@ battle_run(Event, BattleData) ->
                 end;
 			timeout ->
                 ?BATTLE_LOG("--------- 超时！ ---------"),
-				?ERR(battle, "timeout... Timeout = ~w", [Timeout]),
+				?ERR(battle, "timeout... round = ~w", [BattleData#battle_data.round]),
 
                 OldTOTimes = incr_timeout_times(),
                 ?INFO(battle, "OldTOTimes = ~w", [OldTOTimes]),
@@ -335,7 +339,7 @@ battle_run(Event, BattleData) ->
                             [notify_complete_direct(GID, NBattleData1) || GID <- GhostIDList],
                             {stop, normal, NBattleData1};
                         _ ->
-                            ?INFO(battle, "battle_complete...."),
+                            ?INFO(battle_end, "battle_complete...."),
                             {next_state, battle_complete, NBattleData1, ?BATTLE_WAIT_QUIT}
                     end
             end;
@@ -358,7 +362,7 @@ battle_run(Event, BattleData) ->
                                 [notify_complete_direct(GID, NBattleData1) || GID <- GhostIDList],
                                 {stop, normal, NBattleData1};
                             _ ->
-                                ?INFO(battle, "battle_complete...."),
+                                ?INFO(battle_end, "battle_complete...."),
                                 {next_state, battle_complete, NBattleData1, ?BATTLE_WAIT_QUIT}
                         end;
                     false ->
@@ -438,7 +442,7 @@ battle_complete({set_cmd, ID, Cmd}, BattleData) ->
 	{next_state, battle_complete, BattleData#battle_data {timeout = {Now, Timeout}}, Timeout};
 
 battle_complete(timeout, BattleData) ->
-    ?INFO(cross, "battle_complete timed out...."),
+    ?INFO(battle_end, "battle_complete timed out...."),
     F = fun(PlayerID, BData) ->
         case get_player_info(PlayerID, BData) of
             false ->
@@ -464,7 +468,7 @@ battle_complete(timeout, BattleData) ->
 	{stop, normal, NBattleData};
 
 battle_complete({quit, ID}, BattleData) ->
-	?INFO(cross, "receive command quit, ID = ~w", [ID]),
+	?INFO(battle_end, "receive command quit, ID = ~w", [ID]),
 	{Now, Timeout} = time_remain(BattleData),
 	
 	NBattleData = 
@@ -486,7 +490,7 @@ battle_complete({quit, ID}, BattleData) ->
 
 battle_complete(Msg, BattleData) ->
 	{Now, Timeout} = time_remain(BattleData),
-	?INFO(battle, "unknown message: ~w", [Msg]),
+	?INFO(battle_end, "unknown message: ~w", [Msg]),
 	{next_state, battle_complete, BattleData#battle_data {timeout = {Now, Timeout}}, Timeout}.
 	
 %% --------------------------------------------------------------------
@@ -547,13 +551,13 @@ handle_event(Event, StateName, BattleData) ->
                                     battle_wait_for_client({ready, ID}, NBattleData1#battle_data{timeout = {Now, Timeout}});
                                 StateName =:= battle_complete ->
                                     %% 在battle_complete状态说明已经发过结果包了，走battle_complete
-                                    ?INFO(cross, "logout in battle_complete, ID = ~w", [ID]),
+                                    ?INFO(battle_end, "logout in battle_complete, ID = ~w", [ID]),
                                     battle_complete({quit, ID}, NBattleData#battle_data{timeout = {Now, Timeout}});
                                 true ->
                                     send_battle_award(NBattleData1),
                                     ?INFO(battle, "sending battle result"),
                                     send_result_package(NBattleData1, ?BATTLE_END_DISRUPTED),
-                                    ?INFO(battle, "battle_complete.... Camp = ~w", [Camp]),
+                                    ?INFO(battle_end, "battle_complete.... Camp = ~w", [Camp]),
                                     {next_state, battle_complete, NBattleData1, ?BATTLE_WAIT_QUIT}
                             end
 					end
@@ -636,7 +640,7 @@ terminate(Reason, _StateName, BattleData) ->
     ok.
 
 notify_complete(ID, BattleData) ->
-	?INFO(cross, "calling notify complete, ID = ~w", [ID]),
+	?INFO(battle_end, "calling notify complete, ID = ~w", [ID]),
 	
 	Callback = BattleData#battle_data.callback,
 	Type     = BattleData#battle_data.type,
@@ -661,6 +665,8 @@ notify_complete(ID, BattleData) ->
 	WinHPList1 = get_battle_hp_list(Winner, BattleData),
     FullHPList = get_full_battle_hp_list(BattleData),
     ?INFO(battle, "FullHPList = ~w", [FullHPList]),
+    AccMPList  = get_player_mp_list(BattleData),
+    ?INFO(battle, "AccMPList = ~w", [AccMPList]),
 	F1 = fun({Pos, HP}) ->
 				 {(Pos - 1) rem (?BATTLE_FIELD_SIZE div 2) + 1, HP}
 		 end,
@@ -674,6 +680,7 @@ notify_complete(ID, BattleData) ->
             battle_pid = self(),
 			hp_list   = WinHPList,
             full_hp_list = FullHPList,
+            player_mp = AccMPList,
 			callback  = Callback, 
 			statistic = Statistic
 		},
@@ -704,23 +711,24 @@ get_battle_data(Start) ->
 	MakeTeam = Start#battle_start.maketeam,
 	Array    = array:new(?BATTLE_FIELD_SIZE + 1),
     OfflineList = Start#battle_start.off_line_list,
+    AccMPList = Start#battle_start.player_mp,
 	
 	case Mod of
 		pve -> 
 			?INFO(battle, "calling get_mer_info"),
-			{Attacker, Array1} = get_mer_info(att, AttID, AttMer, MakeTeam, Array, Type, OfflineList),
+			{Attacker, Array1} = get_mer_info(att, AttID, AttMer, MakeTeam, Array, Type, OfflineList, AccMPList),
 			?INFO(battle, "calling get_mon_info"),
 			{Defender, Array2} = get_mon_info(def, MonID, Start#battle_start.monster_hp, Array1),
 			?INFO(battle, "done..."),
             PlayerLevel = mod_role:get_main_level(AttID),
             PlotList = [transform_plot(AttID, PlayerLevel, P) || P <- Start#battle_start.plot];
 		pvp ->
-			{Attacker, Array1} = get_mer_info(att, AttID, AttMer, MakeTeam, Array, Type, OfflineList),
+			{Attacker, Array1} = get_mer_info(att, AttID, AttMer, MakeTeam, Array, Type, OfflineList, AccMPList),
             case Type of
                 ?BATTLE_TYPE_BOSS ->
-                    {Defender, Array2} = get_mer_info(boss_def, DefID, DefMer, MakeTeam, Array1, Type, OfflineList);
+                    {Defender, Array2} = get_mer_info(boss_def, DefID, DefMer, MakeTeam, Array1, Type, OfflineList, AccMPList);
                 _ ->
-                    {Defender, Array2} = get_mer_info(def, DefID, DefMer, MakeTeam, Array1, Type, OfflineList)
+                    {Defender, Array2} = get_mer_info(def, DefID, DefMer, MakeTeam, Array1, Type, OfflineList, AccMPList)
             end,
             PlotList = []       % PVP不支持加人和播剧情……
 	end,
@@ -886,7 +894,7 @@ get_mer_list(ID, BattleData) ->
 		PInfo -> PInfo#player_info.mer_list
 	end.
 	
--spec get_mer_info(Camp, ID, MerList, MakeTeam, Array, Type, OfflineList) -> {PlayerInfoList, NArray} when
+-spec get_mer_info(Camp, ID, MerList, MakeTeam, Array, Type, OfflineList, AccMPList) -> {PlayerInfoList, NArray} when
 	Camp           :: battle_camp(),
 	ID             :: integer() | undefined,
 	MerList        :: [any()], %% #mercenary{}
@@ -895,9 +903,10 @@ get_mer_list(ID, BattleData) ->
 	Array          :: array(),
     Type           :: integer(),
     OfflineList    :: [integer()],
+    AccMPList      :: [{integer(), integer()}],
 	NArray         :: array().
 																					 
-get_mer_info(Camp, ID, MerList, MakeTeam, Array, Type, OfflineList) ->
+get_mer_info(Camp, ID, MerList, MakeTeam, Array, Type, OfflineList, AccMPList) ->
     {PlayerLevel, PlayerOnline} = case is_integer(ID) of
         true ->
             %% 竞技场（等）战斗是假的pvp，把防守方的在线状态强制设为不在线，
@@ -937,7 +946,18 @@ get_mer_info(Camp, ID, MerList, MakeTeam, Array, Type, OfflineList) ->
                (Camp == boss_def) ->
                     Pos = ?BOSS_POSITION
 			end,
-            BS = role_2_bs(CurID, CurLevel, Role),
+
+            AccMP = case Role#role.gd_roleRank of
+                1 -> 
+                    case lists:keyfind(CurID, 1, AccMPList) of
+                        false -> 0;
+                        {_, AMP} -> AMP
+                    end;
+                _ ->
+                    0
+            end,
+
+            BS = role_2_bs(CurID, CurLevel, Role, AccMP),
             {NProtectors, NBS} = case BS#battle_status.is_lead of
                 true ->
                     {Protectors, BS#battle_status{protectors = Protectors}};
@@ -1117,7 +1137,7 @@ get_mer_leader(Camp, [Role | Rest]) ->
 	end.
 			   
 %% role to battle status
-role_2_bs(ID, PlayerLevel, Role) ->
+role_2_bs(ID, PlayerLevel, Role, AccMP) ->
 	?INFO(battle, "ID = ~w", [ID]),
 	?INFO(battle, "Skill From Mer = ~w", [Role#role.gd_skill]),
 	{ActSkills0, PasSkills, NormSkills} = transform_skill(Role#role.gd_skill),
@@ -1179,6 +1199,8 @@ role_2_bs(ID, PlayerLevel, Role) ->
     ?INFO(battle, "Role#role.key = ~w, MinMP = ~w, MaxMP = ~w", 
           [Role#role.key, MinMP, MaxMP]),
 
+    InitMP = min(MaxMP, MinMP + NewbieMP + AngryMP),
+
 	#battle_status {
         id        = element(2, Role#role.key),
         player_id = ID,
@@ -1191,8 +1213,12 @@ role_2_bs(ID, PlayerLevel, Role) ->
         n_skill   = NormSkills,
         hp        = CurHP,
         hp_max    = MaxHP,
-        mp        = min(MaxMP, MinMP + NewbieMP + AngryMP),
+        mp        = case AccMP > InitMP of
+                        true -> AccMP;
+                        _    -> InitMP
+                    end,
         mp_max    = MaxMP,
+        mp_up_extra = Role#role.gd_up_angry,
         p_att     = Role#role.p_att,
         p_def     = Role#role.p_def,
         m_att     = Role#role.m_att,
@@ -1229,6 +1255,12 @@ mon_2_bs(MonAttr, Pos, MonHp) ->
     CurHP = min(MonAttr#mon_attr.hp, MaxHP),
 
     ?INFO(battle, "mon at pos ~w, HP = ~w", [Pos, CurHP]),
+
+    AIList = case MonAttr#mon_attr.ai_id of
+        0 -> [];
+        AIID ->
+            ai:transform_ai(data_ai:get(AIID), [], MonAttr#mon_attr.ai_param)
+    end,
     
     #battle_status {
         id      = MonAttr#mon_attr.id,
@@ -1255,7 +1287,7 @@ mon_2_bs(MonAttr, Pos, MonHp) ->
         speed   = MonAttr#mon_attr.speed,
         is_lead = false,
         is_alive = (CurHP > 0),
-        ai      = ai:transform_ai(data_ai:get(MonAttr#mon_attr.ai_id), [], MonAttr#mon_attr.ai_param)
+        ai      = AIList
     }.
 
 get_mon_info(Camp, MonGroupID, Array) ->
@@ -1680,8 +1712,9 @@ handle_command_ex(BattleData, Repeat) ->
             ?INFO(battle, "OrderList = ~w", [OrderList]),
 			case length(OrderList) of
 				1 -> 
-					if (NBattleData1#battle_data.round =:= 30) ->
-						NBattleData#battle_data{winner = def};
+					if NBattleData1#battle_data.type =/= ?BATTLE_TYPE_CROSS_PVE
+                            andalso NBattleData1#battle_data.round =:= 30 ->
+					    NBattleData#battle_data{winner = def};
 					true ->
 						%% if this player is the last one on the attack list
 						%% it means the round is over, we have to start a new one
@@ -2580,7 +2613,6 @@ attack(SkillId, Src, AttSpec = #attack_spec{addition = [CurAddition | RestAdditi
 		attack(SkillId, Src, AttSpec#attack_spec{addition = RestAddition}, 
                Rest, AttInfoList, BattleData);
 	true ->
-        ?ERR(cross, "position: ~w", [NTar]),
         ?BATTLE_LOG("    目标站位: ~w", [NTar]),
 		case pre_attack(Src, NTar, AttSpec, BattleData) of
 			false ->
@@ -2667,6 +2699,7 @@ handle_attack_info(SkillId, Src, AttInfoList, BattleData) ->
 handle_attack_info(_SkillId, Src, AttInfoList, [], BattleData) ->
 	AttPro  = get_attack_pro(BattleData),
 	Status  = get_battle_status(Src, BattleData),
+    ?INFO(battle, "Status#battle_status.mp = ~w", [Status#battle_status.mp]),
 	OldList = AttPro#attack_pro.attack_info, 
 	NAttPro = 
 		AttPro#attack_pro {
@@ -2710,7 +2743,24 @@ handle_attack_info(SkillId, Src, AttInfoList, [AttInfo | Rest], BattleData) ->
                             hp = TarStat#battle_status.hp,
                             mp = TarStat#battle_status.mp
                         },
-                    handle_attack_info(SkillId, Src, [NAttInfo | AttInfoList], Rest, BattleData)
+
+                    %% 虎卫即使miss了也要加怒气
+                    AddedMP = case (Rest =:= []) andalso (SrcStat#battle_status.job =:= ?CAREER_HUWEI)
+                            andalso is_integer(SrcStat#battle_status.player_id)
+                            andalso (SrcStat#battle_status.is_lead) of
+                        true ->
+                            get_att_added_mp_by_skill(SkillId, SrcStat, [NAttInfo | AttInfoList]);
+                        false ->
+                            0
+                    end,
+
+                    NBattleData = case AddedMP of
+                        0 -> BattleData;
+                        _ -> 
+                            NSrcStat = SrcStat#battle_status{mp = SrcStat#battle_status.mp + AddedMP},
+                            set_battle_status(Src, NSrcStat, BattleData)
+                    end,
+                    handle_attack_info(SkillId, Src, [NAttInfo | AttInfoList], Rest, NBattleData)
             end;
 
 		false ->
@@ -2745,15 +2795,25 @@ handle_attack_info(SkillId, Src, AttInfoList, [AttInfo | Rest], BattleData) ->
                     MpAddBySkill = %% mp add by skill 
                         case Rest =/= [] orelse Src == Tar of
                             %% Rest =/= [] is used to avoid adding mp more than once when attacking
-                            true  -> 0;
-                            false -> get_att_added_mp_by_skill(SkillId, SrcStat, [NAttInfo | AttInfoList])
+                            true  -> 
+                                case Rest =:= [] andalso (SrcStat#battle_status.job =:= ?CAREER_HUWEI)
+                                        andalso is_integer(SrcStat#battle_status.player_id)
+                                        andalso (SrcStat#battle_status.is_lead) of
+                                    true ->
+                                        get_att_added_mp_by_skill(SkillId, SrcStat, [NAttInfo | AttInfoList]);
+                                    false ->
+                                        0
+                                end;
+                            false -> 
+                                get_att_added_mp_by_skill(SkillId, SrcStat, [NAttInfo | AttInfoList])
                         end,
 
                     ?INFO(battle, "Src = ~w, maxMp = ~w, OldMp = ~w, MpAddbyskill = ~w", 
-                        [Src, AttMaxMp, AttOldMp, MpAddBySkill]),
-                    
+                          [Src, AttMaxMp, AttOldMp, MpAddBySkill]),
+
                     AttNewHp = max(0, (min(AttMaxHp, AttOldHp + HpAbsorb + Rebound + Counter))),
                     AttNewMp = max(0, (min(AttMaxMp, AttOldMp + MpAbsorb + MpAddBySkill))),
+                    ?INFO(battle, "AttNewMp = ~w", [AttNewMp]),
                     
                     DefNewHp = NAttInfo#attack_info.hp,
                     DefNewMp = NAttInfo#attack_info.mp,
@@ -2787,10 +2847,17 @@ handle_attack_info(SkillId, Src, AttInfoList, [AttInfo | Rest], BattleData) ->
                     
                     NTarBuffList = update_buff_value_rel(?BUFF_DMG_SHIELD, -DmgAbsorbed, 0,
                                                          TarStat#battle_status.buff),
+
+                    % 打自己的时候，TarStat里的mp也要更新……
+                    DefNewMp1 = case Tar =:= Src of
+                        true  -> DefNewMp + MpAddBySkill;
+                        false -> DefNewMp
+                    end,
+
                     NTarStat = 
                         TarStat#battle_status {
                             hp = DefNewHp, 
-                            mp = DefNewMp, 
+                            mp = DefNewMp1, 
                             damage_deal = NTDamDeal,
                             damage_suffer = NTDamSuff,
                             buff = NTarBuffList,
@@ -3960,6 +4027,9 @@ send_battle_award(ID, BattleData) ->
                     catch mod_items:createItems(ID, IDItems, ?FROM_DUNGEON),
                     catch mod_dungeon:add_exp(ID, Exp),
                     catch mod_dungeon:add_silver(ID, Silver);
+                ?BATTLE_TYPE_MARS_TOWER ->
+                    catch mod_economy:add_silver(ID, Silver, ?FROM_MARSTOWER, true, Desc),
+                    catch mod_items:createItems(ID, IDItems, ?FROM_MARSTOWER);
 		        _ ->
 		            catch mod_economy:add_silver(ID, Silver, ?FROM_BATTLE, true, Desc),
 		            catch mod_items:createItems(ID, IDItems, ?FROM_BATTLE)
@@ -3984,11 +4054,12 @@ test_pve(ID, MonID) ->
 	Start = 
 		#battle_start {
 			mod     = pve,
-			type    = 0,
+			type    = ?BATTLE_TYPE_CROSS_PVE,
 			att_id  = ID,
 			att_mer = [],
 			monster = MonID,
             off_line_list = [],
+            player_mp = [],
             callback = {battle, test_callback, []}
 		},
 	battle:start(Start).
@@ -4262,7 +4333,7 @@ transform_plot(ID, PlayerLevel, Plot) ->
                 {Pos, BS};
             Role when is_record(Role, role) ->
                 Pos = Role#role.gd_isBattle,
-                BS = role_2_bs(ID, PlayerLevel, Role),
+                BS = role_2_bs(ID, PlayerLevel, Role, 0),
                 {Pos, BS};
             {Pos, BS} when is_record(BS, battle_status) ->
                 {Pos, BS}
@@ -4565,7 +4636,7 @@ notify_team_complete(Camp, BattleData) ->
         InfoList),
     case AllQuit of
         true ->
-            ?INFO(cross, "AllQuit = true"),
+            ?INFO(battle_end, "AllQuit = true"),
             NotifyF = fun(P) ->
                 case P#player_info.online of
                     true ->
@@ -4582,7 +4653,6 @@ notify_team_complete(Camp, BattleData) ->
             end,
             lists:foreach(NotifyF, InfoList);
         false ->
-            ?INFO(cross, "AllQuit = false"),
             ok
     end.
 
@@ -4693,6 +4763,8 @@ notify_complete_direct(ID, BattleData) ->
 	WinHPList1 = get_battle_hp_list(Winner, BattleData),
     FullHPList = get_full_battle_hp_list(BattleData),
     ?INFO(battle, "FullHPList = ~w", [FullHPList]),
+    AccMPList  = get_player_mp_list(BattleData),
+    ?INFO(battle, "AccMPList = ~w", [AccMPList]),
 	F1 = fun({Pos, HP}) ->
 				 {(Pos - 1) rem (?BATTLE_FIELD_SIZE div 2) + 1, HP}
 		 end,
@@ -4706,6 +4778,7 @@ notify_complete_direct(ID, BattleData) ->
             battle_pid = self(),
 			hp_list   = WinHPList,
             full_hp_list = FullHPList,
+            player_mp = AccMPList,
 			callback  = Callback, 
 			statistic = Statistic
 		},
@@ -4913,7 +4986,7 @@ get_att_added_mp_by_skill(SkillID, SrcStat, AttInfo) ->
             end
     end,
 
-    BaseMP + ExtraMP.
+    BaseMP + ExtraMP + SrcStat#battle_status.mp_up_extra.
 
 
 get_tar_for_common_attack(Src, Tar, BattleData) ->
@@ -4969,6 +5042,31 @@ get_rel_hp(Pos, BattleData) ->
             0;
         BS ->
             BS#battle_status.hp / BS#battle_status.hp_max
+    end.
+
+get_player_mp_list(BattleData) ->
+    IDList = get_ids(BattleData),
+    F = fun(ID) ->
+        PInfo = get_player_info(ID, BattleData),
+        LeadBS = get_battle_status(PInfo#player_info.lead, BattleData),
+        {ID, LeadBS#battle_status.mp}
+    end,
+    [F(ID) || ID <- IDList].
+
+get_battle_id() ->
+    case erlang:get(batt_id) of
+        ?UNDEFINED ->
+            Self = self(),
+            StrSelf = pid_to_list(Self),
+            FirstDotIdx = string:chr(StrSelf, $.),
+            LastDotIdx = string:rchr(StrSelf, $.),
+            Len = LastDotIdx - FirstDotIdx - 1,
+            StrID = string:substr(StrSelf, FirstDotIdx + 1, Len),
+            BattID = list_to_integer(StrID),
+            erlang:put(batt_id, BattID),
+            BattID;
+        BattID ->
+            BattID
     end.
 
 -ifdef(debug).

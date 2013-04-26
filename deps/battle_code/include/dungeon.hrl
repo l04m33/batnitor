@@ -59,7 +59,8 @@
 	award_id          = -1,		%% 转盘奖励id，-1：副本没完成，0：副本完成但没产生奖励，> 0：奖励产生了
 	silver			  = 0,
 	exp 			  = 0,
-	items 			  = []
+	items 			  = [],
+	angry_tuple       = []
 	}).	
 
 -record(dungeon_state_types, {
@@ -77,7 +78,8 @@
 	award_id          = {integer},
 	silver			  = {integer},
 	exp 			  = {integer},
-	items 			  = {term}
+	items 			  = {term},
+	angry_tuple       = {term}
 	}).
 
 -record (dungeon_process, {

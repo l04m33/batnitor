@@ -44,6 +44,7 @@
 -define(ERR_CANT_USE_TOGETHER,	 41).		%% 该物品不能批量使用
 -define(ERR_NO_ONBATTLE_ROLES,	 42).		%% 没有出战佣兵
 -define(ERR_NOT_CHARGE_YET,	     43).		%% 还没有充值过
+-define(ERR_WILD_MONSTER_LEVEL_TOO_HIGH, 44).   %% 怪物太强大，现在不能挑战
 
 
 %% 场景
@@ -213,6 +214,9 @@
 -define(ERR_TRADE_SELL_SUCCESS,			13202).			%% 托卖成功
 -define(ERR_ITEM_NOT_TRADE,				13203).			%% 物品不能被交易
 -define(ERR_TRADE_PRICE_LOW,			13204).			%% 售价不能低于物品的最低交易价格
+-define(ERR_ITEM_BIND_NOT_TRADE,		13205).			%% 绑定的物品不能交易
+-define(ERR_ITEM_TYPE_NOT_TRADE,		13206).			%% 该类物品不能交易
+
 
 %%邮件系统
 -define(ERR_MAIL_WRONG_TITLE,            14001).        %%邮件标题错误
@@ -673,10 +677,12 @@
 -define(ERR_NOT_USE_IN_THIS_SCENE,	   54102).		%% 此物品只可在精英虎牢关中使用
 -define(ERR_HAS_BEEN_IN_BATTLE,	   		54103).		%% 您正在参与战斗，不能继续使用此物品
 -define(ERR_CAN_ONLY_USE_BY_LEAD,	   	54104).		%% 只有队长方可使用
+-define(ERR_FEST_OUT_OF_DATE,		   	54105).		%% 活动时间已过
 
 %% --------------------------------送花----------------------------------
 -define(ERR_CANT_SEND_SELF,		  53000).		%% 您不可送花给自己
 
 %% --------------------------------活动抽奖----------------------------------
--define(ERR_NOT_ENOUGH_ITEMS,		  54200).		%% 你没有美酒可用来祭奠英雄
-
+-define(ERR_NOT_ENOUGH_ITEMS,		  54200).		%% 没有足够的物品了
+-define(ERR_NOT_ENOUGH_MONEY,		  54201).		%% 您没有足够钱了哦
+-define(ERR_ZADAN_SUCCESS_MAX,		  54202).		%% 已达最大成功次数！自动获得活动积分20480！

@@ -34,6 +34,7 @@
 -include("sword.hrl").
 -include("cave.hrl").
 -include("answer.hrl").
+-include("angry.hrl").
 
 -include("rush_rank.hrl").
 

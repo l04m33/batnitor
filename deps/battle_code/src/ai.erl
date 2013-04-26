@@ -112,7 +112,6 @@ get_skill(Src, BattleData) ->
 	
 	?INFO(ai, "Src = ~w, SList = ~w", [Src, SList]),
 
-    %% TODO: 把 [] 换成真的 AI 设定……
     {AISkillUID, _AISpeakID, AITarList} = parse_ai_settings(Src, SrcStat#battle_status.ai, BattleData),
 
     case AISkillUID of
@@ -557,7 +556,15 @@ parse_ai_settings(Src, [CurAI | Rest], BattleData) ->
                     parse_ai_settings(Src, Rest, BattleData)
             end;
         default ->
-            parse_ai_result(Src, CurAI, BattleData)
+            {AISkill, AISpeak, TarList} = parse_ai_result(Src, CurAI, BattleData),
+            case validate_skill(AISkill, Src, BattleData) of
+                true ->
+                    {AISkill, AISpeak, TarList};
+                false ->
+                    {0, 0, []};
+                {false, _} ->
+                    {0, 0, []}
+            end
     end.
 
 transform_ai([H | T], AccList, Param) ->

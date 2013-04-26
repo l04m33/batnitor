@@ -29,6 +29,7 @@
 -define(BATTLE_CROSS_PK,                 13).
 -define(BATTLE_TYPE_CALL_HERO,			14).
 -define(BATTLE_TYPE_DUNGEON,			15).
+-define(BATTLE_TYPE_CROSS_PVE,          16).
 
 -define(BATTLE_TYPE_PLOTTED,    127).   % 特殊类型：剧情战斗
 
@@ -169,6 +170,7 @@
 
 -define(BATTLE_PLOT_TRIGGER_ROUNDS, 1).
 -define(BATTLE_PLOT_TRIGGER_DEATH,  2).
+-define(BATTLE_PLOT_TRIGGER_C_PVE,  3).
 
 -define(CACHE_BATTLE_SKILL_ORDER_REF, cache_util:get_register_name(battle_skill_order)).
 
@@ -269,6 +271,7 @@
 	 	monster,                %% MonsterID
         monster_hp      = ?HP_MAX,  %% Monster HP, can be a list or an integer
         plot            = [],   %% [#battle_plot{}]
+        player_mp       = [],   %% [{PlayerID, MP}]
         off_line_list   = [],
 		maketeam        = false,%% true | false
 		checklist       = [],   %% [check_spec()]
@@ -321,6 +324,7 @@
 		hp_max,
 		mp            = 0,
 		mp_max        = 100,
+        mp_up_extra   = 0,
 		p_att,
 		m_att,
 		p_def,
@@ -357,6 +361,7 @@
 	 	id,       %% monster group ID
 		type,
 		level,   
+        protect_level,
 	 	pos,      %% [{MonsterID, Position}]
 		pts,      %% Practice   军功
 		items,    %% [{ItemID, DropRate, ItemCount}]
@@ -547,6 +552,7 @@
         battle_pid,
 		hp_list = [],        %% winner's hp list :: [{Pos, Hp}]
         full_hp_list = [],
+        player_mp = [],
 		statistic,		%% #battle_statistic{}
 	    callback
 	}		

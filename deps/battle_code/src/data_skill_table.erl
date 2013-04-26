@@ -527,7 +527,7 @@ get(107, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1.1},    
+		param  = {0.95},    
 		slot   = 4
 	};
 
@@ -542,7 +542,7 @@ get(107, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {1.15},    
+		param  = {0.98},    
 		slot   = 4
 	};
 
@@ -557,7 +557,7 @@ get(107, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {1.2},    
+		param  = {1},    
 		slot   = 4
 	};
 
@@ -572,7 +572,7 @@ get(107, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {1.25},    
+		param  = {1.05},    
 		slot   = 4
 	};
 
@@ -587,7 +587,7 @@ get(107, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {1.3},    
+		param  = {1.1},    
 		slot   = 4
 	};
 
@@ -602,7 +602,7 @@ get(107, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {1.35},    
+		param  = {1.15},    
 		slot   = 4
 	};
 
@@ -617,7 +617,7 @@ get(107, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {1.4},    
+		param  = {1.2},    
 		slot   = 4
 	};
 
@@ -632,7 +632,7 @@ get(107, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {1.45},    
+		param  = {1.3},    
 		slot   = 4
 	};
 
@@ -647,7 +647,7 @@ get(107, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {1.5},    
+		param  = {1.4},    
 		slot   = 4
 	};
 
@@ -977,7 +977,7 @@ get(110, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {1.05,1,0.15},    
+		param  = {0.9,1,0.15},    
 		slot   = 4
 	};
 
@@ -992,7 +992,7 @@ get(110, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {1.1,1,0.15},    
+		param  = {0.93,1,0.15},    
 		slot   = 4
 	};
 
@@ -1007,7 +1007,7 @@ get(110, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {1.15,1,0.15},    
+		param  = {0.95,1,0.15},    
 		slot   = 4
 	};
 
@@ -1022,7 +1022,7 @@ get(110, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {1.2,2,0.15},    
+		param  = {0.98,2,0.15},    
 		slot   = 4
 	};
 
@@ -1037,7 +1037,7 @@ get(110, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {1.25,2,0.15},    
+		param  = {1,2,0.15},    
 		slot   = 4
 	};
 
@@ -1052,7 +1052,7 @@ get(110, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {1.3,2,0.2},    
+		param  = {1.05,2,0.2},    
 		slot   = 4
 	};
 
@@ -1067,7 +1067,7 @@ get(110, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {1.35,3,0.2},    
+		param  = {1.1,3,0.2},    
 		slot   = 4
 	};
 
@@ -1082,7 +1082,7 @@ get(110, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {1.4,3,0.2},    
+		param  = {1.2,3,0.2},    
 		slot   = 4
 	};
 
@@ -1097,7 +1097,7 @@ get(110, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {1.45,3,0.2},    
+		param  = {1.35,3,0.2},    
 		slot   = 4
 	};
 
@@ -13532,7 +13532,7 @@ get(117, 1) ->
 		level  = 1,
 		target = enemy,
 		type   = 4,
-		param  = {0.85},    
+		param  = {0.8},    
 		slot   = 2
 	};
 
@@ -13547,7 +13547,7 @@ get(117, 2) ->
 		level  = 2,
 		target = enemy,
 		type   = 4,
-		param  = {1},    
+		param  = {0.9},    
 		slot   = 2
 	};
 
@@ -13562,7 +13562,7 @@ get(117, 3) ->
 		level  = 3,
 		target = enemy,
 		type   = 4,
-		param  = {1.05},    
+		param  = {0.95},    
 		slot   = 2
 	};
 
@@ -13577,7 +13577,7 @@ get(117, 4) ->
 		level  = 4,
 		target = enemy,
 		type   = 4,
-		param  = {1.2},    
+		param  = {1},    
 		slot   = 2
 	};
 
@@ -13592,7 +13592,7 @@ get(117, 5) ->
 		level  = 5,
 		target = enemy,
 		type   = 4,
-		param  = {1.25},    
+		param  = {1.05},    
 		slot   = 2
 	};
 
@@ -13607,7 +13607,7 @@ get(117, 6) ->
 		level  = 6,
 		target = enemy,
 		type   = 4,
-		param  = {1.3},    
+		param  = {1.15},    
 		slot   = 2
 	};
 
@@ -13622,7 +13622,7 @@ get(117, 7) ->
 		level  = 7,
 		target = enemy,
 		type   = 4,
-		param  = {1.4},    
+		param  = {1.25},    
 		slot   = 2
 	};
 
@@ -13637,7 +13637,7 @@ get(117, 8) ->
 		level  = 8,
 		target = enemy,
 		type   = 4,
-		param  = {1.5},    
+		param  = {1.4},    
 		slot   = 2
 	};
 
@@ -13652,7 +13652,7 @@ get(117, 9) ->
 		level  = 9,
 		target = enemy,
 		type   = 4,
-		param  = {1.6},    
+		param  = {1.55},    
 		slot   = 2
 	};
 

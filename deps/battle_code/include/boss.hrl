@@ -11,7 +11,7 @@
 -define(BOSS_CD_TIME, 30).   %%世界boss战斗cd
 -define(UPDAT_BOSS_RABKING_TIME, 3000).%%定时刷新伤害排行榜
 
--define(BOSS_RANK_LENGTH, 10). %%boss 排行榜长度
+-define(BOSS_RANK_LENGTH, 20). %%boss 排行榜长度
 -define(BROADCAST_TIME, [{{15,0,0},{16,0,0},"下午4点"}, {{10,0,0},{11,0,0},"上午11点"}]).%%15点开始广播
 
 -define(BOSS_TIME_LIST, [{39300, 39600, 40800}, {57300, 57600, 58800}]). %% 早上BOSS开启时间

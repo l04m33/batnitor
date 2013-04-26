@@ -160,5 +160,5 @@
 					titles = {term}}).
 
 -record(fest_title,{
-					index,type,money_type,amount,rate
+					title_id,index,type,money_type,amount,rate
 					}).

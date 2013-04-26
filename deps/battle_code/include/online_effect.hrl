@@ -6,12 +6,12 @@
 -define(ONLINE_EFFECT_TYPE_CHANGE,			1). %% 变身卡类型
 -define(ONLINE_EFFECT_TYPE_ONLINE_AWARD,	2). %% 在线奖励
 -define(ONLINE_EFFECT_TYPE_FLY,				3). %% 免费飞行
--define(ONLINE_EFFECT_TYPE_MAY_TITLE,		4). %% 五一称号
 -define(ONLINE_EFFECT_TYPE_PRAY_RAIN,		10001). %% 清明祈雨
 -define(ONLINE_EFFECT_TYPE_KAIFU_PLAN,		10002). %% 10002 - 10007 已被元宝计划占用
 -define(ONLINE_EFFECT_TYPE_LEVEL_AWARD,		10008). %% 新手等级奖励
 -define(ONLINE_EFFECT_TYPE_DEL_ITEM,		10009). %% 物品到期删除类型
 -define(ONLINE_EFFECT_TYPE_DEL_HORSE,		10010). %% 临时坐骑到期删除类型
+-define(ONLINE_EFFECT_TYPE_MAY_TITLE,		10011). %% 五一称号
 
 
 

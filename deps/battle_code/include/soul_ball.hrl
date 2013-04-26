@@ -9,7 +9,8 @@
     soul_ball2,
     {
         playerId = 0,
-        soulExp = 0
+        soulExp = 0,
+        is_changeed = 0 %% 0未转换过，1转换过
     }
    ).
 
@@ -17,7 +18,8 @@
     soul_ball2_types,
     {
         playerId = {integer},
-        soulExp = {integer}
+        soulExp = {integer},
+        is_changeed = {integer}
     }
    ).
 

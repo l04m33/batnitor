@@ -97,7 +97,8 @@
 			lucky_pid		  = none,  		%% 抽奖模块
 			junliang_pid	  = none,  		%% 征收军粮
             guild_hunting_targets_pid = none,   %% 帮派活动目标
-            formation_pid     = none        %% 战斗阵型
+            formation_pid     = none,       %% 战斗阵型
+            angry_pid 		  = none		%% 怒气储存模块
 	}).
 
 %%用户登录数据表
