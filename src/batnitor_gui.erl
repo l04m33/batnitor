@@ -327,7 +327,7 @@ terminate(Reason, _State) ->
                         {ok, PFHandle} ->
                             io:format(PFHandle, "ID,等级,攻击,防御,HP,速度,命中,闪避,暴击,幸运,格挡,反击,破甲,"
                                                 "致命,怪打人次数,人打怪次数,难度,怪物类型,怪物职业,"
-                                                "技能组1,技能组2,技能组3,技能组4,技能组5,技能组6~n", []),
+                                                "技能组1,技能组2,技能组3,技能组4,技能组5,技能组6,技能组7,技能组8,技能组9~n", []),
                             RolesOrder = gen_server:call(batnitor_simulator, get_roles_order),
                             write_player_config(PFHandle, RolesOrder);
                         {error, Err} ->
