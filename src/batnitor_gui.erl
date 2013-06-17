@@ -659,11 +659,12 @@ write_mon_attr(MonList, FHandle) ->
                        "\"怪物星级\"~n", []),
 
     G = fun(Mon) ->
+        MonAtt = max(Mon#mon_attr.p_att, Mon#mon_attr.m_att),
         io:format(FHandle, "~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,~w,~w~n", 
                   [Mon#mon_attr.id,
                    Mon#mon_attr.hp,
-                   Mon#mon_attr.p_att,
-                   Mon#mon_attr.m_att,
+                   MonAtt,
+                   MonAtt,
                    Mon#mon_attr.p_def,
                    Mon#mon_attr.m_def,
                    Mon#mon_attr.speed,
